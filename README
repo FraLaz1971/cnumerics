@@ -1,0 +1,33 @@
+# to compile
+make
+# to execute
+# ./<program> arg1 arg2 ... argn
+# n can be = 0 , so in this case:
+# ./<program>
+# e.g.
+./loopint 10 20
+# to remove generated files:
+make clean
+# trying different values
+./loopint -10 -5
+./loopint -10 0
+./loopint -100 99
+# ging close to and beyond the upper linit
+./loopint 2147483640 2147483644
+./loopint 2147483640 2147483648
+./loopint 2147483640 2147483650
+# what happens in this case??? why?
+./loopint 2147483644 2147483646
+# to save on an output ascii file
+./loopint -5 5 > outdata.dat
+# doublevec reads an array from stdin and prints out it doubled on stdout
+# e.g.
+./doublevec 4 < data2.dat
+#
+./doublevec 15 < data2.dat > data2x2.dat
+cat data2x2.dat
+#
+./doublevec 4
+# to save project into a compressed file for distribution
+make dist
+
