@@ -43,16 +43,18 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = loopint.c doublevec.c accuracy.c
+SOURCES       = loopint.c doublevec.c accuracy.c precision.c
 OBJECTS1      = loopint.o 
 OBJECTS2      = doublevec.o
 OBJECTS3      = accuracy.o
+OBJECTS4      = precision.o
 DIST          = cnumerics.pro
 QMAKE_TARGET  = cnumerics
 DESTDIR       = 
 TARGET1        = loopint
 TARGET2        = doublevec
 TARGET3        = accuracy
+TARGET4        = precision
 
 first: all
 ####### Implicit rules
@@ -77,6 +79,9 @@ $(TARGET2):  $(OBJECTS2)
 
 $(TARGET3):  $(OBJECTS3)  
 	$(LINK) $(LFLAGS) -o $(TARGET3) $(OBJECTS3) $(OBJCOMP) $(LIBS)
+
+$(TARGET4):  $(OBJECTS4)  
+	$(LINK) $(LFLAGS) -o $(TARGET4) $(OBJECTS4) $(OBJCOMP) $(LIBS)
 	
 Makefile: cnumerics.pro
 	$(QMAKE) -o Makefile cnumerics.pro
