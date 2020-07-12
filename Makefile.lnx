@@ -69,7 +69,7 @@ first: all
 
 ####### Build rules
 
-all: $(TARGET1) $(TARGET2) $(TARGET3)
+all: $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4)
 
 $(TARGET1):  $(OBJECTS1)  
 	$(LINK) $(LFLAGS) -o $(TARGET1) $(OBJECTS1) $(OBJCOMP) $(LIBS)
