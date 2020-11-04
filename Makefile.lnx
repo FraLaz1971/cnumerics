@@ -7,7 +7,8 @@ TARGET0 = accuracy
 TARGET1 = doublevec
 TARGET2 = loopint
 TARGET3 = precision
-TARGETS = precision loopint doublevec accuracy
+TARGET4 = realarrays
+TARGETS = realarrays precision loopint doublevec accuracy
 all: $(TARGETS)
 $(TARGET0).o: accuracy.c
 	$(CC) -c   $< -o accuracy.o $(CPPFLAGS)
@@ -25,6 +26,10 @@ $(TARGET3).o: precision.c
 	$(CC) -c   $< -o precision.o $(CPPFLAGS)
 $(TARGET3): precision.o
 	$(CC) -o precision $< $(LDFLAGS)
+$(TARGET4).o: realarrays.c
+	$(CC) -c   $< -o realarrays.o $(CPPFLAGS)
+$(TARGET4): realarrays.o
+	$(CC) -o realarrays $< $(LDFLAGS)
 install: all
 	mv $(TARGETS) bin
 .PHONY: clean
