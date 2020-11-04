@@ -3,10 +3,7 @@ A C compiler defines an integer type  of number (int) this way:
 - On modern computers, integer values range from –2147483647 through 2147483647
 - On older, 16-bit computers, an integer ranges in value from –32768
   through 32767
-- An unsigned integer can have a value that ranges from 0 to 32767.
-- Negative numbers, from –32768 up to 0 are also allowed. 
-- Some compilers may define the range for an int to be much larger than –32768 through 32767. 
-  To be certain, check with your compiler’s documentation or help system. 
+- An unsigned short integer can have a value that ranges from 0 to 32767.
 
 
 
