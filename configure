@@ -4,7 +4,7 @@ if   [[ "$OS" == "Windows_NT" ]]
 then
         echo "detected Microsoft $OS $(uname)"
         . configure-win-mingw.sh > Makefile.mingw
-	cp Makefile.lnx Makefile
+	cp Makefile.mingw Makefile
 elif [[ $(uname) == "Linux" ]]
 then
         echo "detected GNU/linux $OS"
