@@ -28,9 +28,9 @@ make clean
 # e.g.
 ./doublevec 4 < data2.dat
 #
-./doublevec 15 < data2.dat > data2x2.dat
-cat data2x2.dat
-#
+./doublevec 15 < data2.dat > dubdata.dat
+cat dubdata.dat
+# without redirecting stdin from file, this accepts from keyboard input (from stdin)
 ./doublevec 4
 # to clean all generated files for saving only the source code in the project
 make distclean
@@ -55,3 +55,4 @@ alias gpl="gnuplot -p -e \"plot '-' with lines\""
 ./hyperbola -50 50 1 | gpl
 # the following will create a file named hyperbola.png with the hyperbola graph
 ./hyperbola -50 50 1 | gnuplot -p -e "set term png;set output 'hyperbola.png';set xlabel 'x'; set ylabel 'y'; set title 'Hyperbola:  x = 1/x'; plot '-' with lines"
+# of course when the plot become complex it's worth writing a gnuplot command file
