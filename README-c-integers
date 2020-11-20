@@ -2,9 +2,5 @@ A C compiler defines an integer type  of number (int) this way:
 - An integer is a whole number — no fractions or decimal parts. 
 - On modern computers, integer values range from –2147483647 through 2147483647
 - On older, 16-bit computers, an integer ranges in value from –32768
-  through 32767
+  through 32767, while on newer computers the same range is for short int;
 - An unsigned short integer can have a value that ranges from 0 to 32767.
-
-
-
-
