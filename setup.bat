@@ -3,7 +3,7 @@ bash configure
 mingw32-make
 mingw32-make install
 mingw32-make clean
-mv plot*.* bin
+cp plot*.* bin
 PAUSE
 
 

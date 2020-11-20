@@ -3,7 +3,7 @@
 make
 make install
 make clean
-mv plot*.* bin
+cp plot*.* bin
 echo "installed in bin/ the following programs"
 ls -lhrt bin
 
