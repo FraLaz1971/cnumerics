@@ -5,6 +5,18 @@ then
         echo "detected Microsoft $OS $(uname)"
         . configure-win-mingw.sh > Makefile.mingw
 	cp Makefile.mingw Makefile
+	arch=$(uname -m)
+        if [[ $arch == i686 ]]
+        then
+                echo 'ex. config/configure-win-i686-mingw.sh > Makefile.mingw32'
+                . configure-win-i686-mingw.sh > Makefile.mingw32
+		cp Makefile.mingw32 Makefile
+        elif [[ $arch == x86_64 ]]
+        then
+                echo 'ex. config/configure-win-i686-mingw.sh > Makefile.mingw64'
+        else
+                echo "unhandled arch"
+        fi
 elif [[ $(uname) == "Linux" ]]
 then
         echo "detected GNU/linux $OS"
