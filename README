@@ -9,6 +9,7 @@ make
 # ./<program>
 # e.g.
 ./loopint 10 20
+# to install (mv all executable program files in the directory bin)
 # to remove generated files:
 make clean
 # trying different values
@@ -31,6 +32,6 @@ make clean
 cat data2x2.dat
 #
 ./doublevec 4
-# to save project into a compressed file for distribution
-make dist
+# to clean all generated files for saving only the source code in the project
+make distclean
 

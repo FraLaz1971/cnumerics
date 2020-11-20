@@ -38,6 +38,6 @@ done
 	echo 'clean:'
 	echo -e "\t"'rm -f $(OBJ) $(TARGETS)'
 	echo 'distclean: clean'
-        echo -e "\trm -f bin/* Makefile"
+        echo -e "\trm -f bin/* Makefile*"
 echo "generating dirs" >/dev/stderr
 if ! test -d bin; then mkdir  bin; fi

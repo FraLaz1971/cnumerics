@@ -3,7 +3,6 @@
 #include <limits.h>
 #include <float.h> 
 #include <math.h>
- 
 int main(void)
 {
     printf("The number of bits in a byte %d\n", CHAR_BIT);
@@ -47,7 +46,5 @@ int main(void)
     printf("LDBL_MAX_EXP     = %d\n",  LDBL_MAX_EXP);
     printf("LDBL_MAX_10_EXP  = %d\n",  LDBL_MAX_10_EXP);
     printf("LDBL_HAS_SUBNORM = %d\n",  LDBL_HAS_SUBNORM);
-
     return(0);
 }
-
