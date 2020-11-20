@@ -49,3 +49,9 @@ alias gp="gnuplot -p -e \"plot '-'\""
 ./1_div_cos -10 10 0.1   | gp
 ./1_div_sin -10 10 0.1   | gp
 ./1_div_cos -3 -0.01 0.1 | gp
+#you can define plotting with lines instead of points, this way
+alias gpl="gnuplot -p -e \"plot '-' with lines\""
+# so you can run this
+./hyperbola -50 50 1 | gpl
+# the following will create a file named hyperbola.png with the hyperbola graph
+./hyperbola -50 50 1 | gnuplot -p -e "set term png;set output 'hyperbola.png';set xlabel 'x'; set ylabel 'y'; set title 'Hyperbola:  x = 1/x'; plot '-' with lines"
