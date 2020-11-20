@@ -20,7 +20,9 @@ int main() {
 
    printf("The minimum value of LONG = %ld\n", LONG_MIN);
    printf("The maximum value of LONG = %ld\n", LONG_MAX);
-  
+   printf("Please press ENTER");
+   getchar();
    return(0);
 }
+
 

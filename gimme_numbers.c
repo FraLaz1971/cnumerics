@@ -7,10 +7,14 @@ int gimme_seven(int p1);
 int gimme_eight(int p1, int p2);
 
 int main(){
+	int c;
 	printf("%i\n", gimme_five() );
 	printf("%i\n", gimme_six() );
 	printf("%i\n", gimme_seven(4) );
 	printf("%i\n", gimme_eight(10, -330) );
+	printf("please, press ENTER");
+	c = getchar();
+	return 0;
 }
 
 

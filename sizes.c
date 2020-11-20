@@ -12,5 +12,7 @@ int main(){
 	printf("size of float is %ld BYTES \n", sizeof(f));
 	printf("size of double is %ld BYTES \n", sizeof(d));
 	printf("size of long double is %ld BYTES \n", sizeof(ld));
+        printf("Please press ENTER");
+        c = getchar();
 	return 0;
 }

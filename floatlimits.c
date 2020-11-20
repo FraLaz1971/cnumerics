@@ -5,6 +5,7 @@
 #include <math.h>
 int main(void)
 {
+    char c;
     printf("The number of bits in a byte %d\n", CHAR_BIT);
     printf("Size of float is %ld BYTES\n", sizeof(float)); 
     printf("Size of double is %ld BYTES\n", sizeof(double)); 
@@ -43,5 +44,7 @@ int main(void)
     printf("LDBL_MIN_10_EXP  = %d\n",  LDBL_MIN_10_EXP);
     printf("LDBL_MAX_EXP     = %d\n",  LDBL_MAX_EXP);
     printf("LDBL_MAX_10_EXP  = %d\n",  LDBL_MAX_10_EXP);
+    printf("Please press ENTER");
+    c = getchar();
     return(0);
 }

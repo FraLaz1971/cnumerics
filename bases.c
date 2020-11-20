@@ -3,11 +3,11 @@ thanks to Prata, S., 2004 'C Primer plus' */
 #include <stdio.h>
 int main(void)
 {
-	int x = 100;
+	int x = 100; char c;
 	printf("dec = %d; octal = %o; hex = %x\n", x, x, x);
 	printf("dec = %d; octal = %#o; hex = %#x\n", x, x, x);
 	printf("Please press ENTER");
-	getchar();
+	c = getchar();
 	return 0;
 }
 
