@@ -23,7 +23,6 @@ int main(void)
     printf("FLT_MAX_10_EXP  = %d\n",  FLT_MAX_10_EXP);
     printf("FLT_ROUNDS      = %d\n",  FLT_ROUNDS);
     printf("FLT_EVAL_METHOD = %d\n",  FLT_EVAL_METHOD);
-    printf("FLT_HAS_SUBNORM = %d\n",  FLT_HAS_SUBNORM);
     puts("");
     printf("DBL_MIN      = %e\n", DBL_MIN);
     printf("DBL_MAX      = %e\n", DBL_MAX);
@@ -34,7 +33,6 @@ int main(void)
     printf("DBL_MIN_10_EXP  = %d\n",  DBL_MIN_10_EXP);
     printf("DBL_MAX_EXP     = %d\n",  DBL_MAX_EXP);
     printf("DBL_MAX_10_EXP  = %d\n",  DBL_MAX_10_EXP);
-    printf("DBL_HAS_SUBNORM = %d\n",  DBL_HAS_SUBNORM);
     puts("");
     printf("LDBL_MIN      = %Le\n", LDBL_MIN);
     printf("LDBL_MAX      = %Le\n", LDBL_MAX);
@@ -45,6 +43,5 @@ int main(void)
     printf("LDBL_MIN_10_EXP  = %d\n",  LDBL_MIN_10_EXP);
     printf("LDBL_MAX_EXP     = %d\n",  LDBL_MAX_EXP);
     printf("LDBL_MAX_10_EXP  = %d\n",  LDBL_MAX_10_EXP);
-    printf("LDBL_HAS_SUBNORM = %d\n",  LDBL_HAS_SUBNORM);
     return(0);
 }
