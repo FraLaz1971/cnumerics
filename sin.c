@@ -3,7 +3,7 @@
 #include <math.h>
 int main(int argc, char **argv){
 	if (argc != 4){
-		puts("displays \"x, cos(x)\" please enter the interval limits");
+		puts("displays \"x, sin(x)\" please enter the interval limits");
 		printf("%s <lowerer_limit> <upper_limit> <step>\n", argv[0]);
 		return(1);
 	} else {
