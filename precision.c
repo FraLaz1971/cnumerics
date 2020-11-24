@@ -9,6 +9,9 @@ int main() {
    char c;
    float fx = 10.327;
    int fy = 28;
+   float x = 10.3274669;
+   double y = 4244.546234677169;
+   int z = 28;
    printf("The float value : %f\n", fx);
    printf("The sum of float and int variable : %f\n", (fx+fy));
 
@@ -16,9 +19,6 @@ int main() {
 	It is a 64-bit IEEE 754 double precision floating point number for the value. 
 	It has 15 decimal digits of precision.*/
 
-   float x = 10.3274669;
-   double y = 4244.546234677169;
-   int z = 28;
 
    printf("The float value : %f\n", x);
    printf("The double value : %4.11f\n", y);
