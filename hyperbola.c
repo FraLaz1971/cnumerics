@@ -4,7 +4,7 @@
 int main(int argc, char **argv){
 	if (argc != 4){
 		puts("displays \"x, 1/x\" please enter the interval limits");
-		printf("%s <lowerer_limit> <upper_limit> <step>\n", argv[0]);
+		printf("%s <lower_limit> <upper_limit> <step>\n", argv[0]);
 		return(1);
 	} else {
         double cur, lower, upper, step, val, fval; const char *txtl, *txtu, *txts;

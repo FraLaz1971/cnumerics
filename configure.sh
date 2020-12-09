@@ -1,11 +1,13 @@
 #/usr/bin/env bash
 echo "generating total makefile for $(uname) $OS ..." >/dev/stderr
-a=0;t=0;TARGETS=
+EEXT=""; OEXT=".o"; a=0;t=0;TARGETS=
 echo 'CC=gcc -g -O2'
 echo 'SRC = $(wildcard *.c)'
 echo "OBJ = *.o *.obj"
 echo 'CPPFLAGS = -Iinclude'
 echo 'LDFLAGS = -Llib -lm'
+echo 'EEXT='
+echo 'OEXT=.o'
 
 for t in $(ls -1 *.c)
 do

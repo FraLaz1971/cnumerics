@@ -3,8 +3,6 @@ chmod +x *.sh
 if   [[ "$OS" == "Windows_NT" ]]
 then
         echo "detected Microsoft $OS $(uname)"
-        . configure-win-mingw.sh > Makefile.mingw
-	cp Makefile.mingw Makefile
 	arch=$(uname -m)
         if [[ $arch == i686 ]]
         then
@@ -13,7 +11,9 @@ then
 		cp Makefile.mingw32 Makefile
         elif [[ $arch == x86_64 ]]
         then
-                echo 'ex. config/configure-win-i686-mingw.sh > Makefile.mingw64'
+                echo 'ex. config/configure-win-mingw.sh > Makefile.mingw64'
+	        . configure-win-mingw.sh > Makefile.mingw64
+		cp Makefile.mingw64 Makefile
         else
                 echo "unhandled arch"
         fi
