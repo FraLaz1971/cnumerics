@@ -6,12 +6,12 @@ then
 	arch=$(uname -m)
         if [[ $arch == i686 ]]
         then
-                echo 'ex. config/configure-win-i686-mingw.sh > Makefile.mingw32'
+                echo 'ex. configure-win-i686-mingw.sh > Makefile.mingw32'
                 . configure-win-i686-mingw.sh > Makefile.mingw32
 		cp Makefile.mingw32 Makefile
         elif [[ $arch == x86_64 ]]
         then
-                echo 'ex. config/configure-win-mingw.sh > Makefile.mingw64'
+                echo 'ex. configure-win-mingw.sh > Makefile.mingw64'
 	        . configure-win-mingw.sh > Makefile.mingw64
 		cp Makefile.mingw64 Makefile
         else
