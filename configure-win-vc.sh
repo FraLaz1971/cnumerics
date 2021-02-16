@@ -55,7 +55,7 @@ done
     echo -e '\t$(RM) $(OBJ)'
 	echo '.PHONY: clean'
 	echo 'clean:'
-	echo -e "\t"'$(RM) $(OBJ) $(RMTARGETS)'
+	echo -e "\t"'$(RM) $(OBJ) $(RMTARGETS) *.log'
 	echo 'distclean: clean'
     echo -e "\t"'cd bin && $(RM) *$(EEXT) && cd .. $(RM) Makefile*'
     echo "generating dirs" >/dev/stderr

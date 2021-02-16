@@ -58,3 +58,18 @@ alias gpl="gnuplot -p -e \"plot '-' with lines\""
 # the following will create a file named hyperbola.png with the hyperbola graph
 ./hyperbola -50 50 1 | gnuplot -p -e "set term png;set output 'hyperbola.png';set xlabel 'x'; set ylabel 'y'; set title 'Hyperbola:  x = 1/x'; plot '-' with lines"
 # of course when the plot become complex it's worth writing a gnuplot command file
+# pow.c raise to power math.h function usage example
+# parpow.c pow() usage example, x, y are give as program command line parameters
+make parpow
+./parpow 10 -2
+./parpow: compute x raised to y power
+usage: ./parpow <x> <y>
+
+# fpow.c reads <n> input data (x,y) couples from text file and outputs pow(x,y)
+make fpow
+./fpow invals1.txt 2>err.log
+cat err.log
+# rndicples.c --> generate couples of random integer values
+# that can be saved on a file and used as input for fpow
+./rndicples <<< "-5 12 6" > invals6.txt
+./fpow invals6.txt 2>err.log

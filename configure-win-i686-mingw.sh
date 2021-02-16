@@ -46,7 +46,7 @@ done
         echo -e '\tmv $(TARGETS) bin'
 	echo '.PHONY: clean'
 	echo 'clean:'
-	echo -e "\t"'rm -f $(OBJ) $(TARGETS)'
+	echo -e "\t"'rm -f $(OBJ) $(TARGETS) *.log'
 	echo 'distclean: clean'
         echo -e "\trm -f bin/* Makefile"
 echo "generating dirs" >/dev/stderr
