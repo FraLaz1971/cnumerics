@@ -86,10 +86,10 @@ int main(int argc, char **argv){
     Array2x2 a22, a22s1, a22s2; double e1_2x2[4];
     /* determinants for matrix, sol1, sol2*/
     double da2, d2s[2];
-    double v[2]; /*known terms array size=2 */
+    double v[2]; /* known terms array size=2 */
     /* data for the 3x3 equations system */
     Array3x3 a33; double e1_3x3[9];
-    double w[3]; /*known terms array size=3 */
+    double w[3]; /* known terms array size=3 */
     /* determinants for matrix, sol1, sol2, sol3*/
     double da3, d3s[3];
 
@@ -102,19 +102,37 @@ int main(int argc, char **argv){
     /* assign values to 2x2 matrix */
     e1_2x2[0]= 2;e1_2x2[1]=-1;
     e1_2x2[2]= 1;e1_2x2[3]= 3;  
+    /* assign values to known terms size=2 array */
+    v[0]=4;v[1]=9;
     /* show the array content on stderr */
     mret = set_Array2x2_data(&a22, (double *)&e1_2x2);
     fprintf(stderr,"%s: showing content of 2x2 array a22 \n",run.argv[0]);
     /* show the array determinant on stderr */
     mret = show_Array2x2(&a22);
+    mret = show_Array2x2_system(&a22, (double *)&v);
     da2 = detA2x2(&a22);
     fprintf(stderr,"%s: det(a22) is %g\n",run.argv[0], da2);
     if (da2 == 0 ){ 
         fprintf(stderr,"%s: the equation system (a2) (v) cannot be solved \n",run.argv[0]);
     } else{
-        fprintf(stderr,"%s: the value of x is %g\n",run.argv[0], d2s[0]);
-        fprintf(stderr,"%s: the value of y is %g\n",run.argv[0], d2s[1]);
+        //d2s1
+        a22s1.a=v[0];a22s1.b=a22.b;  
+        a22s1.c=v[1];a22s1.d=a22.d;
+        /* determinant of first unknown variable x */
+        d2s[0] = detA2x2(&a22s1);
+        estarline();
+        fprintf(stderr,"%s: det(a22s1) is %g\n",run.argv[0], d2s[0]);
+        
+        a22s2.a=a22.a;a22s2.b=v[0];
+        a22s2.c=a22.c;a22s2.d=v[1];
+        /* determinant of second unknown variable x */
+        d2s[1] = detA2x2(&a22s2);
+        fprintf(stderr,"%s: det(a22s2) is %g\n",run.argv[0], d2s[1]);
+        estarline();
+        fprintf(stderr,"%s: the value of x is %g\n",run.argv[0], d2s[0]/da2);
+        fprintf(stderr,"%s: the value of y is %g\n",run.argv[0], d2s[1]/da2);
     }
+    return 0;
     /* 3x3 array example */
     /* assign values to 3x3 matrix */
     e1_3x3[0]= 2;e1_3x3[1]= 1;e1_3x3[2]= 1;
@@ -228,6 +246,13 @@ int show_Array2x2(Array2x2 *a2x2){
     return 0;
 }
 
+int show_Array2x2_system(Array2x2 *a2x2, double *v){
+    estarline();
+    fprintf(stderr,"%s: %2g*x + %2g*y = %2g\n", run.argv[0], a2x2->a,a2x2->b, v[0]);    
+    fprintf(stderr,"%s: %2g*x + %2g*y = %2g\n", run.argv[0], a2x2->c,a2x2->d, v[1]);    
+    estarline();
+    return 0;
+}
 
 
 int dump_Array2x2(Array2x2 *a2x2){
@@ -258,5 +283,10 @@ int show_Array3x3(Array3x3 *a3x3){
     fprintf(stderr,"%s (%2g %2g %2g )\n",run.argv[0], a3x3->d_2, a3x3->e_2, a3x3->f_2);
     fprintf(stderr,"%s (%2g %2g %2g )\n",run.argv[0], a3x3->d_3, a3x3->e_3, a3x3->f_3);
     estarline();
+    return 0;
+}
+
+
+int show_Array3x3_system(Array3x3 *a3x3, double *w){
     return 0;
 }
