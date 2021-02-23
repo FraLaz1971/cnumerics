@@ -88,7 +88,7 @@ int main(int argc, char **argv){
     double da2, d2s[2];
     double v[2]; /* known terms array size=2 */
     /* data for the 3x3 equations system */
-    Array3x3 a33; double e1_3x3[9];
+    Array3x3 a33, a33s1, a33s2, a33s3; double e1_3x3[9];
     double w[3]; /* known terms array size=3 */
     /* determinants for matrix, sol1, sol2, sol3*/
     double da3, d3s[3];
@@ -104,8 +104,9 @@ int main(int argc, char **argv){
     e1_2x2[2]= 1;e1_2x2[3]= 3;  
     /* assign values to known terms size=2 array */
     v[0]=4;v[1]=9;
-    /* show the array content on stderr */
     mret = set_Array2x2_data(&a22, (double *)&e1_2x2);
+    #ifdef DEBUG
+    /* show the array content on stderr */
     fprintf(stderr,"%s: showing content of 2x2 array a22 \n",run.argv[0]);
     /* show the array determinant on stderr */
     mret = show_Array2x2(&a22);
@@ -115,29 +116,32 @@ int main(int argc, char **argv){
     if (da2 == 0 ){ 
         fprintf(stderr,"%s: the equation system (a2) (v) cannot be solved \n",run.argv[0]);
     } else{
-        //d2s1
+        /* create matrix of the first unknown variable */
         a22s1.a=v[0];a22s1.b=a22.b;  
         a22s1.c=v[1];a22s1.d=a22.d;
-        /* determinant of first unknown variable x */
+        /* compute and shows determinant of first unknown variable x */
         d2s[0] = detA2x2(&a22s1);
         estarline();
         fprintf(stderr,"%s: det(a22s1) is %g\n",run.argv[0], d2s[0]);
         
+        /* create matrix of the second unknown variable */
         a22s2.a=a22.a;a22s2.b=v[0];
         a22s2.c=a22.c;a22s2.d=v[1];
-        /* determinant of second unknown variable x */
+        /* compute and shows determinant of second unknown variable y */
         d2s[1] = detA2x2(&a22s2);
         fprintf(stderr,"%s: det(a22s2) is %g\n",run.argv[0], d2s[1]);
         estarline();
         fprintf(stderr,"%s: the value of x is %g\n",run.argv[0], d2s[0]/da2);
         fprintf(stderr,"%s: the value of y is %g\n",run.argv[0], d2s[1]/da2);
     }
-    return 0;
+    #endif
     /* 3x3 array example */
     /* assign values to 3x3 matrix */
     e1_3x3[0]= 2;e1_3x3[1]= 1;e1_3x3[2]= 1;
     e1_3x3[3]= 4;e1_3x3[4]=-1;e1_3x3[5]= 1;
     e1_3x3[6]=-1;e1_3x3[7]= 1;e1_3x3[8]= 2;
+    /* assign values to known terms size=3 array */
+    w[0]=1; w[1]=-5; w[2]=5;
 
     mret = set_Array3x3_data(&a33, (double *)&e1_3x3);
     /* show the array content on stderr */
@@ -148,9 +152,36 @@ int main(int argc, char **argv){
     if (da3 == 0 ){ 
         fprintf(stderr,"%s: the equation system (a3) (w) cannot be solved \n",run.argv[0]);
     } else{
-        fprintf(stderr,"%s: the value of a is %g\n",run.argv[0], d3s[0]);
-        fprintf(stderr,"%s: the value of b is %g\n",run.argv[0], d3s[1]);
-        fprintf(stderr,"%s: the value of c is %g\n",run.argv[0], d3s[2]);
+            //Array3x3 a33, a33s1, a33s2, a33s3; double e1_3x3[9];
+        /* create matrix of the first unknown variable */
+        a33s1.d_1=w[0];a33s1.e_1=a33.e_1;a33s1.f_1=a33.f_1;  
+        a33s1.d_2=w[1];a33s1.e_2=a33.e_2;a33s1.f_2=a33.f_2;  
+        a33s1.d_3=w[2];a33s1.e_3=a33.e_3;a33s1.f_3=a33.f_3;  
+        /* create matrix of the second unknown variable */
+        a33s2.d_1=a33.d_1;a33s2.e_1=w[0];a33s2.f_1=a33.f_1;  
+        a33s2.d_2=a33.d_2;a33s2.e_2=w[1];a33s2.f_2=a33.f_2;  
+        a33s2.d_3=a33.d_3;a33s2.e_3=w[2];a33s2.f_3=a33.f_3;  
+        /* create matrix of the third unknown variable */
+        a33s3.d_1=a33.d_1;a33s3.e_1=a33.e_1;a33s3.f_1=w[0];  
+        a33s3.d_2=a33.d_2;a33s3.e_2=a33.e_2;a33s3.f_2=w[1];  
+        a33s3.d_3=a33.d_3;a33s3.e_3=a33.e_3;a33s3.f_3=w[2];  
+        /* compute and shows determinant of first unknown variable a */
+        d3s[0] = detA3x3(&a33s1);
+        estarline();
+        fprintf(stderr,"%s: det(a33s1) is %g\n",run.argv[0], d3s[0]);
+        /* compute and shows determinant of second unknown variable b */
+        d3s[1] = detA3x3(&a33s2);
+        estarline();
+        fprintf(stderr,"%s: det(a33s2) is %g\n",run.argv[0], d3s[1]);
+        /* compute and shows determinant of first unknown variable c */
+        d3s[2] = detA3x3(&a33s3);
+        estarline();
+        fprintf(stderr,"%s: det(a33s3) is %g\n",run.argv[0], d3s[2]);
+        estarline();
+
+        fprintf(stderr,"%s: the value of a is %g\n",run.argv[0], d3s[0]/da3);
+        fprintf(stderr,"%s: the value of b is %g\n",run.argv[0], d3s[1]/da3);
+        fprintf(stderr,"%s: the value of c is %g\n",run.argv[0], d3s[2]/da3);
     }
 
     /* compute the equation system */
