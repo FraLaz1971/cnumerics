@@ -13,6 +13,7 @@ int main(){
         float A,B,C,Discr; int ret;
         printf("Computing solutions for\n");
         printf("Equation A * X^2 + B * X + C\n");
+        printf("numerical accuracy: 10^-6 (6 digits)\n");
 do {
         printf("Enter the coefficients A B and C:\n");
         printf("(with A not eq. to 0) :");

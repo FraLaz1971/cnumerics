@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <math.h>
-    /* x^2 + y^2 + a*x + b*y + c = 0 
-     * a+2b+c=−5 --> a+2*b+b+1 = -5 --> a+3b=-4 -->a=1-3*b --> 1 = 1-b--> b=0 
-     * b−c=−1    --> c=b+1  --> c=1
-     * a−b−c=2​   --> a-b-b-1=2 --> a-2*b=1 -->2*b = a+1 --> a=-1
-     */
+#include <math.h>
+/* 
+ * x^2 + y^2 + a*x + b*y + c = 0 
+ Circle of centre C(X_0, Y_0) and radius r
+(X - X_0)^2 + (Y - Y_0)^2 = r^2
+a = -2x_0 ---> x_0 = -a/2
+b = -2y_0 ---> y_0 = -b/2
+c = X_0^2  + y_0^2 -r^2 ---> r^2 = X_0^2  + y_0^2 - c --> r = sqrt(X_0^2  + y_0^2 - c) 
+*/
 
 /* global variables */
 
@@ -20,10 +23,19 @@ struct Array3x3 {
     double d_3, e_3, f_3; 
 } a3x3;  
 
+typedef struct Array2x2 Array2x2;
+typedef struct Array3x3 Array3x3;
+
 struct Circle {
+    /* points on the circle */
     double x1, y1; 
     double x2, y2; 
     double x3, y3; 
+    double w[3]; /* known terms array, size=3 */
+    /* arrays to support the computation */
+    Array3x3 a33, a33s1, a33s2, a33s3; 
+    /* determinants and solution array */
+    double da3, d3s[3];
     double a, b, c;    
     double radius;
     double x_c,y_c; /* centre coordinates */
@@ -37,14 +49,22 @@ struct Run {
 
 typedef struct Circle Circle;
 typedef struct Run Run;
-typedef struct Array2x2 Array2x2;
-typedef struct Array3x3 Array3x3;
 
 int read_input(char ** margv, Circle *circ);
 int show_system(char ** margv, Circle *circ);
 int show_matrix(char ** margv, Circle *circ);
 int set_run_par(int margc, char ** margv);
+int set_circle_arrays(Circle *circ);
 void estarline(void);
+/* 
+Circle of centre C(X_0, Y_0) and radius r
+x^2 + y^2 + a*x + b*y + c = 0 
+(x - x_0)^2 + (y - y_0)^2 = r^2
+x_0 = -a/2
+y_0 = -b/2
+r = sqrt(x_0^2  + y_0^2 - c) 
+*/
+int show_solution();
 int dump_circle(int npts);
 /* functions related to 2x2 arrays */
 
@@ -61,7 +81,7 @@ int dump_Array2x2(Array2x2 *a2x2);
  saves the solution as sol[0], sol[1] */
 int get_2x2_solution(Array2x2 *a2x2, double *v, double *sol);
 /* functions related to 3x3 arrays */
-/* set the values in data to the Array fields*/
+/* set the values in data to the Array fields */
 int set_Array3x3_data(Array3x3 *a3x3, double *data);
 double detA3x3(Array3x3 *a3x3);
 int show_Array3x3(Array3x3 *a3x3);
@@ -94,6 +114,7 @@ int main(int argc, char **argv){
     double da3, d3s[3];
 
     /* computing steps */
+    /* set the input parameters of current run */
     set_run_par(argc, argv);
     mret = read_input(argv, &mycirc);
     mret = show_system(argv, &mycirc);
@@ -134,7 +155,6 @@ int main(int argc, char **argv){
         fprintf(stderr,"%s: the value of x is %g\n",run.argv[0], d2s[0]/da2);
         fprintf(stderr,"%s: the value of y is %g\n",run.argv[0], d2s[1]/da2);
     }
-    #endif
     /* 3x3 array example */
     /* assign values to 3x3 matrix */
     e1_3x3[0]= 2;e1_3x3[1]= 1;e1_3x3[2]= 1;
@@ -183,7 +203,8 @@ int main(int argc, char **argv){
         fprintf(stderr,"%s: the value of b is %g\n",run.argv[0], d3s[1]/da3);
         fprintf(stderr,"%s: the value of c is %g\n",run.argv[0], d3s[2]/da3);
     }
-
+    #endif
+    set_circle_arrays(&mycirc);
     /* compute the equation system */
     // e1 = x1*x1+y1*y1
     return 0;
@@ -201,6 +222,10 @@ int read_input(char ** margv, Circle *circ){
     fprintf(stderr, "%s: please, enter third point  P3: x3 y3 separated by space:\n", margv[0]);
     ret = scanf("%lf %lf", &circ->x3, &circ->y3);
     fprintf(stderr,"%s: you entered P3(%g,%g)\n", margv[0], circ->x3, circ->y3);
+    /*assign computed values */
+    circ->w[0]=-1*(circ->x1*circ->x1+circ->y1*circ->y1);
+    circ->w[1]=-1*(circ->x2*circ->x2+circ->y2*circ->y2);
+    circ->w[2]=-1*(circ->x3*circ->x3+circ->y3*circ->y3);
     estarline();
     /* compute the equation system */
     // e1 = x1*x1+y1*y1
@@ -321,3 +346,71 @@ int show_Array3x3(Array3x3 *a3x3){
 int show_Array3x3_system(Array3x3 *a3x3, double *w){
     return 0;
 }
+
+int set_circle_arrays(Circle *circ){
+   /* assign values to 3x3 matrix */
+    double e1_3x3[9]; double w[3]; int mret;
+    e1_3x3[0]=circ->x1;e1_3x3[1]=circ->y1;e1_3x3[2]=1;
+    e1_3x3[3]=circ->x2;e1_3x3[4]=circ->y2;e1_3x3[5]=1;
+    e1_3x3[6]=circ->x3;e1_3x3[7]=circ->y3;e1_3x3[8]=1;
+    /* assign values to known terms size=3 array */
+    
+    w[0]=circ->w[0]; w[1]=circ->w[1]; w[2]=circ->w[2];
+
+    mret = set_Array3x3_data(&circ->a33, (double *)&e1_3x3);
+    /* show the array content on stderr */
+    fprintf(stderr,"%s:set_circle_arrays() showing content of 3x3 array a33 \n",run.argv[0]);
+    mret = show_Array3x3(&circ->a33);
+    circ->da3 = detA3x3(&circ->a33);
+    fprintf(stderr,"%s:set_circle_arrays() det(a33) is %g\n",run.argv[0], circ->da3);
+    if (circ->da3 == 0 ){ 
+        fprintf(stderr,"%s:set_circle_arrays() the equation system (a3) (w) cannot be solved \n",run.argv[0]);
+    } else{
+            //Array3x3 a33, a33s1, a33s2, a33s3; double e1_3x3[9];
+        /* create matrix of the first unknown variable */
+        circ->a33s1.d_1=circ->w[0];circ->a33s1.e_1=circ->a33.e_1;circ->a33s1.f_1=circ->a33.f_1;  
+        circ->a33s1.d_2=circ->w[1];circ->a33s1.e_2=circ->a33.e_2;circ->a33s1.f_2=circ->a33.f_2;  
+        circ->a33s1.d_3=circ->w[2];circ->a33s1.e_3=circ->a33.e_3;circ->a33s1.f_3=circ->a33.f_3;  
+        /* create matrix of the second unknown variable */
+        circ->a33s2.d_1=circ->a33.d_1;circ->a33s2.e_1=circ->w[0];circ->a33s2.f_1=circ->a33.f_1;  
+        circ->a33s2.d_2=circ->a33.d_2;circ->a33s2.e_2=circ->w[1];circ->a33s2.f_2=circ->a33.f_2;  
+        circ->a33s2.d_3=circ->a33.d_3;circ->a33s2.e_3=circ->w[2];circ->a33s2.f_3=circ->a33.f_3;  
+        /* create matrix of the third unknown variable */
+        circ->a33s3.d_1=circ->a33.d_1;circ->a33s3.e_1=circ->a33.e_1;circ->a33s3.f_1=circ->w[0];  
+        circ->a33s3.d_2=circ->a33.d_2;circ->a33s3.e_2=circ->a33.e_2;circ->a33s3.f_2=circ->w[1];  
+        circ->a33s3.d_3=circ->a33.d_3;circ->a33s3.e_3=circ->a33.e_3;circ->a33s3.f_3=circ->w[2];  
+        /* compute and shows determinant of first unknown variable a */
+        circ->d3s[0] = detA3x3((Array3x3*)&circ->a33s1);
+        estarline();
+        fprintf(stderr,"%s:set_circle_arrays() det(circ->a33s1) is %g\n",run.argv[0], circ->d3s[0]);
+        /* compute and shows determinant of second unknown variable b */
+        circ->d3s[1] = detA3x3((Array3x3*)&circ->a33s2);
+        estarline();
+        fprintf(stderr,"%s:set_circle_arrays() det(circ->a33s2) is %g\n",run.argv[0], circ->d3s[1]);
+        /* compute and shows determinant of first unknown variable c */
+        circ->d3s[2] = detA3x3((Array3x3*)&circ->a33s3);
+        estarline();
+        fprintf(stderr,"%s:set_circle_arrays() det(circ->a33s3) is %g\n",run.argv[0], circ->d3s[2]);
+        estarline();
+        circ->a=circ->d3s[0]/circ->da3;
+        circ->b=circ->d3s[1]/circ->da3;
+        circ->c=circ->d3s[2]/circ->da3;
+        fprintf(stderr,"%s:set_circle_arrays() the value of a is %g\n",run.argv[0], circ->a);
+        fprintf(stderr,"%s:set_circle_arrays() the value of b is %g\n",run.argv[0], circ->b);
+        fprintf(stderr,"%s:set_circle_arrays() the value of c is %g\n",run.argv[0], circ->c);
+        circ->x_c=circ->a/-2;circ->y_c=circ->b/-2; /* centre coordinates */
+        fprintf(stderr,"%s:set_circle_arrays() the centre is (%g,%g)\n",run.argv[0], circ->x_c, circ->y_c);
+        circ->radius = sqrt(circ->x_c*circ->x_c  + circ->y_c*circ->y_c - circ->c); /*radius*/
+        fprintf(stderr,"%s:set_circle_arrays() the radius r is %g\n",run.argv[0], circ->radius);
+        estarline();
+    }
+     return 0;
+}
+/* 
+ * x^2 + y^2 + a*x + b*y + c = 0 
+ Circle of centre C(x_0, y_0) and radius r
+(x - x_0)^2 + (y - y_0)^2 = r^2
+a = -2x_0 ---> x_0 = -a/2
+b = -2y_0 ---> y_0 = -b/2
+c = x_0^2  + y_0^2 -r^2 ---> r^2 = x_0^2  + y_0^2 - c --> r = sqrt(x_0^2  + y_0^2 - c) 
+*/
