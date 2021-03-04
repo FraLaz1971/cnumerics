@@ -11,6 +11,10 @@
 
 int main(){
         float A,B,C,Discr; int ret;
+        printf("****************************\n");
+        printf("** program solvequad.c\n");
+        printf("** solve quadratic equation\n");
+        printf("****************************\n");
         printf("Computing solutions for\n");
         printf("Equation A * X^2 + B * X + C\n");
         printf("numerical accuracy: 10^-6 (6 digits)\n");
@@ -21,7 +25,7 @@ do {
 /* if A > 0 continue */
         if (sqrt((A - 0)*(A - 0)) >= 0.000001) break;
         printf("Illegal value for coeff. A\n");
-        printf("A = %2.9g\n", A - 0);
+        printf("A = %2.9g\n", sqrt((A - 0)*(A - 0)) );
 } while (sqrt((A - 0)*(A - 0)) < 0.0000001);  
 /* request input until A is > 0 */
 	    
@@ -33,11 +37,11 @@ do {
 * Check the discriminant and calculate its roots.
 */
     Discr = pow(B,2) - 4.*A*C;
-	printf("Discriminant (= B^2 - 4.*A*C) is %g\n", Discr);
+	printf("Discriminant (= B^2 - 4*A*C) is %g\n", Discr);
 	if ( Discr  <  0) {
 		printf("This equation has complex roots:\n");
-		printf("X_1 = %g +i *%g\n", -B/(2.*A), sqrt(abs(Discr))/(2.*A) );
-		printf("X_2 = %g -i *%g\n", -B/(2.*A), sqrt(abs(Discr))/(2.*A) );
+		printf("X_1 = %g+i*%g\n", -B/(2.*A), sqrt(abs(Discr))/(2.*A) );
+		printf("X_2 = %g-i*%g\n", -B/(2.*A), sqrt(abs(Discr))/(2.*A) );
     } else if ( sqrt((pow(B,2) - 4.*A*C - 0)*(pow(B,2) - 4.*A*C - 0)) < 0.0000001) {
             printf("Equation with single repeated real root:\n");
             printf("X_1 = X_2 =  %g\n", -B/(2.*A) );
