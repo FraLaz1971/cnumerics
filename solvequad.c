@@ -17,7 +17,7 @@ int main(){
         printf("** solve quadratic equation\n");
         printf("****************************\n");
         printf("Computing solutions for\n");
-        printf("Equation A * X^2 + B * X + C\n");
+        printf("Equation A * X^2 + B * X + C = 0\n");
         printf("numerical accuracy: 10^-6 (6 digits)\n");
 do {
         printf("Enter the coefficients A B and C:\n");
