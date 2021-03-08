@@ -2,7 +2,10 @@
 int main()
 {
 /*   THIS PROGRAM READS 10 NUMBERS FROM STDIN 
- *   AND PRINTS THEIR SUM */
+ *   AND PRINTS THEIR SUM c language implementation 
+ *   of exercise 3.y from Ellis,1982
+ * "A structured approach to FORTRAN 77 programming"
+ */
     float X[10], RSUM;
     int I,NMAX, ret;
     NMAX=10; RSUM=0;
