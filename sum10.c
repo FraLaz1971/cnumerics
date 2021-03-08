@@ -1,27 +1,27 @@
 #include <stdio.h>
 int main()
 {
-/*   THIS PROGRAM READS 10 NUMBERS FROM STDIN 
- *   AND PRINTS THEIR SUM c language implementation 
+/*   THiS PROGRAM READS 10 NUMBERS FROM STDiN 
+ *   AND PRiNTS THEiR SUM c language implementation 
  *   of exercise 3.y from Ellis,1982
  * "A structured approach to FORTRAN 77 programming"
  */
-    float X[10], RSUM;
-    int I,NMAX, ret;
-    NMAX=10; RSUM=0;
-    printf("please, enter %d numbers\n",NMAX);
+    float x[10], rsum;
+    int i,nmax, ret;
+    nmax=10; rsum=0;
+    printf("please, enter %d numbers\n",nmax);
     printf("press enter after each of them\n");
-    for (I=0; I<NMAX; I++)
+    for (i=0; i<nmax; i++)
     {
-        ret = scanf("%f",&X[I]);
-        printf( "number %d  value %g\n",I,X[I]);
+        ret = scanf("%f",&x[i]);
+        printf( "number %d  value %g\n",i,x[i]);
     }
 
-    for (I=0; I<NMAX; I++)
+    for (i=0; i<nmax; i++)
     {
-        RSUM = X [I] + RSUM;
+        rsum = x[i] + rsum;
     }
-    printf("The sum is %g\n", RSUM);
+    printf("The sum is %g\n", rsum);
     return 0;
 }        
 /* ./test23 <data/sum10.dat */
