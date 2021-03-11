@@ -7,61 +7,70 @@ EEXT=
 OEXT=.o
 TARGET0 = 1_div_cos
 TARGET1 = 1_div_sin
-TARGET2 = accuracy
-TARGET3 = arrays2
-TARGET4 = arrays
-TARGET5 = bases
-TARGET6 = bignum
-TARGET7 = blowup
-TARGET8 = checkprimenoret
-TARGET9 = checkprimeret
-TARGET10 = checkprimevoid
-TARGET11 = conbinatorics
-TARGET12 = const
-TARGET13 = cosin
-TARGET14 = couples
-TARGET15 = decodd
-TARGET16 = dices
-TARGET17 = doublerow
-TARGET18 = doublevec
-TARGET19 = e_what
-TARGET20 = floatformats
-TARGET21 = floatlimits
-TARGET22 = fpow
-TARGET23 = gimme_five
-TARGET24 = gimme_numbers
-TARGET25 = gravity
-TARGET26 = hyperbola
-TARGET27 = incodd
-TARGET28 = intlimits
-TARGET29 = lights2
-TARGET30 = limits
-TARGET31 = loopbyte
-TARGET32 = loopint
-TARGET33 = parabola
-TARGET34 = parpow
-TARGET35 = pi
-TARGET36 = pow
-TARGET37 = precision
-TARGET38 = predecodd
-TARGET39 = preincodd
-TARGET40 = printval
-TARGET41 = printwidth
-TARGET42 = random1
-TARGET43 = random2
-TARGET44 = realarrays
-TARGET45 = rndicples
-TARGET46 = rndrcples
-TARGET47 = shares
-TARGET48 = simpshares
-TARGET49 = sin
-TARGET50 = sizes
-TARGET51 = taxes
-TARGET52 = test_limits
-TARGET53 = toobig
-TARGET54 = ugravity
-TARGET55 = voidprint5
-TARGETS = voidprint5 ugravity toobig test_limits taxes sizes sin simpshares shares rndrcples rndicples realarrays random2 random1 printwidth printval preincodd predecodd precision pow pi parpow parabola loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five fpow floatlimits floatformats e_what doublevec doublerow dices decodd couples cosin const conbinatorics checkprimevoid checkprimeret checkprimenoret blowup bignum bases arrays arrays2 accuracy 1_div_sin 1_div_cos
+TARGET2 = 3pcircle
+TARGET3 = accuracy
+TARGET4 = arrays2
+TARGET5 = arrays
+TARGET6 = bases
+TARGET7 = bignum
+TARGET8 = blowup
+TARGET9 = c2f
+TARGET10 = checkprimenoret
+TARGET11 = checkprimeret
+TARGET12 = checkprimevoid
+TARGET13 = conbinatorics
+TARGET14 = const
+TARGET15 = cosin
+TARGET16 = couples
+TARGET17 = decodd
+TARGET18 = deg2rad
+TARGET19 = dices
+TARGET20 = doublerow
+TARGET21 = doublevec
+TARGET22 = e_what
+TARGET23 = f2c
+TARGET24 = floatformats
+TARGET25 = floatlimits
+TARGET26 = fpow
+TARGET27 = gimme_five
+TARGET28 = gimme_numbers
+TARGET29 = gravity
+TARGET30 = hyperbola
+TARGET31 = incodd
+TARGET32 = intlimits
+TARGET33 = lights2
+TARGET34 = limits
+TARGET35 = loopbyte
+TARGET36 = loopint
+TARGET37 = parabola
+TARGET38 = parpow
+TARGET39 = pi
+TARGET40 = pow
+TARGET41 = precision
+TARGET42 = predecodd
+TARGET43 = preincodd
+TARGET44 = printval
+TARGET45 = printwidth
+TARGET46 = random1
+TARGET47 = random2
+TARGET48 = realarrays
+TARGET49 = rndicples
+TARGET50 = rndrcples
+TARGET51 = shares
+TARGET52 = simpshares
+TARGET53 = sin
+TARGET54 = sizes
+TARGET55 = solvequad
+TARGET56 = statsn
+TARGET57 = sum10
+TARGET58 = sum4co
+TARGET59 = sumn
+TARGET60 = taxes
+TARGET61 = test_limits
+TARGET62 = toobig
+TARGET63 = ugravity
+TARGET64 = voidprint5
+TARGETS = voidprint5 ugravity toobig test_limits taxes sumn sum4co sum10 statsn solvequad sizes sin simpshares shares rndrcples rndicples realarrays random2 random1 printwidth printval preincodd predecodd precision pow pi parpow parabola loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five fpow floatlimits floatformats f2c e_what doublevec doublerow dices deg2rad decodd couples cosin const conbinatorics checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases arrays arrays2 accuracy 3pcircle 1_div_sin 1_div_cos
 all: $(TARGETS)
 $(TARGET0).o: 1_div_cos.c
 	$(CC) -c   $< -o 1_div_cos.o $(CPPFLAGS)
@@ -71,221 +80,257 @@ $(TARGET1).o: 1_div_sin.c
 	$(CC) -c   $< -o 1_div_sin.o $(CPPFLAGS)
 $(TARGET1): 1_div_sin.o
 	$(CC) -o 1_div_sin $< $(LDFLAGS)
-$(TARGET2).o: accuracy.c
+$(TARGET2).o: 3pcircle.c
+	$(CC) -c   $< -o 3pcircle.o $(CPPFLAGS)
+$(TARGET2): 3pcircle.o
+	$(CC) -o 3pcircle $< $(LDFLAGS)
+$(TARGET3).o: accuracy.c
 	$(CC) -c   $< -o accuracy.o $(CPPFLAGS)
-$(TARGET2): accuracy.o
+$(TARGET3): accuracy.o
 	$(CC) -o accuracy $< $(LDFLAGS)
-$(TARGET3).o: arrays2.c
+$(TARGET4).o: arrays2.c
 	$(CC) -c   $< -o arrays2.o $(CPPFLAGS)
-$(TARGET3): arrays2.o
+$(TARGET4): arrays2.o
 	$(CC) -o arrays2 $< $(LDFLAGS)
-$(TARGET4).o: arrays.c
+$(TARGET5).o: arrays.c
 	$(CC) -c   $< -o arrays.o $(CPPFLAGS)
-$(TARGET4): arrays.o
+$(TARGET5): arrays.o
 	$(CC) -o arrays $< $(LDFLAGS)
-$(TARGET5).o: bases.c
+$(TARGET6).o: bases.c
 	$(CC) -c   $< -o bases.o $(CPPFLAGS)
-$(TARGET5): bases.o
+$(TARGET6): bases.o
 	$(CC) -o bases $< $(LDFLAGS)
-$(TARGET6).o: bignum.c
+$(TARGET7).o: bignum.c
 	$(CC) -c   $< -o bignum.o $(CPPFLAGS)
-$(TARGET6): bignum.o
+$(TARGET7): bignum.o
 	$(CC) -o bignum $< $(LDFLAGS)
-$(TARGET7).o: blowup.c
+$(TARGET8).o: blowup.c
 	$(CC) -c   $< -o blowup.o $(CPPFLAGS)
-$(TARGET7): blowup.o
+$(TARGET8): blowup.o
 	$(CC) -o blowup $< $(LDFLAGS)
-$(TARGET8).o: checkprimenoret.c
+$(TARGET9).o: c2f.c
+	$(CC) -c   $< -o c2f.o $(CPPFLAGS)
+$(TARGET9): c2f.o
+	$(CC) -o c2f $< $(LDFLAGS)
+$(TARGET10).o: checkprimenoret.c
 	$(CC) -c   $< -o checkprimenoret.o $(CPPFLAGS)
-$(TARGET8): checkprimenoret.o
+$(TARGET10): checkprimenoret.o
 	$(CC) -o checkprimenoret $< $(LDFLAGS)
-$(TARGET9).o: checkprimeret.c
+$(TARGET11).o: checkprimeret.c
 	$(CC) -c   $< -o checkprimeret.o $(CPPFLAGS)
-$(TARGET9): checkprimeret.o
+$(TARGET11): checkprimeret.o
 	$(CC) -o checkprimeret $< $(LDFLAGS)
-$(TARGET10).o: checkprimevoid.c
+$(TARGET12).o: checkprimevoid.c
 	$(CC) -c   $< -o checkprimevoid.o $(CPPFLAGS)
-$(TARGET10): checkprimevoid.o
+$(TARGET12): checkprimevoid.o
 	$(CC) -o checkprimevoid $< $(LDFLAGS)
-$(TARGET11).o: conbinatorics.c
+$(TARGET13).o: conbinatorics.c
 	$(CC) -c   $< -o conbinatorics.o $(CPPFLAGS)
-$(TARGET11): conbinatorics.o
+$(TARGET13): conbinatorics.o
 	$(CC) -o conbinatorics $< $(LDFLAGS)
-$(TARGET12).o: const.c
+$(TARGET14).o: const.c
 	$(CC) -c   $< -o const.o $(CPPFLAGS)
-$(TARGET12): const.o
+$(TARGET14): const.o
 	$(CC) -o const $< $(LDFLAGS)
-$(TARGET13).o: cosin.c
+$(TARGET15).o: cosin.c
 	$(CC) -c   $< -o cosin.o $(CPPFLAGS)
-$(TARGET13): cosin.o
+$(TARGET15): cosin.o
 	$(CC) -o cosin $< $(LDFLAGS)
-$(TARGET14).o: couples.c
+$(TARGET16).o: couples.c
 	$(CC) -c   $< -o couples.o $(CPPFLAGS)
-$(TARGET14): couples.o
+$(TARGET16): couples.o
 	$(CC) -o couples $< $(LDFLAGS)
-$(TARGET15).o: decodd.c
+$(TARGET17).o: decodd.c
 	$(CC) -c   $< -o decodd.o $(CPPFLAGS)
-$(TARGET15): decodd.o
+$(TARGET17): decodd.o
 	$(CC) -o decodd $< $(LDFLAGS)
-$(TARGET16).o: dices.c
+$(TARGET18).o: deg2rad.c
+	$(CC) -c   $< -o deg2rad.o $(CPPFLAGS)
+$(TARGET18): deg2rad.o
+	$(CC) -o deg2rad $< $(LDFLAGS)
+$(TARGET19).o: dices.c
 	$(CC) -c   $< -o dices.o $(CPPFLAGS)
-$(TARGET16): dices.o
+$(TARGET19): dices.o
 	$(CC) -o dices $< $(LDFLAGS)
-$(TARGET17).o: doublerow.c
+$(TARGET20).o: doublerow.c
 	$(CC) -c   $< -o doublerow.o $(CPPFLAGS)
-$(TARGET17): doublerow.o
+$(TARGET20): doublerow.o
 	$(CC) -o doublerow $< $(LDFLAGS)
-$(TARGET18).o: doublevec.c
+$(TARGET21).o: doublevec.c
 	$(CC) -c   $< -o doublevec.o $(CPPFLAGS)
-$(TARGET18): doublevec.o
+$(TARGET21): doublevec.o
 	$(CC) -o doublevec $< $(LDFLAGS)
-$(TARGET19).o: e_what.c
+$(TARGET22).o: e_what.c
 	$(CC) -c   $< -o e_what.o $(CPPFLAGS)
-$(TARGET19): e_what.o
+$(TARGET22): e_what.o
 	$(CC) -o e_what $< $(LDFLAGS)
-$(TARGET20).o: floatformats.c
+$(TARGET23).o: f2c.c
+	$(CC) -c   $< -o f2c.o $(CPPFLAGS)
+$(TARGET23): f2c.o
+	$(CC) -o f2c $< $(LDFLAGS)
+$(TARGET24).o: floatformats.c
 	$(CC) -c   $< -o floatformats.o $(CPPFLAGS)
-$(TARGET20): floatformats.o
+$(TARGET24): floatformats.o
 	$(CC) -o floatformats $< $(LDFLAGS)
-$(TARGET21).o: floatlimits.c
+$(TARGET25).o: floatlimits.c
 	$(CC) -c   $< -o floatlimits.o $(CPPFLAGS)
-$(TARGET21): floatlimits.o
+$(TARGET25): floatlimits.o
 	$(CC) -o floatlimits $< $(LDFLAGS)
-$(TARGET22).o: fpow.c
+$(TARGET26).o: fpow.c
 	$(CC) -c   $< -o fpow.o $(CPPFLAGS)
-$(TARGET22): fpow.o
+$(TARGET26): fpow.o
 	$(CC) -o fpow $< $(LDFLAGS)
-$(TARGET23).o: gimme_five.c
+$(TARGET27).o: gimme_five.c
 	$(CC) -c   $< -o gimme_five.o $(CPPFLAGS)
-$(TARGET23): gimme_five.o
+$(TARGET27): gimme_five.o
 	$(CC) -o gimme_five $< $(LDFLAGS)
-$(TARGET24).o: gimme_numbers.c
+$(TARGET28).o: gimme_numbers.c
 	$(CC) -c   $< -o gimme_numbers.o $(CPPFLAGS)
-$(TARGET24): gimme_numbers.o
+$(TARGET28): gimme_numbers.o
 	$(CC) -o gimme_numbers $< $(LDFLAGS)
-$(TARGET25).o: gravity.c
+$(TARGET29).o: gravity.c
 	$(CC) -c   $< -o gravity.o $(CPPFLAGS)
-$(TARGET25): gravity.o
+$(TARGET29): gravity.o
 	$(CC) -o gravity $< $(LDFLAGS)
-$(TARGET26).o: hyperbola.c
+$(TARGET30).o: hyperbola.c
 	$(CC) -c   $< -o hyperbola.o $(CPPFLAGS)
-$(TARGET26): hyperbola.o
+$(TARGET30): hyperbola.o
 	$(CC) -o hyperbola $< $(LDFLAGS)
-$(TARGET27).o: incodd.c
+$(TARGET31).o: incodd.c
 	$(CC) -c   $< -o incodd.o $(CPPFLAGS)
-$(TARGET27): incodd.o
+$(TARGET31): incodd.o
 	$(CC) -o incodd $< $(LDFLAGS)
-$(TARGET28).o: intlimits.c
+$(TARGET32).o: intlimits.c
 	$(CC) -c   $< -o intlimits.o $(CPPFLAGS)
-$(TARGET28): intlimits.o
+$(TARGET32): intlimits.o
 	$(CC) -o intlimits $< $(LDFLAGS)
-$(TARGET29).o: lights2.c
+$(TARGET33).o: lights2.c
 	$(CC) -c   $< -o lights2.o $(CPPFLAGS)
-$(TARGET29): lights2.o
+$(TARGET33): lights2.o
 	$(CC) -o lights2 $< $(LDFLAGS)
-$(TARGET30).o: limits.c
+$(TARGET34).o: limits.c
 	$(CC) -c   $< -o limits.o $(CPPFLAGS)
-$(TARGET30): limits.o
+$(TARGET34): limits.o
 	$(CC) -o limits $< $(LDFLAGS)
-$(TARGET31).o: loopbyte.c
+$(TARGET35).o: loopbyte.c
 	$(CC) -c   $< -o loopbyte.o $(CPPFLAGS)
-$(TARGET31): loopbyte.o
+$(TARGET35): loopbyte.o
 	$(CC) -o loopbyte $< $(LDFLAGS)
-$(TARGET32).o: loopint.c
+$(TARGET36).o: loopint.c
 	$(CC) -c   $< -o loopint.o $(CPPFLAGS)
-$(TARGET32): loopint.o
+$(TARGET36): loopint.o
 	$(CC) -o loopint $< $(LDFLAGS)
-$(TARGET33).o: parabola.c
+$(TARGET37).o: parabola.c
 	$(CC) -c   $< -o parabola.o $(CPPFLAGS)
-$(TARGET33): parabola.o
+$(TARGET37): parabola.o
 	$(CC) -o parabola $< $(LDFLAGS)
-$(TARGET34).o: parpow.c
+$(TARGET38).o: parpow.c
 	$(CC) -c   $< -o parpow.o $(CPPFLAGS)
-$(TARGET34): parpow.o
+$(TARGET38): parpow.o
 	$(CC) -o parpow $< $(LDFLAGS)
-$(TARGET35).o: pi.c
+$(TARGET39).o: pi.c
 	$(CC) -c   $< -o pi.o $(CPPFLAGS)
-$(TARGET35): pi.o
+$(TARGET39): pi.o
 	$(CC) -o pi $< $(LDFLAGS)
-$(TARGET36).o: pow.c
+$(TARGET40).o: pow.c
 	$(CC) -c   $< -o pow.o $(CPPFLAGS)
-$(TARGET36): pow.o
+$(TARGET40): pow.o
 	$(CC) -o pow $< $(LDFLAGS)
-$(TARGET37).o: precision.c
+$(TARGET41).o: precision.c
 	$(CC) -c   $< -o precision.o $(CPPFLAGS)
-$(TARGET37): precision.o
+$(TARGET41): precision.o
 	$(CC) -o precision $< $(LDFLAGS)
-$(TARGET38).o: predecodd.c
+$(TARGET42).o: predecodd.c
 	$(CC) -c   $< -o predecodd.o $(CPPFLAGS)
-$(TARGET38): predecodd.o
+$(TARGET42): predecodd.o
 	$(CC) -o predecodd $< $(LDFLAGS)
-$(TARGET39).o: preincodd.c
+$(TARGET43).o: preincodd.c
 	$(CC) -c   $< -o preincodd.o $(CPPFLAGS)
-$(TARGET39): preincodd.o
+$(TARGET43): preincodd.o
 	$(CC) -o preincodd $< $(LDFLAGS)
-$(TARGET40).o: printval.c
+$(TARGET44).o: printval.c
 	$(CC) -c   $< -o printval.o $(CPPFLAGS)
-$(TARGET40): printval.o
+$(TARGET44): printval.o
 	$(CC) -o printval $< $(LDFLAGS)
-$(TARGET41).o: printwidth.c
+$(TARGET45).o: printwidth.c
 	$(CC) -c   $< -o printwidth.o $(CPPFLAGS)
-$(TARGET41): printwidth.o
+$(TARGET45): printwidth.o
 	$(CC) -o printwidth $< $(LDFLAGS)
-$(TARGET42).o: random1.c
+$(TARGET46).o: random1.c
 	$(CC) -c   $< -o random1.o $(CPPFLAGS)
-$(TARGET42): random1.o
+$(TARGET46): random1.o
 	$(CC) -o random1 $< $(LDFLAGS)
-$(TARGET43).o: random2.c
+$(TARGET47).o: random2.c
 	$(CC) -c   $< -o random2.o $(CPPFLAGS)
-$(TARGET43): random2.o
+$(TARGET47): random2.o
 	$(CC) -o random2 $< $(LDFLAGS)
-$(TARGET44).o: realarrays.c
+$(TARGET48).o: realarrays.c
 	$(CC) -c   $< -o realarrays.o $(CPPFLAGS)
-$(TARGET44): realarrays.o
+$(TARGET48): realarrays.o
 	$(CC) -o realarrays $< $(LDFLAGS)
-$(TARGET45).o: rndicples.c
+$(TARGET49).o: rndicples.c
 	$(CC) -c   $< -o rndicples.o $(CPPFLAGS)
-$(TARGET45): rndicples.o
+$(TARGET49): rndicples.o
 	$(CC) -o rndicples $< $(LDFLAGS)
-$(TARGET46).o: rndrcples.c
+$(TARGET50).o: rndrcples.c
 	$(CC) -c   $< -o rndrcples.o $(CPPFLAGS)
-$(TARGET46): rndrcples.o
+$(TARGET50): rndrcples.o
 	$(CC) -o rndrcples $< $(LDFLAGS)
-$(TARGET47).o: shares.c
+$(TARGET51).o: shares.c
 	$(CC) -c   $< -o shares.o $(CPPFLAGS)
-$(TARGET47): shares.o
+$(TARGET51): shares.o
 	$(CC) -o shares $< $(LDFLAGS)
-$(TARGET48).o: simpshares.c
+$(TARGET52).o: simpshares.c
 	$(CC) -c   $< -o simpshares.o $(CPPFLAGS)
-$(TARGET48): simpshares.o
+$(TARGET52): simpshares.o
 	$(CC) -o simpshares $< $(LDFLAGS)
-$(TARGET49).o: sin.c
+$(TARGET53).o: sin.c
 	$(CC) -c   $< -o sin.o $(CPPFLAGS)
-$(TARGET49): sin.o
+$(TARGET53): sin.o
 	$(CC) -o sin $< $(LDFLAGS)
-$(TARGET50).o: sizes.c
+$(TARGET54).o: sizes.c
 	$(CC) -c   $< -o sizes.o $(CPPFLAGS)
-$(TARGET50): sizes.o
+$(TARGET54): sizes.o
 	$(CC) -o sizes $< $(LDFLAGS)
-$(TARGET51).o: taxes.c
+$(TARGET55).o: solvequad.c
+	$(CC) -c   $< -o solvequad.o $(CPPFLAGS)
+$(TARGET55): solvequad.o
+	$(CC) -o solvequad $< $(LDFLAGS)
+$(TARGET56).o: statsn.c
+	$(CC) -c   $< -o statsn.o $(CPPFLAGS)
+$(TARGET56): statsn.o
+	$(CC) -o statsn $< $(LDFLAGS)
+$(TARGET57).o: sum10.c
+	$(CC) -c   $< -o sum10.o $(CPPFLAGS)
+$(TARGET57): sum10.o
+	$(CC) -o sum10 $< $(LDFLAGS)
+$(TARGET58).o: sum4co.c
+	$(CC) -c   $< -o sum4co.o $(CPPFLAGS)
+$(TARGET58): sum4co.o
+	$(CC) -o sum4co $< $(LDFLAGS)
+$(TARGET59).o: sumn.c
+	$(CC) -c   $< -o sumn.o $(CPPFLAGS)
+$(TARGET59): sumn.o
+	$(CC) -o sumn $< $(LDFLAGS)
+$(TARGET60).o: taxes.c
 	$(CC) -c   $< -o taxes.o $(CPPFLAGS)
-$(TARGET51): taxes.o
+$(TARGET60): taxes.o
 	$(CC) -o taxes $< $(LDFLAGS)
-$(TARGET52).o: test_limits.c
+$(TARGET61).o: test_limits.c
 	$(CC) -c   $< -o test_limits.o $(CPPFLAGS)
-$(TARGET52): test_limits.o
+$(TARGET61): test_limits.o
 	$(CC) -o test_limits $< $(LDFLAGS)
-$(TARGET53).o: toobig.c
+$(TARGET62).o: toobig.c
 	$(CC) -c   $< -o toobig.o $(CPPFLAGS)
-$(TARGET53): toobig.o
+$(TARGET62): toobig.o
 	$(CC) -o toobig $< $(LDFLAGS)
-$(TARGET54).o: ugravity.c
+$(TARGET63).o: ugravity.c
 	$(CC) -c   $< -o ugravity.o $(CPPFLAGS)
-$(TARGET54): ugravity.o
+$(TARGET63): ugravity.o
 	$(CC) -o ugravity $< $(LDFLAGS)
-$(TARGET55).o: voidprint5.c
+$(TARGET64).o: voidprint5.c
 	$(CC) -c   $< -o voidprint5.o $(CPPFLAGS)
-$(TARGET55): voidprint5.o
+$(TARGET64): voidprint5.o
 	$(CC) -o voidprint5 $< $(LDFLAGS)
 install: all
 	mv $(TARGETS) bin

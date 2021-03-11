@@ -1,0 +1,229 @@
+LDFLAGS =
+LIBS = 
+INCS = 
+CXXINCS =  
+CXXFLAGS = 
+CFLAGS = 
+RM = del /F /Q 
+MV = move /Y 
+CP = copy /Y /B 
+CXX  = cl
+CC   = cl
+EEXT   = .exe
+OEXT   = .obj
+SRC = $(SRC:.c=.obj)
+OBJ = *.obj
+CPPFLAGS = /W4
+LDFLAGS = 
+TARGET0 = 1_div_cos
+TARGET1 = 1_div_sin
+TARGET2 = 3pcircle
+TARGET3 = accuracy
+TARGET4 = arrays2
+TARGET5 = arrays
+TARGET6 = astroconst
+TARGET7 = bases
+TARGET8 = bignum
+TARGET9 = blowup
+TARGET10 = c2f
+TARGET11 = checkprimenoret
+TARGET12 = checkprimeret
+TARGET13 = checkprimevoid
+TARGET14 = conbinatorics
+TARGET15 = const
+TARGET16 = cosin
+TARGET17 = couples
+TARGET18 = decodd
+TARGET19 = deg2rad
+TARGET20 = dices
+TARGET21 = doublerow
+TARGET22 = doublevec
+TARGET23 = e_what
+TARGET24 = f2c
+TARGET25 = floatformats
+TARGET26 = floatlimits
+TARGET27 = fpow
+TARGET28 = gimme_five
+TARGET29 = gimme_numbers
+TARGET30 = gravity
+TARGET31 = hyperbola
+TARGET32 = incodd
+TARGET33 = intlimits
+TARGET34 = lights2
+TARGET35 = limits
+TARGET36 = loopbyte
+TARGET37 = loopint
+TARGET38 = parabola
+TARGET39 = parpow
+TARGET40 = pi
+TARGET41 = pow
+TARGET42 = precision
+TARGET43 = predecodd
+TARGET44 = preincodd
+TARGET45 = printval
+TARGET46 = printwidth
+TARGET47 = random1
+TARGET48 = random2
+TARGET49 = realarrays
+TARGET50 = rndicples
+TARGET51 = rndrcples
+TARGET52 = shares
+TARGET53 = simpshares
+TARGET54 = sin
+TARGET55 = sizes
+TARGET56 = solvequad
+TARGET57 = statsn
+TARGET58 = sum10
+TARGET59 = sum4co
+TARGET60 = sumn
+TARGET61 = taxes
+TARGET62 = test_limits
+TARGET63 = toobig
+TARGET64 = ugravity
+TARGET65 = voidprint5
+TARGETS = voidprint5 ugravity toobig test_limits taxes sumn sum4co sum10 statsn solvequad sizes sin simpshares shares rndrcples rndicples realarrays random2 random1 printwidth printval preincodd predecodd precision pow pi parpow parabola loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five fpow floatlimits floatformats f2c e_what doublevec doublerow dices deg2rad decodd couples cosin const conbinatorics checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases astroconst arrays arrays2 accuracy 3pcircle 1_div_sin 1_div_cos
+RMTARGETS = voidprint5.exe ugravity.exe toobig.exe test_limits.exe taxes.exe sumn.exe sum4co.exe sum10.exe statsn.exe solvequad.exe sizes.exe sin.exe simpshares.exe shares.exe rndrcples.exe rndicples.exe realarrays.exe random2.exe random1.exe printwidth.exe printval.exe preincodd.exe predecodd.exe precision.exe pow.exe pi.exe parpow.exe parabola.exe loopint.exe loopbyte.exe limits.exe lights2.exe intlimits.exe incodd.exe hyperbola.exe gravity.exe gimme_numbers.exe gimme_five.exe fpow.exe floatlimits.exe floatformats.exe f2c.exe e_what.exe doublevec.exe doublerow.exe dices.exe deg2rad.exe decodd.exe couples.exe cosin.exe const.exe conbinatorics.exe checkprimevoid.exe checkprimeret.exe checkprimenoret.exe c2f.exe blowup.exe bignum.exe bases.exe astroconst.exe arrays.exe arrays2.exe accuracy.exe 3pcircle.exe 1_div_sin.exe 1_div_cos.exe while.exe wall.exe types.exe trunc.exe test23.exe tables.exe survrec.exe surea.exe sunearth.exe sums.exe sumn.exe sum4co.exe sum10.exe strings.exe solvequad.exe quad4.exe pay.exe mul.exe maxlog.exe matrix.exe marks.exe inpdat.exe hmark.exe getfilnam.exe format.exe firstfmt.exe first.exe fileorig.exe fileoo.exe fileo.exe fileir.exe fileio.exe filei.exe exprs.exe ex45.exe energies.exe circle.exe cast.exe apples.exe ansurv.exe
+CPTARGETS = voidprint5.exe+ugravity.exe+toobig.exe+test_limits.exe+taxes.exe+sumn.exe+sum4co.exe+sum10.exe+statsn.exe+solvequad.exe+sizes.exe+sin.exe+simpshares.exe+shares.exe+rndrcples.exe+rndicples.exe+realarrays.exe+random2.exe+random1.exe+printwidth.exe+printval.exe+preincodd.exe+predecodd.exe+precision.exe+pow.exe+pi.exe+parpow.exe+parabola.exe+loopint.exe+loopbyte.exe+limits.exe+lights2.exe+intlimits.exe+incodd.exe+hyperbola.exe+gravity.exe+gimme_numbers.exe+gimme_five.exe+fpow.exe+floatlimits.exe+floatformats.exe+f2c.exe+e_what.exe+doublevec.exe+doublerow.exe+dices.exe+deg2rad.exe+decodd.exe+couples.exe+cosin.exe+const.exe+conbinatorics.exe+checkprimevoid.exe+checkprimeret.exe+checkprimenoret.exe+c2f.exe+blowup.exe+bignum.exe+bases.exe+astroconst.exe+arrays.exe+arrays2.exe+accuracy.exe+3pcircle.exe+1_div_sin.exe+1_div_cos.exe+
+all: $(RMTARGETS)
+$(TARGET0)$(EEXT):
+	$(CC) $(TARGET0).c  /link  /out:1_div_cos.exe $(LDFLAGS)
+$(TARGET1)$(EEXT):
+	$(CC) $(TARGET1).c  /link  /out:1_div_sin.exe $(LDFLAGS)
+$(TARGET2)$(EEXT):
+	$(CC) $(TARGET2).c  /link  /out:3pcircle.exe $(LDFLAGS)
+$(TARGET3)$(EEXT):
+	$(CC) $(TARGET3).c  /link  /out:accuracy.exe $(LDFLAGS)
+$(TARGET4)$(EEXT):
+	$(CC) $(TARGET4).c  /link  /out:arrays2.exe $(LDFLAGS)
+$(TARGET5)$(EEXT):
+	$(CC) $(TARGET5).c  /link  /out:arrays.exe $(LDFLAGS)
+$(TARGET6)$(EEXT):
+	$(CC) $(TARGET6).c  /link  /out:astroconst.exe $(LDFLAGS)
+$(TARGET7)$(EEXT):
+	$(CC) $(TARGET7).c  /link  /out:bases.exe $(LDFLAGS)
+$(TARGET8)$(EEXT):
+	$(CC) $(TARGET8).c  /link  /out:bignum.exe $(LDFLAGS)
+$(TARGET9)$(EEXT):
+	$(CC) $(TARGET9).c  /link  /out:blowup.exe $(LDFLAGS)
+$(TARGET10)$(EEXT):
+	$(CC) $(TARGET10).c  /link  /out:c2f.exe $(LDFLAGS)
+$(TARGET11)$(EEXT):
+	$(CC) $(TARGET11).c  /link  /out:checkprimenoret.exe $(LDFLAGS)
+$(TARGET12)$(EEXT):
+	$(CC) $(TARGET12).c  /link  /out:checkprimeret.exe $(LDFLAGS)
+$(TARGET13)$(EEXT):
+	$(CC) $(TARGET13).c  /link  /out:checkprimevoid.exe $(LDFLAGS)
+$(TARGET14)$(EEXT):
+	$(CC) $(TARGET14).c  /link  /out:conbinatorics.exe $(LDFLAGS)
+$(TARGET15)$(EEXT):
+	$(CC) $(TARGET15).c  /link  /out:const.exe $(LDFLAGS)
+$(TARGET16)$(EEXT):
+	$(CC) $(TARGET16).c  /link  /out:cosin.exe $(LDFLAGS)
+$(TARGET17)$(EEXT):
+	$(CC) $(TARGET17).c  /link  /out:couples.exe $(LDFLAGS)
+$(TARGET18)$(EEXT):
+	$(CC) $(TARGET18).c  /link  /out:decodd.exe $(LDFLAGS)
+$(TARGET19)$(EEXT):
+	$(CC) $(TARGET19).c  /link  /out:deg2rad.exe $(LDFLAGS)
+$(TARGET20)$(EEXT):
+	$(CC) $(TARGET20).c  /link  /out:dices.exe $(LDFLAGS)
+$(TARGET21)$(EEXT):
+	$(CC) $(TARGET21).c  /link  /out:doublerow.exe $(LDFLAGS)
+$(TARGET22)$(EEXT):
+	$(CC) $(TARGET22).c  /link  /out:doublevec.exe $(LDFLAGS)
+$(TARGET23)$(EEXT):
+	$(CC) $(TARGET23).c  /link  /out:e_what.exe $(LDFLAGS)
+$(TARGET24)$(EEXT):
+	$(CC) $(TARGET24).c  /link  /out:f2c.exe $(LDFLAGS)
+$(TARGET25)$(EEXT):
+	$(CC) $(TARGET25).c  /link  /out:floatformats.exe $(LDFLAGS)
+$(TARGET26)$(EEXT):
+	$(CC) $(TARGET26).c  /link  /out:floatlimits.exe $(LDFLAGS)
+$(TARGET27)$(EEXT):
+	$(CC) $(TARGET27).c  /link  /out:fpow.exe $(LDFLAGS)
+$(TARGET28)$(EEXT):
+	$(CC) $(TARGET28).c  /link  /out:gimme_five.exe $(LDFLAGS)
+$(TARGET29)$(EEXT):
+	$(CC) $(TARGET29).c  /link  /out:gimme_numbers.exe $(LDFLAGS)
+$(TARGET30)$(EEXT):
+	$(CC) $(TARGET30).c  /link  /out:gravity.exe $(LDFLAGS)
+$(TARGET31)$(EEXT):
+	$(CC) $(TARGET31).c  /link  /out:hyperbola.exe $(LDFLAGS)
+$(TARGET32)$(EEXT):
+	$(CC) $(TARGET32).c  /link  /out:incodd.exe $(LDFLAGS)
+$(TARGET33)$(EEXT):
+	$(CC) $(TARGET33).c  /link  /out:intlimits.exe $(LDFLAGS)
+$(TARGET34)$(EEXT):
+	$(CC) $(TARGET34).c  /link  /out:lights2.exe $(LDFLAGS)
+$(TARGET35)$(EEXT):
+	$(CC) $(TARGET35).c  /link  /out:limits.exe $(LDFLAGS)
+$(TARGET36)$(EEXT):
+	$(CC) $(TARGET36).c  /link  /out:loopbyte.exe $(LDFLAGS)
+$(TARGET37)$(EEXT):
+	$(CC) $(TARGET37).c  /link  /out:loopint.exe $(LDFLAGS)
+$(TARGET38)$(EEXT):
+	$(CC) $(TARGET38).c  /link  /out:parabola.exe $(LDFLAGS)
+$(TARGET39)$(EEXT):
+	$(CC) $(TARGET39).c  /link  /out:parpow.exe $(LDFLAGS)
+$(TARGET40)$(EEXT):
+	$(CC) $(TARGET40).c  /link  /out:pi.exe $(LDFLAGS)
+$(TARGET41)$(EEXT):
+	$(CC) $(TARGET41).c  /link  /out:pow.exe $(LDFLAGS)
+$(TARGET42)$(EEXT):
+	$(CC) $(TARGET42).c  /link  /out:precision.exe $(LDFLAGS)
+$(TARGET43)$(EEXT):
+	$(CC) $(TARGET43).c  /link  /out:predecodd.exe $(LDFLAGS)
+$(TARGET44)$(EEXT):
+	$(CC) $(TARGET44).c  /link  /out:preincodd.exe $(LDFLAGS)
+$(TARGET45)$(EEXT):
+	$(CC) $(TARGET45).c  /link  /out:printval.exe $(LDFLAGS)
+$(TARGET46)$(EEXT):
+	$(CC) $(TARGET46).c  /link  /out:printwidth.exe $(LDFLAGS)
+$(TARGET47)$(EEXT):
+	$(CC) $(TARGET47).c  /link  /out:random1.exe $(LDFLAGS)
+$(TARGET48)$(EEXT):
+	$(CC) $(TARGET48).c  /link  /out:random2.exe $(LDFLAGS)
+$(TARGET49)$(EEXT):
+	$(CC) $(TARGET49).c  /link  /out:realarrays.exe $(LDFLAGS)
+$(TARGET50)$(EEXT):
+	$(CC) $(TARGET50).c  /link  /out:rndicples.exe $(LDFLAGS)
+$(TARGET51)$(EEXT):
+	$(CC) $(TARGET51).c  /link  /out:rndrcples.exe $(LDFLAGS)
+$(TARGET52)$(EEXT):
+	$(CC) $(TARGET52).c  /link  /out:shares.exe $(LDFLAGS)
+$(TARGET53)$(EEXT):
+	$(CC) $(TARGET53).c  /link  /out:simpshares.exe $(LDFLAGS)
+$(TARGET54)$(EEXT):
+	$(CC) $(TARGET54).c  /link  /out:sin.exe $(LDFLAGS)
+$(TARGET55)$(EEXT):
+	$(CC) $(TARGET55).c  /link  /out:sizes.exe $(LDFLAGS)
+$(TARGET56)$(EEXT):
+	$(CC) $(TARGET56).c  /link  /out:solvequad.exe $(LDFLAGS)
+$(TARGET57)$(EEXT):
+	$(CC) $(TARGET57).c  /link  /out:statsn.exe $(LDFLAGS)
+$(TARGET58)$(EEXT):
+	$(CC) $(TARGET58).c  /link  /out:sum10.exe $(LDFLAGS)
+$(TARGET59)$(EEXT):
+	$(CC) $(TARGET59).c  /link  /out:sum4co.exe $(LDFLAGS)
+$(TARGET60)$(EEXT):
+	$(CC) $(TARGET60).c  /link  /out:sumn.exe $(LDFLAGS)
+$(TARGET61)$(EEXT):
+	$(CC) $(TARGET61).c  /link  /out:taxes.exe $(LDFLAGS)
+$(TARGET62)$(EEXT):
+	$(CC) $(TARGET62).c  /link  /out:test_limits.exe $(LDFLAGS)
+$(TARGET63)$(EEXT):
+	$(CC) $(TARGET63).c  /link  /out:toobig.exe $(LDFLAGS)
+$(TARGET64)$(EEXT):
+	$(CC) $(TARGET64).c  /link  /out:ugravity.exe $(LDFLAGS)
+$(TARGET65)$(EEXT):
+	$(CC) $(TARGET65).c  /link  /out:voidprint5.exe $(LDFLAGS)
+install: all
+	$(CP) *.exe bin
+	$(CP) *.obj obj
+	$(RM) $(RMTARGETS)
+	$(RM) $(OBJ)
+.PHONY: clean
+clean:
+	$(RM) $(OBJ) $(RMTARGETS) *.log
+distclean: clean
+	cd bin && $(RM) *$(EEXT) && cd .. $(RM) Makefile*
