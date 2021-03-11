@@ -1,9 +1,10 @@
-/*   THiS PROGRAM READS N NUMBERS FROM STDiN 
- *   AND PRiNTS THEiR SUM in c language 
+/*   ThiS PROGRAM reads N numbers from stdin
+ *   AND PRiNTS statistics, implemented in c language
  *   inspired by fortran exercises in Ellis,1982
- *   and other books
+ *   and other books. First number in input is the
+ *   number of samples to be read. 
  *   author: Francesco Lazzarotto
- *   version: 0.0.1
+ *   version: 0.0.2
  *   date: 2021-03-11
  *   email: fralaz1971_at_gmail.com
  * *********************************************
@@ -11,7 +12,7 @@
  * *********************************************
  * Date,         Developer,   Description_of_change
  * 2021-03-11,   fralaz1971,    first version
- * 
+ *
  */
 /* maximum number of element we can read */
 #define MAXS 100
@@ -86,6 +87,21 @@ int main()
     fprintf(stderr,"* End of run. Bye.                  *\n");
     fprintf(stderr,"*************************************\n");
     return 0;
-}        
-/* ./sumn <sum100.dat */
+}
+/*
+* on linux/mac/mingw
+* to compile 
+make
+* to run
+./statsn <statsn.dat
+* to read only info log and save output on file
+./statsn <statsn.dat >out.csv
+* to save info on log file and get output on stdin (terminal)
+./statsn <statsn.dat 2>err.log
+on MS win using MSVC compiler
+*to compile
+cl statsn.c /link
+*to run
+statsn < statsn.dat
+*/
 
