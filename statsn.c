@@ -1,8 +1,8 @@
-/*   ThiS PROGRAM reads N numbers from stdin
- *   AND PRiNTS statistics, implemented in c language
+/*   This PROGRAM reads N numbers from stdin
+ *   AND PRINTS statistics, implemented in c language
  *   inspired by fortran exercises in Ellis,1982
  *   and other books. First number in input is the
- *   number of samples to be read. 
+ *   number of samples to be read.
  *   author: Francesco Lazzarotto
  *   version: 0.0.2
  *   date: 2021-03-11

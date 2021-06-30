@@ -1,0 +1,33 @@
+GET DATA
+  /TYPE=TXT
+  /FILE="/home/francesco/projects/c_cpp/cnumerics/stats14.dat"
+  /ARRANGEMENT=DELIMITED
+  /DELCASE=LINE
+  /FIRSTCASE=2
+  /DELIMITERS="-"
+  /VARIABLES=
+    VAR001 F10.5
+    VAR002 F8.1.
+
+GET DATA
+  /TYPE=TXT
+  /FILE="/home/francesco/projects/c_cpp/cnumerics/stats14.dat"
+  /ARRANGEMENT=DELIMITED
+  /DELCASE=LINE
+  /FIRSTCASE=2
+  /DELIMITERS=","
+  /VARIABLES=
+    VAR001 F10.5.
+
+SAVE OUTFILE="/home/francesco/projects/c_cpp/cnumerics/statn14pspp.sav".
+
+DESCRIPTIVES
+    /VARIABLES= VAR001
+    /STATISTICS=MEAN STDDEV SUM SEMEAN VARIANCE.
+
+Valid cases = 22; cases with missing value(s) = 0.
+╭────────╥──┬────┬─────────┬───────┬────────┬─────╮
+│Variable║ N│Mean│S.E. Mean│Std Dev│Variance│ Sum │
+╞════════╬══╪════╪═════════╪═══════╪════════╪═════╡
+│VAR001  ║22│-.11│     8.59│  40.28│ 1622.83│-2.39│
+╰────────╨──┴────┴─────────┴───────┴────────┴─────╯

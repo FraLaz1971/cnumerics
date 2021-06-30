@@ -1,0 +1,29 @@
+GET DATA
+  /TYPE=TXT
+  /FILE="/home/francesco/projects/c_cpp/cnumerics/statsn.tsv"
+  /ARRANGEMENT=DELIMITED
+  /DELCASE=LINE
+  /FIRSTCASE=4
+  /DELIMITERS="\t"
+  /VARIABLES=
+    #n F3.0
+    sample F11.5.
+
+/home/francesco/projects/c_cpp/cnumerics/statsn.tsv:104.1: warning: Data for
+variable #n is not valid as format F: Field contents are not numeric.
+
+GRAPH SCATTERPLOT(BIVARIATE) = sample WITH #n.
+
+GRAPH /HISTOGRAM (NORMAL) = sample.
+
+DESCRIPTIVES
+    /VARIABLES= sample
+    /STATISTICS=DEFAULT RANGE SUM SEMEAN VARIANCE.
+
+Valid cases = 101; cases with missing value(s) = 1.
++--------#---+-----+--------+-------+---------+-------+-------+-------+-------+
+|Variable# N | Mean|  S.E.  |Std Dev| Variance| Range |Minimum|Maximum|  Sum  |
+|        #   |     |  Mean  |       |         |       |       |       |       |
+#========#===#=====#========#=======#=========#=======#=======#=======#=======#
+|sample  #100|-8.62|   34.29| 342.94|117608.31|1193.19|-596.37| 596.81|-861.79|
++--------#---+-----+--------+-------+---------+-------+-------+-------+-------+
