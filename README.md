@@ -129,7 +129,7 @@ parpow.c pow() usage example, x, y are give as program command line parameters
     ├── floatformats.c
     ├── floatlimits.c
     ├── fpow.c
-    ├── fun1.c           ------> example on the use of a c function (and simple err/msg handling)
+    ├── fun1.c           ----> on the use of a c function (and simple err/msg handling)
     ├── gimme_five.c
     ├── gimme_numbers.c
     ├── gravity.c
