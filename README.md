@@ -95,6 +95,36 @@ parpow.c pow() usage example, x, y are give as program command line parameters
 	make fpow
 	./fpow invals1.txt 2>err.log
 	cat err.log
+### fun1.c explain how to create and use c functions
+fun1 needs two input parameters
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 
+    ./fun1: ERROR, too few program arguments!
+    usage: ./fun1 <operand1> <operand2>
+    ./fun1: <operand1> and <operand2> are expected to be integer numbers
+#
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 10 20 
+    ./fun1: testing the use of a function
+    ./fun1: the result of alpha(10, 20) is 204
+    204
+#
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 10 20 2>err.log
+    204
+note how we get only the result number as output in the last run, all the messages flew into
+the file err.log
+#
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ cat err.log
+    ./fun1: testing the use of a function
+    ./fun1: the result of alpha(10, 20) is 204
+#
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 10 20 20 12 "ciao"; printf "\n return value from main() is $?\n"
+    ./fun1: WARNING, too many program arguments
+    usage: ./fun1 <operand1> <operand2>
+    ./fun1: you gave 5 command line arguments to ./fun1
+    ./fun1: arguments after the 2nd will be ignored
+    ./fun1: testing the use of a function
+    ./fun1: the result of alpha(10, 20) is 204
+    204 
+    return value from main() is 2
 ### rndicples.c --> generate couples of random integer values
 ### that can be saved on a file and used as input for fpow
 	./rndicples <<< "-5 12 6" > invals6.txt
