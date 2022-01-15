@@ -8,7 +8,10 @@ terminal in GNU/Linux or MacOS or msys2 terminal on MicroSoft Windows.
 Other c [compilers](https://en.wikipedia.org/wiki/Compiler) / [terminals](https://en.wikipedia.org/wiki/Terminal_emulator) / [shells](https://en.wikipedia.org/wiki/Shell_(computing)) 
 are suitable too, as well as an [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
 ### VERY IMPORTANT !! ### 
-all the command lines examples you see below typed at the terminal console, can be inserted in an automated script and be launched as a single program, also clicking on icon with the mouse. The terminal emulator will help you to understand how to compose commands and create scripts.
+all the command lines examples you see below typed at the terminal console (or similar ones), 
+can be also inserted in an automated script and be launched as a single program, also clicking on 
+an icon with the mouse. 
+The terminal emulator will help you to understand how to compose commands and create scripts.
 ### 
 ### to configure on bash shell
 	./configure
