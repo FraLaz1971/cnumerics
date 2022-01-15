@@ -147,8 +147,9 @@ the file err.log
 ### that can be saved on a file and used as input for fpow
 	./rndicples <<< "-5 12 6" > invals6.txt
 	./fpow invals6.txt 2>err.log
-	../cnumerics
+
 ### list of the programs
+    tree ../cnumerics
     ├── 1_div_cos.c
     ├── 1_div_sin.c
     ├── 3pcircle.c
