@@ -54,10 +54,17 @@ from its sourceforge page https://sourceforge.net/projects/gnuplot/files/gnuplot
 ### example for plotting function data points
 	./cosin -7 7 0.1 | gnuplot -p -e "plot '-'"
 ![plotting cosine function](./cosin.svg)
-	./sin -7 7 0.1 | gnuplot -p -e "plot '-'"
+
+    ./sin -7 7 0.1 | gnuplot -p -e "plot '-'"
+![plotting sine function](./sin.svg)
 	./1_div_cos -10 10 0.1   | gnuplot -p -e "plot '-'"
+![plotting 1 div cosine function](./1divcos.svg)
+
 	./1_div_sin -10 10 0.1   | gnuplot -p -e "plot '-'"
+	
 	./1_div_cos -3 -0.01 0.1 | gnuplot -p -e "plot '-'"
+![plotting 1 div cosine in -3,0](./1divcos3.svg)
+
 ### on the bash terminals (in linux or msys2/mingw on MS Win)
 ### it is possible to simplify the call to gnuplot with an alias
 	alias gp="gnuplot -p -e \"plot '-'\""
