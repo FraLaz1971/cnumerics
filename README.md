@@ -47,9 +47,10 @@ are suitable too, as well as an [IDE](https://en.wikipedia.org/wiki/Integrated_d
 	make distclean
 ## Plotting data points
 Generated data points can be plotted on the screen, the simpler way is to
-use an external (free and open source) program called gnuplot 
-[gnuplot](https://www.gnuplot.info)
-gnuplot can be [downloaded](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
+use an external (free and open source) program called [gnuplot](https://www.gnuplot.info) .
+gnuplot is a widely used and portable application to create graphics of calculus functions or sample data points, and fit them. It has graphical user interfaces or can be called by scripts or
+executed on the terminal command line.
+can be [downloaded](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
 from its sourceforge page https://sourceforge.net/projects/gnuplot/files/gnuplot
 ### example for plotting function data points
 	./cosin -7 7 0.1 | gnuplot -p -e "plot '-'"
