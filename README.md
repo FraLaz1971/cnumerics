@@ -104,7 +104,8 @@ parpow.c pow() usage example, x, y are give as program command line parameters
 	./fpow invals1.txt 2>err.log
 	cat err.log
 ### fun1.c explain how to create and use c functions
-fun1 needs two input parameters
+fun1 needs two input parameters:
+
     francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 
     ./fun1: ERROR, too few program arguments!
     usage: ./fun1 <operand1> <operand2>
