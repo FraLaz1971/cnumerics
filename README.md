@@ -53,6 +53,7 @@ gnuplot can be [downloaded](https://sourceforge.net/projects/gnuplot/files/gnupl
 from its sourceforge page https://sourceforge.net/projects/gnuplot/files/gnuplot
 ### example for plotting function data points
 	./cosin -7 7 0.1 | gnuplot -p -e "plot '-'"
+![plotting cosine function](./cosin.svg)
 	./sin -7 7 0.1 | gnuplot -p -e "plot '-'"
 	./1_div_cos -10 10 0.1   | gnuplot -p -e "plot '-'"
 	./1_div_sin -10 10 0.1   | gnuplot -p -e "plot '-'"
