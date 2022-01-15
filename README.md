@@ -70,7 +70,7 @@ from its sourceforge page https://sourceforge.net/projects/gnuplot/files/gnuplot
 ### on the bash terminals (in linux or msys2/mingw on MS Win)
 ### it is possible to simplify the call to gnuplot with an alias
 	alias gp="gnuplot -p -e \"plot '-'\""
-### after that, the previous commands became
+### after that, the previous commands become
 	./cosin -7 7 0.1 | gp
 	./sin -7 7 0.1 | gp
 	./1_div_cos -10 10 0.1   | gp
