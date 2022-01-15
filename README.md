@@ -90,111 +90,111 @@ parpow.c pow() usage example, x, y are give as program command line parameters
 	./fpow invals6.txt 2>err.log
 	../cnumerics
 ### list of the programs
-├── 1_div_cos.c
-├── 1_div_sin.c
-├── 3pcircle.c
-├── accuracy.c
-├── arrays2.c
-├── arrays.c
-├── bases.c
-├── bignum.c
-├── bin
-├── blowup.c
-├── c2f.c
-├── checkprimenoret.c
-├── checkprimeret.c
-├── checkprimevoid.c
-├── cnumerics.pro
-├── conbinatorics.c
-├── conbinatorics.h
-├── configure
-├── configure.bat
-├── configure.sh
-├── configure-win-i686-mingw.sh
-├── configure-win-mingw.sh
-├── configure-win-vc.sh
-├── const.c
-├── cosin.c
-├── couples.c
-├── crossinglines.png
-├── data2.dat
-├── data2x2.dat
-├── decodd.c
-├── deg2rad.c
-├── dices.c
-├── doublerow.c
-├── doublevec.c
-├── errvals.h
-├── e_what.c
-├── floatformats.c
-├── floatlimits.c
-├── fpow.c
-├── fun1.c           ------> example on the use of a c function (and simple err/msg handling)
-├── gimme_five.c
-├── gimme_numbers.c
-├── gravity.c
-├── gravity.h
-├── hyperbola.c
-├── hyperbola.png
-├── incodd.c
-├── install.bat
-├── install.sh
-├── intlimits.c
-├── invals0.txt
-├── invals1_5.txt
-├── invals1.txt
-├── invals2.txt
-├── invals40.txt
-├── invals6.txt
-├── invals.txt
-├── LICENSE
-├── lights2.c
-├── limits.c
-├── linescrossf.plt
-├── linescross.plt
-├── loopbyte.c
-├── loopint.c
-├── Makefile
-├── Makefile.lnx
-├── outdata.dat
-├── parabola.c
-├── parpow.c
-├── pi.c
-├── plothyperbola.bat
-├── plothyperbola.sh
-├── plotparabola.bat
-├── plotparabola.sh
-├── pow.c
-├── precision.c
-├── predecodd.c
-├── preincodd.c
-├── printval.c
-├── printwidth.c
-├── random1.c
-├── random2.c
-├── README
-├── README-c-integers
-├── realarrays.c
-├── rndicples.c
-├── rndrcples.c
-├── setup.bat
-├── setup.sh
-├── shares.c
-├── simpshares.c
-├── sin.c
-├── sizes.c
-├── solvequad.c
-├── sum10.c
-├── sum10.dat
-├── sum4co.c
-├── sum4co.dat
-├── taxes.c
-├── test_limits.c
-├── toobig.c
-├── ugravity.c
-├── uninstall.sh
-├── utility.h
-├── voidprint5.c
-└── words.txt
+    ├── 1_div_cos.c
+    ├── 1_div_sin.c
+    ├── 3pcircle.c
+    ├── accuracy.c
+    ├── arrays2.c
+    ├── arrays.c
+    ├── bases.c
+    ├── bignum.c
+    ├── bin
+    ├── blowup.c
+    ├── c2f.c
+    ├── checkprimenoret.c
+    ├── checkprimeret.c
+    ├── checkprimevoid.c
+    ├── cnumerics.pro
+    ├── conbinatorics.c
+    ├── conbinatorics.h
+    ├── configure
+    ├── configure.bat
+    ├── configure.sh
+    ├── configure-win-i686-mingw.sh
+    ├── configure-win-mingw.sh
+    ├── configure-win-vc.sh
+    ├── const.c
+    ├── cosin.c
+    ├── couples.c
+    ├── crossinglines.png
+    ├── data2.dat
+    ├── data2x2.dat
+    ├── decodd.c
+    ├── deg2rad.c
+    ├── dices.c
+    ├── doublerow.c
+    ├── doublevec.c
+    ├── errvals.h
+    ├── e_what.c
+    ├── floatformats.c
+    ├── floatlimits.c
+    ├── fpow.c
+    ├── fun1.c           ------> example on the use of a c function (and simple err/msg handling)
+    ├── gimme_five.c
+    ├── gimme_numbers.c
+    ├── gravity.c
+    ├── gravity.h
+    ├── hyperbola.c
+    ├── hyperbola.png
+    ├── incodd.c
+    ├── install.bat
+    ├── install.sh
+    ├── intlimits.c
+    ├── invals0.txt
+    ├── invals1_5.txt
+    ├── invals1.txt
+    ├── invals2.txt
+    ├── invals40.txt
+    ├── invals6.txt
+    ├── invals.txt
+    ├── LICENSE
+    ├── lights2.c
+    ├── limits.c
+    ├── linescrossf.plt
+    ├── linescross.plt
+    ├── loopbyte.c
+    ├── loopint.c
+    ├── Makefile
+    ├── Makefile.lnx
+    ├── outdata.dat
+    ├── parabola.c
+    ├── parpow.c
+    ├── pi.c
+    ├── plothyperbola.bat
+    ├── plothyperbola.sh
+    ├── plotparabola.bat
+    ├── plotparabola.sh
+    ├── pow.c
+    ├── precision.c
+    ├── predecodd.c
+    ├── preincodd.c
+    ├── printval.c
+    ├── printwidth.c
+    ├── random1.c
+    ├── random2.c
+    ├── README
+    ├── README-c-integers
+    ├── realarrays.c
+    ├── rndicples.c
+    ├── rndrcples.c
+    ├── setup.bat
+    ├── setup.sh
+    ├── shares.c
+    ├── simpshares.c
+    ├── sin.c
+    ├── sizes.c
+    ├── solvequad.c
+    ├── sum10.c
+    ├── sum10.dat
+    ├── sum4co.c
+    ├── sum4co.dat
+    ├── taxes.c
+    ├── test_limits.c
+    ├── toobig.c
+    ├── ugravity.c
+    ├── uninstall.sh
+    ├── utility.h
+    ├── voidprint5.c
+    └── words.txt
 
-1 directory, 106 files
+    1 directory, 106 files
