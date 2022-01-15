@@ -113,7 +113,9 @@ fun1 needs two input parameters:
 #
 when <operand1> and <operand2> are valid integer numbers, the implemented function alpha()
 will return an integer output value applying the formula
+
     4 + (<operand1> * <operand2>)
+
 you can modify the formula applied in the alpha() function, without modifying the
 programming interface you use in the code inside the main() when you call (=use) the alpha()
 function.
