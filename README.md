@@ -111,6 +111,13 @@ fun1 needs two input parameters:
     usage: ./fun1 <operand1> <operand2>
     ./fun1: <operand1> and <operand2> are expected to be integer numbers
 #
+when <operand1> and <operand2> are valid integer numbers, the implemented function alpha()
+will return an integer output value applying the formula
+    4 + (<operand1> * <operand2>)
+you can modify the formula applied in the alpha() function, without modifying the
+programming interface you use in the code inside the main() when you call (=use) the alpha()
+function.
+#
     francesco@squirrel:~/projects/c_cpp/cnumerics$ ./fun1 10 20 
     ./fun1: testing the use of a function
     ./fun1: the result of alpha(10, 20) is 204
