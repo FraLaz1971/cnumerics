@@ -25,6 +25,11 @@ The terminal emulator will help you to understand how to compose commands and cr
 ### e.g.
 	./loopint 10 20
 ### to install (mv all executable program files in the directory bin)
+
+this is optional
+
+	make install
+	./install
 ### to remove generated files:
 	make clean
 ### trying different values
