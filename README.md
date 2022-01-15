@@ -39,8 +39,9 @@ are suitable too, as well as an [IDE](https://en.wikipedia.org/wiki/Integrated_d
 #
 	./doublevec 15 < data2.dat > dubdata.dat
 ### cat program may be used to see the content of a text file
-### on MicroSoft Windows or FreeDOS you can use type command instead
 	cat dubdata.dat
+### on MicroSoft Windows or FreeDOS you can use type command instead
+	type dubdata.dat
 ### without redirecting stdin from file, this accepts from keyboard input (from stdin)
 	./doublevec 4
 ### to clean all generated files for saving only the source code in the project
