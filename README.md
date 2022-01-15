@@ -1,4 +1,5 @@
-# cnumerics: simple examples on numerical operations in c language
+# cnumerics 
+### simple examples on numerical operations in c language
 by Francesco Lazzarotto fralaz1971@gmail.com
 ## How to run the examples
 The simpler way is to use a shell terminal and gcc compiler in a unix-like
@@ -37,8 +38,8 @@ are suitable too, as well as an [IDE](https://en.wikipedia.org/wiki/Integrated_d
 	./doublevec 4 < data2.dat
 #
 	./doublevec 15 < data2.dat > dubdata.dat
-# cat program may be used to see the content of a text file
-# on MicroSoft Windows or FreeDOS you can use type command instead
+### cat program may be used to see the content of a text file
+### on MicroSoft Windows or FreeDOS you can use type command instead
 	cat dubdata.dat
 ### without redirecting stdin from file, this accepts from keyboard input (from stdin)
 	./doublevec 4
