@@ -113,6 +113,7 @@ cat err.log
 ├── floatformats.c
 ├── floatlimits.c
 ├── fpow.c
+├── fun1.c           ------> example on the use of a c function (and simple err/msg handling)
 ├── gimme_five.c
 ├── gimme_numbers.c
 ├── gravity.c
