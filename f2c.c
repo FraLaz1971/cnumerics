@@ -10,7 +10,7 @@ int main()
 {
     float ce, fa;
     int ret;
-    printf("please, enter a temperature value (F deg.)\n");
+    printf("please, type a temperature value (F deg.)\n");
     printf("and then enter\n");
     ret = scanf("%f",&fa );
     ce = 5.0*(fa - 32)/9.0;
