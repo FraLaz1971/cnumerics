@@ -15,10 +15,12 @@ int main(int argc, char* argv[])
     printf("main(): lets see what is in argv[]\n");
     if (argc>1)
     {
+       cur = atof(argv[1]);
        for  (i = 1; i<argc; i++)
        {
           printf("main(): argv[%d]=%s\n", i, argv[i]);
           cur = alpha( cur, atof(argv[i]) );
+	  printf("main(): cur = %g\n", cur);
     }
     printf("main(): Total = %g\n", cur);
   }
