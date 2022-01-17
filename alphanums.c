@@ -10,7 +10,7 @@ double alpha(double val1, double val2){
 
 int main(int argc, char* argv[])
 {
-    int i; double cur;
+    int i; double cur=0.0;
     printf("main(): argc=%d\n", argc);
     printf("main(): lets see what is in argv[]\n");
     if (argc>1)
