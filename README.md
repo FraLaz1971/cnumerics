@@ -44,8 +44,7 @@ the following is optional
 	19
 	20
 ### trying different values
-	./loopint -10 -5
-$ ./loopint -10 -5
+    $ ./loopint -10 -5
 	we'll display integers in the following interval:[-10, -5]
 	-10
 	-9
@@ -53,9 +52,8 @@ $ ./loopint -10 -5
 	-7
 	-6
 	-5
-#
-	./loopint -10 0
-$ ./loopint -10 0
+# from now on, we'll use $ to represent the command prompt
+    $ ./loopint -10 0
 	we'll display integers in the following interval:[-10, 0]
 	-10
 	-9
@@ -69,8 +67,7 @@ $ ./loopint -10 0
 	-1
 	0
 #
-	./loopint -100 99
-$ ./loopint -10 99
+    $ ./loopint -10 99
 	we'll display integers in the following interval:[-10, 99]
 	-10
 	-9
@@ -108,7 +105,7 @@ $ ./loopint -10 99
 ### what happens in this case??? why?
 	$ ./loopint 2147483644 2147483646
 ### to save on an output ascii file
-	./loopint -5 5 > outdata.dat
+	$ ./loopint -5 5 > outdata.dat
 ### doublevec reads an array from stdin and prints out it doubled on stdout
 ### e.g.
 	$ ./doublevec 4 < data2.dat
@@ -141,9 +138,9 @@ $ ./loopint -10 99
 ### on MicroSoft Windows or FreeDOS you can use type command instead
 	type dubdata.dat
 ### without redirecting stdin from file, this accepts from keyboard input (from stdin)
-	./doublevec 4
+	$  ./doublevec 4
 ### to clean all generated files for saving only the source code in the project
-	make distclean
+	$  make distclean
 ## Plotting data points
 Generated data points can be plotted on the screen, the simpler way is to
 use an external (free and open source) program called [gnuplot](https://www.gnuplot.info) .
