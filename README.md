@@ -22,35 +22,122 @@ The terminal emulator will help you to understand how to compose commands and cr
 	./<program> arg1 arg2 ... argn
 	n can be = 0 , so in this case:
 	./<program>
-### e.g.
-	./loopint 10 20
 ### to install (mv all executable program files in the directory bin)
-
-this is optional
-
+the following is optional
+#
 	make install
 	./install
 ### to remove generated files:
 	make clean
+### e.g.
+	./loopint 10 20
+	we'll display integers in the following interval:[10, 20]
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
 ### trying different values
 	./loopint -10 -5
+$ ./loopint -10 -5
+	we'll display integers in the following interval:[-10, -5]
+	-10
+	-9
+	-8
+	-7
+	-6
+	-5
+#
 	./loopint -10 0
+$ ./loopint -10 0
+	we'll display integers in the following interval:[-10, 0]
+	-10
+	-9
+	-8
+	-7
+	-6
+	-5
+	-4
+	-3
+	-2
+	-1
+	0
+#
 	./loopint -100 99
+$ ./loopint -10 99
+	we'll display integers in the following interval:[-10, 99]
+	-10
+	-9
+	-8
+	-7
+	-6
+	-5
+	-4
+	-3
+	-2
+	-1
+	0
+	1
+	2
+	3
+	4
+	...
+	...
+	98
+	99
 ### going close to and beyond the upper linit
-	./loopint 2147483640 2147483644
-	./loopint 2147483640 2147483648
-	./loopint 2147483640 2147483650
+	$ ./loopint 2147483640 2147483644
+	we'll display integers in the following interval:[2147483640, 2147483644]
+	2147483640
+	2147483641
+	2147483642
+	2147483643
+	2147483644
+#
+	$ ./loopint 2147483640 2147483648
+	we'll display integers in the following interval:[2147483640, -2147483648]
+#
+	$ ./loopint 2147483640 2147483650
+	we'll display integers in the following interval:[2147483640, -2147483646]
 ### what happens in this case??? why?
-	./loopint 2147483644 2147483646
+	$ ./loopint 2147483644 2147483646
 ### to save on an output ascii file
 	./loopint -5 5 > outdata.dat
 ### doublevec reads an array from stdin and prints out it doubled on stdout
 ### e.g.
-	./doublevec 4 < data2.dat
+	$ ./doublevec 4 < data2.dat
+	./doublevec.main() you entered 2 parameter(s)
+	./doublevec.main() doubling a vector read from stdout 
+	./doublevec.main() reading a 4 elements 1D array 
+	-20
+	-18
+	-16
+	-14
 #
-	./doublevec 15 < data2.dat > dubdata.dat
+	$ ./doublevec 15 < data2.dat > dubdata.dat
 ### cat program may be used to see the content of a text file
-	cat dubdata.dat
+	$ cat dubdata.dat 
+	-20
+	-18
+	-16
+	-14
+	-12
+	-10
+	-8
+	-6
+	-4
+	-2
+	0
+	2
+	4
+	6
+	8
 ### on MicroSoft Windows or FreeDOS you can use type command instead
 	type dubdata.dat
 ### without redirecting stdin from file, this accepts from keyboard input (from stdin)
