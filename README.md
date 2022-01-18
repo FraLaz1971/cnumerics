@@ -22,13 +22,6 @@ The terminal emulator will help you to understand how to compose commands and cr
 	./<program> arg1 arg2 ... argn
 	n can be = 0 , so in this case:
 	./<program>
-### to install (mv all executable program files in the directory bin)
-the following is optional
-#
-	make install
-	./install
-### to remove generated files:
-	make clean
 ### e.g.
 	./loopint 10 20
 	we'll display integers in the following interval:[10, 20]
@@ -139,6 +132,13 @@ the following is optional
 	type dubdata.dat
 ### without redirecting stdin from file, this accepts from keyboard input (from stdin)
 	$  ./doublevec 4
+### to install (mv all executable program files in the directory bin)
+	the following is optional
+#
+	make install
+	./install
+### to remove generated files:
+	make clean
 ### to clean all generated files for saving only the source code in the project
 	$  make distclean
 ## Plotting data points
@@ -149,17 +149,17 @@ executed on the terminal command line.
 can be [downloaded](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
 from its sourceforge page https://sourceforge.net/projects/gnuplot/files/gnuplot
 ### example for plotting function data points
-	./cosin -7 7 0.1 | gnuplot -p -e "plot '-'"
+	$ ./cosin -7 7 0.1 | gnuplot -p -e "plot '-'"
 ![plotting cosine function](./cosin.svg)
 
-    ./sin -7 7 0.1 | gnuplot -p -e "plot '-'"
+	$ ./sin -7 7 0.1 | gnuplot -p -e "plot '-'"
 ![plotting sine function](./sin.svg)
-	./1_div_cos -10 10 0.1   | gnuplot -p -e "plot '-'"
+	$ ./1_div_cos -10 10 0.1   | gnuplot -p -e "plot '-'"
 ![plotting 1 div cosine function](./1divcos.svg)
 
-	./1_div_sin -10 10 0.1   | gnuplot -p -e "plot '-'"
+	$ ./1_div_sin -10 10 0.1   | gnuplot -p -e "plot '-'"
 	
-	./1_div_cos -3 -0.01 0.1 | gnuplot -p -e "plot '-'"
+	$ ./1_div_cos -3 -0.01 0.1 | gnuplot -p -e "plot '-'"
 ![plotting 1 div cosine in -3,0](./1divcosmin3.svg)
 
 ### on the bash terminals (in linux or msys2/mingw on MS Win)
