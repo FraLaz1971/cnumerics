@@ -34,7 +34,7 @@ int main (int argc, char *argv[]) {
     	/* i want to call the result of addition and multiplication */
 	c = alpha(a,b);
 	fprintf(stderr, "in[%d] = [%d,%d] --> ou[%i] = %d\n",i,a,b,i,c);
-   if (i == 4) /* the exact number of 5 elements is the number i want to iterate */
+   if (i == (SIZE - 1) ) /* the exact number of 5 elements is the number i want to iterate */
    {   fprintf(stderr,"%s: good I read all the expected data, now exiting! \n ", argv[0]);
       break;
    }
