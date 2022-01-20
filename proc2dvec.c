@@ -31,15 +31,16 @@ int main (int argc, char *argv[]) {
    for (i=0; i<SIZE; i++){
         /* c is the result of summation, i want to multiply by itself to get the square */
 	fprintf(stderr, "%s: reading an integers couple ... \n", argv[0]);
-	res = scanf("%d %d ", &a, &b);
+	res = scanf("%d %d", &a, &b);
     	/* i want to call the result of addition and multiplication */
 	c = alpha(a,b);
 	fprintf(stderr, "in[%d] = [%d,%d] --> ou[%i] =",i,a,b,i);
 	fprintf(stdout, " %d\n",c);
-   if (i == (SIZE - 1) ) /* the exact number of 5 elements is the number i want to iterate */
-   {   fprintf(stderr,"%s: good I read all the expected data, now exiting! \n ", argv[0]);
-      break;
-   }
+   	if (i == (SIZE - 1) ) /* the exact number of 5 elements is the number i want to iterate */
+   	{
+		fprintf(stderr,"%s: good I read all the expected data, now exiting! \n ", argv[0]);
+      		break;
+   	}
      a = 0; b = 0;
    }
    return 0;
