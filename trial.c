@@ -25,10 +25,10 @@ int main(){
 	        printf("the result of %d - %d will be negative \n",var1, var2);
 
 	    printf("WARNING! operator / is integer division (without the fractional part)\n");
-	    printf("your results are: %d + %d = %d\n", var1, var2, add  );
-	    printf("your results are: %d - %d = %d\n", var1, var2, sub  );
-	    printf("your results are: %d * %d = %d\n", var1, var2, mult );
-	    printf("your results are: %d / %d = %d\n", var1, var2, div  );
+	    printf("add  result: %d + %d = %d\n", var1, var2, add  );
+	    printf("sub  result: %d - %d = %d\n", var1, var2, sub  );
+	    printf("mult result: %d * %d = %d\n", var1, var2, mult );
+	    printf("div  result: %d / %d = %d\n", var1, var2, div  );
        }
 	    printf("You processed 3 couples \n");	
 	    printf("*********************** \n");	
