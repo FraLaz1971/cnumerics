@@ -26,6 +26,7 @@ int main (int argc, char *argv[]) {
    int i = 0;	  /* i iterate on the input elements */
 
    /* I want to make a loop to calculate a+b 5 times  */
+	fprintf(stderr, "%s: please type %d int. numbers (end press ENTER) \n", argv[0],SIZE*2);
 
    for (i=0; i<SIZE; i++){
         /* c is the result of summation, i want to multiply by itself to get the square */
@@ -33,7 +34,8 @@ int main (int argc, char *argv[]) {
 	res = scanf("%d %d ", &a, &b);
     	/* i want to call the result of addition and multiplication */
 	c = alpha(a,b);
-	fprintf(stderr, "in[%d] = [%d,%d] --> ou[%i] = %d\n",i,a,b,i,c);
+	fprintf(stderr, "in[%d] = [%d,%d] --> ou[%i] =",i,a,b,i);
+	fprintf(stdout, " %d\n",c);
    if (i == (SIZE - 1) ) /* the exact number of 5 elements is the number i want to iterate */
    {   fprintf(stderr,"%s: good I read all the expected data, now exiting! \n ", argv[0]);
       break;
