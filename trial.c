@@ -10,9 +10,9 @@ int main(){
 	printf("****************************************\n");
         for (i=0; i<3; i++){
 	    printf("doing iteration %d\n", i);
-	    printf("enter a first int. number ... ");
+	    printf("enter a first int. number  (and then ENTER) ... ");
 	    res = scanf("%d", &var1);
-	    printf("enter a second int. number ... ");
+	    printf("enter a second int. number (and then ENTER)... ");
 	    res = scanf("%d", &var2);
 
 	    add = var1 + var2;
