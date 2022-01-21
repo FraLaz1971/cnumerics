@@ -12,9 +12,11 @@ int main(void)
     printf("Size of long double is %ld BYTES\n", sizeof(long double)); 
     puts("");
     printf("FLT_RADIX    = %d\n", FLT_RADIX);
+/*
 #ifdef __GNUC__
     printf("DECIMAL_DIG  = %d\n", DECIMAL_DIG);
 #endif
+*/
     printf("FLT_MIN      = %e\n", FLT_MIN);
     printf("FLT_MAX      = %e\n", FLT_MAX);
     printf("FLT_EPSILON  = %e\n", FLT_EPSILON);
@@ -25,9 +27,11 @@ int main(void)
     printf("FLT_MAX_EXP     = %d\n",  FLT_MAX_EXP);
     printf("FLT_MAX_10_EXP  = %d\n",  FLT_MAX_10_EXP);
     printf("FLT_ROUNDS      = %d\n",  FLT_ROUNDS);
+/*
 #ifdef __GNUC__
     printf("FLT_EVAL_METHOD = %d\n",  FLT_EVAL_METHOD);
 #endif
+*/
     puts("");
     printf("DBL_MIN      = %e\n", DBL_MIN);
     printf("DBL_MAX      = %e\n", DBL_MAX);
