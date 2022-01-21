@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 int main(){
 	int var1,var2, add, sub, mult, div,res,i;
 	printf("****************************************\n");
