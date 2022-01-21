@@ -20,10 +20,10 @@ int main(){
 	    div = var1 / var2;
 	    sub = var1 - var2;
 
-	    if (sub<0)
-	        printf("NOTICE: %d is less than %d \n",var1, var2);
+	    if (sub<0){
+	        printf("\nNOTICE: %d is less than %d \n",var1, var2);
 	        printf("the result of %d - %d will be negative \n",var1, var2);
-
+	    }
 	    printf("WARNING! operator / is integer division (without the fractional part)\n");
 	    printf("add  result: %d + %d = %d\n", var1, var2, add  );
 	    printf("sub  result: %d - %d = %d\n", var1, var2, sub  );
