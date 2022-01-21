@@ -1,0 +1,402 @@
+LDFLAGS =  -L"."  -g
+LIBS = 
+INCS =  -I"."
+CXXINCS =  -I"include"
+CXXFLAGS = $(CXXINCS)   -g
+CFLAGS = $(INCS) -std=c99  -g
+RM = rm -f
+CXX  = i686-w64-mingw32-g++ -g -O2
+CC   = i686-w64-mingw32-gcc -g -O2
+SRC = $(wildcard *.c)
+OBJ = *.o
+CPPFLAGS = -Iinclude
+LDFLAGS = -Llib -lm
+TARGET0 = 1_div_cos.exe
+TARGET1 = 1_div_sin.exe
+TARGET2 = 3pcircle.exe
+TARGET3 = accuracy.exe
+TARGET4 = alphanums.exe
+TARGET5 = arrays.exe
+TARGET6 = arrays2.exe
+TARGET7 = astroconst.exe
+TARGET8 = bases.exe
+TARGET9 = bignum.exe
+TARGET10 = blowup.exe
+TARGET11 = c2f.exe
+TARGET12 = checkprimenoret.exe
+TARGET13 = checkprimeret.exe
+TARGET14 = checkprimevoid.exe
+TARGET15 = conbinatorics.exe
+TARGET16 = const.exe
+TARGET17 = cosin.exe
+TARGET18 = couples.exe
+TARGET19 = cowlegs.exe
+TARGET20 = decodd.exe
+TARGET21 = deg2rad.exe
+TARGET22 = dices.exe
+TARGET23 = doublerow.exe
+TARGET24 = doublevec.exe
+TARGET25 = e_what.exe
+TARGET26 = f2c.exe
+TARGET27 = floaterr.exe
+TARGET28 = floatformats.exe
+TARGET29 = floatlimits.exe
+TARGET30 = fpow.exe
+TARGET31 = fun1.exe
+TARGET32 = gimme_five.exe
+TARGET33 = gimme_numbers.exe
+TARGET34 = gravity.exe
+TARGET35 = hyperbola.exe
+TARGET36 = incodd.exe
+TARGET37 = intlimits.exe
+TARGET38 = lights2.exe
+TARGET39 = limits.exe
+TARGET40 = loopbyte.exe
+TARGET41 = loopint.exe
+TARGET42 = max.exe
+TARGET43 = parabola.exe
+TARGET44 = parpow.exe
+TARGET45 = pi.exe
+TARGET46 = pow.exe
+TARGET47 = precision.exe
+TARGET48 = predecodd.exe
+TARGET49 = preincodd.exe
+TARGET50 = printval.exe
+TARGET51 = printwidth.exe
+TARGET52 = proc2dvec.exe
+TARGET53 = random1.exe
+TARGET54 = random2.exe
+TARGET55 = realarrays.exe
+TARGET56 = rndicples.exe
+TARGET57 = rndrcples.exe
+TARGET58 = shares.exe
+TARGET59 = show_pt.exe
+TARGET60 = simpshares.exe
+TARGET61 = sin.exe
+TARGET62 = sizes.exe
+TARGET63 = solvequad.exe
+TARGET64 = squares.exe
+TARGET65 = statsn.exe
+TARGET66 = sum10.exe
+TARGET67 = sum4co.exe
+TARGET68 = sumn.exe
+TARGET69 = taxes.exe
+TARGET70 = test_limits.exe
+TARGET71 = toobig.exe
+TARGET72 = trial.exe
+TARGET73 = typesize.exe
+TARGET74 = ugravity.exe
+TARGET75 = voidprint5.exe
+TARGETS = voidprint5.exe ugravity.exe typesize.exe trial.exe toobig.exe test_limits.exe taxes.exe sumn.exe sum4co.exe sum10.exe statsn.exe squares.exe solvequad.exe sizes.exe sin.exe simpshares.exe show_pt.exe shares.exe rndrcples.exe rndicples.exe realarrays.exe random2.exe random1.exe proc2dvec.exe printwidth.exe printval.exe preincodd.exe predecodd.exe precision.exe pow.exe pi.exe parpow.exe parabola.exe max.exe loopint.exe loopbyte.exe limits.exe lights2.exe intlimits.exe incodd.exe hyperbola.exe gravity.exe gimme_numbers.exe gimme_five.exe fun1.exe fpow.exe floatlimits.exe floatformats.exe floaterr.exe f2c.exe e_what.exe doublevec.exe doublerow.exe dices.exe deg2rad.exe decodd.exe cowlegs.exe couples.exe cosin.exe const.exe conbinatorics.exe checkprimevoid.exe checkprimeret.exe checkprimenoret.exe c2f.exe blowup.exe bignum.exe bases.exe astroconst.exe arrays2.exe arrays.exe alphanums.exe accuracy.exe 3pcircle.exe 1_div_sin.exe 1_div_cos.exe
+all: $(TARGETS)
+$(TARGET0).o: 1_div_cos.c
+	$(CC) -c   $< -o 1_div_cos.o $(CPPFLAGS)
+$(TARGET0): 1_div_cos.o
+	$(CC) -o 1_div_cos.exe $< $(LDFLAGS)
+$(TARGET1).o: 1_div_sin.c
+	$(CC) -c   $< -o 1_div_sin.o $(CPPFLAGS)
+$(TARGET1): 1_div_sin.o
+	$(CC) -o 1_div_sin.exe $< $(LDFLAGS)
+$(TARGET2).o: 3pcircle.c
+	$(CC) -c   $< -o 3pcircle.o $(CPPFLAGS)
+$(TARGET2): 3pcircle.o
+	$(CC) -o 3pcircle.exe $< $(LDFLAGS)
+$(TARGET3).o: accuracy.c
+	$(CC) -c   $< -o accuracy.o $(CPPFLAGS)
+$(TARGET3): accuracy.o
+	$(CC) -o accuracy.exe $< $(LDFLAGS)
+$(TARGET4).o: alphanums.c
+	$(CC) -c   $< -o alphanums.o $(CPPFLAGS)
+$(TARGET4): alphanums.o
+	$(CC) -o alphanums.exe $< $(LDFLAGS)
+$(TARGET5).o: arrays.c
+	$(CC) -c   $< -o arrays.o $(CPPFLAGS)
+$(TARGET5): arrays.o
+	$(CC) -o arrays.exe $< $(LDFLAGS)
+$(TARGET6).o: arrays2.c
+	$(CC) -c   $< -o arrays2.o $(CPPFLAGS)
+$(TARGET6): arrays2.o
+	$(CC) -o arrays2.exe $< $(LDFLAGS)
+$(TARGET7).o: astroconst.c
+	$(CC) -c   $< -o astroconst.o $(CPPFLAGS)
+$(TARGET7): astroconst.o
+	$(CC) -o astroconst.exe $< $(LDFLAGS)
+$(TARGET8).o: bases.c
+	$(CC) -c   $< -o bases.o $(CPPFLAGS)
+$(TARGET8): bases.o
+	$(CC) -o bases.exe $< $(LDFLAGS)
+$(TARGET9).o: bignum.c
+	$(CC) -c   $< -o bignum.o $(CPPFLAGS)
+$(TARGET9): bignum.o
+	$(CC) -o bignum.exe $< $(LDFLAGS)
+$(TARGET10).o: blowup.c
+	$(CC) -c   $< -o blowup.o $(CPPFLAGS)
+$(TARGET10): blowup.o
+	$(CC) -o blowup.exe $< $(LDFLAGS)
+$(TARGET11).o: c2f.c
+	$(CC) -c   $< -o c2f.o $(CPPFLAGS)
+$(TARGET11): c2f.o
+	$(CC) -o c2f.exe $< $(LDFLAGS)
+$(TARGET12).o: checkprimenoret.c
+	$(CC) -c   $< -o checkprimenoret.o $(CPPFLAGS)
+$(TARGET12): checkprimenoret.o
+	$(CC) -o checkprimenoret.exe $< $(LDFLAGS)
+$(TARGET13).o: checkprimeret.c
+	$(CC) -c   $< -o checkprimeret.o $(CPPFLAGS)
+$(TARGET13): checkprimeret.o
+	$(CC) -o checkprimeret.exe $< $(LDFLAGS)
+$(TARGET14).o: checkprimevoid.c
+	$(CC) -c   $< -o checkprimevoid.o $(CPPFLAGS)
+$(TARGET14): checkprimevoid.o
+	$(CC) -o checkprimevoid.exe $< $(LDFLAGS)
+$(TARGET15).o: conbinatorics.c
+	$(CC) -c   $< -o conbinatorics.o $(CPPFLAGS)
+$(TARGET15): conbinatorics.o
+	$(CC) -o conbinatorics.exe $< $(LDFLAGS)
+$(TARGET16).o: const.c
+	$(CC) -c   $< -o const.o $(CPPFLAGS)
+$(TARGET16): const.o
+	$(CC) -o const.exe $< $(LDFLAGS)
+$(TARGET17).o: cosin.c
+	$(CC) -c   $< -o cosin.o $(CPPFLAGS)
+$(TARGET17): cosin.o
+	$(CC) -o cosin.exe $< $(LDFLAGS)
+$(TARGET18).o: couples.c
+	$(CC) -c   $< -o couples.o $(CPPFLAGS)
+$(TARGET18): couples.o
+	$(CC) -o couples.exe $< $(LDFLAGS)
+$(TARGET19).o: cowlegs.c
+	$(CC) -c   $< -o cowlegs.o $(CPPFLAGS)
+$(TARGET19): cowlegs.o
+	$(CC) -o cowlegs.exe $< $(LDFLAGS)
+$(TARGET20).o: decodd.c
+	$(CC) -c   $< -o decodd.o $(CPPFLAGS)
+$(TARGET20): decodd.o
+	$(CC) -o decodd.exe $< $(LDFLAGS)
+$(TARGET21).o: deg2rad.c
+	$(CC) -c   $< -o deg2rad.o $(CPPFLAGS)
+$(TARGET21): deg2rad.o
+	$(CC) -o deg2rad.exe $< $(LDFLAGS)
+$(TARGET22).o: dices.c
+	$(CC) -c   $< -o dices.o $(CPPFLAGS)
+$(TARGET22): dices.o
+	$(CC) -o dices.exe $< $(LDFLAGS)
+$(TARGET23).o: doublerow.c
+	$(CC) -c   $< -o doublerow.o $(CPPFLAGS)
+$(TARGET23): doublerow.o
+	$(CC) -o doublerow.exe $< $(LDFLAGS)
+$(TARGET24).o: doublevec.c
+	$(CC) -c   $< -o doublevec.o $(CPPFLAGS)
+$(TARGET24): doublevec.o
+	$(CC) -o doublevec.exe $< $(LDFLAGS)
+$(TARGET25).o: e_what.c
+	$(CC) -c   $< -o e_what.o $(CPPFLAGS)
+$(TARGET25): e_what.o
+	$(CC) -o e_what.exe $< $(LDFLAGS)
+$(TARGET26).o: f2c.c
+	$(CC) -c   $< -o f2c.o $(CPPFLAGS)
+$(TARGET26): f2c.o
+	$(CC) -o f2c.exe $< $(LDFLAGS)
+$(TARGET27).o: floaterr.c
+	$(CC) -c   $< -o floaterr.o $(CPPFLAGS)
+$(TARGET27): floaterr.o
+	$(CC) -o floaterr.exe $< $(LDFLAGS)
+$(TARGET28).o: floatformats.c
+	$(CC) -c   $< -o floatformats.o $(CPPFLAGS)
+$(TARGET28): floatformats.o
+	$(CC) -o floatformats.exe $< $(LDFLAGS)
+$(TARGET29).o: floatlimits.c
+	$(CC) -c   $< -o floatlimits.o $(CPPFLAGS)
+$(TARGET29): floatlimits.o
+	$(CC) -o floatlimits.exe $< $(LDFLAGS)
+$(TARGET30).o: fpow.c
+	$(CC) -c   $< -o fpow.o $(CPPFLAGS)
+$(TARGET30): fpow.o
+	$(CC) -o fpow.exe $< $(LDFLAGS)
+$(TARGET31).o: fun1.c
+	$(CC) -c   $< -o fun1.o $(CPPFLAGS)
+$(TARGET31): fun1.o
+	$(CC) -o fun1.exe $< $(LDFLAGS)
+$(TARGET32).o: gimme_five.c
+	$(CC) -c   $< -o gimme_five.o $(CPPFLAGS)
+$(TARGET32): gimme_five.o
+	$(CC) -o gimme_five.exe $< $(LDFLAGS)
+$(TARGET33).o: gimme_numbers.c
+	$(CC) -c   $< -o gimme_numbers.o $(CPPFLAGS)
+$(TARGET33): gimme_numbers.o
+	$(CC) -o gimme_numbers.exe $< $(LDFLAGS)
+$(TARGET34).o: gravity.c
+	$(CC) -c   $< -o gravity.o $(CPPFLAGS)
+$(TARGET34): gravity.o
+	$(CC) -o gravity.exe $< $(LDFLAGS)
+$(TARGET35).o: hyperbola.c
+	$(CC) -c   $< -o hyperbola.o $(CPPFLAGS)
+$(TARGET35): hyperbola.o
+	$(CC) -o hyperbola.exe $< $(LDFLAGS)
+$(TARGET36).o: incodd.c
+	$(CC) -c   $< -o incodd.o $(CPPFLAGS)
+$(TARGET36): incodd.o
+	$(CC) -o incodd.exe $< $(LDFLAGS)
+$(TARGET37).o: intlimits.c
+	$(CC) -c   $< -o intlimits.o $(CPPFLAGS)
+$(TARGET37): intlimits.o
+	$(CC) -o intlimits.exe $< $(LDFLAGS)
+$(TARGET38).o: lights2.c
+	$(CC) -c   $< -o lights2.o $(CPPFLAGS)
+$(TARGET38): lights2.o
+	$(CC) -o lights2.exe $< $(LDFLAGS)
+$(TARGET39).o: limits.c
+	$(CC) -c   $< -o limits.o $(CPPFLAGS)
+$(TARGET39): limits.o
+	$(CC) -o limits.exe $< $(LDFLAGS)
+$(TARGET40).o: loopbyte.c
+	$(CC) -c   $< -o loopbyte.o $(CPPFLAGS)
+$(TARGET40): loopbyte.o
+	$(CC) -o loopbyte.exe $< $(LDFLAGS)
+$(TARGET41).o: loopint.c
+	$(CC) -c   $< -o loopint.o $(CPPFLAGS)
+$(TARGET41): loopint.o
+	$(CC) -o loopint.exe $< $(LDFLAGS)
+$(TARGET42).o: max.c
+	$(CC) -c   $< -o max.o $(CPPFLAGS)
+$(TARGET42): max.o
+	$(CC) -o max.exe $< $(LDFLAGS)
+$(TARGET43).o: parabola.c
+	$(CC) -c   $< -o parabola.o $(CPPFLAGS)
+$(TARGET43): parabola.o
+	$(CC) -o parabola.exe $< $(LDFLAGS)
+$(TARGET44).o: parpow.c
+	$(CC) -c   $< -o parpow.o $(CPPFLAGS)
+$(TARGET44): parpow.o
+	$(CC) -o parpow.exe $< $(LDFLAGS)
+$(TARGET45).o: pi.c
+	$(CC) -c   $< -o pi.o $(CPPFLAGS)
+$(TARGET45): pi.o
+	$(CC) -o pi.exe $< $(LDFLAGS)
+$(TARGET46).o: pow.c
+	$(CC) -c   $< -o pow.o $(CPPFLAGS)
+$(TARGET46): pow.o
+	$(CC) -o pow.exe $< $(LDFLAGS)
+$(TARGET47).o: precision.c
+	$(CC) -c   $< -o precision.o $(CPPFLAGS)
+$(TARGET47): precision.o
+	$(CC) -o precision.exe $< $(LDFLAGS)
+$(TARGET48).o: predecodd.c
+	$(CC) -c   $< -o predecodd.o $(CPPFLAGS)
+$(TARGET48): predecodd.o
+	$(CC) -o predecodd.exe $< $(LDFLAGS)
+$(TARGET49).o: preincodd.c
+	$(CC) -c   $< -o preincodd.o $(CPPFLAGS)
+$(TARGET49): preincodd.o
+	$(CC) -o preincodd.exe $< $(LDFLAGS)
+$(TARGET50).o: printval.c
+	$(CC) -c   $< -o printval.o $(CPPFLAGS)
+$(TARGET50): printval.o
+	$(CC) -o printval.exe $< $(LDFLAGS)
+$(TARGET51).o: printwidth.c
+	$(CC) -c   $< -o printwidth.o $(CPPFLAGS)
+$(TARGET51): printwidth.o
+	$(CC) -o printwidth.exe $< $(LDFLAGS)
+$(TARGET52).o: proc2dvec.c
+	$(CC) -c   $< -o proc2dvec.o $(CPPFLAGS)
+$(TARGET52): proc2dvec.o
+	$(CC) -o proc2dvec.exe $< $(LDFLAGS)
+$(TARGET53).o: random1.c
+	$(CC) -c   $< -o random1.o $(CPPFLAGS)
+$(TARGET53): random1.o
+	$(CC) -o random1.exe $< $(LDFLAGS)
+$(TARGET54).o: random2.c
+	$(CC) -c   $< -o random2.o $(CPPFLAGS)
+$(TARGET54): random2.o
+	$(CC) -o random2.exe $< $(LDFLAGS)
+$(TARGET55).o: realarrays.c
+	$(CC) -c   $< -o realarrays.o $(CPPFLAGS)
+$(TARGET55): realarrays.o
+	$(CC) -o realarrays.exe $< $(LDFLAGS)
+$(TARGET56).o: rndicples.c
+	$(CC) -c   $< -o rndicples.o $(CPPFLAGS)
+$(TARGET56): rndicples.o
+	$(CC) -o rndicples.exe $< $(LDFLAGS)
+$(TARGET57).o: rndrcples.c
+	$(CC) -c   $< -o rndrcples.o $(CPPFLAGS)
+$(TARGET57): rndrcples.o
+	$(CC) -o rndrcples.exe $< $(LDFLAGS)
+$(TARGET58).o: shares.c
+	$(CC) -c   $< -o shares.o $(CPPFLAGS)
+$(TARGET58): shares.o
+	$(CC) -o shares.exe $< $(LDFLAGS)
+$(TARGET59).o: show_pt.c
+	$(CC) -c   $< -o show_pt.o $(CPPFLAGS)
+$(TARGET59): show_pt.o
+	$(CC) -o show_pt.exe $< $(LDFLAGS)
+$(TARGET60).o: simpshares.c
+	$(CC) -c   $< -o simpshares.o $(CPPFLAGS)
+$(TARGET60): simpshares.o
+	$(CC) -o simpshares.exe $< $(LDFLAGS)
+$(TARGET61).o: sin.c
+	$(CC) -c   $< -o sin.o $(CPPFLAGS)
+$(TARGET61): sin.o
+	$(CC) -o sin.exe $< $(LDFLAGS)
+$(TARGET62).o: sizes.c
+	$(CC) -c   $< -o sizes.o $(CPPFLAGS)
+$(TARGET62): sizes.o
+	$(CC) -o sizes.exe $< $(LDFLAGS)
+$(TARGET63).o: solvequad.c
+	$(CC) -c   $< -o solvequad.o $(CPPFLAGS)
+$(TARGET63): solvequad.o
+	$(CC) -o solvequad.exe $< $(LDFLAGS)
+$(TARGET64).o: squares.c
+	$(CC) -c   $< -o squares.o $(CPPFLAGS)
+$(TARGET64): squares.o
+	$(CC) -o squares.exe $< $(LDFLAGS)
+$(TARGET65).o: statsn.c
+	$(CC) -c   $< -o statsn.o $(CPPFLAGS)
+$(TARGET65): statsn.o
+	$(CC) -o statsn.exe $< $(LDFLAGS)
+$(TARGET66).o: sum10.c
+	$(CC) -c   $< -o sum10.o $(CPPFLAGS)
+$(TARGET66): sum10.o
+	$(CC) -o sum10.exe $< $(LDFLAGS)
+$(TARGET67).o: sum4co.c
+	$(CC) -c   $< -o sum4co.o $(CPPFLAGS)
+$(TARGET67): sum4co.o
+	$(CC) -o sum4co.exe $< $(LDFLAGS)
+$(TARGET68).o: sumn.c
+	$(CC) -c   $< -o sumn.o $(CPPFLAGS)
+$(TARGET68): sumn.o
+	$(CC) -o sumn.exe $< $(LDFLAGS)
+$(TARGET69).o: taxes.c
+	$(CC) -c   $< -o taxes.o $(CPPFLAGS)
+$(TARGET69): taxes.o
+	$(CC) -o taxes.exe $< $(LDFLAGS)
+$(TARGET70).o: test_limits.c
+	$(CC) -c   $< -o test_limits.o $(CPPFLAGS)
+$(TARGET70): test_limits.o
+	$(CC) -o test_limits.exe $< $(LDFLAGS)
+$(TARGET71).o: toobig.c
+	$(CC) -c   $< -o toobig.o $(CPPFLAGS)
+$(TARGET71): toobig.o
+	$(CC) -o toobig.exe $< $(LDFLAGS)
+$(TARGET72).o: trial.c
+	$(CC) -c   $< -o trial.o $(CPPFLAGS)
+$(TARGET72): trial.o
+	$(CC) -o trial.exe $< $(LDFLAGS)
+$(TARGET73).o: typesize.c
+	$(CC) -c   $< -o typesize.o $(CPPFLAGS)
+$(TARGET73): typesize.o
+	$(CC) -o typesize.exe $< $(LDFLAGS)
+$(TARGET74).o: ugravity.c
+	$(CC) -c   $< -o ugravity.o $(CPPFLAGS)
+$(TARGET74): ugravity.o
+	$(CC) -o ugravity.exe $< $(LDFLAGS)
+$(TARGET75).o: voidprint5.c
+	$(CC) -c   $< -o voidprint5.o $(CPPFLAGS)
+$(TARGET75): voidprint5.o
+	$(CC) -o voidprint5.exe $< $(LDFLAGS)
+install: all
+	mv $(TARGETS) bin
+.PHONY: clean
+clean:
+	rm -f $(OBJ) $(TARGETS) *.log
+distclean: clean
+	rm -f bin/* Makefile
