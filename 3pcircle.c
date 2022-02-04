@@ -264,9 +264,9 @@ int show_matrix(char ** margv, Circle *circ){
 }
 
 int set_run_par(int margc, char ** margv){
+    int count;
     run.argc = margc;
     run.argv = margv;
-    int count;
     for(count=0; count<=run.argc; count++){
             fprintf(stderr,"%s: run.argv[%i] = %s\n",run.argv[0], count, run.argv[count]);
     }

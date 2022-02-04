@@ -2,7 +2,7 @@
 #include <stdlib.h>
 	/* function declaration */
 #define EX_BADARGS 64
-int max(int num1, int num2);
+int mymax(int num1, int num2);
 
 int main (int argc, char *argv[]) {
 	/* local variable definition */
@@ -10,7 +10,7 @@ int main (int argc, char *argv[]) {
    	/* calling a function to get max value between two integers */
    if (argc == 3){
       a = atoi(argv[1]); b = atoi(argv[2]);
-      res = max(a,b);
+      res = mymax(a,b);
       fprintf(stderr, "%s: max(%d,%d)=",argv[0],a,b);
       printf("%d\n", res);
       return 0;
@@ -23,7 +23,7 @@ int main (int argc, char *argv[]) {
 }
 
 /* function implementation */
-int max(int num1, int num2){
+int mymax(int num1, int num2){
 	if (num1 > num2){
 		return num1;
 	} else {
