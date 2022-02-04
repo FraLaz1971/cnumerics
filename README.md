@@ -354,8 +354,8 @@ the file err.log
     ├── sin.c
     ├── sin.svg
     ├── sizes.c
-    ├── solvemorequad.sh ----> solve more quadratic equations given a file of coefficients
-    ├── solvequad.c ----> solve quadratic equation ax^2 + bx + c = 0 given (a,b,c)
+    ├── solvemorequad.sh ---> solve more quadratic equations given a data file
+    ├── solvequad.c ---> solve quadratic equation ax^2 + bx + c = 0 given (a,b,c)
     ├── squares.c
     ├── stats14.csv
     ├── stats14.dat
