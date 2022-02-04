@@ -236,23 +236,24 @@ the file err.log
 ### that can be saved on a file and used as input for fpow
 	./rndicples <<< "-5 12 6" > invals6.txt
 	./fpow invals6.txt 2>err.log
-
+###
+    . solvemorequad.sh quadcoeff.asc
 ### list of the programs
-
-    tree ../cnumerics
+    francesco@squirrel:~/projects/c_cpp/cnumerics$ tree ../cnumerics
+    ../cnumerics
     ├── 1_div_cos.c
     ├── 1divcosmin3.svg
     ├── 1divcos.svg
     ├── 1_div_sin.c
     ├── 3pcircle.c
     ├── accuracy.c
-    ├── alphanums
     ├── alphanums.c
     ├── arrays2.c
     ├── arrays.c
     ├── astroconst.c
     ├── bases.c
     ├── bignum.c
+    ├── bin
     ├── blowup.c
     ├── c2f.c
     ├── checkprimenoret.c
@@ -315,9 +316,7 @@ the file err.log
     ├── linescross.plt
     ├── loopbyte.c
     ├── loopint.c
-    ├── Makefile
-    ├── Makefile.lnx
-    ├── Makefile.msvc
+    ├── max.c
     ├── outdata.dat
     ├── out.txt
     ├── parabola.c
@@ -334,12 +333,15 @@ the file err.log
     ├── preincodd.c
     ├── printval.c
     ├── printwidth.c
+    ├── proc2dvec.c
     ├── pspp2statn.sh
+    ├── quadcoeff.asc
     ├── random1.c
     ├── random2.c
     ├── README
     ├── README-c-integers
     ├── README.md
+    ├── README.txt
     ├── README.win
     ├── realarrays.c
     ├── rndicples.c
@@ -352,7 +354,9 @@ the file err.log
     ├── sin.c
     ├── sin.svg
     ├── sizes.c
-    ├── solvequad.c
+    ├── solvemorequad.sh ----> solve more quadratic equations given a file of coefficients
+    ├── solvequad.c ----> solve quadratic equation ax^2 + bx + c = 0 given (a,b,c)
+    ├── squares.c
     ├── stats14.csv
     ├── stats14.dat
     ├── stats14pspp.txt
@@ -374,9 +378,12 @@ the file err.log
     ├── taxes.c
     ├── test_limits.c
     ├── toobig.c
+    ├── trial.c
     ├── typesize.c
     ├── ugravity.c
     ├── uninstall.sh
     ├── utility.h
     ├── voidprint5.c
     └── words.txt
+
+    1 directory, 143 files
