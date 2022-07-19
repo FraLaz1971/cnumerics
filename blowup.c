@@ -17,5 +17,10 @@ int main()
     {
         printf("Okay. Whew!\n");
     }
+        printf("press enter\n");
+	e=getchar();
+	e=getchar();
+
+        printf("Bye!\n");
     return(0);
 }
