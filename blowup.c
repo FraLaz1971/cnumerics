@@ -1,14 +1,13 @@
 #include <stdio.h>
 int main()
 {
-    char c,d, e;
+    char c, e; int ret, d;
     printf("Enter the character code for self-destruct (and then ENTER)? ");
-    c=getchar();
-    e=getchar();
+    ret = scanf("%c", &c);
     /* use fpurge(stdin) in unix */
     printf("Input number code to confirm self-destruct (and then ENTER)?");
-    d=getchar();
-    if(c=='G' && d=='0')
+    ret = scanf("%d", &d);
+    if(c=='G' && d==0)
     {
         printf("AUTO DESTRUCT ENABLED!\n");
         printf("Bye!\n");
@@ -17,10 +16,8 @@ int main()
     {
         printf("Okay. Whew!\n");
     }
-        printf("press enter\n");
-	e=getchar();
-	e=getchar();
-
+        printf("press a key and then enter\n");
+        ret = scanf("%c", &e);
         printf("Bye!\n");
     return(0);
 }
