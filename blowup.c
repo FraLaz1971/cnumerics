@@ -17,7 +17,7 @@ int main()
         printf("Okay. Whew!\n");
     }
         printf("press a key and then enter\n");
-        ret = scanf("%c", &e);
+        ret = scanf("%s", &e);
         printf("Bye!\n");
     return(0);
 }
