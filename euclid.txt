@@ -1,0 +1,19 @@
+Euclid algorithm for gcd
+
+GCD of m,n
+(e.g. m=10,n=20)
+- swap
+m=20,n=10
+if n=m --> GCD=n
+m/n=q+r-->q*n+r=m
+if r=0-->n=GCD
+(in our case 20/10=2+0-->GCD=10)
+
+m=32,m=24
+n=m? no
+m/n=1,r=8,1*24+8=32=m
+m<--n=24
+n<--r=8
+& go-on
+24/8=3,r=0,3*8+0=24
+8=GCD(m,n)
