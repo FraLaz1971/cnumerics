@@ -41,10 +41,13 @@ int main(int argc, char **argv){
       mret = is_inside(&P, &C, R);
       if (mret==1){
         fprintf(stderr,"point: %f,%f,%f is inside\n",P.x,P.y,P.z);
+        fprintf(ofp2,"%4.1f,%4.1f,%4.1f\n",P.x,P.y,P.z);
       } else if (mret==0){
         fprintf(stderr,"point: %f,%f,%f is on the surface\n",P.x,P.y,P.z);
+        fprintf(ofp3,"%4.1f,%4.1f,%4.1f\n",P.x,P.y,P.z);
       } else {
         fprintf(stderr,"point: %f,%f,%f is outside\n",P.x,P.y,P.z);
+        fprintf(ofp1,"%4.1f,%4.1f,%4.1f\n",P.x,P.y,P.z);
       }
     }
     fclose(ifp);fclose(ofp1);fclose(ofp2);fclose(ofp3);
