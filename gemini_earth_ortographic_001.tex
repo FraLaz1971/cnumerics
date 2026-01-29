@@ -1,0 +1,175 @@
+\documentclass[a4paper,14pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+%opening
+\title{Gemini notes on Earth Orthographic geo-referencing}
+\author{Francesco Lazzarotto (OAPD INAF) mailto:francesco.lazzarotto@inaf.it}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+\section{Introduction}
+le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
+\section{equazione di una sfera nello spazio}
+L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
+\(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\), \\
+dove il centro è \((-a/2,-b/2,-c/2)\) \\
+e il raggio si ricava dalla condizione \(a^{2}+b^{2}+c^{2}-4d\ge 0\).\\
+\subsubsection{Forma canonica (più usata)}
+\begin{itemize}
+\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\)
+\item Centro:  \(C(x_{0},y_{0},z_{0})\)
+\item Raggio:  \(R\)
+\end{itemize}
+\subsubsection{Forma generale}
+\begin{itemize}
+\item \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\)
+\item Centro:  \(C(-a/2,-b/2,-c/2)\)
+\item Raggio:  \(R=\sqrt{a^{2}/4+b^{2}/4+c^{2}/4-d}\) (o \(\sqrt{(-a/2)^{2}+(-b/2)^{2}+(-c/2)^{2}-d}\)).
+\end{itemize}
+\subsubsection{Esempio}
+\begin{itemize}
+\item Se centro \(C(1,2,-3)\) e raggio \(R=3\):
+\item \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\)
+\item \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).\\
+\end{itemize}
+\subsubsection{Per l'interno della sfera si usa una disequazione}
+\begin{itemize}
+\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).
+\end{itemize}
+\subsection{Equazione cartesiana} l'equazione cartesiana di una sfera con centro in \( (x_0, y_0, z_0) \) e raggio R è \\
+\( (x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = R^2. \) \\
+L'equazione cartesiana di una sfera nello spazio 3D, con centro \(C(x_{0},y_{0},z_{0})\) e raggio \(R>0\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
+Questa equazione rappresenta il luogo dei punti \((x,y,z)\) equidistanti dal centro, con la somma dei quadrati delle differenze coordinate pari al quadrato del raggio.
+\subsection{Forma Standard e Note}
+Equazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
+Centro: \(C=(x_{0},y_{0},z_{0})\). \\
+Raggio: \(R\). \\
+Forma estesa: \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\). \\
+Centro dalla forma estesa: \(C=\left(-\frac{a}{2},-\frac{b}{2},-\frac{c}{2}\right)\).\\
+Raggio dalla forma estesa: \(R=\sqrt{\frac{a^{2}}{4}+\frac{b^{2}}{4}+\frac{c^{2}}{4}-d}\) \\
+Una sfera è una quadrica caratterizzata da termini quadratici \(x^{2},y^{2},z^{2}\) con coefficienti uguali e assenza di termini misti \(xy,xz,yz\). Se il raggio è \(R=0\), l'equazione rappresenta un punto.
+\section{EUMETSAT Technical Parameters}
+Ho recuperato i parametri esatti utilizzati da EUMETSAT per mappare i dati grezzi in immagini Full Disk come la tua:
+\begin{itemize}
+\item Longitudine del Centro (Nominale): 0.0°
+\item Latitudine del Centro: 0.0° (Equatore)
+\item Distanza Satellite dal centro della Terra: \( (H=42164.0\,km)\)
+\item Raggio Equatoriale Terra: \( (R_{eq}=6378.137\,km)\) (modello standard WGS84)
+\end{itemize}
+Il tuo script gnuplot utilizza dei fattori di scala fissi (544.5 e 541.5). Questi valori sono approssimativi e non tengono conto della curvatura esatta e dell'altezza del satellite nel sistema di coordinate EUMETSAT.
+\section{The Solution}:
+Usa i parametri standard Il modo corretto per risolvere il problema è utilizzare i parametri orbitali e terrestri standard per calcolare la relazione tra coordinate geografiche (lat/lon) e coordinate immagine (x/y in pixel), invece di usare fattori di scala fissi. I file di dati EUMETSAT di Livello 1c utilizzano un sistema di riferimento standard. Se il tuo script può incorporare una proiezione geostazionaria esatta (a volte chiamata "viewpoint perspective" o "satellite projection"), funzionerà perfettamente con 0°,0°. Se devi continuare a usare lo script attuale, è più probabile che tu debba aggiustare la distanza nel calcolo della proiezione, non le coordinate centrali.
+\section{The correct formula} per la proiezione geostazionaria normalizzata, che utilizza l'altezza del satellite e il raggio terrestre invece dei valori approssimativi in pixel.
+Il problema che riscontri deriva dall'uso di una sfera perfetta e di fattori di scala approssimativi nel tuo script. La Terra è un elissoide oblato (schiacciato ai poli), e la proiezione geostazionaria tiene conto di questa forma. Qui di seguito trovi le formule esatte per la proiezione geostazionaria normalizzata, che mappano le coordinate geografiche (\(\phi ,\lambda \)) in coordinate di proiezione normalizzate (\(x,y\)).
+\section{Parametri Fondamentali (WGS84)}
+Sono usati questi valori precisi nel programma C e Gnuplot:
+\begin{itemize}
+\item Raggio Equatoriale: \(R_{eq}=6378.137\,km \)
+\item Raggio Polare: \(R_{p}=6356.7523\,km\)
+\item Distanza Terra-Satellite (dal centro): \(H=42164.0\,km\)
+\item Longitudine del Centro (\(\lambda _{0}\)): \(0.0^{\circ }\)
+\item Latitudine del Centro (\(\phi _{0}\)): \(0.0^{\circ }\)
+\item Fattore di schiacciamento inverso: \(f^{-1}=298.257223563\)
+\end{itemize}
+\section{Formule per la Proiezione Geostazionaria Normalizzata}
+La proiezione geostazionaria normalizzata è un sistema di coordinate cartografiche utilizzato per mappare immagini dai satelliti GEO, posizionati a circa 35.786 km sopra l'equatore. Questa proiezione trasforma angoli di visione (elevazione/azimut) in coordinate cartesiane normalizzate \((x,y)\), spesso scalate per rappresentare la vista disco-piena della Terra, semplificando l'analisi meteorologica e di telecomunicazione.
+Caratteristiche Principali:
+\begin{itemize}
+\item Punto di vista: Il satellite è fisso rispetto alla superficie terrestre, solitamente posizionato sopra l'equatore a una specifica longitudine.
+\item Normalizzazione: Le coordinate \(x\) e \(y\) sono spesso normalizzate in un intervallo, ad esempio, tra \(-1\) e \(1\) o basate sulla dimensione del disco terrestre visto dal satellite.
+\item Applicazioni: Ampiamente usata nel trattamento dati dei satelliti meteorologici (come Meteosat) per visualizzare l'intera faccia terrestre visibile in un'unica immagine.
+\item Distorsione: Aumenta significativamente verso i bordi del disco terrestre (limbo), dove la curvatura della Terra è più pronunciata.
+\end{itemize}
+La proiezione mappa il punto sub-satellitare al centro \((0,0)\) e i bordi della Terra ai limiti definiti dalla distanza del satellite
+Queste formule calcolano prima le coordinate cartesiane 3D (\(r_{x},r_{y},r_{z}\)) del punto sulla superficie terrestre, e poi le proiettano in coordinate piane (\(x,y\)).
+\begin{enumerate}
+\item Coordinate Cartesiane del punto sulla superficie (Latitudine \(\phi \), Longitudine \(\lambda \))\\
+Converti prima latitudine e longitudine in radianti.\\
+\(r_{x}=R_{eq}\cos (\phi )\cos (\lambda )\) \\
+\(r_{y}=R_{eq}\cos (\phi )\sin (\lambda )\) \\
+\(r_{z}=R_{p}\sin (\phi )\) \\
+(Nota: queste formule assumono una sfera per semplicità; per l'ellissoide, sono leggermente più complese, ma queste sono spesso sufficienti per la vista ortografica).
+\item Calcoli Intermedi per la Proiezione \\
+Definisci i valori relativi al punto sub-satellite (\(\phi _{0},\lambda _{0}\)): \\
+\(S_{1}=H-(r_{x}\cos (\phi _{0})\cos (\lambda _{0})+r_{y}\cos (\phi _{0})\sin (\lambda _{0})+r_{z}\sin (\phi _{0}))\) \\
+\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\) \\
+\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
+\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\) \\
+(Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).
+\item Coordinate Piane Proiettate (\(x,y\))\\
+Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
+\(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
+\(y=\frac{r_{x}\sin (\phi _{0})\cos (\lambda _{0})+r_{y}\sin (\phi _{0})\sin (\lambda _{0})-r_{z}\cos (\phi _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)
+\item Conversione in Pixel \\
+Per convertire le coordinate normalizzate \((x,y)\) in coordinate pixel \((Px,Py)\) per la tua immagine specifica (che è circa 1089x1083 pixel), devi conoscere il centro in pixel (es. \(C_{x}=544,C_{y}=541\)) e un fattore di scala in pixel/radiante (questo è il pezzo che ti manca).
+EUMETSAT utilizza un fattore di scala angolare standard di circa 3712 pixel per radiante.
+\[Px=C_{x}+x\times FattoreScalaPixel\]
+\[Py=C_{y}-y\times FattoreScalaPixel\]
+\end{enumerate}
+Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°. Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?
+\clearpage
+\section{Parametric equation of the sphere}
+L'equazione parametrica è il modo più efficace per "disegnare" una sfera perché usa due angoli
+(come latitudine e longitudine) per mappare ogni punto della superficie.
+Ecco lo schema logico per non dimenticarla più:
+\begin{enumerate}
+\item I Componenti Per definire la sfera ti servono:
+\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.
+\(R\): Il Raggio.
+\(u,v\): I due Parametri (angoli).
+\item Lo Schema delle Coordinate L'equazione si basa sulle coordinate sferiche.
+Immagina di partire dal centro e muoverti sulla superficie:\\
+\(
+\begin{cases}
+x=c_{x}+R\cdot \cos (u)\cdot \cos (v)\\
+y=c_{y}+R\cdot \cos (u)\cdot \sin (v)\\
+z=c_{z}+R\cdot \sin (u)\\
+\end{cases}
+\)
+\item Significato degli Angoli (Cruciale per Gnuplot)
+Il segreto è capire come ruotano \(u\) e \(v\):
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Parametro} & \textbf{Analogia} & \textbf{Range standard} & \textbf{Funzione} \\
+\hline
+\(u\) & Latitudine & \([-\pi /2,\pi /2]\)& Controlla l'altezza (da Polo Sud a Polo Nord).\\
+\hline
+\(v\) & Longitudine & \([0,2\pi ]\)& Ruota attorno all'asse verticale (il giro completo).\\
+\hline
+\end{tabular}
+\caption{Angles of the sphere}
+\end{center}
+\end{table}
+\item Perché funziona? (Il trucco visivo)
+La componente \(z\) dipende solo da \(\sin (u)\). Se \(u=\pi /2\) (90°),
+allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)).
+Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli.
+All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero.
+\item Verifica rapida
+
+\end{enumerate}
+Se sommi i quadrati degli spostamenti dal centro:\((x-c_{x})^{2}+(y-c_{y})^{2}+(z-c_{z})^{2}\)
+sostituendo le parametriche otterrai sempre \(R^{2}\), che è l'equazione cartesiana della sfera.
+Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricordati di mantenere sempre
+\begin{verbatim}
+set view equal xyz
+\end{verbatim}
+per forzare la stessa scala su tutti gli assi.
+\section{References}
+\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+\nocite{*} % Insert publications even if they are not cited in the poster
+{
+\small
+\bibliography{cassis_001}{}
+\bibliographystyle{alpha}
+}
+
+\end{document}
+

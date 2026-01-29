@@ -1,0 +1,90 @@
+Per ottenere una sfera perfetta con un rapporto 1:1:1 in gnuplot, devi forzare le scale degli assi affinché siano uguali. Per impostazione predefinita, gnuplot scala ogni asse in modo indipendente per riempire il canvas, il che spesso "schiaccia" il risultato
+.
+Puoi correggere questo comportamento aggiungendo uno dei seguenti comandi al tuo script prima dell'istruzione splot:
+1. Il metodo moderno (più semplice)
+Dalle versioni più recenti di gnuplot, il comando più immediato è:
+gnuplot
+
+set isotropic
+
+Usa il codice con cautela.
+Questo comando regola automaticamente le proporzioni di tutti e tre gli assi affinché la lunghezza dell'unità sia la stessa ovunque (equivale a impostare sia set size ratio -1 che set view equal xyz).
+
+2. Il metodo classico
+Se usi una versione precedente o preferisci un controllo granulare, usa:
+gnuplot
+
+set view equal xyz
+
+Usa il codice con cautela.
+Questo forza gli assi X, Y e Z ad avere la stessa scala.
+3. Allineamento del piano XY
+Spesso la sfera sembra "schiacciata" o sospesa perché gnuplot aggiunge uno spazio predefinito sotto il piano Z. Per far partire la sfera correttamente dalla base del grafico, aggiungi:
+gnuplot
+
+set xyplane at 0
+
+uesto rimuove l'offset verticale tra il piano della griglia e l'origine dell'asse Z.
+Esempio di script corretto:
+gnuplot
+
+set parametric
+set isotropic      # Rende la sfera 1:1:1
+set xyplane at 0   # Rimuove l'offset alla base
+set urange [0:2*pi]
+set vrange [-pi/2:pi/2]
+set isosamples 30
+splot cos(u)*cos(v), sin(u)*cos(v), sin(v) with lines
+
+---
+equazione di una sfera nello spazio
+---
+L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. Se sviluppata, assume la forma generale \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\), dove il centro è \((-A/2,-B/2,-C/2)\) e il raggio si ricava dalla condizione \(A^{2}+B^{2}+C^{2}-4D\ge 0\).                   Forma canonica (più usata)    \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\) Centro:  \(C(x_{0},y_{0},z_{0})\) Raggio:  \(R\)               Forma generale    \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\) Centro:  \(C(-A/2,-B/2,-C/2)\) Raggio:  \(R=\sqrt{A^{2}/4+B^{2}/4+C^{2}/4-D}\) (o \(\sqrt{(-A/2)^{2}+(-B/2)^{2}+(-C/2)^{2}-D}\)).              Esempio    Se centro \(C(1,2,-3)\) e raggio \(R=3\): \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\) \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).                               Per l'interno della sfera    Si usa una disequazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).                  Geometria analitica nello spazio: sfera, ellissoide, paraboloide - Skuola.netSfera Equazione cartesiana: l'equazione cartesiana di una sfera con centro in (x_0, y_0, z_0) e raggio R è (x - x_0)^2 + (y - y_0) + (z - z_0) = R^2
+---
+(x - x_0)^2 + (y - y_0) + (z - z_0) = R^2
+ Se centro C(1, 2, −3) e raggio R = 3:
+• (x − 1)^2 + (y − 2)^2 + (z − (−3))^2 = 3^2
+• (x − 1)^2 + (y − 2)^2 + (z + 3)^2 = 9.
+
+
+L'equazione parametrica è il modo più efficace per "disegnare" una sfera perché usa due angoli 
+(come latitudine e longitudine) per mappare ogni punto della superficie. 
+Ecco lo schema logico per non dimenticarla più: 
+1. I Componenti Per definire la sfera ti servono: 
+\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.
+\(R\): Il Raggio.
+\(u,v\): I due Parametri (angoli). 
+2. Lo Schema delle Coordinate L'equazione si basa sulle coordinate sferiche. Immagina di partire dal centro e muoverti sulla superficie: 
+\(\begin{cases}x=c_{x}+R\cdot \cos (u)\cdot \cos (v)\\ y=c_{y}+R\cdot \cos (u)\cdot \sin (v)\\ z=c_{z}+R\cdot \sin (u)\end{cases}\)
+3. Significato degli Angoli (Cruciale per Gnuplot) 
+Il segreto è capire come ruotano \(u\) e \(v\): 
+Parametro AnalogiaRange standardFunzione
+\(u\)Latitudine\([-\pi /2,\pi /2]\)Controlla l'altezza (da Polo Sud a Polo Nord).
+\(v\)Longitudine\([0,2\pi ]\)Ruota attorno all'asse verticale (il giro completo).
+4. Perché funziona? (Il trucco visivo) 
+La componente \(z\) dipende solo da \(\sin (u)\). Se \(u=\pi /2\) (90°), 
+allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)).
+Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli. 
+All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero. 
+5. Verifica rapida 
+Se sommi i quadrati degli spostamenti dal centro:\((x-c_{x})^{2}+(y-c_{y})^{2}+(z-c_{z})^{2}\)
+sostituendo le parametriche otterrai sempre \(R^{2}\), che è l'equazione cartesiana della sfera. 
+Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricordati di mantenere sempre 
+set view equal xyz 
+per forzare la stessa scala su tutti gli assi.
+ora credo di ricordarmi dalle lezioni di matematica, è come ruotare uno spicchio sottile di semicirconferenza che va da 
+pi/2 a -pi/2 per 360° (2pi) ottenendo così tutta la sfera, giusto?Elaborazione in corso…Esatto, la tua memoria non ti 
+inganna! Hai centrato perfettamente l'aspetto geometrico. Immagina lo "spicchio" come un filo a forma di semicerchio 
+(la tua semicirconferenza che va da polo Nord a polo Sud): Lo Spicchio (Parametro \(u\)): 
+Muovendo \(u\) da \(-\pi /2\) a \(\pi /2\), stai "disegnando" quel singolo arco verticale (latitudine).
+La Rotazione (Parametro \(v\)): 
+Facendo ruotare questo arco attorno all'asse \(Z\) per un angolo \(v\) che va da \(0\) a \(2\pi \) (360°), 
+quell'arco "spazza" l'intero volume, generando la superficie della sfera. 
+È esattamente il concetto di solido di rotazione: La semicirconferenza è la tua generatrice.
+L'asse verticale (che passa per i poli) è l'asse di rotazione. 
+Curiosità tecnica:
+Proprio perché lo "spicchio" ruota attorno all'asse, in Gnuplot hai usato set parametric. 
+Gnuplot non fa altro che calcolare una griglia di punti facendo variare \(u\) e \(v\) a piccoli passi 
+(determinati da set isosamples), creando quella "rete" (mesh) che poi vedi come una sfera. 
+Per questo, se metti set isosamples 2, 360, vedresti solo 2 archi verticali, mentre con set isosamples 50, 50 
+ottieni una superficie bella liscia! 
