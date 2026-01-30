@@ -1,8 +1,8 @@
-/* This program convers the value of an angle from degrees to radians */
+/* This program converts the value of an angle from degrees to radians */
 #include <stdio.h>
 int main ()
 {
-   float Pi =  3.14159; int ret;
+   float Pi =  3.14159265; int ret;
    float degrees, radians;
    printf("Value of the angle in degrees?");
    ret = scanf("%f", &degrees); 

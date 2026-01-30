@@ -28,6 +28,8 @@ float deg2rad(unsigned short deg, unsigned char min, unsigned char sec);
 
 int main(int argc, char **argv){
   int i, mret;
+  char *outfile="few_capitals.csv";
+  FILE *ofp;
   struct Angle angle;
   struct Capital capitals[5];
   capitals[0].n=18 ;capitals[0].city="Baku";capitals[0].country="Azerbaijan";capitals[0].continent="Asia";capitals[0].Lat=40.366943;capitals[0].Lon=49.84;
@@ -37,11 +39,14 @@ int main(int argc, char **argv){
   capitals[4].n=92 ;capitals[4].city="Lisbon";capitals[4].country="Portugal";capitals[4].continent="Europe";capitals[4].Lat=38.728054;capitals[4].Lon=-9.15;
   printf("      city\tlat\tlon\n");
   printf("------------------------------\n");
+  ofp=fopen(outfile, "w");
+  fprintf(ofp,"#city,  Lat,  Lon\n");
   for(i=0;i<5;i++){
       printf("%10s\t%5.2f\t%5.2f\n",capitals[i].city,capitals[i].Lat,capitals[i].Lon);
+      fprintf(ofp,"%10s,%9.6f,%9.6f\n",capitals[i].city,capitals[i].Lat,capitals[i].Lon);
   }
   printf("------------------------------\n");
-
+  fclose(ofp);
   printf("The Latitude of %s is %4.2f (angle with decimals)\n",capitals[2].city,capitals[2].Lat);
   mret = decdeg2deg(capitals[2].Lat, &angle);
   printf("Or better is %d degrees %d minutes and %d seconds\n",angle.deg,angle.min,angle.sec);
@@ -65,12 +70,9 @@ int decdeg2deg (float dd, struct Angle *iangle) {
   int ret=0; float tf;
   iangle->deg=(int)dd;
   tf = (dd-iangle->deg)*60.0;
-  printf("tf=%4.2f\n",tf);
   iangle->min=(int)tf;
   tf = tf - iangle->min;
-  printf("tf=%4.2f\n",tf);
   iangle->sec=round(tf*60.0);
-  printf("sec=%u\n",iangle->sec);
   return ret;
 }
 
