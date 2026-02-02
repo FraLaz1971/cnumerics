@@ -1,0 +1,40 @@
+cnfile: geonorm001.conf
+#value,measure(unit)
+6378.137000 Req(km)
+6356.752300 Rp(km)
+42164.000000 H(km)
+ 0.000000 Lon(dd)
+ 0.000000 Lat(dd)
+298.257224 fm1
+
+Satellite position (rad): Lat= 0.000000, Lon= 0.000000
+Satellite position (km): X=42164.000, Y=    0.000, Z=    0.000
+
+points file: few_capitals.csv
+#Lat,Lon,city
+
+Lat=40.366943,rLat= 0.704536,Lon=49.840000,rLon= 0.869872,City=Baku
+rx=3134.061144,ry=3713.916687,rz=4117.144002
+Gamma(rad)=0.141119, Gamma(deg)=8.085538
+
+Lat=31.776699,rLat= 0.554608,Lon=35.236946,rLon= 0.615001,City=Jerusalem
+rx=4428.623757,ry=3128.329111,rz=3347.530077
+Gamma(rad)=0.120826, Gamma(deg)=6.922841
+
+Lat=41.899200,rLat= 0.731279,Lon=12.511666,rLon= 0.218370,City=Rome
+rx=4634.639307,ry=1028.464880,rz=4245.180066
+Gamma(rad)=0.115867, Gamma(deg)=6.638699
+
+Lat=59.437222,rLat= 1.037375,Lon=24.745277,rLon= 0.431887,City=Tallin
+rx=2945.373428,ry=1357.541366,rz=5473.624860
+Gamma(rad)=0.142816, Gamma(deg)=8.182778
+
+Lat=38.728054,rLat= 0.675932,Lon=-9.150000,rLon=-0.159698,City=Lisbon
+rx=4912.424630,ry=-791.240440,rz=3976.941292
+Gamma(rad)=0.108425, Gamma(deg)=6.212271
+#City,Lat(deg),Lon(deg),Gamma(deg),Gamma(rad)
+Baku,40.366943,49.840000,8.085538,0.141119
+Jerusalem,31.776699,35.236946,6.922841,0.120826
+Rome,41.899200,12.511666,6.638699,0.115867
+Tallin,59.437222,24.745277,8.182778,0.142816
+Lisbon,38.728054,-9.150000,6.212271,0.108425

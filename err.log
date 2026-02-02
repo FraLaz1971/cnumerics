@@ -1,0 +1,17 @@
+cnfile: geonorm001.conf
+#value,measure(unit)
+6378.137000 Req(km)
+6356.752300 Rp(km)
+42164.000000 H(km)
+ 0.000000 Lon(dd)
+ 0.000000 Lat(dd)
+298.257224 fm1
+
+Satellite position (rad): Lat= 0.000000, Lon= 0.000000
+
+points file: few_capitals.csv
+#Lat,Lon,city
+
+Lat=40.366943,rLat= 0.704536,Lon=49.840000,rLon= 0.869872,City=Baku
+rx=3134.061144,ry=3713.916687,rz=4117.144002
+WARNING: discriminant < 0 (=-1482769735.925780), punto non visibile!

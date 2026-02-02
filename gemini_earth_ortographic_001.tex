@@ -160,6 +160,26 @@ Il controllo della visibilità:\\
 Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile.\\
 In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) (circa \(8.7^{\circ }\) per la copertura globale).
 \end{enumerate}
+In cartografia satellitare e telerilevamento, l'
+angolo di Nadir (spesso indicato come Off-Nadir Angle o ONA) è l'angolo formato tra la linea che congiunge il sensore al punto osservato sulla Terra e la verticale perfetta che scende dal satellite verso il centro del pianeta (il Nadir).
+I concetti chiave legati a questo angolo includono:
+\begin{enumerate}
+\item Definizione e Geometria
+    Nadir (0°): Quando il satellite guarda esattamente verso il basso, l'angolo off-nadir è pari a 0°. Questa geometria offre la massima accuratezza geometrica e la minima distorsione.
+    Off-Nadir (>0°): Quando il sensore viene inclinato per osservare un'area non direttamente sottostante, l'angolo cresce. Valori comuni per immagini ad alta risoluzione si attestano tra 0° e 30°.
+\item Differenza tra Angoli
+Sebbene talvolta usati come sinonimi, esistono distinzioni tecniche importanti:
+    Look Angle (Angolo di vista): È l'angolo di inclinazione del sensore rispetto al Nadir dal punto di vista del satellite.
+    Incidence Angle (Angolo di incidenza): È l'angolo tra il raggio incidente e la normale alla superficie terrestre nel punto di osservazione. A causa della curvatura terrestre, l'angolo di incidenza è solitamente leggermente maggiore dell'angolo off-nadir.
+\item Impatto sulla Cartografia
+L'aumento dell'angolo off-nadir comporta diversi effetti:
+\begin{itemize}
+\item Risoluzione: I pixel si "allungano" (pixel stretching), riducendo la risoluzione spaziale effettiva.
+\item Distorsione Geometrica: Gli edifici alti sembrano "inclinarsi" (effetto building-lean), rendendo più complessa la georeferenziazione e la creazione di modelli 3D.
+\item Vantaggi Operativi: Permette una maggiore frequenza di rivisitazione (il satellite può fotografare un punto anche se non ci passa sopra esattamente) e facilita l'acquisizione di coppie stereoscopiche per la creazione di modelli digitali di elevazione (DEM).
+\end{itemize}
+Per applicazioni di precisione, si preferiscono angoli definiti Near-Nadir (<= 15°) o Tight-Nadir (<= 10°).
+\end{enumerate}
 \item Coordinate Piane Proiettate (\(x,y\))\\
 Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
 \(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
@@ -253,6 +273,50 @@ Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricorda
 set view equal xyz
 \end{verbatim}
 per forzare la stessa scala su tutti gli assi.
+\section{Azimutal angle}
+L'angolo azimutale \(\theta \) (chiamato spesso anche angolo di posizione) è l'angolo che identifica la "direzione" in cui si trova il punto rispetto al centro del disco terrestre, come se guardassi la Terra attraverso un mirino telescopico.\\
+Rappresentazione visiva (Vista dal Satellite)\\
+Immagina di essere sul satellite e di guardare verso il centro della Terra.\\
+Il centro del disco è l'origine \((0,0)\).\\
+\begin{verbatim}
+Nord (Direzione Polo Nord)
+               | 90° (+Y)
+               |
+               |     . P (Punto sulla Terra)
+               |    /
+               |   / d_piana (proporzionale a Gamma)
+               |  /
+               | /  Theta (Angolo Azimutale)
+---------------C----------------> Est (0° o +X)
+               | (Centro Terra)
+               |
+               |
+               | 270° (-Y)
+\end{verbatim}
+\section{projection to planar coordinates}
+\subsection{Come calcolare \(\theta \) dalle tue coordinate}
+Per calcolare questo angolo, devi guardare come il punto si sposta rispetto all'asse del satellite nelle direzioni laterali (Est-Ovest) e verticali (Nord-Sud).\\
+Dalle tue coordinate cartesiane \(S(S_{x},S_{y},S_{z})\) e \(P(r_{x},r_{y},r_{z})\), le "coordinate nel piano della camera" si ottengono proiettando il vettore \(P-S\) sugli assi locali del satellite.\\
+Per un satellite GEO a \((0,0)\), un modo semplificato e molto efficace è usare le coordinate del punto nel sistema del satellite:
+\begin{itemize}
+\item Spostamento Orizzontale (\(dx\)):\\
+È legato a \(r_{y}\) (longitudine).
+\item Spostamento Verticale (\(dy\)):\\
+È legato a \(r_{z}\) (latitudine).
+\end{itemize}
+Quindi:\\
+\(\theta =\>\mathrm{atan2}\>(r_{z},r_{y})\)\\
+Se \(r_{y}>0\) e \(r_{z}=0\), \(\theta =0^{\circ }\) (il punto è esattamente a Est del centro).\\
+Se \(r_{y}=0\) e \(r_{z}>0\), \(\theta =90^{\circ }\) (il punto è esattamente a Nord del centro, verso il Polo).\\
+\subsection{Trasformazione in Coordinate Planari \((X,Y)\)}
+Una volta che hai \(\gamma \) (dal tuo programma) e \(\theta \) (da atan2), le coordinate del punto sul tuo grafico (o immagine) saranno: \(\begin{cases}X_{planare}=\gamma \cdot \cos (\theta )\\ Y_{planare}=\gamma \cdot \sin (\theta )\end{cases}\)\\
+\subsection{Dove approfondire}
+Questa proiezione è tecnicamente chiamata Proiezione Geostazionaria (o Proiezione Prospettica Verticale). Puoi trovare diagrammi dettagliati cercando: Proiezione Geostazionaria (Snyder, Map Projections):\\
+Vai alla sezione "Vertical Perspective Projection".\\
+Il manuale di EUMETSAT per i satelliti Meteosat (che spiega esattamente come trasformano Lat/Lon in pixel \((c,l)\) per le immagini meteo).\\
+Nota pratica: Nel tuo codice C, usa atan2(capitals[i].rz, capitals[i].ry) per ottenere l'angolo in radianti.\\
+Attenzione: se il satellite non fosse a Longitudine 0, dovresti prima ruotare \(r_{y}\) rispetto a \(Sy\).\\
+Ma nel tuo caso (0,0) è immediato!
 \section{References}
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster

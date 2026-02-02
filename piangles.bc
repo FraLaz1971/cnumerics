@@ -1,0 +1,18 @@
+scale=4
+pi=4*a(1)
+define dd2rad(d){
+  return d*pi/180.0
+}
+define rad2dd(r){
+  return r*180/pi
+}
+print pi, "\n"
+print "pi/2 = ", pi/2, " = ", rad2dd(pi/2), "\n"
+print "pi/3 = ", pi/3, " = ", rad2dd(pi/3), "\n"
+print "pi/4 = ", pi/4, " = ", rad2dd(pi/4), "\n"
+print "pi/6 = ", pi/6, " = ", rad2dd(pi/6), "\n"
+
+#x^2+y^2=1
+
+
+quit

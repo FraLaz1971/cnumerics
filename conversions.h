@@ -2,31 +2,35 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "conversions.h"
 #define PI 3.14159265
 /* #n,Capital City,Country,Continent,Latitude,Longitude */
+struct Capital{
+  unsigned char n;
+  char *city;
+  char *country;
+  char *continent;
+  double Lat;
+  double Lon;
+  double rLat;
+  double rLon;
+  double rx;
+  double ry;
+  double rz;
+};
 
-double ddeg2rad(double d){
-  double rad;
-  rad = d*PI/180.0;
-  return rad;
-}
+struct Angle{
+  unsigned short deg;
+  unsigned char min;
+  unsigned char sec;
+};
 
-double deg2decdeg(unsigned short deg, unsigned char min, unsigned char sec){
-  double dd;
-  dd = deg+min/60.0+sec/3600.0;
-  return dd;
-}
+int decdeg2deg (double dd, struct Angle *iangle);
 
-int decdeg2deg (double dd, struct Angle *iangle) {
-  int ret=0; double tf;
-  iangle->deg=(int)dd;
-  tf = (dd-iangle->deg)*60.0;
-  iangle->min=(int)tf;
-  tf = tf - iangle->min;
-  iangle->sec=round(tf*60.0);
-  return ret;
-}
+double deg2decdeg(unsigned short deg, unsigned char min, unsigned char sec);
+
+double ddeg2rad(double d);
+
+double deg2rad(unsigned short deg, unsigned char min, unsigned char sec);
 
 
 /*

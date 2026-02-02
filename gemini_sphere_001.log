@@ -39,7 +39,7 @@ splot cos(u)*cos(v), sin(u)*cos(v), sin(v) with lines
 ---
 equazione di una sfera nello spazio
 ---
-L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. Se sviluppata, assume la forma generale \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\), dove il centro è \((-A/2,-B/2,-C/2)\) e il raggio si ricava dalla condizione \(A^{2}+B^{2}+C^{2}-4D\ge 0\).                   Forma canonica (più usata)    \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\) Centro:  \(C(x_{0},y_{0},z_{0})\) Raggio:  \(R\)               Forma generale    \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\) Centro:  \(C(-A/2,-B/2,-C/2)\) Raggio:  \(R=\sqrt{A^{2}/4+B^{2}/4+C^{2}/4-D}\) (o \(\sqrt{(-A/2)^{2}+(-B/2)^{2}+(-C/2)^{2}-D}\)).              Esempio    Se centro \(C(1,2,-3)\) e raggio \(R=3\): \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\) \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).                               Per l'interno della sfera    Si usa una disequazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).                  Geometria analitica nello spazio: sfera, ellissoide, paraboloide - Skuola.netSfera Equazione cartesiana: l'equazione cartesiana di una sfera con centro in (x_0, y_0, z_0) e raggio R è (x - x_0)^2 + (y - y_0) + (z - z_0) = R^2
+L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. Se sviluppata, assume la forma generale \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\), dove il centro è \((-A/2,-B/2,-C/2)\) e il raggio si ricava dalla condizione \(A^{2}+B^{2}+C^{2}-4D\ge 0\).                   Forma canonica (più usata)    \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\) Centro:  \(C(x_{0},y_{0},z_{0})\) Raggio:  \(R\)               Forma generale    \(x^{2}+y^{2}+z^{2}+Ax+By+Cz+D=0\) Centro:  \(C(-A/2,-B/2,-C/2)\) Raggio:  \(R=\sqrt{A^{2}/4+B^{2}/4+C^{2}/4-D}\) (o \(\sqrt{(-A/2)^{2}+(-B/2)^{2}+(-C/2)^{2}-D}\)).              Esempio    Se centro \(C(1,2,-3)\) e raggio \(R=3\): \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\) \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).                               Per l'interno della sfera    Si usa una disequazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).                  Geometria analitica nello spazio: sfera, ellissoide, paraboloide - Skuola.netSfera Equazione cartesiana: l'equazione cartesiana di una sfera con centro in (x_0, y_0, z_0) e raggio R è (x - x_0)^2 + (y - y_0)^2 + (z - z_0^)2 = R^2
 ---
 (x - x_0)^2 + (y - y_0) + (z - z_0) = R^2
  Se centro C(1, 2, −3) e raggio R = 3:
@@ -88,3 +88,32 @@ Gnuplot non fa altro che calcolare una griglia di punti facendo variare \(u\) e 
 (determinati da set isosamples), creando quella "rete" (mesh) che poi vedi come una sfera. 
 Per questo, se metti set isosamples 2, 360, vedresti solo 2 archi verticali, mentre con set isosamples 50, 50 
 ottieni una superficie bella liscia! 
+La definizione che hai riportato descrive la visibilità geometrica di un punto sulla superficie terrestre rispetto a un 
+satellite. Hai commesso alcuni piccoli errori di trascrizione e mancano effettivamente gli operatori di moltiplicazione 
+e gli esponenti corretti in \(S_{3}\). Ecco la spiegazione dei passaggi e la correzione delle formule: 
+1. Parametri Iniziali \((r_{x},r_{y},r_{z})\): Sono le coordinate cartesiane (ECEF) del punto sulla Terra che vuoi verificare.
+\((\phi _{0},\lambda _{0})\): Sono la latitudine e la longitudine del punto sub-satellite (dove il satellite è allo zenit). 
+Per un satellite GEO, \(\phi _{0}\) è solitamente \(0^{\circ }\) (Equatore) e \(\lambda _{0}\) è la sua longitudine fissa.
+\(H\): È la distanza del satellite dal centro della Terra. Per un'orbita GEO, \(H\approx 42.164\) km. 
+2. Correzione delle Formule (\(S_{1},S_{2},S_{3}\)) 
+Le variabili rappresentano proiezioni vettoriali e distanze: 
+\(S_{1}\) (Proiezione del vettore posizione del punto sul raggio del satellite):
+\(S_{1}=H-(r_{x}\cdot \cos \phi _{0}\cdot \cos \lambda _{0}+r_{y}\cdot \cos \phi _{0}\cdot \sin \lambda _{0}+r_{z}\cdot \sin \phi _{0})\)
+Qui hai sottratto a \(H\) il prodotto scalare tra il vettore posizione del punto e il versore della direzione del satellite.
+\(S_{2}\) (Quadrato della distanza del punto dal centro della Terra):
+\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\)
+Se il punto è sulla superficie, \(\sqrt{S_{2}}\approx R_{Terra}\).
+\(S_{3}\) (Quadrato della distanza tra il satellite e il punto):
+C'erano errori negli esponenti e nei segni:
+\(S_{3}=(H\cdot \cos \phi _{0}\cdot \cos \lambda _{0}-r_{x})^{2}+(H\cdot \cos \phi _{0}\cdot \sin \lambda _{0}-r_{y})^{2}+(H\cdot \sin \phi _{0}-r_{z})^{2}\) 
+3. Il valore \(\gamma \) (Angolo di Nadir) 
+L'angolo \(\gamma \) è l'angolo sotto il quale il satellite "vede" il punto rispetto alla sua verticale (nadir).
+\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\)
+Il controllo della visibilità: 
+Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile. 
+In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) 
+(circa \(8.7^{\circ }\) per la copertura globale). 
+Errori rilevati nel tuo testo: Mancanza di \(*\): In \(S_{1}\) e \(S_{3}\) mancano le moltiplicazioni tra \(H\) o \(r\) 
+e le funzioni trigonometriche.Esponenti in \(S_{3}\): Nel tuo testo il "2" dopo le parentesi sembrava un numero moltiplicatore, 
+mentre è un quadrato \(()^{2}\).
+Ultimo termine di \(S_{3}\): Mancava l'esponente \({}^{2}\) sull'ultima parentesi \((H\sin \phi _{0}-r_{z})\). 

@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
   fprintf(stderr, "%9.6f %s\n", fm1, temps1);
   fclose(cfp);
   
-  /* CORREZIONE: Converti coordinate satellite in radianti */
+  /*Conversione coordinate satellite in radianti */
   rLat_sat = ddeg2rad(Lat_sat);
   rLon_sat = ddeg2rad(Lon_sat);
   fprintf(stderr, "\nSatellite position (rad): Lat=%9.6f, Lon=%9.6f\n", 
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
  * Prodotto scalare tra vettore posizione punto e versore nadir
  */
 double getS1(double rx, double ry, double rz) {
-  /* CORREZIONE: usa rLat_sat e rLon_sat (in radianti) */
+  /* rLat_sat e rLon_sat (in radianti) */
   return H - (rx * cos(rLat_sat) * cos(rLon_sat) +
               ry * cos(rLat_sat) * sin(rLon_sat) +
               rz * sin(rLat_sat));
@@ -135,12 +135,12 @@ double getGamma() {
   
   if (discriminant < 0) {
     fprintf(stderr, "WARNING: discriminant < 0 (=%9.6f), punto non visibile!\n",discriminant);
-    return -1.0;
+    exit(-1);
   }
   
   if (S1 <= 0) {
     fprintf(stderr, "WARNING: S1 <= 0 (=%9.6f), geometria non valida!\n",S1);
-    return -1.0;
+    exit(-1);
   }
   
   return atan(sqrt(discriminant) / S1);
