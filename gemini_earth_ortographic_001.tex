@@ -100,7 +100,66 @@ Definisci i valori relativi al punto sub-satellite (\(\phi _{0},\lambda _{0}\)):
 \(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\) \\
 \(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
 \(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\) \\
-(Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).
+(Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).\\
+La definizione che hai riportato descrive la visibilità geometrica di un punto sulla superficie terrestre rispetto a un
+satellite. Hai commesso alcuni piccoli errori di trascrizione e mancano effettivamente gli operatori di moltiplicazione
+e gli esponenti corretti in \(S_{3}\).
+\subsection{ECEF coordinates}
+Il sistema di coordinate cartesiane ECEF (Earth-Centered, Earth-Fixed) è un sistema di riferimento geocentrico tridimensionale con origine nel centro di massa terrestre (0,0,0) e assi fissati rispetto alla rotazione terrestre (X, Y, Z). X punta al meridiano di Greenwich, Y a 90° est, Z al Polo Nord, solitamente misurato in metri.\\
+Caratteristiche Principali del Sistema ECEF
+\begin{itemize}
+\item Origine (0,0,0): Situata nel centro di massa della Terra.
+\item Rotazione: Ruota in modo solidale con la Terra, rendendo le coordinate (X, Y, Z) di un punto fisso sulla superficie quasi costanti nel tempo.
+\item Asse X: Interseca la superficie dell'ellissoide all'equatore e al meridiano primo (\(0^{\circ }\) latitudine, \(0^{\circ }\) longitudine).
+\item Asse Y: Interseca la superficie all'equatore e a \(90^{\circ }\) longitudine est.
+\item Asse Z: Allineato con l'asse di rotazione terrestre, verso il Polo Nord.
+\item Unità di misura: Metri.
+\end{itemize}
+\subsection{GNSS Antenna}
+Un'antenna GNSS (Global Navigation Satellite System) è un dispositivo progettato per catturare le onde elettromagnetiche trasmesse dai satelliti in orbita e convertirle in segnali elettrici utilizzabili da un ricevitore.
+A differenza del termine "antenna GPS", che si riferisce specificamente al sistema statunitense, l'antenna GNSS è in grado di ricevere dati da più costellazioni contemporaneamente, come Galileo (Europa), GLONASS (Russia) e BeiDou (Cina).
+Funzioni principali\\
+\begin{itemize}
+\item Ricezione e filtraggio: Cattura segnali radio estremamente deboli (provenienti da circa 20.000 km di altezza) filtrando i disturbi e il rumore di fondo.
+\item Amplificazione: Molte antenne moderne sono "attive", ovvero includono un amplificatore integrato (LNA - Low Noise Amplifier) per potenziare il segnale prima che attraversi il cavo verso il ricevitore.
+\item Conversione: Trasforma le onde radio in corrente elettrica che contiene le informazioni di cronometraggio e posizione dei satelliti.
+\end{itemize}
+Tipologie comuni\\
+\begin{itemize}
+\item Antenne Patch: Piccole e piatte, sono quelle integrate negli smartphone, nei wearable o nei cruscotti delle auto.
+\item Antenne Geodetiche: Caratterizzate da una forma a "fungo" o dotate di un piano di massa circolare (choke ring), servono per rilievi topografici di alta precisione (centimetrica) e per minimizzare gli errori causati dai segnali riflessi (multipath).
+\item Antenne Aviation/Marine: Robuste e certificate per resistere a vibrazioni estreme, alte velocità e agenti atmosferici corrosivi.
+\end{itemize}
+Senza un'antenna di qualità, anche il ricevitore più avanzato non sarebbe in grado di calcolare una posizione precisa a causa della debolezza dei segnali satellitari.
+\subsubsection{Applications and Conversions}
+L'ECEF è fondamentale per i sistemi di navigazione satellitare come il GPS, poiché le posizioni dei satelliti e le misurazioni dell'antenna GNSS sono nativamente in questo sistema.\\
+Le coordinate ECEF possono essere convertite in coordinate geodetiche (latitudine \(\phi \), longitudine \(\lambda \), altezza ellissoidale \(h\)) utilizzando i parametri dell'ellissoide di riferimento (come WGS84).
+Differenze principali:\\
+A differenza delle coordinate geografiche (Latitudine/Longitudine), l'ECEF utilizza una terna \(XYZ\) rettilinea, evitando le singolarità ai poli e facilitando i calcoli vettoriali 3D.
+\begin{enumerate}
+\item Parametri Iniziali\\
+\((r_{x},r_{y},r_{z})\): Sono le coordinate cartesiane (ECEF) del punto sulla Terra che vuoi verificare.\\
+\((\phi _{0},\lambda _{0})\): Sono la latitudine e la longitudine del punto sub-satellite (dove il satellite è allo zenit).\\
+Per un satellite GEO, \(\phi _{0}\) è solitamente \(0^{\circ }\) (Equatore) e \(\lambda _{0}\) è la sua longitudine fissa.\\
+\(H\): È la distanza del satellite dal centro della Terra.\\
+Per un'orbita GEO, \(H\approx 42164\) km.
+\item Correzione delle Formule (\(S_{1},S_{2},S_{3}\))\\
+Le variabili rappresentano proiezioni vettoriali e distanze:\\
+\(S_{1}\) (Proiezione del vettore posizione del punto sul raggio del satellite):\\
+\(S_{1}=H-(r_{x}\cdot \cos \phi _{0}\cdot \cos \lambda _{0}+r_{y}\cdot \cos \phi _{0}\cdot \sin \lambda _{0}+r_{z}\cdot \sin \phi _{0})\)\\
+Qui hai sottratto a \(H\) il prodotto scalare tra il vettore posizione del punto e il versore della direzione del satellite.\\
+\(S_{2}\) (Quadrato della distanza del punto dal centro della Terra):\\
+\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\)\\
+Se il punto è sulla superficie, \(\sqrt{S_{2}}\approx R_{Terra}\).\\
+\(S_{3}\) (Quadrato della distanza tra il satellite e il punto):\\
+\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
+\item Il valore \(\gamma \) (Angolo di Nadir)\\
+L'angolo \(\gamma \) è l'angolo sotto il quale il satellite "vede" il punto rispetto alla sua verticale (nadir).\\
+\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\)
+Il controllo della visibilità:\\
+Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile.\\
+In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) (circa \(8.7^{\circ }\) per la copertura globale).
+\end{enumerate}
 \item Coordinate Piane Proiettate (\(x,y\))\\
 Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
 \(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
@@ -111,8 +170,40 @@ EUMETSAT utilizza un fattore di scala angolare standard di circa 3712 pixel per 
 \[Px=C_{x}+x\times FattoreScalaPixel\]
 \[Py=C_{y}-y\times FattoreScalaPixel\]
 \end{enumerate}
-Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°. Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?
-\clearpage
+Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°. Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?\\
+OK il concetto di dimensione angolare, attenzione a non confondere la Longitudine Terrestre con l'Angolo di Nadir.
+Ecco il chiarimento definitivo:
+\begin{enumerate}
+
+\item La Terra come la Luna Sì, esattamente come la Luna copre circa \(0.5^{\circ }\) nel nostro cielo, la Terra vista da un satellite GEO (a 35.786 km di quota) è un disco che copre un arco di circa 17.4°. Se il satellite punta una camera al centro della Terra, il "bordo" del pianeta si trova a 8.7° di distanza dal centro dell'obiettivo.
+\item Il limite di Longitudine (Il vero "taglio")
+Qui c'è il punto fondamentale: un angolo di Nadir di 8.7° permette di vedere molto più di 8.7° di Longitudine sulla Terra. Grazie alla geometria, il satellite vede quasi un intero emisfero. Per un satellite GEO posizionato sopra l'equatore a longitudine \(0^{\circ }\): Punto Sub-satellite: Longitudine \(0^{\circ }\) (Nadir \(\gamma =0^{\circ }\)).Orizzonte (Limite visibile): Arriva fino a circa 81.3° Est e 81.3° Ovest di longitudine.
+Oltre l'orizzonte: Da \(81.3^{\circ }\) a \(180^{\circ }\) (e da \(-181.3^{\circ }\) a \(-180^{\circ }\)), i punti sono dietro la curvatura terrestre e non sono visibili.
+\item Perché quella formula diceva 90°? La formula che hai postato è una condizione di "visibilità geometrica locale": Se calcoli l'angolo tra il vettore satellite e il vettore punto, il limite è 90° rispetto al centro della terra (l'orizzonte geometrico).
+\end{enumerate}
+Se un punto ha una longitudine (rispetto al satellite) superiore a circa 81.3°, l'angolo \(\gamma \) della tua formula supererà il limite fisico e il punto risulterà "nascosto". In sintesi per il tuo programma:\\
+Campo di vista del satellite (Nadir \(\gamma \)):\\
+Spazia solo da \(0^{\circ }\) a \(8.7^{\circ }\).\\
+Se superi \(8.7^{\circ }\), stai inquadrando le stelle, non la Terra.\\
+Copertura Terrestre (Longitudine \(\lambda \)):\\
+Il satellite "vede" una fetta di Terra larga circa 162.6° (da \(-81.3^{\circ }\) a \(+81.3^{\circ }\) rispetto alla sua posizione).\\
+Zona d'ombra: Tutto ciò che sta tra \(81.3^{\circ }\) e \(180^{\circ }\) di distanza angolare dal punto sub-satellite è invisibile.\\
+Quindi, se il tuo satellite è a \(0^{\circ }\) di longitudine, non vedrà mai l'Australia o il Pacifico Centrale, perché la loro longitudine è troppo elevata e "girano" dietro l'angolo della sfera.\\
+Per un satellite GEO centrato su (Lat,Lon) = (0°, 0°):\\
+L'intervallo di visibilità:\\
+I punti visibili sono solo quelli compresi tra 81.3°W e 81.3°E.\\
+Tutto ciò che si trova al di fuori di questa "fetta" di 162.6° totali è nascosto dalla curvatura terrestre.\\
+Il limite dei Poli:\\
+Lo stesso ragionamento vale per la latitudine. Il satellite non vedrà mai i poli Nord e Sud, ma si fermerà a circa 81.3°N e 81.3°S.\\
+L'illusione ottica:\\
+Anche se il satellite "vede" fino a 81° di longitudine, i territori vicini a quel limite (come l'estremo Alaska o l'est dell'Asia, a seconda di dove è posizionato il satellite) appariranno molto schiacciati e deformati perché sono visti quasi "di taglio" (tangenti all'orizzonte).\\
+Riassunto visivo:
+\begin{itemize}
+\item Longitudine \(0^{\circ }\): Pieno centro del disco (Nadir 0°).
+\item Longitudine \(81.3^{\circ }\): Bordo estremo del disco terrestre (Nadir 8.7°).
+\item Longitudine \(>81.3^{\circ }\): "Dietro" la Terra (Invisibile).
+\end{itemize}
+Questo è il motivo per cui servono almeno 3 satelliti GEO (distanziati di 120°) per coprire l'intera circonferenza terrestre (fatta eccezione per le calotte polari). Se ne avessi solo uno a 0°, non sapresti mai cosa succede a Tokyo (139°E) o Los Angeles (118°W)!
 \section{Parametric equation of the sphere}
 L'equazione parametrica è il modo più efficace per "disegnare" una sfera perché usa due angoli
 (come latitudine e longitudine) per mappare ogni punto della superficie.

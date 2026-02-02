@@ -70,6 +70,7 @@ TARGET61 = printval
 TARGET62 = printwidth
 TARGET63 = proc2dvec
 TARGET64 = proj_geo_norm
+TARGET64bis = proj_geo_norm_fixed
 TARGET65 = random1
 TARGET66 = random2
 TARGET67 = realarrays
@@ -356,8 +357,10 @@ $(TARGET63): proc2dvec.o
 	$(CC) -o proc2dvec $< $(LDFLAGS)
 $(TARGET64).o: proj_geo_norm.c
 	$(CC) -c   $< -o proj_geo_norm.o $(CPPFLAGS)
-$(TARGET64): proj_geo_norm.o
-	$(CC) -o proj_geo_norm $< $(LDFLAGS)
+$(TARGET64): proj_geo_norm.o  conversions.o
+	$(CC) -o proj_geo_norm $^ $(LDFLAGS)
+$(TARGET64bis): proj_geo_norm_fixed.o  conversions.o
+	$(CC) -o proj_geo_norm $^ $(LDFLAGS)
 $(TARGET65).o: random1.c
 	$(CC) -c   $< -o random1.o $(CPPFLAGS)
 $(TARGET65): random1.o
