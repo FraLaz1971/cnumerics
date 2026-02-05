@@ -13,7 +13,7 @@
 \begin{abstract}
 \end{abstract}
 \section{Introduction}
-le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
+le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile.Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
 \section{equazione di una sfera nello spazio}
 L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
 \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\), \\
@@ -62,10 +62,11 @@ Ho recuperato i parametri esatti utilizzati da EUMETSAT per mappare i dati grezz
 \item Raggio Equatoriale Terra: \( (R_{eq}=6378.137\,km)\) (modello standard WGS84)
 \end{itemize}
 Il tuo script gnuplot utilizza dei fattori di scala fissi (544.5 e 541.5). Questi valori sono approssimativi e non tengono conto della curvatura esatta e dell'altezza del satellite nel sistema di coordinate EUMETSAT.
-\section{The Solution}:
-Usa i parametri standard Il modo corretto per risolvere il problema è utilizzare i parametri orbitali e terrestri standard per calcolare la relazione tra coordinate geografiche (lat/lon) e coordinate immagine (x/y in pixel), invece di usare fattori di scala fissi. I file di dati EUMETSAT di Livello 1c utilizzano un sistema di riferimento standard. Se il tuo script può incorporare una proiezione geostazionaria esatta (a volte chiamata "viewpoint perspective" o "satellite projection"), funzionerà perfettamente con 0°,0°. Se devi continuare a usare lo script attuale, è più probabile che tu debba aggiustare la distanza nel calcolo della proiezione, non le coordinate centrali.
+\section{The Solution}
+Usa i parametri standard.\\
+Il modo corretto per risolvere il problema è utilizzare i parametri orbitali e terrestri standard per calcolare la relazione tra coordinate geografiche (lat/lon) e coordinate immagine (x/y in pixel), invece di usare fattori di scala fissi. I file di dati EUMETSAT di Livello 1c utilizzano un sistema di riferimento standard. Se il tuo script può incorporare una proiezione geostazionaria esatta (a volte chiamata "viewpoint perspective" o "satellite projection"), funzionerà perfettamente con 0°,0°.Se devi continuare a usare lo script attuale, è più probabile che tu debba aggiustare la distanza nel calcolo della proiezione, non le coordinate centrali.
 \section{The correct formula} per la proiezione geostazionaria normalizzata, che utilizza l'altezza del satellite e il raggio terrestre invece dei valori approssimativi in pixel.
-Il problema che riscontri deriva dall'uso di una sfera perfetta e di fattori di scala approssimativi nel tuo script. La Terra è un elissoide oblato (schiacciato ai poli), e la proiezione geostazionaria tiene conto di questa forma. Qui di seguito trovi le formule esatte per la proiezione geostazionaria normalizzata, che mappano le coordinate geografiche (\(\phi ,\lambda \)) in coordinate di proiezione normalizzate (\(x,y\)).
+Il problema che riscontri deriva dall'uso di una sfera perfetta e di fattori di scala approssimativi nel tuo script. La Terra è un elissoide oblato (schiacciato ai poli), e la proiezione geostazionaria tiene conto di questa forma.Qui di seguito trovi le formule esatte per la proiezione geostazionaria normalizzata, che mappano le coordinate geografiche (\(\phi ,\lambda \)) in coordinate di proiezione normalizzate (\(x,y\)).
 \section{Parametri Fondamentali (WGS84)}
 Sono usati questi valori precisi nel programma C e Gnuplot:
 \begin{itemize}
@@ -160,17 +161,23 @@ Il controllo della visibilità:\\
 Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile.\\
 In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) (circa \(8.7^{\circ }\) per la copertura globale).
 \end{enumerate}
-In cartografia satellitare e telerilevamento, l'
-angolo di Nadir (spesso indicato come Off-Nadir Angle o ONA) è l'angolo formato tra la linea che congiunge il sensore al punto osservato sulla Terra e la verticale perfetta che scende dal satellite verso il centro del pianeta (il Nadir).
+In cartografia satellitare e telerilevamento, l'angolo di Nadir (spesso indicato come Off-Nadir Angle o ONA) è l'angolo formato tra la linea che congiunge il sensore al punto osservato sulla Terra e la verticale perfetta che scende dal satellite verso il centro del pianeta (il Nadir).
 I concetti chiave legati a questo angolo includono:
 \begin{enumerate}
 \item Definizione e Geometria
-    Nadir (0°): Quando il satellite guarda esattamente verso il basso, l'angolo off-nadir è pari a 0°. Questa geometria offre la massima accuratezza geometrica e la minima distorsione.
-    Off-Nadir (>0°): Quando il sensore viene inclinato per osservare un'area non direttamente sottostante, l'angolo cresce. Valori comuni per immagini ad alta risoluzione si attestano tra 0° e 30°.
+\begin{itemize}
+\item Nadir (0°): Quando il satellite guarda esattamente verso il basso, l'angolo off-nadir è pari a 0°. Questa geometria offre la massima accuratezza geometrica e la minima distorsione.
+\item Off-Nadir (>0°): Quando il sensore viene inclinato per osservare un'area non direttamente sottostante, l'angolo cresce. Valori comuni per immagini ad alta risoluzione si attestano tra 0° e 30°.
+\end{itemize}
 \item Differenza tra Angoli
 Sebbene talvolta usati come sinonimi, esistono distinzioni tecniche importanti:
-    Look Angle (Angolo di vista): È l'angolo di inclinazione del sensore rispetto al Nadir dal punto di vista del satellite.
-    Incidence Angle (Angolo di incidenza): È l'angolo tra il raggio incidente e la normale alla superficie terrestre nel punto di osservazione. A causa della curvatura terrestre, l'angolo di incidenza è solitamente leggermente maggiore dell'angolo off-nadir.
+\begin{itemize}
+\item Look Angle (Angolo di vista):
+È l'angolo di inclinazione del sensore rispetto al Nadir dal punto di vista del satellite.
+\item Incidence Angle (Angolo di incidenza):
+È l'angolo tra il raggio incidente e la normale alla superficie terrestre nel punto di osservazione.
+A causa della curvatura terrestre, l'angolo di incidenza è solitamente leggermente maggiore dell'angolo off-nadir.
+\end{itemize}
 \item Impatto sulla Cartografia
 L'aumento dell'angolo off-nadir comporta diversi effetti:
 \begin{itemize}
@@ -190,18 +197,21 @@ EUMETSAT utilizza un fattore di scala angolare standard di circa 3712 pixel per 
 \[Px=C_{x}+x\times FattoreScalaPixel\]
 \[Py=C_{y}-y\times FattoreScalaPixel\]
 \end{enumerate}
-Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°. Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?\\
+Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°.Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?\\
 OK il concetto di dimensione angolare, attenzione a non confondere la Longitudine Terrestre con l'Angolo di Nadir.
 Ecco il chiarimento definitivo:
 \begin{enumerate}
 
-\item La Terra come la Luna Sì, esattamente come la Luna copre circa \(0.5^{\circ }\) nel nostro cielo, la Terra vista da un satellite GEO (a 35.786 km di quota) è un disco che copre un arco di circa 17.4°. Se il satellite punta una camera al centro della Terra, il "bordo" del pianeta si trova a 8.7° di distanza dal centro dell'obiettivo.
-\item Il limite di Longitudine (Il vero "taglio")
-Qui c'è il punto fondamentale: un angolo di Nadir di 8.7° permette di vedere molto più di 8.7° di Longitudine sulla Terra. Grazie alla geometria, il satellite vede quasi un intero emisfero. Per un satellite GEO posizionato sopra l'equatore a longitudine \(0^{\circ }\): Punto Sub-satellite: Longitudine \(0^{\circ }\) (Nadir \(\gamma =0^{\circ }\)).Orizzonte (Limite visibile): Arriva fino a circa 81.3° Est e 81.3° Ovest di longitudine.
+\item La Terra come la Luna\\
+Sì, esattamente come la Luna copre circa \(0.5^{\circ }\) nel nostro cielo, la Terra vista da un satellite GEO (a 35.786 km di quota) è un disco che copre un arco di circa 17.4°.Se il satellite punta una camera al centro della Terra, il "bordo" del pianeta si trova a 8.7° di distanza dal centro dell'obiettivo.
+\item Il limite di Longitudine (Il vero "taglio")\\
+Qui c'è il punto fondamentale: un angolo di Nadir di 8.7° permette di vedere molto più di 8.7° di Longitudine sulla Terra. Grazie alla geometria, il satellite vede quasi un intero emisfero.Per un satellite GEO posizionato sopra l'equatore a longitudine \(0^{\circ }\):Punto Sub-satellite: Longitudine \(0^{\circ }\) (Nadir \(\gamma =0^{\circ }\)).Orizzonte (Limite visibile): Arriva fino a circa 81.3° Est e 81.3° Ovest di longitudine.
 Oltre l'orizzonte: Da \(81.3^{\circ }\) a \(180^{\circ }\) (e da \(-181.3^{\circ }\) a \(-180^{\circ }\)), i punti sono dietro la curvatura terrestre e non sono visibili.
-\item Perché quella formula diceva 90°? La formula che hai postato è una condizione di "visibilità geometrica locale": Se calcoli l'angolo tra il vettore satellite e il vettore punto, il limite è 90° rispetto al centro della terra (l'orizzonte geometrico).
+\item Perché quella formula diceva 90°?\\
+La formula che hai postato è una condizione di "visibilità geometrica locale": Se calcoli l'angolo tra il vettore satellite e il vettore punto, il limite è 90° rispetto al centro della terra (l'orizzonte geometrico).
 \end{enumerate}
-Se un punto ha una longitudine (rispetto al satellite) superiore a circa 81.3°, l'angolo \(\gamma \) della tua formula supererà il limite fisico e il punto risulterà "nascosto". In sintesi per il tuo programma:\\
+Se un punto ha una longitudine (rispetto al satellite) superiore a circa 81.3°, l'angolo \(\gamma \) della tua formula supererà il limite fisico e il punto risulterà "nascosto". \\
+In sintesi per il tuo programma:\\
 Campo di vista del satellite (Nadir \(\gamma \)):\\
 Spazia solo da \(0^{\circ }\) a \(8.7^{\circ }\).\\
 Se superi \(8.7^{\circ }\), stai inquadrando le stelle, non la Terra.\\
@@ -229,11 +239,13 @@ L'equazione parametrica è il modo più efficace per "disegnare" una sfera perch
 (come latitudine e longitudine) per mappare ogni punto della superficie.
 Ecco lo schema logico per non dimenticarla più:
 \begin{enumerate}
-\item I Componenti Per definire la sfera ti servono:
-\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.
-\(R\): Il Raggio.
-\(u,v\): I due Parametri (angoli).
-\item Lo Schema delle Coordinate L'equazione si basa sulle coordinate sferiche.
+\item I Componenti\\
+Per definire la sfera ti servono:\\
+\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.\\
+\(R\): Il Raggio.\\
+\(u,v\): I due Parametri (angoli).\\
+\item Lo Schema delle Coordinate\\
+L'equazione si basa sulle coordinate sferiche.\\
 Immagina di partire dal centro e muoverti sulla superficie:\\
 \(
 \begin{cases}
@@ -242,7 +254,7 @@ y=c_{y}+R\cdot \cos (u)\cdot \sin (v)\\
 z=c_{z}+R\cdot \sin (u)\\
 \end{cases}
 \)
-\item Significato degli Angoli (Cruciale per Gnuplot)
+\item Significato degli Angoli (Cruciale per Gnuplot)\\
 Il segreto è capire come ruotano \(u\) e \(v\):
 \begin{table}[h!]
 \begin{center}
@@ -258,11 +270,11 @@ Il segreto è capire come ruotano \(u\) e \(v\):
 \caption{Angles of the sphere}
 \end{center}
 \end{table}
-\item Perché funziona? (Il trucco visivo)
-La componente \(z\) dipende solo da \(\sin (u)\). Se \(u=\pi /2\) (90°),
-allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)).
-Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli.
-All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero.
+\item Perché funziona? (Il trucco visivo) \\
+La componente \(z\) dipende solo da \(\sin (u)\). \\
+Se \( u=\pi /2 \) (90°), allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)). \\
+Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli.\\
+All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero.\\
 \item Verifica rapida
 
 \end{enumerate}
@@ -286,7 +298,7 @@ Nord (Direzione Polo Nord)
                |    /
                |   / d_piana (proporzionale a Gamma)
                |  /
-               | /  Theta (Angolo Azimutale)
+               | /   Theta (Angolo Azimutale)
 ---------------C----------------> Est (0° o +X)
                | (Centro Terra)
                |
@@ -309,14 +321,472 @@ Quindi:\\
 Se \(r_{y}>0\) e \(r_{z}=0\), \(\theta =0^{\circ }\) (il punto è esattamente a Est del centro).\\
 Se \(r_{y}=0\) e \(r_{z}>0\), \(\theta =90^{\circ }\) (il punto è esattamente a Nord del centro, verso il Polo).\\
 \subsection{Trasformazione in Coordinate Planari \((X,Y)\)}
-Una volta che hai \(\gamma \) (dal tuo programma) e \(\theta \) (da atan2), le coordinate del punto sul tuo grafico (o immagine) saranno: \(\begin{cases}X_{planare}=\gamma \cdot \cos (\theta )\\ Y_{planare}=\gamma \cdot \sin (\theta )\end{cases}\)\\
+Una volta che hai \(\gamma \) (dal tuo programma) e \(\theta \) (da atan2), le coordinate del punto sul tuo grafico (o immagine) saranno:\(\begin{cases}X_{planare}=\gamma \cdot \cos (\theta )\\ Y_{planare}=\gamma \cdot \sin (\theta )\end{cases}\)\\
+\subsection{GEO FOV}
+Le coordinate altazimutali di un satellite geostazionario (GEO) sono fisse per un dato luogo di osservazione e includono l'altezza (\(h\)) sull'orizzonte e l'azimut (\(A\)) dal nord. Poiché i satelliti GEO orbitano sopra l'equatore, dalla latitudine del Nord Italia appaiono verso Sud, con un'altezza che diminuisce avvicinandosi al polo e aumenta avvicinandosi all'equatore. Dettagli sulle Coordinate Altazimutali GEO:\\
+\begin{itemize}
+\item Azimut (\(A\)):\\
+Indica la direzione cardinale. Per un osservatore nell'emisfero boreale, i satelliti GEO si trovano generalmente verso Sud (Azimut \(\approx 180^{\circ }\) se misurato da Nord, o \(0^{\circ }\) se misurato da Sud), con variazioni in base alla longitudine del satellite rispetto a quella dell'osservatore.\\
+\item Altezza (\(h\)):\\
+È l'angolo sopra l'orizzonte. Diminuisce all'aumentare della latitudine dell'osservatore. In Italia, l'altezza varia indicativamente tra i \(30^{\circ }\) e i \(45^{\circ }\) sopra l'orizzonte sud.\\
+\end{itemize}
+Stazionarietà:\\
+A differenza delle stelle o di altri satelliti, le coordinate altazimutali di un satellite GEO rimangono costanti nel tempo per un osservatore fisso, poiché il satellite ruota con la Terra.\\
+Come calcolare le coordinate specifiche:\\
+Per ottenere i valori esatti di azimut e altezza per un satellite GEO specifico (es. Hotbird a \(13^{\circ }\) Est), sono necessari:\\
+Latitudine e longitudine dell'osservatore.\\
+Longitudine del satellite GEO.\\
+Questi dati vengono solitamente inseriti in calcolatori online per puntamento satellitare.
 \subsection{Dove approfondire}
-Questa proiezione è tecnicamente chiamata Proiezione Geostazionaria (o Proiezione Prospettica Verticale). Puoi trovare diagrammi dettagliati cercando: Proiezione Geostazionaria (Snyder, Map Projections):\\
+Questa proiezione è tecnicamente chiamata Proiezione Geostazionaria (o Proiezione Prospettica Verticale). Puoi trovare diagrammi dettagliati cercando:\\
+Proiezione Geostazionaria (Snyder, Map Projections):\\
 Vai alla sezione "Vertical Perspective Projection".\\
 Il manuale di EUMETSAT per i satelliti Meteosat (che spiega esattamente come trasformano Lat/Lon in pixel \((c,l)\) per le immagini meteo).\\
 Nota pratica: Nel tuo codice C, usa atan2(capitals[i].rz, capitals[i].ry) per ottenere l'angolo in radianti.\\
 Attenzione: se il satellite non fosse a Longitudine 0, dovresti prima ruotare \(r_{y}\) rispetto a \(Sy\).\\
 Ma nel tuo caso (0,0) è immediato!
+\section{GEO Satellite FOV}
+Per comprendere il campo visivo (Field of View - FOV) di un satellite in orbita geostazionaria (GEO) e il relativo angolo azimutale, dobbiamo distinguere tra ciò che il satellite "vede" (il footprint) e come un osservatore a terra deve puntare la propria antenna per "vedere" il satellite.Ecco un'analisi tecnica semplificata.
+\begin{enumerate}
+\item Il Campo Visivo (FOV) del Satellite\\
+Un satellite GEO si trova a circa 35.786 km sopra l'equatore. A questa altitudine, il "disco" terrestre sottostante occupa un angolo di circa 17,4°.
+Copertura Globale:\\
+Dalla sua posizione fissa, un singolo satellite GEO può vedere quasi un intero emisfero (circa il 42\% della superficie terrestre).\\
+Limiti di  Latitudine:\\
+Poiché il satellite è sopra l'equatore, la sua visuale si degrada vicino ai poli. Generalmente, oltre gli 81° Nord/Sud, il satellite scende sotto l'orizzonte e non è più visibile.\\
+\item L'Angolo Azimutale (Puntamento da Terra)\\
+Se ti trovi a terra e devi puntare un'antenna verso un satellite GEO, l'Azimut è l'angolo sul piano orizzontale (misurato in gradi rispetto al Nord geografico) verso la proiezione sul piano della direzione del satellite e verso cui devi ruotare la parabola.\\
+L'azimut dipende dalla tua posizione (latitudine/longitudine) e dalla longitudine del satellite.\\
+La Formula del Puntamento\\
+Per calcolare l'azimut (\(\alpha \)), si definisce prima la differenza di longitudine (\(\Delta Lon\)):\(\Delta Lon=Lon_{ospite}-Lon_{satellite}\)\\
+L'angolo azimutale si ricava solitamente tramite:\(\alpha =180^{\circ }+\arctan \left(\frac{\tan (\Delta Lon)}{\sin (Lat)}\right)\)\\
+Nota: Il risultato va poi normalizzato in base al quadrante (Emisfero Nord vs Sud).\\
+In Italia, i satelliti GEO si trovano sempre verso Sud, quindi l'azimut oscilla tipicamente tra 140° (Sud-Est) e 220° (Sud-Ovest).\\
+\item Parametri Chiave per il Calcolo\\
+Quando si lavora con il FOV e il puntamento GEO, questi sono i tre valori fondamentali:
+Il segreto è capire come ruotano \(u\) e \(v\):
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Parametro}& \textbf{Descrizione}\\
+\hline
+Azimut & Direzione orizzontale (es. 180° per il Sud puro).\\
+\hline
+Elevazione & L'angolo "sopra l'orizzonte". Se è 0°, il satellite è al limite del FOV.\\
+\hline
+Skew (Polarizzazione) & La rotazione dell'LNB necessaria per allinearsi al segnale del satellite.\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\item Perché l'Azimut è cruciale nel FOV?\\
+In ambito ingegneristico, l'azimut definisce i limiti della "finestra" di visibilità:\\
+Ostruzioni: Se un edificio si trova sull'azimut calcolato, il satellite è fuori dal FOV locale.\\
+Stazioni di terra: Per mantenere il collegamento, l'antenna deve avere un FOV libero che includa l'azimut specifico del satellite.
+\end{enumerate}
+Ti serve aiuto con un calcolo specifico?\\
+Se mi fornisci la tua città (o coordinate) e la posizione del satellite (es. Hotbird 13° Est), posso calcolarti l'azimut esatto e l'angolo di elevazione.\\
+Vuoi che esegua questo calcolo per te?\\
+grafico 3D per un punto a Terra, l'angolo di azimut di un satellite in GEO posizionato verticalmente al punto (Lat,Lon) (0°,0°) (equatore, greenwich). Per esempio il punto a Terra potrebbe coincidere con Roma, (Osservatorio di Monte Mario).\\
+Per visualizzare correttamente il concetto, dobbiamo immaginare la geometria sferica che lega Roma (\(41.92^{\circ }N,12.45^{\circ }E\)) al satellite "nadir" su Greenwich (\(0^{\circ },0^{\circ }\)).\\
+In questo scenario, l'azimut indica la direzione della "linea di vista" proiettata sul piano orizzontale dell'osservatore a Roma. Poiché il satellite si trova a Sud e ad Ovest rispetto a Roma, l'azimut sarà nel quadrante Sud-Ovest.
+\begin{enumerate}
+\item I Dati di Input\\
+Punto a Terra (Roma - M. Mario):\\
+Latitudine \(\phi _{e}=41.92^{\circ }N\), Longitudine \(L_{e}=12.45^{\circ }E\).\\
+Punto Satellite (GEO):\\
+Latitudine \(\phi _{s}=0^{\circ }\), Longitudine \(L_{s}=0^{\circ }\).\\
+Differenza di Longitudine (\(\Delta Lon\)): \(12.45^{\circ }\).\\
+\item Rappresentazione Concettuale 3D\\
+\begin{itemize}
+\item Il Vettore Terra-Centro: Un vettore che parte dal centro della Terra verso Roma.
+\item Il Piano Locale: Un piano tangente alla sfera nel punto di Roma. Su questo piano disegniamo gli assi Nord e Est.
+\item Il Vettore di Puntamento: Una linea che congiunge Roma al satellite GEO (situato a 42.164 km dal centro terra).
+\item L'Angolo di Azimut: L'angolo tra il vettore Nord e la proiezione del vettore di puntamento sul piano locale.
+\end{itemize}
+\item 3. Calcolo dei Valori per il GraficoUtilizzando la trigonometria sferica per un osservatore nell'emisfero Nord:\(\alpha =180^{\circ }+\arctan \left(\frac{\tan (\Delta L)}{\sin (\phi _{e})}\right)\)Applicando i dati di Roma:\(\Delta L=12.45^{\circ }\)\(\sin (41.92^{\circ })\approx 0.668\)\(\tan (12.45^{\circ })\approx 0.221\)\(\text{Angolo\ corretto}\approx \arctan (0.221/0.668)\approx 18.3^{\circ }\)
+Risultato: L'azimut rispetto al Nord è \(180^{\circ }+18.3^{\circ }=198.3^{\circ }\).\\
+\item Codice Python per generare il grafico 3D
+Se hai accesso a un ambiente Python, puoi copiare questo script per vedere il grafico esatto della tua configurazione:
+\end{enumerate}
+{
+\scriptsize
+\begin{verbatim}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Coordinate
+lat_roma = np.radians(41.92)
+lon_roma = np.radians(12.45)
+r_terra = 6371
+r_geo = 42164
+
+# Posizione Roma (XYZ)
+x_r = r_terra * np.cos(lat_roma) * np.cos(lon_roma)
+y_r = r_terra * np.cos(lat_roma) * np.sin(lon_roma)
+z_r = r_terra * np.sin(lat_roma)
+
+# Posizione Satellite (0,0) GEO
+x_s = r_geo * np.cos(0) * np.cos(0)
+y_s = 0
+z_s = 0
+
+# Plotting
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# Disegna Terra (semplificata)
+u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+ax.plot_wireframe(r_terra*np.cos(u)*np.sin(v), r_terra*np.sin(u)*np.sin(v), r_terra*np.cos(v), color="lightblue", alpha=0.3)
+
+# Vettore Roma-Satellite
+ax.plot([x_r, x_s], [y_r, y_s], [z_r, z_s], color='red', label='Linea di Vista (LOS)', linewidth=2)
+ax.scatter([x_r], [y_r], [z_r], color='blue', s=50, label='Roma')
+ax.scatter([x_s], [y_s], [z_s], color='green', s=50, label='Satellite (0,0)')
+
+ax.set_xlabel('X (km)')
+ax.set_ylabel('Y (km)')
+ax.set_zlabel('Z (km)')
+plt.legend()
+plt.show()
+
+\end{verbatim}
+}
+Sintesi dei risultati per Roma verso GEO (0,0)
+\begin{itemize}
+\item Azimut: \(198.3^{\circ }\) (ovvero \(18.3^{\circ }\) a Ovest rispetto al Sud geografico).
+\item Elevazione: circa \(40.5^{\circ }\) sopra l'orizzonte.
+Desideri che approfondisca il calcolo dell'elevazione o vuoi vedere come cambia l'azimut se spostiamo il satellite più a Est?
+{
+\scriptsize
+
+\begin{verbatim}
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# --- Parametri ---
+lat_roma_deg = 41.92
+lon_roma_deg = 12.45
+r_terra = 6371 # km
+r_geo = 42164 # km (distanza centro Terra-satellite GEO)
+
+lat_roma = np.radians(lat_roma_deg)
+lon_roma = np.radians(lon_roma_deg)
+
+# --- Calcolo Coordinate XYZ ---
+# Posizione Roma (XYZ in sistema cartesiano globale)
+x_r = r_terra * np.cos(lat_roma) * np.cos(lon_roma)
+y_r = r_terra * np.cos(lat_roma) * np.sin(lon_roma)
+z_r = r_terra * np.sin(lat_roma)
+
+# Posizione Satellite (0,0) GEO
+x_s = r_geo * np.cos(0) * np.cos(0)
+y_s = 0
+z_s = 0
+
+# --- Plotting Globale ---
+fig = plt.figure(figsize=(10, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+# CORREZIONE 1: Forza un rapporto 1:1:1 per gli assi per avere una sfera reale
+ax.set_box_aspect([1, 1, 1])
+
+# Disegna Terra (sfera)
+u = np.linspace(0, 2 * np.pi, 50)
+v = np.linspace(0, np.pi, 50)
+X = r_terra * np.outer(np.cos(u), np.sin(v))
+Y = r_terra * np.outer(np.sin(u), np.sin(v))
+Z = r_terra * np.outer(np.ones(np.size(u)), np.cos(v))
+ax.plot_surface(X, Y, Z, color='lightblue', alpha=0.6, rstride=3, cstride=3)
+
+# Vettore Roma-Satellite (LOS)
+ax.plot([x_r, x_s], [y_r, y_s], [z_r, z_s], color='red', label='Linea di Vista (LOS)', linewidth=2)
+ax.scatter([x_r], [y_r], [z_r], color='blue', s=100, label='Roma (Osservatore)')
+ax.scatter([x_s], [y_s], [z_s], color='green', s=100, label='Satellite GEO (0,0)')
+
+ax.set_xlabel('X (km - asse Greenwich)')
+ax.set_ylabel('Y (km - asse 90E)')
+ax.set_zlabel('Z (km - asse Polo Nord)')
+ax.set_title('Geometria Satellite GEO-Terra con proporzioni corrette')
+plt.legend()
+plt.show()
+\end{verbatim}
+}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=18cm]{Eartg_Rome_GEO.png}
+ % Eartg_Rome_GEO.png: 1000x960 px, 100dpi, 25.40x24.38 cm, bb=0 0 720 691
+\end{center}
+\caption{Earth-Rome-GEO(0,0)}
+\end{figure}
+
+\subsubsection{Correct representation of the azimut}
+{
+\scriptsize
+\begin{verbatim}
+# Richiede lo stesso setup iniziale di numpy e math del primo script
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Valori calcolati in precedenza per Roma -> GEO(0,0)
+azimut_deg = 198.3
+elevazione_deg = 40.5
+
+azimut_rad = np.radians(azimut_deg)
+elevazione_rad = np.radians(elevazione_deg)
+
+# --- Plotting Locale (Azimut ed Elevazione) ---
+fig, ax = plt.subplots(figsize=(8, 8), subplot_kw={'projection': 'polar'})
+
+# CORREZIONE 2 & 3: Rappresentazione dell'Azimut con un arco e label
+# L'azimut si misura in senso orario dal Nord (0 gradi)
+# La convenzione di Matplotlib per i grafici polari è antioraria, quindi aggiustiamo l'angolo
+angle_plot = np.radians(90 - azimut_deg) # Converti da [0-360 Clockwise from North] a [0-2pi Anticlockwise from East]
+
+# Disegna la linea di vista proiettata sul piano orizzontale
+ax.plot([0, angle_plot], [0, 1], color='red', linewidth=3, label=f'Azimut: {azimut_deg:.1f}° (Sud-Ovest)')
+
+# Disegna l'arco che rappresenta l'angolo
+arc_angles = np.linspace(0, angle_plot, 100)
+ax.plot(arc_angles, [0.5]*100, color='orange', linestyle='--', linewidth=2)
+ax.text(angle_plot/2, 0.6, 'Azimut', rotation=0, ha='center', va='center', color='darkorange', fontweight='bold')
+
+
+# Impostazioni grafico polare
+ax.set_theta_zero_location('N')  # Imposta 0 gradi (Nord) in alto
+ax.set_theta_direction(-1)      # Imposta la direzione in senso orario (come l'Azimut reale)
+ax.set_title(f'Vista Orizzontale da Roma: Angolo di Azimut\nElevazione: {elevazione_deg:.1f}°', va='bottom')
+ax.set_yticks([]) # Nasconde i raggi di distanza, ci interessa solo l'angolo
+plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.1))
+plt.show()
+\end{verbatim}
+}
+\end{itemize}
+\begin{enumerate}
+\item La linea a 0°/360° punta a Nord.
+Nel contesto standard di navigazione, geodesia, e astronomia, l'angolo di azimut è definito in modo molto specifico:
+\begin{itemize}
+\item 0° (e 360°) rappresentano la direzione del Nord geografico.
+Man mano che ci si sposta in senso orario:
+\item 90° è Est
+\item 180° è Sud
+\item 270° è Ovest
+\end{itemize}
+ \begin{center}
+\begin{figure}[!th]
+ \includegraphics[width=18cm]{romavsgeo_003.png}
+ % romavsgeo_002.png: 1920x1107 px, 100dpi, 48.77x28.12 cm, bb=0 0 1382 797
+\caption{azimut angle}
+\end{figure}
+\end{center}
+La linea rossa nel grafico polare indica la direzione orizzontale in cui dovresti guardare (o puntare un'antenna) da Roma per allinearti al satellite GEO. Il suo angolo di circa \(198.3^{\circ }\) indica che si trova nel quadrante Sud-Ovest, come previsto, partendo da 0° (Nord) e muovendosi in senso orario.
+\item La crescita in senso orario è una Convenzione Standard\\
+Sì, la misurazione dell'angolo di azimut in senso orario è una convenzione consolidata e ampiamente accettata in molte discipline, tra cui:
+\begin{itemize}
+\item Navigazione
+\item Topografia/Geodesia
+\item Astronomia
+\item Applicazioni militari
+\end{itemize}
+Questa standardizzazione garantisce che un valore di azimut sia compreso universalmente. Il codice Python che ti ho fornito (utilizzando \verb|ax.set_theta_direction(-1)|) forza Matplotlib a seguire questa convenzione, poiché per default i grafici polari in matematica pura usano spesso il senso antiorario a partire dall'asse X positivo (Est).\\
+\end{enumerate}
+\begin{itemize}
+\item In Matematica (Trigonometria):\\
+La convenzione è antioraria (levogira) partendo dall'asse \(x\) (che solitamente punta a Est). È il sistema che usiamo per i cerchi goniometrici standard.
+\item In Topografia e Navigazione:\\
+La convenzione è oraria (destrogira) partendo dall'asse \(y\) (il Nord).
+\end{itemize}
+Questa differenza è il motivo per cui, nel codice Python per l'Azimut, ho dovuto usare
+\verb|ax.set_theta_direction(-1)| e \verb|set_theta_zero_location('N')|. Senza questi comandi, Matplotlib avrebbe disegnato l'angolo "alla matematica", confondendo chiunque debba puntare una parabola o una bussola.
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=15cm]{Azimuth-Altitude_schematic_it.png}
+\end{center}
+\caption{Elevation and Azimut}
+\end{figure}
+
+\subsubsection{Proiezioni: Ortografica vs Cilindrica}
+Dato che stai lavorando sulla georeferenziazione, la scelta di queste due proiezioni è molto interessante perché rappresentano i due estremi del modo in cui "vediamo" il satellite:
+\begin{enumerate}
+\item Proiezione Ortografica (La vista "spaziale")\\
+È la proiezione che meglio simula la fotografia del satellite.\\
+Caratteristica: Rappresenta la Terra come appare da una distanza infinita (o molto grande).\\
+Geometria: Le linee di vista sono parallele. Per un satellite GEO, la distorsione diventa enorme verso i bordi del disco (il "limbo" terrestre).\\
+Utilità: È perfetta per visualizzare il FOV (Field of View) del satellite come se fosse un obiettivo fotografico puntato sul Nadir.
+\item Proiezione Cilindrica (Equirettangolare / Mercatore)\\
+È la classica mappa "piatta".Caratteristica: La griglia di Latitudine e Longitudine è rettilinea.\\
+Geometria: Le distanze sono preservate (nella equirettangolare) o gli angoli sono preservati (nella Mercatore).\\
+Utilità: È dove andrai a mappare i dati per la georeferenziazione standard (EPSG:4326 o EPSG:3857).
+\end{enumerate}
+Un suggerimento tecnico per la Georeferenziazione: \\
+Quando proietterai la superficie sferica su un'immagine piana (specialmente se l'immagine proviene da un sensore satellitare), dovrai gestire il fatto che il satellite GEO ha una proiezione prospettica e non puramente ortografica.\\
+Mentre la proiezione ortografica assume raggi paralleli, il satellite GEO è a una distanza finita (\(\approx 6.6\) raggi terrestri).\\
+Questo significa che:\\
+Il satellite "vede" leggermente meno di un intero emisfero (circa \(81.3^{\circ }\) di latitudine max invece di \(90^{\circ }\)).La trasformazione corretta tra coordinate immagine \((u,v)\) e coordinate geografiche \((\phi ,\lambda )\) per un satellite GEO è definita dallo standard GEOS (Geostationary Projection).\\
+Stai usando una libreria specifica per le proiezioni (come pyproj o GDAL) o stai scrivendo le equazioni di trasformazione manualmente? Se le scrivi a mano, posso fornirti le matrici di rotazione per passare dal sistema locale di Roma a quello globale.
+Lavorare con GDAL per corpi celesti diversi dalla Terra è un'ottima scelta, poiché è lo standard industriale per la gestione di metadati geospaziali e proiezioni. Tuttavia, quando passi dalla Terra alla Luna, Marte o Mercurio, cambiano i parametri fondamentali dei sistemi di riferimento (CRS).\\
+Ecco alcuni punti chiave per gestire le tue proiezioni con GDAL su altri pianeti:\\
+\begin{enumerate}
+\item Definizione dell'Ellissoide (Sdatum)
+Per la Terra, GDAL usa solitamente WGS84. Per gli altri pianeti, devi definire il raggio specifico. Sebbene molti usino sfere perfette per semplicità, la proiezione corretta richiede i raggi IAU:\\
+Luna: Raggio \(\approx 1737.1\text{\ km}\)\\
+Marte: Raggio \(\approx 3389.5\text{\ km}\)\\
+Mercurio: Raggio \(\approx 2439.7\,km\)\\
+In GDAL (tramite gdalwarp o \(gdal_translate\)), puoi specificare il sistema di riferimento usando stringhe PROJ.\\
+Ad esempio, per Marte:\verb|+proj=longlat +a=3389500 +b=3389500 +no_defs|\\
+\item Proiezione Ortografica e Cilindrica con GDAL\\
+Dato che il tuo obiettivo è la proiezione piana, ecco come impostare i comandi GDAL per i due tipi che stai studiando:\\
+\begin{itemize}
+\item Cilindrica (Equirettangolare):\\
+È la più semplice per mappare l'intero pianeta.
+{
+\scriptsize
+\begin{verbatim}
+bash
+gdalwarp -t_srs "+proj=eqc +lat_0=0 +lon_0=0 +a=3389500 +b=3389500" input.tif output_mars_cyl.tif                                                                                                \end{verbatim}
+}
+\item Ortografica (Vista tipo "Satellite"): \\
+Utile per simulare come vedresti Marte o la Luna da un satellite GEO (o meglio, Areostazionario/Seleno-stazionario).\\
+{
+\scriptsize
+\begin{verbatim}
+bashg
+dalwarp -t_srs "+proj=ortho +lat_0=0 +lon_0=0 +a=1737100 +b=1737100" input.tif output_moon_ortho.tif                                                                                                    \end{verbatim}
+}
+\end{itemize}
+\item La particolarità della Luna (Sistemi Selenografici)\\
+Per la Luna, fai attenzione al sistema di coordinate. Esistono due standard principali:\\
+\begin{itemize}
+\item Mean Earth/Polar Axis: Spesso usato per i dati di cartografia globale.\\
+\item Principal Axis (PA): Più preciso per la dinamica orbitale.\\
+\end{itemize}
+Puoi trovare le definizioni ufficiali dei codici EPSG per i corpi planetari sul portale IAU WGCCRE o utilizzare i codici definiti dal USGS Astrogeology Center.
+\item Il calcolo dell'Azimut su altri pianeti\\
+Il concetto di azimut che abbiamo usato per Roma rimane identico matematicamente anche su Marte o Mercurio, a patto di sostituire \(R_{terra}\) con il raggio del pianeta in questione e calcolare l'altezza dell'orbita stazionaria (che dipende dalla massa e dal periodo di rotazione del pianeta).\\
+Per esempio, l'orbita Areostazionaria (l'equivalente GEO su Marte) si trova a circa 17.032 km dalla superficie, molto più vicina rispetto ai 35.786 km della Terra.
+\end{enumerate}
+Consiglio tecnico: Se vuoi georeferenziare immagini grezze di missioni spaziali (come quelle della sonda LRO per la Luna), ti consiglio di esplorare anche ISIS3 (Integrated Software for Imagers and Spectrometers), che lavora in perfetta simbiosi con GDAL ed è lo standard della NASA per il processamento planetario.\\
+Stai lavorando su dataset specifici (es. immagini della fotocamera LROC o HiRISE)?\\
+\begin{enumerate}
+\item Proiezione Ortografica e Cilindrica con GDAL\\
+Dato che il tuo obiettivo è la proiezione piana, ecco come impostare i comandi GDAL per i due tipi che stai studiando:\\
+Cilindrica (Equirettangolare): \\
+È la più semplice per mappare l'intero pianeta.\\
+{
+\scriptsize
+\begin{verbatim}
+bash
+gdalwarp -t_srs "+proj=eqc +lat_0=0 +lon_0=0 +a=3389500 +b=3389500" input.tif output_mars_cyl.tif                                                                                                \end{verbatim}
+}
+Ortografica (Vista tipo "Satellite"):\\
+Utile per simulare come vedresti Marte o la Luna da un satellite GEO (o meglio, Areostazionario/Seleno-stazionario).\\
+{
+\scriptsize
+\begin{verbatim}
+bash
+gdalwarp -t_srs "+proj=ortho +lat_0=0 +lon_0=0 +a=1737100 +b=1737100" input.tif output_moon_ortho.tif                                                                                                     \end{verbatim}
+}
+\item La particolarità della Luna (Sistemi Selenografici)\\
+Per la Luna, fai attenzione al sistema di coordinate. Esistono due standard principali:\\
+\begin{itemize}
+\item Mean Earth/Polar Axis: Spesso usato per i dati di cartografia globale.
+\item Principal Axis (PA): Più preciso per la dinamica orbitale.\\
+\end{itemize}
+Puoi trovare le definizioni ufficiali dei codici EPSG per i corpi planetari sul portale IAU WGCCRE o utilizzare i codici definiti dal USGS Astrogeology Center.
+\item Il calcolo dell'Azimut su altri pianeti\\
+Il concetto di azimut che abbiamo usato per Roma rimane identico matematicamente anche su Marte o Mercurio, a patto di sostituire \(R_{terra}\) con il raggio del pianeta in questione e calcolare l'altezza dell'orbita stazionaria (che dipende dalla massa e dal periodo di rotazione del pianeta).Per esempio, l'orbita Areostazionaria (l'equivalente GEO su Marte) si trova a circa 17.032 km dalla superficie, molto più vicina rispetto ai 35.786 km della Terra.\\
+Consiglio tecnico: Se vuoi georeferenziare immagini grezze di missioni spaziali (come quelle della sonda LRO per la Luna), ti consiglio di esplorare anche ISIS3 (Integrated Software for Imagers and Spectrometers), che lavora in perfetta simbiosi con GDAL ed è lo standard della NASA per il processamento planetario.\\
+Stai lavorando su dataset specifici (es. immagini della fotocamera LROC o HiRISE)?\\
+Stai lavorando con alcuni dei dataset più interessanti e tecnicamente complessi della moderna esplorazione planetaria.
+Il passaggio tra LROC (Luna), CaSSIS (Marte) e il futuro SIMBIO-SYS (BepiColombo su Mercurio) richiede una gestione molto rigorosa dei metadati geometrici.
+\end{enumerate}
+Ecco alcuni consigli specifici per i sensori che hai citato, specialmente riguardo al calcolo di Azimut/Elevazione e Georeferenziazione:\\
+\begin{enumerate}
+\item CaSSIS (Marte) e la sfida dell'Azimut\\
+CaSSIS (su ExoMars TGO) è una camera push-frame che acquisisce immagini a colori e stereo.\\
+Geometria Stereo:\\
+A differenza dei satelliti GEO terrestri, TGO orbita a circa 400 km.\\
+L'azimut e l'angolo di incidenza cambiano costantemente lungo la traccia.\\
+GDAL Tip: Per CaSSIS, i file PDS4 originali contengono le geometrie di illuminazione.\\
+Se usi gdalwarp, assicurati di gestire i file .xml dei metadati per non perdere le informazioni sugli angoli di fase e azimutali solari, fondamentali per interpretare le ombre nel DEM.\\
+\item SIMBIO-SYS / STC (Mercurio)\\
+Il canale STC (Stereo Channel) di SIMBIO-SYS è progettato proprio per generare modelli digitali del terreno (DTM).\\
+Allenamento con MESSENGER:\\
+I dati MDIS (MESSENGER) sono ottimi, ma Mercurio ha una particolarità: la sua rotazione è molto lenta e la risonanza orbita-rotazione influenza la definizione dei sistemi di coordinate longitidunali.\\
+Proiezioni per STC:\\
+Quando lavorerai sui dati STC, la proiezione Stereografica (che hai menzionato di voler usare) è quella nativa ideale per l'elaborazione dei "pair" stereo prima di generare la nuvola di punti 3D, poiché preserva gli angoli locali.\\
+\item Integrazione GDAL + SPICE\\
+Dato che i satelliti planetari non sono fissi come i GEO, il calcolo dell'azimut del satellite rispetto a un punto sulla superficie (come il tuo esercizio su Roma) richiede i kernel SPICE.\\
+Suggerimento: Se vuoi calcolare l'azimut di CaSSIS o SIMBIO-SYS in un dato istante \(t\) rispetto a un cratere, usa la libreria Python SpiceyPy.\\
+Ti permette di ottenere la posizione esatta del satellite nel sistema di riferimento del pianeta (es. \verb|IAU_MARS|) e convertire il vettore posizione in coordinate locali (Azimut, Elevazione).\\
+\item Flusso di lavoro per i DTM (Elevation)\\
+Visto che ti allenerai con dati stereografici di elevazione:\\
+\end{enumerate}
+\begin{itemize}
+\item Rectification: Usa GDAL per proiettare le due immagini stereo su una superficie cilindrica comune (o ortografica locale).\\
+\item Disparity Map: Calcola lo spostamento dei pixel (corrispondenza).\\
+\item Triangolazione: Trasforma la disparità in altezza usando i parametri di azimut e inclinazione dei sensori.\\
+\end{itemize}
+Un dettaglio su SIMBIO-SYS: Essendo uno strumento italiano (INAF/ASI), i dati STC avranno una precisione sub-metrica.\\
+Se riesci a padroneggiare la proiezione ortografica e azimutale con i dati MESSENGER, sarai pronto per Mercurio non appena i dati di BepiColombo saranno disponibili dopo l'inserimento in orbita (2025/26).\\
+Quale software usi per la correlazione stereo (il "matching" delle immagini)? Usi ASP (Ames Stereo Pipeline) della NASA? È il compagno perfetto per GDAL in questi contesti.
+Lavorare alla pipeline di SIMBIO-SYS / STC con 3DPD ti pone direttamente alla frontiera della cartografia planetaria europea.\\
+Il passaggio da GeoTIFF a PDS4 è la fase più delicata per garantire che il lavoro di calcolo dell'elevazione sia fruibile dalla comunità scientifica internazionale tramite il PSA (Planetary Science Archive) dell'ESA.Ecco alcuni aspetti tecnici cruciali per la conversione dei DTM in PDS4:
+\begin{enumerate}
+\item La Label XML e i metadati geometriciIn PDS4, il file XML non è un semplice "accessorio", ma è la definizione stessa del dato.\\
+Per un DTM di Mercurio derivato da STC, la label dovrà contenere:\\
+\begin{itemize}
+\item Cartographic Discipline: Qui definirai la proiezione (probabilmente Equirectangular o Lambert Conformal Conic a seconda della latitudine).\\
+\item Reference Ellipsoid: Dovrai specificare il raggio di Mercurio definito dal working group IAU (solitamente \(2439.4\text{\ km}\) per Mercurio).\\
+\item Coordinate System: Fondamentale definire se le latitudini sono planetocentriche o planetografiche.\\
+\end{itemize}
+\item Gestione dei "Null Values"
+I DTM generati da pipeline stereo come 3DPD presentano spesso aree di "shadow" o "mismatch" dove l'elevazione non è calcolabile.\\
+Assicurati che il valore di NoData nel GeoTIFF (es. -32768 o NaN) sia mappato correttamente nella classe Special\_Constants della label XML PDS4. GDAL può aiutarti a verificare questi valori con gdalinfo.\\
+\item Trasformazione da GeoTIFF a PDS4 Raw\\
+Sebbene PDS4 accetti tecnicamente alcuni formati TIFF, lo standard preferito per i dati d'archivio è il binary raw (un array di pixel senza header, accompagnato dall'XML).
+Puoi usare gdal\_translate per estrarre i dati grezzi:\\
+(Il formato ENVI produce un file .img flat che è facilmente descrivibile nella label PDS4 come un Array\_2D\_Image o Array\_3D\_Spectrum).\\
+\item Il ruolo dell'Azimut e dell'Elevazione nei metadati
+Per STC, l'informazione geometrica è doppia:
+\begin{itemize}
+\item Angolo di osservazione (Emission Angle): Fondamentale per descrivere come è stato acquisito il pair stereo.
+\item Azimut Solare: Essenziale per chi userà il tuo DTM per analisi morfologiche
+(es. calcolo delle pendenze o analisi dei crateri polari per la ricerca di ghiaccio d'acqua).
+\end{itemize}
+\item Strumenti di validazione
+Prima di inviare i dati all'ESA, dovrai passare il PDS4 Validate Tool. Ti consiglio di testare le tue label XML con le definizioni dei dizionari Cartography e Geometry ufficiali, che sono i più complessi per i dati di elevazione di Mercurio.\\
+Curiosità tecnica: State già testando la pipeline 3DPD sui dataset sintetici o sulle immagini di flyby di BepiColombo? I flyby di Mercurio (come quello avvenuto recentemente) forniscono dati preziosi per calibrare proprio la risposta geometrica dello strumento STC prima dell'arrivo in orbita stabile
+\end{enumerate}
+
+\begin{verbatim}
+bash
+gdal_translate -of ENVI input_dtm.tif output_dtm.img
+\end{verbatim}
+Il fatto che Roma ti sia finita in Nord Africa indica un errore classico nella georeferenziazione dei dati Meteosat: l'uso di una proiezione lineare (pixel-distanza) per un sensore che lavora in modo angolare. Il Meteosat (e i satelliti GEO in generale) non scansiona la Terra come uno scanner piano; scansiona la superficie muovendo uno specchio di angoli costanti (\(\Delta \alpha \)). Questo crea la cosiddetta Geostationary Projection. Ecco i tre motivi tecnici per cui il tuo calcolo basato sulla distanza pixel ti ha spostato Roma verso Sud: 1. Proiezione "Gnomonica" vs "Sferica" In un'immagine Meteosat, la distanza tra l'equatore (0°) e Roma (42°N) in pixel non è lineare. A causa della curvatura terrestre e della prospettiva dal punto GEO, i pixel "si comprimono" man mano che ti allontani dal Nadir (0,0). Se usi un rapporto pixel/km fisso basato sull'equatore, sovrastimerai la distanza verso nord, "spingendo" virtualmente i punti verso il basso (ecco perché Roma finisce in Africa).
+2. L'errore del raggio visivo (Scanning Angles) Le coordinate di un pixel Meteosat sono definite da due angoli: Scanning Angle Nord-Sud (\(y\)) e East-West (\(x\)).Per passare da questi angoli alla Latitudine/Longitudine (\(\phi ,\lambda \)), non puoi usare una semplice proporzione. Devi usare le formule della proiezione geostazionaria definita da EUMETSAT: \(x=\arctan \left(\frac{r_{y}}{r_{x}}\right)\)\(y=\arcsin \left(\frac{r_{z}}{d}\right)\)Dove \(r_{x},r_{y},r_{z}\) sono le componenti del vettore distanza osservatore-punto. Se tratti \(x\) e \(y\) come semplici distanze cartesiane su un piano, l'errore aumenta drasticamente con la latitudine. 3. Meteosat Third Generation (MTG) e la posizione Meteosat-12 (il primo MTG-I) è posizionato a 0° di longitudine. Se la tua immagine è una "Full Disk", il centro del pixel (Nadir) è esattamente \((0^{\circ },0^{\circ })\). Controlla il ritaglio: Se l'immagine che stai usando non è il disco intero ma un ritaglio sull'Europa, il "pixel centrale" dell'immagine non è più lo \((0,0)\). Devi conoscere l'offset (colonna/riga iniziale) rispetto al disco completo di 11136 x 11136 pixel (per il canale FCI a risoluzione standard).
+Come risolvere con GDAL
+Invece di calcolare manualmente le distanze, puoi "istruire" GDAL sulla natura dell'immagine. Se conosci l'estensione dell'immagine in termini di angoli di scansione (radianti), puoi usare il CRS specifico per Meteosat (+proj=geos).
+Ecco il comando teorico per georeferenziare correttamente un'immagine MTG (0°) assumendo che sia il disco intero:
+{
+\scriptsize
+\begin{verbatim}
+bash
+gdal_translate -a_srs "+proj=geos +h=35785831 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs" \
+-a_ullr -5568000 5568000 5568000 -5568000 \
+input_meteosat.tif output_georef.tif
+\end{verbatim}
+}
+-a\_ullr: Questi numeri (5568000) rappresentano l'estensione del disco terrestre in "metri di proiezione" alla quota GEO.\\
++h: È l'altezza esatta del satellite che corregge la distorsione prospettica.\\
+Un test rapido per te\\
+Se vuoi verificare la tua teoria:\\
+Prendi le coordinate di Roma (\(41.9^{\circ }N\)).\\
+Calcola l'angolo di scansione dal satellite: \(\theta =\arctan (\dots )\).\\
+Vedrai che il rapporto \(\frac{Pixel}{Grado}\) a Roma è diverso dal rapporto \(\frac{Pixel}{Grado}\) all'Equatore.\\
+Vuoi che ti aiuti a calcolare l'offset corretto dei pixel per Roma partendo da un'immagine MTG specifica, o preferisci provare prima con il comando GDAL?
 \section{References}
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
@@ -325,6 +795,5 @@ Ma nel tuo caso (0,0) è immediato!
 \bibliography{cassis_001}{}
 \bibliographystyle{alpha}
 }
-
 \end{document}
 

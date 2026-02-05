@@ -71,6 +71,7 @@ TARGET62 = printwidth
 TARGET63 = proc2dvec
 TARGET64 = proj_geo_norm
 TARGET64bis = proj_geo_norm_fixed
+TARGET64tris = proj_geo_norm_final
 TARGET65 = random1
 TARGET66 = random2
 TARGET67 = realarrays
@@ -97,7 +98,8 @@ TARGET87 = trial
 TARGET88 = typesize
 TARGET89 = ugravity
 TARGET90 = voidprint5
-TARGETS = voidprint5 ugravity typesize trial toobig test_limits test2 test1 taxes sumn sum4co sum10 statsn squares sphere001 solvequad sizes sin simpshares show_pt shares rndrcples rndicples realarrays random2 random1 proj_geo_norm proc2dvec printwidth printval primes001 primes preincodd predecodd precision pow pi parpow parabola max loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five gcd_school gcd_base gcd fun1 fpow floatlimits floatformats floaterr factors f2c e_what doublevec doublerow dices deg2rad deg2dd decodd dd2deg create_cities_file cowlegs couples cosin conversions const conbinatorics checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases astroconst arrays2 arrays angles alphanums accuracy 3pcircle 1_div_sin 1_div_cos
+TARGET91 = piangles
+TARGETS = voidprint5 ugravity typesize trial toobig test_limits test2 test1 taxes sumn sum4co sum10 statsn squares sphere001 solvequad sizes sin simpshares show_pt shares rndrcples rndicples realarrays random2 random1 proj_geo_norm proc2dvec printwidth printval primes001 primes preincodd predecodd precision pow pi parpow parabola max loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five gcd_school gcd_base gcd fun1 fpow floatlimits floatformats floaterr factors f2c e_what doublevec doublerow dices deg2rad deg2dd decodd dd2deg create_cities_file cowlegs couples cosin conversions const conbinatorics checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases astroconst arrays2 arrays angles alphanums accuracy 3pcircle 1_div_sin 1_div_cos piangles
 all: $(TARGETS)
 $(TARGET0).o: 1_div_cos.c
 	$(CC) -c   $< -o 1_div_cos.o $(CPPFLAGS)
@@ -359,7 +361,13 @@ $(TARGET64).o: proj_geo_norm.c
 	$(CC) -c   $< -o proj_geo_norm.o $(CPPFLAGS)
 $(TARGET64): proj_geo_norm.o  conversions.o
 	$(CC) -o proj_geo_norm $^ $(LDFLAGS)
+$(TARGET64bis).o: proj_geo_norm_fixed.c 
+	$(CC) -c $< -o proj_geo_norm_fixed.o  $(LDFLAGS)
 $(TARGET64bis): proj_geo_norm_fixed.o  conversions.o
+	$(CC) -o proj_geo_norm $^ $(LDFLAGS)
+$(TARGET64tris).o: proj_geo_norm_final.c 
+	$(CC) -c $< -o proj_geo_norm_final.o  $(LDFLAGS)
+$(TARGET64tris): proj_geo_norm_final.o  conversions.o
 	$(CC) -o proj_geo_norm $^ $(LDFLAGS)
 $(TARGET65).o: random1.c
 	$(CC) -c   $< -o random1.o $(CPPFLAGS)
@@ -465,6 +473,8 @@ $(TARGET90).o: voidprint5.c
 	$(CC) -c   $< -o voidprint5.o $(CPPFLAGS)
 $(TARGET90): voidprint5.o
 	$(CC) -o voidprint5 $< $(LDFLAGS)
+$(TARGET91): piangles.o
+	$(CC) -o $@ $< $(LDFLAGS)
 install: all
 	mv $(TARGETS) bin
 .PHONY: clean
