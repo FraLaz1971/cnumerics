@@ -13,7 +13,7 @@
 \begin{abstract}
 \end{abstract}
 \section{Introduction}
-le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile.Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
+le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
 \section{equazione di una sfera nello spazio}
 L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
 \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\), \\
@@ -53,6 +53,424 @@ Forma estesa: \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\). \\
 Centro dalla forma estesa: \(C=\left(-\frac{a}{2},-\frac{b}{2},-\frac{c}{2}\right)\).\\
 Raggio dalla forma estesa: \(R=\sqrt{\frac{a^{2}}{4}+\frac{b^{2}}{4}+\frac{c^{2}}{4}-d}\) \\
 Una sfera è una quadrica caratterizzata da termini quadratici \(x^{2},y^{2},z^{2}\) con coefficienti uguali e assenza di termini misti \(xy,xz,yz\). Se il raggio è \(R=0\), l'equazione rappresenta un punto.
+\section{coordinate cartesiane}
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) su una sfera di raggio \(r\) centrata nell'origine sono espresse come \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
+\begin{itemize}
+\item Passaggio 1: \\
+Definizione dell'equazione cartesiana.\\
+L'equazione di una superficie sferica con centro nell'origine \((0,0,0)\) e raggio \(r\) è definita dalla relazione:\\
+\(x^{2}+y^{2}+z^{2}=r^{2}\)\\
+Ogni punto \((R_{x},R_{y},R_{z})\) che appartiene alla superficie deve soddisfare questa uguaglianza.\\
+Equazione cartesiana\\
+Un punto \((R_{x},R_{y},R_{z})\) appartiene alla superficie di una sfera con centro nell'origine se la sua distanza dall'origine è pari al raggio \(r\). L'equazione fondamentale è:\\
+\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)\\
+Equazione cartesiana della sfera\\
+In uno spazio tridimensionale, la distanza di un punto \((R_{x},R_{y},R_{z})\) dall'origine \((0,0,0)\) è data dal teorema di Pitagora in 3D.\\
+Affinché il punto si trovi sulla superficie di una sfera di raggio \(r\), questa distanza deve essere esattamente pari a \(r\):\\
+\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)
+\item Passaggio 2:\\
+Conversione in coordinate sferiche\\
+Per identificare univocamente un punto sulla superficie, si utilizzano solitamente due angoli:\\
+l'angolo di \emph{colatitudine} (o zenitale) \(\theta \) e l'angolo di \emph{azimut} \(\phi \).\\
+Le relazioni di trasformazione sono:\\
+\begin{enumerate}
+\item \(R_{x}=r\sin (\theta )\cos (\phi )\)
+\item \(R_{y}=r\sin (\theta )\sin (\phi )\)
+\item \(R_{z}=r\cos (\theta )\)
+\end{enumerate}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=18cm]{decomposition_3d_sphere.png}
+\end{center}
+\caption{Projections of the point coordinates}
+\end{figure}
+
+Dove gli intervalli tipici sono \(\theta \in [0,\pi ]\) (da polo a polo) e \\
+\(\phi \in [0,2\pi ]\) (rotazione completa attorno all'asse \(z\)).\\
+Parametrizzazione sferica\\
+Per descrivere la posizione del punto mediante angoli (coordinate sferiche), si utilizzano:\\
+\(\theta \) (latitudine o angolo zenitale): l'angolo tra il raggio e l'asse positivo \(z\), con \(0\le \theta \le \pi \).\\
+\(\phi \) (longitudine o azimut): l'angolo sul piano \(xy\) misurato dall'asse positivo \(x\), con \(0\le \phi <2\pi \).\\
+Le formule di conversione sono:\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
+\(R_{y}=r\sin (\theta )\sin (\phi )\)
+\(R_{z}=r\cos (\theta )\)\\
+Passaggio alle coordinate sferiche\\
+Per identificare un punto specifico sulla superficie sferica, si usano solitamente due angoli:\\
+\(\theta \) (angolo zenitale/colatitudine):\\
+l'angolo rispetto all'asse positivo \(z\) (\(0\le \theta \le \pi \)).
+\(\phi \) (angolo azimutale/longitudine):\\
+l'angolo sul piano \(xy\) rispetto all'asse positivo \(x\) (\(0\le \phi <2\pi \)).\\
+Le formule risultanti per le coordinate cartesiane sono:\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
+\(R_{y}=r\sin (\theta )\sin (\phi )\)\\
+\(R_{z}=r\cos (\theta )\)\\
+\item Passaggio 3:\\
+Visualizzazione grafica\\
+Di seguito è riportato il codice per generare la rappresentazione tridimensionale della sfera e di un punto specifico sulla sua superficie.\\
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro nell'origine \((0,0,0)\) e raggio \(r\) sono espresse dalle relazioni\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).\\
+Visualizzazione grafica\\
+L'immagine seguente mostra una sfera centrata in \((0,0,0)\) con un punto (in rosso) posizionato sulla sua superficie esterna.\\
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro in \((0,0,0)\) e raggio \(r\) sono descritte dalle equazioni \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
+Rappresentazione grafica\\
+Il seguente grafico illustra una sfera unitaria (\(r=1\)) con un punto \(P\) evidenziato sulla sua superficie calcolato per \(\theta =45^{\circ }\) e \(\phi =45^{\circ }\).\\
+(Immagine esemplificativa di una superficie sferica 3D)\\
+{\scriptsize
+\begin{verbatim}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Parametri della sfera
+r = 1
+theta_p = np.pi / 4  # 45 gradi
+phi_p = np.pi / 4    # 45 gradi
+
+# Coordinate del punto specifico
+rx = r * np.sin(theta_p) * np.cos(phi_p)
+ry = r * np.sin(theta_p) * np.sin(phi_p)
+rz = r * np.cos(theta_p)
+
+# Creazione della superficie della sfera
+u = np.linspace(0, 2 * np.pi, 30)
+v = np.linspace(0, np.pi, 30)
+x = r * np.outer(np.cos(u), np.sin(v))
+y = r * np.outer(np.sin(u), np.sin(v))
+z = r * np.outer(np.ones(np.size(u)), np.cos(v))
+
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+
+# Disegno della sfera (trasparente)
+ax.plot_surface(x, y, z, color='cyan', alpha=0.3, edgecolor='k', linewidth=0.1)
+
+# Disegno del punto
+ax.scatter([rx], [ry], [rz], color='red', s=100, label=f'Punto P({rx:.2f}, {ry:.2f}, {rz:.2f})')
+
+# Assi e etichette
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('Punto su superficie sferica')
+ax.legend()
+
+plt.show()
+\end{verbatim}
+}
+\end{itemize}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=18cm]{point_on_sphere_001.png}
+\end{center}
+\caption{Point on the surface of a sphere}
+\end{figure}
+Cosa osservare nel grafico:\\
+Il Piano Arancio (Verticale):\\
+Questo è il piano "di taglio" che hai chiesto.\\
+Qui vedi chiaramente come l'altezza del punto sia il cateto adiacente all'angolo \(\theta \) (\(R\cos \theta \)).\\
+La Linea Verde sull'asse Z: Rappresenta fisicamente la coordinata \(R_{z}\).\\
+La Linea Blu tratteggiata: È l'ombra del raggio sul "pavimento" (piano \(XY\)).\\
+La sua lunghezza è esattamente \(R\sin \theta \).\\
+Il Triangolo Rettangolo Verticale: È formato dal raggio rosso (ipotenusa), dalla linea blu (cateto opposto a \(\theta \)) e dalla linea verde (cateto adiacente a \(\theta \)).
+\begin{itemize}
+\item Passaggio 1: Scomposizione nel piano verticale (Arancione) Hai identificato correttamente che il raggio \(R\) (ipotenusa) viene proiettato sul piano meridiano:\\
+Componente Verticale: Essendo adiacente all'angolo \(\theta \), si ha \(R_{z}=R\cos (\theta )\).\\
+Componente Orizzontale (diagonale \(d\)): Essendo l'altezza del triangolo o la proiezione sul "pavimento", è il cateto opposto a \(\theta \), quindi \(d=R\sin (\theta )\).
+\item Passaggio 2: Scomposizione nel piano orizzontale (Blu/XY)\\
+Ora la diagonale \(d\), che giace sul piano \(XY\), diventa a sua volta l'ipotenusa per un nuovo triangolo rettangolo "disteso" sul pavimento, dove l'angolo di riferimento è \(\phi \):\\
+Lungo l'asse X: Il segmento \(R_{x}\) è il cateto adiacente a \(\phi \), quindi \(R_{x}=d\cos (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{x}}\mathbf{=R}\sin \mathbf{(\theta )}\cos \mathbf{(\phi )}\).\\
+Lungo l'asse Y: Il segmento \(R_{y}\) è il cateto opposto a \(\phi \) (o adiacente al complementare), quindi \(R_{y}=d\sin (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{y}}\mathbf{=R}\sin \mathbf{(\theta )}\sin \mathbf{(\phi )}\).
+\end{itemize}
+La logica ipotenusa \(\times \) coseno (per l'adiacente) e ipotenusa \(\times \) seno (per l'opposto) è applicata correttamente in due passaggi sequenziali: Primo livello (3D -> 2D): Si passa dal raggio \(R\) alla sua ombra \(d\) sul piano \(XY\).\\
+Secondo livello (2D -> 1D): Si passa dall'ombra \(d\) alle singole coordinate \(R_{x}\) e \(R_{y}\).\\
+Le formule risultanti sono infatti:\\
+\(\begin{cases}R_{x}=R\sin (\theta )\cos (\phi )\\ R_{y}=R\sin (\theta )\sin (\phi )\\ R_{z}=R\cos (\theta )\end{cases}\)
+\section{application to planetary science}
+la geometria è la stessa, ma i nomi e i punti di riferimento cambiano quando passiamo dalla matematica alla geografia o all'astronomia. Ecco il confronto tra il modello che abbiamo usato e quello planetario:
+\begin{enumerate}
+\item Latitudine e Colatitudine (\(\theta \))
+ In matematica (coordinate sferiche), \(\theta \) è la colatitudine o distanza zenitale: parte da \(0^{\circ }\) al Polo Nord e arriva a \(180^{\circ }\) al Polo Sud.\\
+ In Geografia: Usiamo la latitudine (\(\delta \) o \(\phi _{lat}\)), che parte da \(0^{\circ }\) all'equatore.\\
+ Relazione: \(\text{Latitudine}=90^{\circ }-\text{Colatitudine}\).\\
+ Effetto sulle formule: Se usi la latitudine (\(\delta \)), le funzioni si invertono:\(R_{z}=R\sin (\delta )\) (perché ora è il cateto opposto all'angolo dall'equatore).\\
+ \(d=R\cos (\delta )\) (la proiezione sul piano equatoriale diventa il cateto adiacente).
+ \item Longitudine e Azimut (\(\phi \))\\
+ Nella trigonometria piana, lo zero è l'asse \(X\) e si ruota in senso antiorario verso \(Y\).\\
+ In Geografia (Longitudine):\\
+ Lo zero è il Meridiano di Greenwich. Si conta verso Est (positivi) o Ovest (negativi) fino a \(180^{\circ }\).\\
+ In Astronomia/Navigazione (Azimut): Qui c'è una sottile differenza. L'Azimut solitamente parte dal Nord (che è la proiezione del polo sul piano dell'osservatore) e ruota in senso orario:\\
+ Nord = \(0^{\circ }\)Est = \(90^{\circ }\)Sud = \(180^{\circ }\)Ovest = \(270^{\circ }\)\\
+ Il nord è anche 360°\\
+\end{enumerate}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Elemento}& \textbf{Matematico (Sferiche)}& \textbf{Geografico (Terrestre)}\\
+\hline
+Punto di origine& Centro della sfera &Centro della Terra\\
+\hline
+Angolo Verticale\(\,\theta \)& (Colatitudine) da Nord\(\,\delta \)& (Latitudine) dall'Equatore\\
+\hline
+Angolo Orizzontale\(\,\phi \)& (Azimut) da asse X\(\,\lambda \)& (Longitudine) da Greenwich\\
+\hline
+Asse Z& Polo Nord& Polo Nord\\
+\hline
+Asse X& Direzione \(0^{\circ }\) longitudine& Intersezione Greenwich-Equatore\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Confronto Sistemi di Coordinate}
+\end{table}
+Nello studio dei pianeti (Sistemi di Coordinate Planetocentriche), si seguono solitamente queste regole della IAU (International Astronomical Union):\\
+\begin{enumerate}
+
+\item Latitudine:\\
+Sempre \(0^{\circ }\) all'equatore, \(+90^{\circ }\) al polo nord, \(-90^{\circ }\) al polo sud.\\
+\item Longitudine:\\
+Dipende dal pianeta. Per la Terra e Marte è positiva verso Est. Per i pianeti che ruotano al contrario (Venere), si usano convenzioni specifiche.
+\item L'Azimut dell'osservatore:\\
+Se sei sulla superficie e guardi il cielo, l'Azimut si conta dal Nord verso Est. Se invece stai mappando l'intero pianeta dallo spazio, usi la Longitudine.
+Se vuoi calcolare le coordinate \((X,Y,Z)\) di una città o di un cratere lunare usando Latitudine (\(\delta \)) e Longitudine (\(\lambda \)):\\
+\(R_{x}=R\cos (\delta )\cos (\lambda )\)\\
+\(R_{y}=R\cos (\delta )\sin (\lambda )\)\\
+\(R_{z}=R\sin (\delta )\)\\
+Vedi come \(\cos \) e \(\sin \) si sono scambiati rispetto al disegno? Questo accade proprio perché la latitudine parte dall'equatore (piano \(XY\)) e non dal polo (asse \(Z\)).
+\end{enumerate}
+\subsection{cartografia planetaria}
+Per localizzare crateri o vulcani (come l'Olympus Mons su Marte), occorre padroneggiare le trasformazioni che proiettano questi punti \(P(R_{x},R_{y},R_{z})\) su un foglio bidimensionale \((u,v)\).\\
+Ecco come funzionano le due proiezioni principali che hai menzionato, partendo dalle coordinate geografiche \((\delta ,\lambda )\):\\
+\begin{enumerate}
+\item Proiezione Cilindrica Equidistante (Plate Carrée)\\
+È la più semplice, usata spesso per le mappe globali di Marte o della Luna.\\
+In pratica "srotoli" la sfera su un rettangolo.\\
+Coordinate Mappa:\\
+\(u=R\cdot \lambda \) (la longitudine diventa l'asse orizzontale)\\
+\(v=R\cdot \delta \) (la latitudine diventa l'asse verticale)\\
+Caratteristica: È ottima per i calcoli diretti, ma distorce enormemente le aree vicino ai poli (i poli diventano lunghe linee quanto l'equatore).\\
+\item Proiezione Ortografica\\
+È quella che vedi quando guardi un pianeta attraverso un telescopio o da una sonda molto lontana. Vedrai solo un emisfero, proprio come se fosse un disco piatto.\\ Se il centro della tua osservazione è l'equatore \((\delta =0,\lambda =0)\), le coordinate sulla mappa \((x_{map},y_{map})\) sono semplicemente:\\
+\(x_{map}=R\cos (\delta )\sin (\lambda )\)\\
+\(y_{map}=R\sin (\delta )\)\\
+due dettagli tecnici delle scienze planetarie:\\
+Il raggio \(R\) non è costante:\\
+Marte è un ellissoide schiacciato, non una sfera perfetta.\\
+Per calcoli di alta precisione (geodetici), si usa un raggio equatoriale (\(R_{eq}\approx 3396\) km) e uno polare (\(R_{pol}\approx 3376\) km).\\
+Sistemi Est vs Ovest: Per Marte, la IAU definisce le longitudini come "Planetocentriche" (crescenti verso Est da \(0\) a \(360^{\circ }\)).\\
+Mercurio ha un sistema simile. Assicurati sempre che il tuo \(\phi \) (o \(\lambda \)) segua la direzione corretta del pianeta che stai mappando.\\
+Implementare una funzione che:\\
+Prende in input le coordinate \((\delta ,\lambda )\) di un cratere (es. il cratere Gale su Marte).\\
+Calcola le coordinate 3D \((R_{x},R_{y},R_{z})\).\\
+Le "proietta" su un piano per mostrarti dove apparirebbe il cratere in una mappa piatta.
+\end{enumerate}
+\subsubsection{Punti planetari notevoli}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Corpo Celeste}&\textbf{Raggio Medio} (\(R\)) & \textbf{Caratteristica principale}\\
+\hline
+Luna& \(1.737\) km& Superficie sferica molto regolare.\\
+\hline
+Marte& \(3.389\) km& Leggermente schiacciato ai poli.\\
+\hline
+Mercurio& \(2.440\) km& Molto denso, quasi perfettamente sferico.\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Dati Planetari per il Calcolo}
+\end{table}
+Punti Notevoli (Coordinate Geografiche/Planetocentriche)\\
+Le longitudini sono espresse nel sistema Est (\(0^{\circ }\) a \(360^{\circ }\)), che è lo standard matematico più comodo per i calcoli.\\
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+%{
+%\small
+\hline
+\textbf{Pianeta/Luna}&\textbf{Nome Dettaglio}& \textbf{Latitudine} (\(\delta \))& \textbf{Longitudine} (\(\lambda \))& \textbf{Tipo}\\
+\hline
+Luna& Tranquillitatis& \(+0.67^{\circ }\)& \(23.47^{\circ }\)& Mare (Pianura)\\
+\hline
+Luna& Tycho& \(-43.30^{\circ }\)& \(348.80^{\circ }\)& Cratere con raggi\\
+\hline
+Luna& Copernicus& \(+9.60^{\circ }\)& \(340.00^{\circ }\)& Cratere d'impatto\\
+\hline
+Marte& Olympus& \(+18.65^{\circ }\)& \(226.20^{\circ }\)& Vulcano più alto del SS\\
+\hline
+Marte& Valles Marineris& \(-13.90^{\circ } \)&\(300.80^{\circ }\)& Canyon immenso\\
+\hline
+Marte& Gale& \(-4.58^{\circ }\)& \(137.44^{\circ }\)& Cratere d'impatto\\
+\hline
+Mercurio& Caloris Planitia& \(+30.50^{\circ }\)& \(190.20^{\circ }\)& cratere gigante\\
+\hline
+Mercurio& Kuiper& \(-11.30^{\circ }\)& \(328.50^{\circ }\)& Cratere molto luminoso\\
+\hline
+Mercurio& Beethoven & \(-20.80^{\circ }\)& \(236.10^{\circ }\)& Grande bacino\\
+\hline
+%}
+\end{tabular}
+\end{center}
+\caption{Dati Planetari}
+\end{table}
+Occorre convertire i gradi in radianti:\\
+\(\text{rad}=\text{deg}\cdot \frac{\pi }{180}\)\\
+Ad esempio, per l'Olympus Mons su Marte:\\
+\(\delta =18.65^{\circ }\)\\
+\(\lambda =226.20^{\circ }\)\\
+\(R=3389\) km\\
+Calcoli:\\
+\begin{enumerate}
+\item \(R_{z}=3389\cdot \sin (18.65^{\circ })\approx 1083.8\) km\\
+\item \(d=3389\cdot \cos (18.65^{\circ })\approx 3211.2\) km\\
+\item \(R_{x}=3211.2\cdot \cos (226.20^{\circ })\approx -2222.8\) km\\
+\item \(R_{y}=3211.2\cdot \sin (226.20^{\circ })\approx -2317.7\) km\\
+\end{enumerate}
+Questi valori \((R_{x},R_{y},R_{z})\) rappresentano la posizione del vulcano rispetto al centro del pianeta.
+\subsection{Modello a ellissoide}
+Ecco il passaggio dalla sfera (modello ideale) all'ellissoide (forma reale dei pianeti).\\
+Volendo essere precisi per un pianeta "schiacciato" come la Terra o Marte, non si può usare un raggio unico.\\
+Occorre differenziare il raggio in base alla componente da calcolare.
+Ecco come procedere per la proiezione ortografica su un ellissoide:\\
+In un ellissoide di rotazione (dove il pianeta ruota attorno all'asse Z):\\
+\(a\) (Raggio Equatoriale):\\
+Si usa per le componenti che giacciono sul piano orizzontale (\(X\) e \(Y\)).\\
+\(b\) (Raggio Polare): Si usa per la componente verticale (\(Z\)).\\
+Perché questa differenza?\\
+Se guardi la Terra dallo spazio, la vedresti come un'ellisse, non come un cerchio perfetto. Sarebbe leggermente più "larga" che "alta".\\
+Usando \(a\) per la \(X\) e \(b\) per la \(Y\), la mappa rispetterà esattamente lo schiacciamento polare del pianeta.
+\subsubsection{Esempio Pratico: La Terra}
+Dati i valori:\\
+\(a\approx 6378.1\) km (Equatore)\\
+\(b\approx 6356.8\) km (Poli)\\
+Se si calcola la posizione di un punto a \(45^{\circ }\) di latitudine:\\
+La sua distanza "orizzontale" dal centro sarà scalata sul raggio maggiore (\(a\)).\\
+La sua "altezza" sopra l'equatore sarà scalata sul raggio minore (\(b\)).\\
+Quando usare il Raggio Medio (\(R_{mean}\))?\\
+Puoi usare il raggio medio (\(R=\frac{2a+b}{3}\)) senza commettere errori significativi se:\\
+\begin{itemize}
+\item Stai disegnando una mappa a piccola scala (dove il pianeta sembra un piccolo disco).\\
+\item Lavori su corpi quasi sferici come la Luna o Mercurio (dove la differenza tra \(a\) e \(b\) è minima, spesso meno di 1 km).\\
+\end{itemize}
+Per Marte, lo schiacciamento è circa lo \(0.6\%\): visivamente è quasi impercettibile, ma per la navigazione di un rover è fondamentale.
+\begin{enumerate}
+\item Le formule corrette per \(P(R_{x},R_{y},R_{z})\)\\
+Prima di arrivare alla mappa, le coordinate 3D del punto diventano:\\
+\(R_{x}=\mathbf{a}\cdot \cos (\delta )\cos (\lambda )\)\\
+\(R_{y}=\mathbf{a}\cdot \cos (\delta )\sin (\lambda )\)\\
+\(R_{z}=\mathbf{b}\cdot \sin (\delta )\)\\
+\item Coordinate sulla Mappa Ortografica (\(X_{map},Y_{map}\))\\
+Quando proietti ortograficamente (immaginando di guardare il pianeta dall'infinito, centrato sull'equatore a longitudine \(0^{\circ }\)), le formule diventano:\\
+\(X_{map}=a\cdot \cos (\delta )\sin (\lambda )\)\\
+\(Y_{map}=b\cdot \sin (\delta )\)\\
+In pratica la \(Y_{map}\) è orientata come l'asse z del caso tridimensionale.
+\end{enumerate}
+\subsection{Planet class}
+Ecco una classe in C++ progettata per gestire i calcoli su diversi pianeti. La classe Planet permette di definire il raggio equatoriale (\(a\)) e quello polare (\(b\)), calcolando sia le coordinate 3D che le proiezioni ortografiche basate sulla scomposizione che abbiamo discusso.\\
+Codice C++ (Standard 11 o superiore)\\
+{
+\scriptsize
+\begin{verbatim}
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <iomanip>
+
+// Costante per conversione gradi in radianti
+const double PI = 3.14159265358979323846;
+
+struct Point3D {
+    double x, y, z;
+};
+
+struct PointMap {
+    double u, v; // Coordinate su mappa piana
+};
+
+class Planet {
+private:
+    std::string name;
+    double r_equatorial; // raggio a
+    double r_polar;      // raggio b
+
+    double toRadians(double degrees) const {
+        return degrees * (PI / 180.0);
+    }
+
+public:
+    Planet(std::string n, double a, double b)
+        : name(n), r_equatorial(a), r_polar(b) {}
+
+    // 1. Calcolo coordinate Cartesiane 3D
+    Point3D getCartesian(double lat, double lon) const {
+        double delta = toRadians(lat);
+        double lambda = toRadians(lon);
+
+        Point3D p;
+        // La proiezione sul piano XY usa il raggio equatoriale (a)
+        double d = r_equatorial * cos(delta);
+        p.x = d * cos(lambda);
+        p.y = d * sin(lambda);
+
+        // La coordinata verticale usa il raggio polare (b)
+        p.z = r_polar * sin(delta);
+
+        return p;
+    }
+
+    // 2. Proiezione Ortografica (vista frontale centrata su lon 0)
+    // Xmap usa il raggio equatoriale, Ymap usa il raggio polare
+    PointMap projectOrthographic(double lat, double lon) const {
+        double delta = toRadians(lat);
+        double lambda = toRadians(lon);
+
+        PointMap pm;
+        pm.u = r_equatorial * cos(delta) * sin(lambda);
+        pm.v = r_polar * sin(delta);
+
+        return pm;
+    }
+
+    void printInfo(double lat, double lon) const {
+        Point3D p = getCartesian(lat, lon);
+        PointMap m = projectOrthographic(lat, lon);
+
+        std::cout << "--- " << name << " ---" << std::endl;
+        std::cout << "Coordinate 3D: X=" << p.x << ", Y=" << p.y << ", Z=" << p.z << std::endl;
+        std::cout << "Mappa Ortografica: U=" << m.u << ", V=" << m.v << std::endl;
+        std::cout << "---------------------------" << std::endl << std::endl;
+    }
+};
+
+int main() {
+    // Definizione dei pianeti (Raggio Equatoriale, Raggio Polare in km)
+    Planet terra("Terra", 6378.1, 6356.8);
+    Planet marte("Marte", 3396.2, 3376.2);
+    Planet luna("Luna", 1737.4, 1737.4); // Sferica
+
+    // Test Olympus Mons su Marte
+    // Lat: 18.65, Lon: 226.2 (o -133.8)
+    std::cout << std::fixed << std::setprecision(2);
+    marte.printInfo(18.65, 226.2);
+
+    // Test Apollo 11 su Luna
+    luna.printInfo(0.67, 23.47);
+
+    return 0;
+}
+\end{verbatim}
+}
+Caratteristiche del codice:\\
+Gestione dello schiacciamento:\\
+Come abbiamo discusso, p.z e pm.v (la coordinata verticale) usano r\_polar, mentre le componenti orizzontali usano r\_equatorial.\\
+Strutture Dati: Ho usato struct Point3D e PointMap per rendere il codice pulito e pronto per essere integrato in un motore grafico o in un software di analisi dati.\\
+Modularità: Puoi aggiungere facilmente nuovi pianeti nel main semplicemente passando i due raggi.\\
+Note tecniche per la tua implementazione:\\
+Longitudine:\\
+Nello script ho considerato la longitudine \(\lambda \) crescente verso Est (0-360).\\
+Se ricevi dati in formato Ovest, ricorda di trasformarli (es. \(350^{\circ }\text{\ Est}=-10^{\circ }\text{\ Ovest}\)).\\
+Visibilità: Nella proiezione ortografica reale, dovresti aggiungere un controllo:\\
+se \(\cos (\lambda )\) è negativo, il punto si trova "dietro" l'emisfero visibile e non andrebbe disegnato.
 \section{EUMETSAT Technical Parameters}
 Ho recuperato i parametri esatti utilizzati da EUMETSAT per mappare i dati grezzi in immagini Full Disk come la tua:
 \begin{itemize}
