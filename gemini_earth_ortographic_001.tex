@@ -359,6 +359,7 @@ Prima di arrivare alla mappa, le coordinate 3D del punto diventano:\\
 \(R_{x}=\mathbf{a}\cdot \cos (\delta )\cos (\lambda )\)\\
 \(R_{y}=\mathbf{a}\cdot \cos (\delta )\sin (\lambda )\)\\
 \(R_{z}=\mathbf{b}\cdot \sin (\delta )\)\\
+\clearpage
 \item Coordinate sulla Mappa Ortografica (\(X_{map},Y_{map}\))\\
 Quando proietti ortograficamente (immaginando di guardare il pianeta dall'infinito, centrato sull'equatore a longitudine \(0^{\circ }\)), le formule diventano:\\
 \(X_{map}=a\cdot \cos (\delta )\sin (\lambda )\)\\
@@ -521,8 +522,7 @@ Definisci i valori relativi al punto sub-satellite (\(\phi _{0},\lambda _{0}\)):
 \(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\) \\
 (Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).\\
 La definizione che hai riportato descrive la visibilità geometrica di un punto sulla superficie terrestre rispetto a un
-satellite. Hai commesso alcuni piccoli errori di trascrizione e mancano effettivamente gli operatori di moltiplicazione
-e gli esponenti corretti in \(S_{3}\).
+satellite.
 \subsection{ECEF coordinates}
 Il sistema di coordinate cartesiane ECEF (Earth-Centered, Earth-Fixed) è un sistema di riferimento geocentrico tridimensionale con origine nel centro di massa terrestre (0,0,0) e assi fissati rispetto alla rotazione terrestre (X, Y, Z). X punta al meridiano di Greenwich, Y a 90° est, Z al Polo Nord, solitamente misurato in metri.\\
 Caratteristiche Principali del Sistema ECEF
@@ -534,6 +534,24 @@ Caratteristiche Principali del Sistema ECEF
 \item Asse Z: Allineato con l'asse di rotazione terrestre, verso il Polo Nord.
 \item Unità di misura: Metri.
 \end{itemize}
+\end{enumerate}
+\subsection{georeferenziazione e metadati}
+\begin{enumerate}
+\item Parametrizzazione del Fattore di Scala (\(K\))\\
+Il valore \(K\) non è magico: rappresenta quanti pixel ci sono per ogni radiante di scansione. Nelle immagini Meteosat standard, questo valore è fisso per ogni tipo di file (HRIT, Native, o derivati web). Per rendere lo script ripetibile, puoi definire \(K\) in funzione della dimensione dell'immagine (\(dim_{x}\)):\(K=\frac{dim\_x}{2\times \text{max\_scan\_angle}}\)Dove per i satelliti MSG (Meteosat 8-11) l'angolo massimo è \(\approx 0.15185\) rad. Se \(dim\_x=3712\), allora \(K\approx 12222\).Se la tua immagine reale richiede \(K=11900\), significa che l'immagine PNG/JPG che stai usando ha un margine nero di circa il 2.6\% che "ruba" spazio al disco terrestre. Soluzione: Crea un file di configurazione .sh o un piccolo database che associ al "Provider" dell'immagine (es. EUMETSAT Web, RealEarth, NASA WorldView) il suo coefficiente \(K\) specifico.
+\item Utilizzo dei GCP (Ground Control Points) con GDAL\\
+Il modo più professionale per georeferenziare migliaia di immagini è usare GDAL per "iniettare" i punti che hai calcolato direttamente nei metadati dell'immagine. Puoi creare uno script che genera una lista di punti di controllo: Prendi le coordinate Lat/Lon di 10 capitali (quelle che hai già).Calcola con le tue formule xproj e yproj i pixel corrispondenti \((X,Y)\).Lancia il comando:\\
+\begin{verbatim}
+ gdal_translate -gcp [Lon] [Lat] [X_pixel] [Y_pixel] ... (per 10 punti) \
+               input_immagine.jpg immagine_con_metadati.tif
+\end{verbatim}
+\item Infine, usa gdalwarp per trasformare l'immagine in una proiezione standard (es. Mercatore o Cilindrica):
+\begin{verbatim}
+ gdalwarp -t_srs EPSG:4326 immagine_con_metadati.tif mappa_finale.tif
+\end{verbatim}
+\item Automatizzazione tramite SPICE (per Marte e Mercurio) Dato che il tuo obiettivo finale sono CaSSIS e SIMBIO-SYS, non potrai usare un \(K\) fisso perché quei satelliti si muovono. Per rendere lo studio ripetibile sui pianeti, dovrai sostituire i tuoi parametri \(H,R_{eq},R_{pol}\) con variabili caricate dai Kernel SPICE della NASA/ESA.Lo script gnuplot che hai scritto diventerà il tuo "validatore visivo": lo userai per controllare che il DTM o l'immagine di Marte prodotta dalla pipeline sia corretta prima di inviarla all'archivio ESA.
+\end{enumerate}
+applicarlo a Marte? Possiamo modificare lo script Gnuplot cambiando i raggi (\(R_{eq}=3396.19\), \(R_{pol}=3376.2\)) e calcolando l'altezza \(H\) per un ipotetico satellite "Areostazionario". Questo ti servirà per capire come variano le distorsioni su un pianeta più piccolo e più schiacciato. Vuoi che impostiamo insieme i parametri per il "Meteosat di Marte" così da vedere come cambia la griglia? [1, 2, 3]
 \subsection{GNSS Antenna}
 Un'antenna GNSS (Global Navigation Satellite System) è un dispositivo progettato per catturare le onde elettromagnetiche trasmesse dai satelliti in orbita e convertirle in segnali elettrici utilizzabili da un ricevitore.
 A differenza del termine "antenna GPS", che si riferisce specificamente al sistema statunitense, l'antenna GNSS è in grado di ricevere dati da più costellazioni contemporaneamente, come Galileo (Europa), GLONASS (Russia) e BeiDou (Cina).
@@ -604,7 +622,6 @@ L'aumento dell'angolo off-nadir comporta diversi effetti:
 \item Vantaggi Operativi: Permette una maggiore frequenza di rivisitazione (il satellite può fotografare un punto anche se non ci passa sopra esattamente) e facilita l'acquisizione di coppie stereoscopiche per la creazione di modelli digitali di elevazione (DEM).
 \end{itemize}
 Per applicazioni di precisione, si preferiscono angoli definiti Near-Nadir (<= 15°) o Tight-Nadir (<= 10°).
-\end{enumerate}
 \item Coordinate Piane Proiettate (\(x,y\))\\
 Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
 \(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
