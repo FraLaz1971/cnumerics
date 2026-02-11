@@ -3,8 +3,14 @@
 #include <string.h>
 #include <math.h>
 #include "conversions.h"
-#define PI 3.14159265
-/* #n,Capital City,Country,Continent,Latitude,Longitude */
+
+
+double rad2ddeg(double rad){
+  double d;
+  d = rad*180.0/PI;
+  return rad;
+}
+
 
 double ddeg2rad(double d){
   double rad;
@@ -30,7 +36,6 @@ int decdeg2deg (double dd, struct Angle *iangle) {
 
 
 /*
- * #n,Capital City,Country,Continent,Latitude,Longitude
                           x_d    180       x_r    x_d   pi
  x_d/(x_r) = 180/pi ---> ---- = ---- --->     =     * ----
                           x_r    pi                    180

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define PI 3.14159265
-/* #n,Capital City,Country,Continent,Latitude,Longitude */
+#define PI 3.14159265358979323844
 struct Capital{
   unsigned char n;
   char *city;
@@ -24,6 +23,8 @@ struct Angle{
   unsigned char sec;
 };
 
+double rad2ddeg(double rad);
+
 int decdeg2deg (double dd, struct Angle *iangle);
 
 double deg2decdeg(unsigned short deg, unsigned char min, unsigned char sec);
@@ -34,7 +35,7 @@ double deg2rad(unsigned short deg, unsigned char min, unsigned char sec);
 
 
 /*
- * #n,Capital City,Country,Continent,Latitude,Longitude
+ *
                           x_d    180       x_r    x_d   pi
  x_d/(x_r) = 180/pi ---> ---- = ---- --->     =     * ----
                           x_r    pi                    180

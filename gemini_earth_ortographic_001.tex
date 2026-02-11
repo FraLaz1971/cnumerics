@@ -2,6 +2,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{gensymb}
+\DeclareUnicodeCharacter{2061}{}
+\DeclareUnicodeCharacter{2005}{}
+\DeclareUnicodeCharacter{200B}{}
+\DeclareUnicodeCharacter{200A}{}
+
 %opening
 \title{Gemini notes on Earth Orthographic geo-referencing}
 \author{Francesco Lazzarotto (OAPD INAF) mailto:francesco.lazzarotto@inaf.it}
@@ -13,7 +19,7 @@
 \begin{abstract}
 \end{abstract}
 \section{Introduction}
-le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate 0°,0°, che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
+le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate (0,0) , che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
 \section{equazione di una sfera nello spazio}
 L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
 \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\), \\
@@ -200,7 +206,7 @@ la geometria è la stessa, ma i nomi e i punti di riferimento cambiano quando pa
  Lo zero è il Meridiano di Greenwich. Si conta verso Est (positivi) o Ovest (negativi) fino a \(180^{\circ }\).\\
  In Astronomia/Navigazione (Azimut): Qui c'è una sottile differenza. L'Azimut solitamente parte dal Nord (che è la proiezione del polo sul piano dell'osservatore) e ruota in senso orario:\\
  Nord = \(0^{\circ }\)Est = \(90^{\circ }\)Sud = \(180^{\circ }\)Ovest = \(270^{\circ }\)\\
- Il nord è anche 360°\\
+ Il nord è anche 360 degrees \\
 \end{enumerate}
 \begin{table}[h!]
 \begin{center}
@@ -538,9 +544,18 @@ Caratteristiche Principali del Sistema ECEF
 \subsection{georeferenziazione e metadati}
 \begin{enumerate}
 \item Parametrizzazione del Fattore di Scala (\(K\))\\
-Il valore \(K\) non è magico: rappresenta quanti pixel ci sono per ogni radiante di scansione. Nelle immagini Meteosat standard, questo valore è fisso per ogni tipo di file (HRIT, Native, o derivati web). Per rendere lo script ripetibile, puoi definire \(K\) in funzione della dimensione dell'immagine (\(dim_{x}\)):\(K=\frac{dim\_x}{2\times \text{max\_scan\_angle}}\)Dove per i satelliti MSG (Meteosat 8-11) l'angolo massimo è \(\approx 0.15185\) rad. Se \(dim\_x=3712\), allora \(K\approx 12222\).Se la tua immagine reale richiede \(K=11900\), significa che l'immagine PNG/JPG che stai usando ha un margine nero di circa il 2.6\% che "ruba" spazio al disco terrestre. Soluzione: Crea un file di configurazione .sh o un piccolo database che associ al "Provider" dell'immagine (es. EUMETSAT Web, RealEarth, NASA WorldView) il suo coefficiente \(K\) specifico.
+Il valore \(K\) non è magico: rappresenta quanti pixel ci sono per ogni radiante di scansione. Nelle immagini Meteosat standard, questo valore è fisso per ogni tipo di file (HRIT, Native, o derivati web). Per rendere lo script ripetibile, puoi definire \(K\) in funzione della dimensione dell'immagine (\(dim_{x}\)):\\
+
+\begin{center}
+\(K=\frac{dim\_x}{2\times \text{max\_scan\_angle(rad)}}\)\\                                                      \end{center}
+Dove per i satelliti MSG (Meteosat 8-11) l'angolo massimo è \(\approx 0.15185\) rad.\\
+Se \(dim\_x=3712\), allora \(K\approx 12222\).\\
+Se la tua immagine reale richiede \(K=11900\), significa che l'immagine PNG/JPG che stai usando ha un margine nero di circa il 2.6\% che "ruba" spazio al disco terrestre.\\
+Soluzione: Crea un file di configurazione .sh o un piccolo database che associ al "Provider" dell'immagine (es. EUMETSAT Web, RealEarth, NASA WorldView) il suo coefficiente \(K\) specifico.
 \item Utilizzo dei GCP (Ground Control Points) con GDAL\\
-Il modo più professionale per georeferenziare migliaia di immagini è usare GDAL per "iniettare" i punti che hai calcolato direttamente nei metadati dell'immagine. Puoi creare uno script che genera una lista di punti di controllo: Prendi le coordinate Lat/Lon di 10 capitali (quelle che hai già).Calcola con le tue formule xproj e yproj i pixel corrispondenti \((X,Y)\).Lancia il comando:\\
+Il modo più professionale per georeferenziare migliaia di immagini è usare GDAL per "iniettare" i punti che hai calcolato direttamente nei metadati dell'immagine.\\
+Puoi creare uno script che genera una lista di punti di controllo: Prendi le coordinate Lat/Lon di 10 capitali (quelle che hai già).\\
+Calcola con le tue formule xproj e yproj i pixel corrispondenti \((X,Y)\). Lancia il comando:\\
 \begin{verbatim}
  gdal_translate -gcp [Lon] [Lat] [X_pixel] [Y_pixel] ... (per 10 punti) \
                input_immagine.jpg immagine_con_metadati.tif
@@ -720,6 +735,1104 @@ Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricorda
 set view equal xyz
 \end{verbatim}
 per forzare la stessa scala su tutti gli assi.
+\section{The oblate spheroid model}
+\subsection{The ellipse}
+
+
+An ellipse is the geometric locus of points in a plane for which the sum of the distances from two fixed points F1 and F2, called foci, is constant. An ellipse is a non-degenerate conic section. If we indicate a generic point on the ellipse P, we can translate the definition into the following algebraic condition:\\
+\[ PF_1 + PF_2 = constant \]
+L'equazione canonica dell'ellisse con centro nell'origine \(O(0,0)\) e assi coincidenti con gli assi cartesiani è\\
+\(\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1\),\\
+dove \(a\) e \(b\) sono i semiassi, diversi da zero (rispettivamente orizzontale e verticale).\\
+Se \(a^{2}>b^{2}\), i fuochi sono sull'asse \(x\); se \(a^{2}<b^{2}\), i fuochi sono sull'asse \(y\).\\
+\textbf{Elementi e Formule Chiave}:\\
+\begin{itemize}
+\item Equazione: \(\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1\) (con \(a,b>0\)).\\
+\item Semiassi: \(a\) è il semiasse orizzontale, \(b\) è il semiasse verticale.\\
+\item Fuochi (\(c\)): La semidistanza focale è data da \(c^{2}=|a^{2}-b^{2}|\).\\
+\item Eccentricità (\(e\)): \(e=\frac{c}{a}\) (se \(a>b\)) o \(e=\frac{c}{b}\) (se \(b>a\)), con \(0<e<1\).\\
+\item Vertici: I quattro vertici si trovano nei punti \((\pm a,0)\) e \((0,\pm b)\).\\
+\item Ellisse traslata: Se il centro è \(C(x_{0},y_{0})\), l'equazione diventa\\
+\(\frac{(x-x_{0})^{2}}{a^{2}}+\frac{(y-y_{0})^{2}}{b^{2}}=1\).
+\end{itemize}
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=12cm]{equation-of-ellipse1-c1148b91.png}
+\end{center}
+\caption{ellipse 1}
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=14cm]{equation-of-ellipse4-4bf7f794.png}
+\end{center}
+\caption{ellipse 2}
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{equation-of-ellipse3-1518cb07.png}
+\end{center}
+\caption{ellipse 3}
+\end{figure}
+
+Characteristic elements of the ellipse:\\
+\begin{itemize}
+\item axes of the ellipse: these are the segments along which the ellipse is divided into equal parts; the segments into which the axes divide each other are called semi-axes;
+\item  vertices of the ellipse: these are the four points of intersection between the ellipse and its axes;
+\item  center of the ellipse: this is the point of intersection of the axes and constitutes its center of symmetry;
+\item  foci of the ellipse: these are the points with respect to which the points of the ellipse have distances with a constant sum;
+\item  semi-focal length: this is the semi-distance between the two foci.
+\item  eccentricity of the ellipse: this is a value that expresses the deformation of the ellipse with respect to a circumference;
+\item  semi-focal length:
+It is defined as the semi-distance between the two foci and is denoted by c.
+\[ if\, a^2 > b^2\,\, then\,\, c = \sqrt{(a^{2}-b^{2})} \] \\
+\[ if\, b^2 > a^2\,\, then\,\, c = \sqrt{(b^{2}-a^{2})} \] \\
+\item eccentricity of the ellipse:
+The eccentricity e is a measure of the deformation of the ellipse with respect to a circle (= how much the ellipse is squashed) and by definition is the ratio between the semi-focal length and the length of the semi-major axis.
+\[e = \frac{c}{a}\,\, if\,\, a^2 > b^2\] \\
+\[e = \frac{c}{b}\,\, if\,\, b^2 > a^2\] \\
+\\
+\[0 \leq e < 1\] \\
+If c = 0, the ellipse reduces to a circle.\\
+If c = 1, the ellipse reduces to a segment.\\
+\end{itemize}
+\subsection{Plotting an ellipse}
+\subsubsection{Equation of Ellipse in Parametric Form}
+Parametric equation of ellipse:\\
+\[ \frac{x^2}{a^2}+\frac{y^2}{b^2}=1\] is given by \[x=a \cdot cos\theta, y=b \cdot sin\theta\] and the parametric coordinates of the points lying on it are furnished by \[ (a \cdot cos\theta,b \cdot sin\theta) \]
+ho plottato una ellisse non ruotata con centro C(x0,y0)\\
+x0 = 2\\
+y0 = 4\\
+semiassi\\
+a = 8\\
+b = 3\\
+con il seguente script gnuplot
+\begin{verbatim}
+set datafile separator ","
+set terminal pngcairo
+set output "ellipse001.png"
+set parametric
+set trange [0:2*pi]
+set samples 500
+set size ratio -1
+set grid
+x0 = 2
+y0 = 4
+a = 8
+b = 3
+# 3. Funzioni parametriche per il perimetro dell'ellisse
+x(t) = x0 + a*cos(t)y(t) = y0 + b*sin(t)
+# 5. Definizione degli Assi (vettori che partono dal centro)
+# Asse maggiore (lungo a)
+set arrow from x0 - a, y0 to x0 + a, y0 nohead lc rgb "blue" dt 2
+# Asse minore (lungo b)
+set arrow from x0, y0-b to x0,y0+b nohead lc rgb "red" dt 2
+set xrange [x0-a-2 : x0+a+2]
+set yrange [y0-b-2 : y0+b+2]
+set xtics x0-a-2,1,x0+a+2
+set ytics y0-b-2,1,y0+b+2
+plot x(t), y(t) with lines title "Ellipse" lw 2, \
+"ellipse_points001.csv" with points pt 7 notitle, \
+"ellipse_points001.csv" using 1:2:3 with labels offset 0.50,0.50 font 'arial,14' notitle                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \end{verbatim}
+questo è il file di punti ellipse\_points001.csv\\
+\begin{verbatim}
+#x,y,label
+-6,4,-a
+10,4,+a
+2,1,-b
+2,7,+b
+7.656848,6.121318,P
+\end{verbatim} questa è l'immagine in output,
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellipse001.png}
+\end{center}
+\caption{point on the perimeter of the ellipse}
+\end{figure}
+ho fatto il plot di un punto P sul perimetro dell'ellisse e ho scelto un punto a 45° secondo l'angolo spazzato dal raggio al centro (0° sull'asse +X). Ho utilizzato le formule\\
+x = \( a \cdot cos\theta, y = b \cdot sin\theta\) e l'angolo in radianti \(\pi/4\) \(\sim 0.785\)\\
+il punto P mi viene quindi di coordinate (7.656848,6.121318) e nel plot viene bene sul perimetro. Il problema è che l'angolo spazzato non sembra di 45°.\\
+Il calcolo è corretto per quanto riguarda la posizione del punto sul perimetro, ma l'osservazione visiva è giustissima: l'angolo geometrico reale che vedi nel grafico non è di 45°. Il motivo risiede nella differenza tra l'anomalia eccentrica (\(t\) nelle tue formule parametriche) e l'angolo polare (\(\theta \) misurato dal centro).\\
+Il "problema" delle equazioni parametriche\\
+Le formule che hai usato:\\
+\(x=x_{0}+a\cdot \cos (t)\)\\
+\(y=y_{0}+b\cdot \sin (t)\)\\
+utilizzano un parametro \(t\) chiamato anomalia eccentrica.\\
+In un'ellisse (dove \(a\ne b\)), questo parametro non corrisponde all'angolo geometrico \(\theta \) tra l'asse \(X\) e la semiretta che congiunge il centro al punto \(P\).\\
+Perché non sembra 45°?\\
+Quando imposti \(t=45\)°  (\(\pi /4\)):\\
+\(  \cos (45 \degree)  = \sin ( 45 \degree) \approx 0.707 \) \\
+Tuttavia, dato che \(a=8\) e \(b=3\), il punto si sposta molto di più in orizzontale che in verticale (\(8\cdot 0.707\) contro \(3\cdot 0.707\)).\\
+L'angolo reale \(\theta \) si calcola con:\\
+\(\tan (\theta )=\frac{y-y_{0}}{x-x_{0}}=\frac{b\cdot \sin (t)}{a\cdot \cos (t)}=\frac{b}{a}\tan (t)\)\\
+Nel tuo caso: \(\tan (\theta )=\frac{3}{8}\cdot \tan (45^{\circ } )=\frac{3}{8}=0.375\).\\
+L'angolo che vedi nel grafico è \(\arctan (0.375)\approx \mathbf{20.5^{\circ } }\).
+Per far si che il punto \(P\) si trovi esattamente sulla bisettrice (angolo geometrico \( \alpha =45\)° rispetto al centro), occorre calcolare il parametro \(t\) necessario affinché \(\frac{b}{a}\tan (t)=\tan (45^{\circ } )\).\\
+La formula per trovare le coordinate di un punto con un angolo polare \(\alpha \) desiderato è:\\
+\(x=x_{0}+\frac{a\cdot b}{\sqrt{b^{2}+a^{2}\tan ^{2}\alpha }}\)\\
+\(y=y_{0}+\frac{a\cdot b\tan \alpha }{\sqrt{b^{2}+a^{2}\tan ^{2}\alpha }}\)\\
+Per \(\alpha =45^{\circ } \) (dove \(\tan \alpha =1\)):\\
+\(x=2+\frac{24}{\sqrt{9+64}}=2+\frac{24}{\sqrt{73}}\approx \mathbf{4.809}\)\\
+\(y=4+\frac{24}{\sqrt{73}}\approx \mathbf{6.809}\)\\
+Prova a plottare questo punto \((4.809,6.809)\) e vedrai che si troverà esattamente a 45° rispetto al centro.
+\subsection{Angolo polare vs Anomalia Eccentrica}
+\subsubsection{ L’ellisse “standard”}
+Consideriamo un’ellisse centrata nell’origine, con asse maggiore lungo x:
+\[
+\frac{x^2}{a^2}+\frac{y^2}{b^2}=1
+\]\\
+dove:\\
+\begin{itemize}
+\item a = semiasse maggiore\\
+\item b = semiasse minore\\
+\item eccentricità:\\
+\[e=\sqrt{1-\frac{b^{2}}{a^{2}}}\]\\​
+\end{itemize}
+\subsubsection{Angolo polare \(\theta\)}
+ L’angolo polare è quello usuale:
+\begin{itemize}
+\item misurato dal centro
+\item rispetto all’asse x
+\item coordinate polari:\\
+\[
+x=r \cos ⁡\theta,\,y=r \sin⁡ \theta
+\]
+\end{itemize}
+Ma attenzione: in un’ellisse il raggio r non è costante, quindi r(\(\theta\)) è complicato.\\
+Se sostituiamo nella forma cartesiana:\\
+\[
+\frac{(r\cos⁡\theta)^2}{a^2}+\frac{(r\sin⁡\theta)^2}{b^2}=1
+\]
+\[
+r^2(\frac{\cos^⁡2\theta}{a^2}+\frac{\sin⁡^2\theta}{b^2})=1
+\]
+quindi:
+\[
+r(\theta)=\frac{1}{\sqrt{(\frac{\cos^⁡2\theta}{a^2}+\frac{\sin^⁡2\theta}{b^2})}}
+\]
+già qui si vede: usare \(\theta\) produce una formula meno elegante.\\
+\subsubsection{Anomalia eccentrica t (o E)}
+Ora introduciamo un altro angolo, che NON è geometrico rispetto al centro.\\
+L’anomalia eccentrica si definisce così:\\
+\begin{itemize}
+\item prendi il cerchio di raggio a\\
+\item proietta un punto del cerchio sull’ellisse\\
+\end{itemize}
+Parametrizzazione:
+\[ x=a \cdot \cos⁡(t) \]
+\[ y=b \cdot \sin⁡(t) \]
+dove t è l’anomalia eccentrica.\\
+Che soddisfa automaticamente l’equazione dell’ellisse:
+\[
+\frac{(a\cos⁡t)^2}{a^2}+\frac{(b\sin⁡t)^2}{b^2}=\cos^⁡2t+\sin^⁡2t=1 \\
+\]
+perfetta e semplice.\\
+\subsubsection{ Differenza geometrica tra t e \(\theta\)}
+
+Ora: qual è l’angolo polare reale?
+\[ \tan⁡\theta=\frac{y}{x} \]
+sostituiamo:
+\[ \tan⁡ \theta = \frac{b \cdot \sin ⁡t}{ a \cos⁡ t} \]
+\[ \tan⁡ \theta = \frac{b}{a} \tan ⁡t \]
+
+Quindi: \[\theta=\arctan⁡(\frac{b}{a}\tan ⁡t)\]
+
+Conclusione importante
+\[\theta \neq t\]
+\( \theta = t\) Solo se a=b  (coincidono: cerchio).
+\subsubsection{Esempio numerico}
+Prendiamo:
+\begin{itemize}
+\item a=5
+\item b=3
+\end{itemize}
+Supponiamo: \[t=45^{\circ}\]
+Allora:\\
+\[x=5 \cdot cos(⁡45^{\circ})=5\cdot0.707=3.54\]\\
+\[y=3 \cdot sin⁡(45^{\circ})=3\cdot0.707=2.12\]\\
+Ora l’angolo polare vero:\\
+tan\[⁡\theta=\frac{2.12}{3.54}=0.599\]\\
+\[\theta=arctan⁡(0.599)=31^{\circ}\]\\
+\\
+\textbf{Risultato}\\
+\begin{itemize}
+\item anomalia eccentrica: \(t=45^{\circ}\) \\
+\item angolo polare reale: \(\theta=31^{\circ}\) \\
+\end{itemize}
+molto diverso!
+\clearpage
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellipse002.png}
+\end{center}
+\caption{anomalia eccentrica vs angolo al centro}
+\end{figure}
+
+\subsubsection{Perché si usa t e non \(\theta\)?}
+Qui arriva la parte orbitale.\\
+\begin{enumerate}
+\item \textbf{Parametrizzazione semplice}\\
+\\
+Con t:\\
+\[
+x=a \cdot cos⁡t,\,y=b \cdot sin⁡t
+\]
+Con \(\theta\):\\
+\[
+r(\theta)=\frac{1}{\sqrt{\frac{cos⁡^2\theta}{a^2}+\frac{sin^⁡2\theta}{b^2}}}
+\]​
+​
+Molto più complicato.\\
+\item \textbf{Dinamica kepleriana: il tempo}
+
+Nel moto orbitale (fuoco, non centro!) vale l’equazione di Keplero:
+\[
+M=E-esin⁡E
+\]
+dove:
+\begin{itemize}
+\item M = anomalia media (proporzionale al tempo)\\
+\item E = anomalia eccentrica\\
+\end{itemize}
+il tempo entra in modo semplice tramite E.\\
+\item  \textbf{L’angolo polare “vero” (anomalia vera)}\\
+In orbite si usa invece l’angolo dal fuoco: \(\nu\)
+che è legato a E da:
+\[
+\tan⁡{\frac{\nu}{2}}=\sqrt{\frac{1+e}{1-e}}\tan{\frac{⁡E}{2}}
+​\]
+Quindi anche lì:
+\begin{itemize}
+\item \(\nu\) è complicato
+\item E è quello naturale per integrare nel tempo\\
+\end{itemize}
+\subsubsection{Intuizione finale}
+$\theta$: angolo geometrico dal centro → naturale per la forma, ma brutto per le formule\\
+t=E: angolo ausiliario sul cerchio → artificiale geometricamente, ma perfetto matematicamente\\
+in orbite: E è quello che collega facilmente spazio e tempo.\\
+Riassunto in una frase\\
+L’anomalia eccentrica è usata perché rende l’ellisse una proiezione semplice di un moto circolare uniforme, mentre l’angolo polare reale non produce formule semplici né per la geometria né per il moto nel tempo.\\
+\end{enumerate}
+\subsection{perchè \(y = b \cdot sin (t)\) }
+è una conseguenza diretta di come nasce l’ellisse come immagine schiacciata di un cerchio.
+
+\subsubsection{L’idea geometrica fondamentale}
+L’ellisse
+\[ \frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \]
+può essere vista così:\\
+\begin{quote}
+prendi un cerchio di raggio a
+e schiaccialo verticalmente di un fattore b/a
+\end{quote}
+Questa è una trasformazione affine.
+\subsubsection{Parti dal cerchio ausiliario}
+Cerchio di raggio a:
+
+\[x=a\cos ⁡t \]
+\[y=a\sin t \]
+Questo è perfetto e noto.\\
+Chiamiamo il punto sul cerchio:\\
+\[ C=(a\cos⁡t,\,a\sin⁡ t) \]
+\subsubsection{Come ottieni l’ellisse dal cerchio?}
+Ora applichiamo uno “schiacciamento” solo sulla coordinata y:
+
+\[(x,y)\longmapsto(x,\frac{b}{a}y)\]
+cioè:\\
+
+\begin{itemize}
+\item x resta uguale
+\item y viene ridotto di un fattore b/a
+\end{itemize}
+\textbf{Applichiamolo a C}
+\[x_P=a\cos⁡t\]
+\[y_P=\frac{b}{a}(a\sin⁡t)\]
+semplificando:\\
+\[y_P=b\sin⁡t\]
+Ecco la dimostrazione geometrica.\\
+\subsubsection{Perché questo punto sta davvero sull’ellisse?}
+Verifica algebrica immediata:\\
+Prendi
+\[x=a\cos⁡t,y=b\sin⁡t\]
+Sostituisci:\\
+\[\frac{(a\cos⁡t)^2}{a^2}+\frac{(b\sin⁡t)^2}{b^2}\]
+\[=\cos⁡^2t+\sin⁡^2t\]
+\[=1\]
+Quindi il punto soddisfa esattamente l’equazione dell’ellisse.\\
+\subsubsection{Interpretazione geometrica semplice}
+Guarda cosa succede:
+\begin{itemize}
+\item sul cerchio l’altezza è
+\[ y_C=a\sin⁡t \]
+\item sull’ellisse l’altezza è “compressa”
+\[y_P=\frac{b}{a}y_C\]
+cioè
+\[y_P=\frac{b}{a}(a\sin⁡t)=b\sin⁡t\]
+\end{itemize}
+Quindi:\\
+\begin{quote}
+l’ellisse è un cerchio “stirato” in  x e “schiacciato” in y                                                           \end{quote}
+\subsection{ellipse gnuplot script}
+\subsubsection{Defining variables and parameters}
+Definiamo le costanti fornite: il centro \((x_{0},y_{0})\) e i semiassi \(a\) e \(b\). Impostiamo inoltre la modalità parametrica per permettere a Gnuplot di plottare funzioni del tipo \(x(t)\) e \(y(t)\).
+\begin{verbatim}
+# general settings
+set parametric
+set trange [0:2*pi]
+set samples 500  # Per una curva fluida
+# Parametri dell'ellisse
+x0 = 2
+y0 = 4
+a = 8
+b = 3
+\end{verbatim}
+\subsubsection{Plot function implementation}
+Le equazioni parametriche per un'ellisse traslata sono:\\
+\(x(t)=x_{0}+a\cdot \cos (t)\)\\
+\(y(t)=y_{0}+b\cdot \sin (t)\)\\
+Dobbiamo anche assicurarci che gli assi abbiano la stessa scala (ratio) per evitare che l'ellisse appaia deformata a causa della forma della finestra.\\
+gnuplot\\
+\begin{verbatim}
+# Mantiene la proporzione tra gli assi (1 unità x = 1 unità y)
+set size ratio -1
+
+# Axes limit to center the view
+set xrange [x0-a-1 : x0+a+1]
+set yrange [y0-b-1 : y0+b+1]
+
+# plot command
+plot x0 + a*cos(t), y0 + b*sin(t) title "Ellisse C(2,4) a=8 b=3" lw 2                                                                     \end{verbatim}
+\subsubsection{rotated ellipse}
+Per ruotare un'ellisse, dobbiamo applicare una matrice di rotazione alle coordinate parametriche di base. Se vogliamo ruotare l'ellisse di un angolo \(\alpha \) attorno al suo centro \((x_{0},y_{0})\), le equazioni diventano:\\
+\(x(t)=x_{0}+a\cdot \cos (t)\cdot \cos (\alpha )-b\cdot \sin (t)\cdot \sin (\alpha )\)\\
+\(y(t)=y_{0}+a\cdot \cos (t)\cdot \sin (\alpha )+b\cdot \sin (t)\cdot \cos (\alpha )\)\\
+Viene aggiunta una variabile alpha per l'angolo di rotazione (espresso in gradi per comodità e poi convertito in radianti).\\
+\newpage
+\begin{verbatim}
+set parametric
+set trange [0:2*pi]
+set samples 500
+set size ratio -1
+set grid
+
+# Parametri dell'ellisse
+x0 = 2
+y0 = 4
+a = 8
+b = 3
+
+# Angolo di rotazione (in gradi)
+angolo_deg = 30
+alpha = angolo_deg * pi / 180.0
+
+# Funzioni di rotazione applicate alle coordinate
+x(t) = x0 + a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha)
+y(t) = y0 + a*cos(t)*sin(alpha) + b*sin(t)*cos(alpha)
+
+# Impostazione margini per visibilità
+set xrange [x0-10 : x0+10]
+set yrange [y0-10 : y0+10]
+
+# Plot
+plot x(t), y(t) with lines title sprintf("Ellisse ruotata di %d°", angolo_deg) lw 2
+\end{verbatim}
+Per visualizzare i fuochi e gli assi, dobbiamo prima calcolare la distanza focale lineare\\
+\(c=\sqrt{a^{2}-b^{2}}\).\\
+Poiché l'ellisse è ruotata, anche la posizione dei fuochi e l'orientamento degli assi devono subire la stessa trasformazione geometrica applicata prima.\\
+Viene aggiunto il calcolo della semidistanza focale c\_dist e il comando per disegnare i fuochi come punti e gli assi come segmenti di retta.
+\newpage
+{
+\scriptsize
+\begin{verbatim}
+set parametric
+set trange [0:2*pi]
+set samples 500
+set size ratio -1
+set grid
+
+# 1. Parametri base
+x0 = 2
+y0 = 4
+a = 8
+b = 3
+angolo_deg = 30
+alpha = angolo_deg * pi / 180.0
+
+# 2. Calcolo distanza focale c = sqrt(a^2 - b^2)
+c_dist = sqrt(a**2 - b**2)
+
+# 3. Funzioni parametriche per il perimetro dell'ellisse
+x(t) = x0 + a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha)
+y(t) = y0 + a*cos(t)*sin(alpha) + b*sin(t)*cos(alpha)
+
+# 4. Coordinate dei Fuochi (ruotate)
+f1_x = x0 + c_dist * cos(alpha)
+f1_y = y0 + c_dist * sin(alpha)
+f2_x = x0 - c_dist * cos(alpha)
+f2_y = y0 - c_dist * sin(alpha)
+
+# 5. Defining the Axes (vectors starting from the center)
+# Major axis (along a)
+set arrow from x0 - a*cos(alpha), y0 - a*sin(alpha) to x0 + a*cos(alpha), y0 + a*sin(alpha) nohead lc rgb "blue" dt 2
+# Minor axis (along b)
+set arrow from x0 + b*sin(alpha), y0 - b*cos(alpha) to x0 - b*sin(alpha), y0 + b*cos(alpha) nohead lc rgb "red" dt 2
+
+# Limiti del grafico
+set xrange [x0-10 : x0+10]
+set yrange [y0-10 : y0+10]
+
+# 6. Plot dell'ellisse e dei fuochi
+plot x(t), y(t) with lines title "Ellisse" lw 2 lc rgb "black", \
+f1_x,f1_y with points pt 7 ps 1.5 lc rgb "forest-green" title "Fuoco1",\
+f2_x,f2_y with points pt 7 ps 1.5 lc rgb "blue" title "Fuoco2"
+\end{verbatim}
+}
+\begin{itemize}
+\item c\_dist: Rappresenta la distanza dal centro a ciascun fuoco lungo l'asse maggiore.\\
+\item set arrow: Ho utilizzato questo comando per disegnare i due assi.\\
+    \begin{itemize}
+    \item L'asse maggiore segue la direzione \((\cos \alpha ,\sin \alpha )\).\\
+    \item L'asse minore segue la direzione perpendicolare \((-\sin \alpha ,\cos \alpha )\).\\
+    \item dt 2 rende la linea tratteggiata per non appesantire il disegno.\\
+    \end{itemize}
+\item Punti dei Fuochi: Verranno visualizzati come punti pieni (pt 7).
+\end{itemize}
+\subsection{Ellissoide di rotazione}
+è esattamente il ponte tra:
+\begin{itemize}
+\item geometria classica
+\item geodesia terrestre
+\item pianeti reali (che non sono sfere perfette)
+\item coordinate geografiche
+\end{itemize}
+Andremo passo passo dall’ellisse 2D all’ellissoide 3D, con esempi concreti come Terra e Marte.
+\subsubsection{Punto di partenza: ellisse in 2D}
+L’ellisse standard centrata nell’origine:
+\[\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\]
+dove:
+\begin{itemize}
+\item a = semiasse maggiore
+\item b = semiasse minore
+\end{itemize}
+Se \(a>b\), l’ellisse è “schiacciata” verticalmente.\\
+\subsubsection{Come si passa al 3D: rotazione}
+Ora immagina di prendere questa ellisse e ruotarla attorno a uno degli assi.\\
+Ci sono due casi:\\
+\begin{itemize}
+\item \textbf{Caso A: Rotazione attorno all’asse x} \\
+Ruoti l’ellisse attorno all’asse maggiore.\\
+Ottieni un ellissoide “schiacciato ai poli”:\\
+è il modello della Terra.\\
+\textbf{Geometricamente}\\
+Nel piano 2D avevi la coordinata y\\
+In 3D, y diventa un raggio nel piano yz:\\
+\[ y^2 \rightarrow y^2+z^2 \]
+Quindi:\\
+\[\frac{x^2}{a^2}+\frac{y^2+z^2}{b^2}=1\]
+Questa è l’equazione dell’ellissoide di rotazione oblato.\\
+\item \textbf{Caso B: Rotazione attorno all’asse} \\
+Ruoti attorno all’asse minore, ottieni un ellissoide “allungato” (prolato).\\
+Non è la Terra, ma alcuni satelliti lo sono.\\
+\end{itemize}
+\subsubsection{Equazione generale dell’ellissoide}
+L’ellissoide più generale (assi diversi):\\
+\[ \frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1 \]
+\begin{itemize}
+\item se \(a=b=c\): sfera
+\item se \(a=b\neq c\): ellissoide di rotazione
+\item se tutti diversi: ellissoide triaxiale
+\end{itemize}
+\subsubsection{Ellissoide terrestre (oblate spheroid)}
+Per la Terra:
+\begin{itemize}
+\item asse equatoriale a
+\item asse polare b
+\end{itemize}
+\begin{center}
+a=6378.137 km
+b=6356.752 km
+\end{center}
+L’equazione è:
+\[ \frac{x^2+y^2}{a^2}+\frac{z^2}{b^2}=1 \]
+Perché \(x^2+y^2\) ?\\
+Perché l’equatore è simmetrico in tutte le direzioni.
+\subsubsection{Parametrizzazione: punti sulla superficie}
+In 2D:\\
+\[ x=acos⁡t,\,y=bsin⁡t \]
+In 3D (ellissoide di rotazione):\\
+Introduciamo due angoli:\\
+\begin{itemize}
+\item longitudine \(\lambda\)
+\item latitudine parametrica \(\phi\)
+\end{itemize}
+\textbf{Parametrizzazione}
+\[ x=a\cos⁡\phi\cos⁡\lambda \]
+\[ y=a\cos\phi\sin⁡\lambda \]
+\[z=b\sin⁡\phi \]
+Questa descrive tutti i punti sulla superficie.\\
+\textbf{Nota importante}\\
+Questa \(\phi\) NON è ancora la latitudine geografica vera, ma una latitudine parametrica.\\
+\subsubsection{Coordinate geografiche reali: latitudine geodetica}
+In geografia si usa la latitudine geodetica \(\phi\):\\
+\begin{itemize}
+\item angolo tra la normale all’ellissoide e il piano equatoriale
+\end{itemize}
+Non coincide con la latitudine “centrale”.\\
+Per questo GPS e mappe usano formule più complesse.\\
+\subsubsection{Parametro fondamentale: schiacciamento}
+Definiamo lo schiacciamento:\\
+\[ f=\frac{a-b}{a}\]
+Per la Terra:\\
+\[f \approx \frac{1}{298.257}\]
+Piccolo ma cruciale.
+\subsubsection{Uso in geografia: ellissoide WGS84}
+Il sistema GPS usa un ellissoide standard:\\
+\begin{itemize}
+\item WGS84
+\end{itemize}
+\begin{itemize}
+\item a=6378.137 m
+\item f=1/298.257223563
+\end{itemize}
+Da qui si ricava:\\
+\[ b=a(1-f) \]
+\subsubsection{Uso in scienze planetarie}
+Ogni pianeta ha un ellissoide di riferimento.\\
+Esempi:\\
+\textbf{Marte (approssimazione)}\\
+Marte è meno schiacciato:
+\begin{itemize}
+\item \(a\approx3396.2 km\)
+\item \(b\approx3376.2 km\)
+\end{itemize}
+Schiacciamento:\\
+\[ f\approx1/169 \]
+\textbf{Giove}\\
+Molto più oblato perché ruota velocemente:\\
+
+\begin{itemize}
+\item \(a\approx71492 km\)
+\item \(b\approx66854 km\)
+\end{itemize}
+Qui lo schiacciamento è enorme.\\
+\[ f\approx1/16 \]
+\subsubsection{Perché serve un ellissoide e non una sfera?}
+Perché:\\
+\begin{itemize}
+\item la rotazione crea rigonfiamento equatoriale
+\item la gravità non è uniforme
+\item la superficie reale (geoide) è ancora più complessa
+\end{itemize}
+Quindi:
+\begin{itemize}
+\item sfera = modello semplice
+\item ellissoide = modello realistico
+\item geoide = modello fisico completo
+\end{itemize}
+\subsubsection{Dal modello ellissoide al geoide}
+In geodesia:
+\begin{itemize}
+\item ellissoide = riferimento matematico
+\item geoide = livello medio del mare gravitazionale
+\item topografia = superficie reale
+\end{itemize}
+\subsubsection{Riassunto concettuale}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Oggetto}&\textbf{Forma}&\textbf{Uso}\\
+\hline
+Cerchio/sfera& ideale& modelli semplici\\
+\hline
+Ellisse/ellissoide& pianeti reali& GPS, cartografia, orbite\\
+\hline
+Geoide& campo gravitazionale& livello del mare, geofisica\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\subsubsection{Rotazione dell’ellisse attorno all’asse x}
+Partiamo dall’ellisse 2D nel piano xy:\\
+
+\[ \frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \]
+\begin{itemize}
+\item asse x: semiasse maggiore a
+\item asse y: semiasse minore b
+\end{itemize}
+Ora ruotiamo questa curva attorno all’asse x.\\
+
+Quello che succede è:
+
+\begin{itemize}
+\item x resta invariato
+\item la distanza dal punto all’asse x genera una circonferenza
+\end{itemize}
+
+\subsubsection{Il punto chiave: cosa significa “y diventa un raggio”?}
+Qui è la frase cruciale:
+
+\textbf{In 2D}, y \textbf{è la distanza dall’asse} x.
+
+Infatti, nel piano xy:
+\begin{itemize}
+\item un punto è (x,y)
+\item la distanza del punto dall’asse x è proprio \(|y|\)
+\end{itemize}
+Quindi y misura quanto sei “sopra o sotto” l’asse di rotazione.\\
+
+\textbf{Quando ruoti in 3D \dots}
+
+Quel segmento verticale di lunghezza \(|y|\) ruota attorno all’asse x.\\
+E quindi non resta più un singolo valore y:\\
+diventa un’intera circonferenza nel piano perpendicolare a x.
+\subsubsection{La geometria del cerchio generato}
+Immagina un punto dell’ellisse:\\
+\[P=(x,y)\]
+Ruotandolo attorno all’asse x, ottieni punti del tipo:
+\[(x,  ycos\phi,  ysin\phi)\]
+dove \(\phi\) è l’angolo di rotazione.
+Quindi:\\
+\begin{itemize}
+\item la coordinata x non cambia
+\item la coordinata y si “spalma” in
+\end{itemize}
+\textbf{E la distanza dall’asse x resta costante}\\
+La distanza dal punto all’asse x è:\\
+
+\[\rho=\sqrt{y^2+z^2}\]
+Questa è la cosa fondamentale.\\
+
+\subsubsection{ Ecco perché  \(y^2\rightarrow y^2+z^2\)}
+Nel piano 2D:\\
+\[ y^2 \]
+misura il quadrato della distanza dall’asse x.
+In 3D, la distanza dall’asse x non è più solo y, ma:
+\[\rho^2=y^2+z^2\]
+Quindi:\\
+\[y2 \rightarrow y^2+z^2\]
+È semplicemente Pitagora nel piano yz.\\
+
+\subsubsection{Quindi l’ellissoide diventa}
+Parti da:\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellissoide.png}
+\end{center}
+\caption{rotational ellipsoid}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellissoide_costruzione.png}
+\end{center}
+\caption{construction ellipsoid}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellissoide_geofisico.png}
+\end{center}
+\caption{geophysics ellipsoid}
+\end{figure}
+
+\[\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\]
+Sostituisci:\\
+\[y2 \rightarrow y^2+z^2\]
+Ottieni:\\
+\[ \frac{x2}{a2}+\frac{y2+z2}{b2}=1 \]
+Questa è l’equazione dell’ellissoide di rotazione attorno all’asse x.
+\subsubsection{Attenzione alle convenzioni geografiche}
+\begin{quote}
+Nei modelli di coordinate terrestri per convenzione l’asse z è quello verso il polo nord.                                                                                         \end{quote}
+Sì — ma allora di solito si ruota attorno a z, non a x.\\
+In geodesia terrestre infatti si usa quasi sempre:
+\begin{itemize}
+\item asse z: asse di rotazione terrestre (poli)
+\item asse x,y: piano equatoriale
+\end{itemize}
+Quindi l’ellissoide terrestre è:
+\[\frac{x^2+y^2}{a^2}+\frac{z^2}{b^2}=1\]
+(dove a è equatoriale, b polare)\\
+
+\subsubsection{Visualizzazione con Gnuplot}
+Esempio minimale che fa vedere proprio la rotazione:\\
+\verb|ellissoide_rotazione.plt|
+
+\begin{verbatim}
+ set terminal pngcairo size 900,700
+set output "ellissoide.png"
+
+set hidden3d
+set parametric
+set urange [0:2*pi]
+set vrange [0:pi]
+set samples 80
+set isosamples 40
+set view 60,30
+set size ratio -1
+
+# semiassi
+a = 8
+b = 3
+
+# parametrizzazione ellissoide di rotazione attorno a x
+x(u,v) = a*cos(v)
+y(u,v) = b*sin(v)*cos(u)
+z(u,v) = b*sin(v)*sin(u)
+
+splot x(u,v),y(u,v),z(u,v) with lines notitle
+\end{verbatim}
+
+Interpretazione
+\begin{itemize}
+\item v descrive l’ellisse originale nel piano  xy
+\item u è l’angolo di rotazione attorno all’asse x
+\item e infatti:
+\[y^2+z^2=b^2\sin^⁡2v\]
+\end{itemize}
+
+\begin{itemize}
+\item in 2D,y è la distanza dall’asse di rotazione
+\item in 3D, quella distanza diventa un raggio nel piano perpendicolare
+\item il raggio in quel piano è:
+\[\rho=\sqrt{y^2+z^2}\]
+\end{itemize}
+quindi automaticamente:
+\[y^2\rightarrow y^2+z^2\]
+\subsubsection{Geometrical construction of ellipsoid}
+\begin{itemize}
+\item hai l’ellisse nel piano  xy
+\item scegli un punto  \(P=(x_P,y_P)\) sull’ellisse
+\item ruoti quel punto attorno all’asse  x
+\item la traiettoria di P diventa una circonferenza nel piano yz
+\item quella circonferenza è esattamente il motivo per cui compare \(y^2+z^2\)
+\end{itemize}
+\verb|ellissoide_costruzione.plt|
+\begin{verbatim}
+ set terminal pngcairo size 1000,750
+set output "ellissoide_costruzione.png"
+
+set hidden3d
+set parametric
+set samples 200
+set isosamples 60
+set view 65,35
+set size ratio -1
+set grid
+
+# ============================
+# Parametri ellisse
+# ============================
+a = 8
+b = 3
+
+# scegli un parametro t0 per il punto P
+t0 = pi/4
+
+# Punto P sull’ellisse nel piano xy
+xP = a*cos(t0)
+yP = b*sin(t0)
+
+# ============================
+# Ellisse originale (2D)
+# ============================
+xe(t) = a*cos(t)
+ye(t) = b*sin(t)
+
+# ============================
+# Rotazione del punto P attorno all’asse x
+# ============================
+# Quando ruoti, y si divide in y e z:
+#
+# y(u) = yP*cos(u)
+# z(u) = yP*sin(u)
+#
+# quindi y^2+z^2 = yP^2 = costante
+
+xC(u) = xP
+yC(u) = yP*cos(u)
+zC(u) = yP*sin(u)
+
+# ============================
+# Ellissoide completo (superficie)
+# ============================
+x(u,v) = a*cos(v)
+y(u,v) = b*sin(v)*cos(u)
+z(u,v) = b*sin(v)*sin(u)
+
+# ============================
+# Assi cartesiani
+# ============================
+set arrow from -10,0,0 to 10,0,0 nohead lc rgb "black"
+set arrow from 0,-6,0 to 0,6,0 nohead lc rgb "black"
+set arrow from 0,0,-6 to 0,0,6 nohead lc rgb "black"
+
+set label "x" at 10,0,0
+set label "y" at 0,6,0
+set label "z" at 0,0,6
+
+# ============================
+# Label punto P
+# ============================
+set label sprintf("P = (%.2f, %.2f)",xP,yP) at xP+0.5,yP+0.5,0
+
+# ============================
+# Plot finale
+# ============================
+splot \
+   x(u,v),y(u,v),z(u,v) with lines lw 1 title "Ellissoide", \
+   xC(u),yC(u),zC(u) with lines lw 3 title "Circonferenza generata da P", \
+   xP,yP,0 with points pt 7 ps 2 title "P sull’ellisse"
+\end{verbatim}
+\begin{itemize}
+\item l’ellissoide completo
+\item il punto  P sull’ellisse originale (piano xy)
+\item la circonferenza che P genera ruotando
+\item la prova visiva che:
+\[y^2\rightarrow y^2+z^2\]
+perché il punto ruota mantenendo costante:\\
+\[y^2+z^2={y_P}^2\]
+\end{itemize}
+adottiamo la convenzione standard ECEF/planet-fixed.\\
+Qui le convenzioni sono:
+\begin{itemize}
+\item asse z = asse di rotazione del pianeta (verso il polo nord)
+\item piano xy = piano equatoriale
+\item ellissoide oblato:
+\[\frac{x^2+y^2}{a^2}+\frac{z^2}{b^2}=1\]
+\end{itemize}
+dove\\
+\begin{itemize}
+\item a = semiasse equatoriale
+\item b = semiasse polare
+\end{itemize}
+quando ruoti un punto del meridiano attorno all’asse z:
+\begin{itemize}
+\item la coordinata z resta uguale
+\item la distanza dall’asse z è:
+\end{itemize}
+\[\rho=\sqrt{x^2+y^2}\]
+Quindi:
+\[x^2\rightarrow x^2+y^2\]
+(analogo perfetto del caso precedente)\\
+sulla Terra:
+\begin{itemize}
+\item prendi un punto su un meridiano ellittico
+\item ruotandolo attorno a z
+\item ottieni un parallelo di latitudine (una circonferenza)
+\end{itemize}
+\verb|ellissoide_geofisico_costruzione.plt| \\
+\begin{verbatim}
+set terminal pngcairo size 1100,800
+set output "ellissoide_geofisico.png"
+
+set hidden3d
+set parametric
+set samples 250
+set isosamples 80
+set view 65,35
+set size ratio -1
+set grid
+
+# ============================
+# Parametri ellissoide planetario
+# ============================
+a = 8     # raggio equatoriale
+b = 3     # raggio polare
+
+# scegli un parametro t0 per il punto P sul meridiano
+t0 = pi/4
+
+# ============================
+# Meridiano ellittico nel piano xz
+# ============================
+# Ellisse 2D:
+# x = a cos(t)
+# z = b sin(t)
+
+xP = a*cos(t0)
+zP = b*sin(t0)
+
+# ============================
+# Rotazione del punto P attorno all’asse z
+# ============================
+# Ruotando attorno a z:
+#
+# x(u) = xP cos(u)
+# y(u) = xP sin(u)
+# z(u) = zP costante
+#
+# quindi x^2+y^2 = xP^2
+
+xC(u) = xP*cos(u)
+yC(u) = xP*sin(u)
+zC(u) = zP
+
+# ============================
+# Ellissoide completo (superficie)
+# ============================
+x(u,v) = a*cos(v)*cos(u)
+y(u,v) = a*cos(v)*sin(u)
+z(u,v) = b*sin(v)
+
+# ============================
+# Assi planetari (ECEF)
+# ============================
+set arrow from -10,0,0 to 10,0,0 nohead lc rgb "black"
+set arrow from 0,-10,0 to 0,10,0 nohead lc rgb "black"
+set arrow from 0,0,-6 to 0,0,6 nohead lc rgb "black"
+
+set label "x (equatore)" at 10,0,0
+set label "y (equatore)" at 0,10,0
+set label "z (polo nord)" at 0,0,6
+
+# ============================
+# Punto P sul meridiano
+# ============================
+set label sprintf("P meridiano: (%.2f, 0, %.2f)",xP,zP) \
+    at xP+0.5,0,zP+0.3
+
+# ============================
+# Plot finale
+# ============================
+splot \
+   x(u,v),y(u,v),z(u,v) with lines lw 1 title "Ellissoide planetario", \
+   xC(u),yC(u),zC(u) with lines lw 3 title "Parallelo generato da P", \
+   xP,0,zP with points pt 7 ps 2 title "P sul meridiano"
+\end{verbatim}
+Dall'output di questo script si vede:
+\begin{itemize}
+\item l’ellissoide oblato (Terra-like)
+\item il punto P su un meridiano (piano xz)
+\item la circonferenza generata dalla rotazione = un parallelo
+\item la prova geometrica che:
+\end{itemize}
+\[x^2 \rightarrow x^2+y^2 \]
+perchè la distanza dall'asse z resta costante:
+\[ x^2 + y^2 = {x_P}^2 \]
+nei modelli planetari:
+\begin{itemize}
+\item a è il raggio equatoriale
+\item b è il raggio polare
+\item ogni punto è descritto da:
+\[ (x,y,z) \]
+\end{itemize}
+e la latitudine/longitudine sono definite rispetto all’asse z.
+\subsubsection{Prima:ellisse 2D nel piano xy}
+All’inizio disegnavamo l’ellisse così:
+\[\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\]
+nel piano:
+\begin{itemize}
+\item x orizzontale
+\item y verticale
+\end{itemize}
+Quella era una semplice ellisse “da libro di matematica”.\\
+\subsubsection{Ruolo degli assi in scienze planetarie}
+Nel modello planetario standard:
+\begin{itemize}
+\item asse z = asse di rotazione (polo nord)
+\item piano xy = piano equatoriale
+\end{itemize}
+
+Quindi il profilo dell’ellissoide non si prende nel piano xy, ma nel piano:
+\[xz\]
+Perché il piano xz è un \textbf{piano meridiano}, cioè contiene:
+\begin{itemize}
+\item l’asse di rotazione z
+\item una direzione equatoriale x
+\end{itemize}
+\subsubsection{L'ellisse generatrice giace nel piano xz}
+Nel grafico 3D abbiamo preso:
+\[x=acos⁡t\]
+\[z=bsin⁡t\]
+Questa è un’ellisse nel piano xz:
+\[\frac{x^2}{a^2}+\frac{z^2}{b^2}=1\]
+con:
+\begin{itemize}
+\item semiasse equatoriale a lungo x
+\item semiasse polare b lungo z
+\end{itemize}
+questa è la sezione meridiana della Terra.\\
+\subsubsection{Rotazione attorno a z}
+Ora ruoti questa ellisse attorno all’asse z.
+Cosa succede?
+
+\begin{itemize}
+\item z resta uguale
+\item il punto (x,0,z) gira nel piano equatoriale formando una circonferenza:
+\end{itemize}
+\[x^2+y^2=costante\]
+cioè:
+\[x\rightarrow (xcos⁡u,  xsin⁡u)\]
+Quindi ottieni:
+\[\frac{x^2+y^2}{a^2}+\frac{z^2}{b^2}=1\]
+che è l’ellissoide oblato.
+\subsubsection{Interpretazione fisica planetaria}
+E' stata costruita:
+\begin{itemize}
+\item una sezione Nord–Sud del pianeta (meridiano)
+\item ruotata attorno all’asse dei poli
+\end{itemize}
+Esattamente come la Terra reale:
+\begin{itemize}
+\item più larga all’equatore
+\item schiacciata ai poli
+\end{itemize}
+l’ellisse 2D che prima disegnavamo su x,y starebbe ora su una sezione nel piano xz e poi ruotata intorno a z
+\begin{itemize}
+\item prima: ellisse nel piano xy
+\item ora: ellisse nel piano xz
+\item rotazione attorno a z
+\end{itemize}
+\textbf{Geodesia planetaria}\\
+\begin{itemize}
+\item z: polo nord
+\item x,y: equatore
+\end{itemize}
+\textbf{Ellisse generatrice}\\
+\begin{itemize}
+\item sta in un meridiano xz
+\end{itemize}
+\textbf{Rotazione}\\
+\begin{itemize}
+\item attorno all'asse z
+\end{itemize}
+\textbf{Risultato}\\
+\begin{itemize}
+\item ellissoide di riferimento (WGS84, Marte, ecc.)
+\end{itemize}
+\subsection{Radius in function of the latitude}
+The radius (\(R\)) of an oblate spheroid at a specific geodetic latitude (\(\phi \)) is calculated using the formula\\
+\(R(\phi )=\frac{a\cos \phi }{\sqrt{\cos ^{2}\phi +(1-f)^{2}\sin ^{2}\phi }}\),\\
+where \(a\) is the equatorial radius (approx. \(6378.137\text{\ m}\) for WGS84) and \\
+\(f\) is the flattening (\(1/298.257223563\)).\\
+A simpler, close approximation is \(R(\phi )\approx a(1-f\sin ^{2}\phi )\).\\ \\
+\textbf{Detailed Formula and Parameters}\\
+\begin{itemize}
+\item \(a\) (Semi-major axis): Equatorial radius (\(6378.137\text{\ m}\) for Earth).\\
+\item \(b\) (Semi-minor axis): Polar radius (\(6356.752\text{\ m}\) for Earth).\\
+\item \(f\) (Flattening): \(\frac{a-b}{a}\approx \frac{1}{298.257223563}\).\\
+\item \(\phi \) (Geodetic Latitude): The angle between the equatorial plane and the normal to the surface.\\
+\end{itemize}
+\textbf{Common Formula Variations}\\
+\begin{enumerate}
+\item Direct Radius Definition:\\
+\(R(\phi )=\sqrt{\frac{(a^{2}\cos \phi )^{2}+(b^{2}\sin \phi )^{2}}{(a\cos \phi )^{2}+(b\sin \phi )^{2}}}\)\\
+\item Using Flattening (\(f\)):\\
+\(R(\phi )=a\sqrt{1-(2f-f^{2})\cos ^{2}\phi }\\
+\text{\ (Approx.\ }R(\phi )\approx a(1-f\cos ^{2}\phi )\text{\ in\ some\ contexts)}\)\\
+\item WGS84 Approximation:\\
+\(R(\phi )=6378.137\sqrt{1-0.00669437999\cos ^{2}\phi }\)\\
+\end{enumerate}
+\textit{Note: For highest accuracy, the radius of curvature (meridional or prime vertical) is often used in geodetic calculations instead of the simple radial distance from the center}\\
+
+Let's calculate the \emph{Earth radius at specific latitude} using the formula for an oblate spheroid:
+\begin{verbatim}
+r_e(lat) = R_pol / sqrt(1.0 - (1.0 - (R_pol/R_eq)**2) * cos(deg2rad(lat))**2)                                                                             \end{verbatim}
+\[ r_e(lat) = \frac{R_{pol}}{\sqrt{1.0 - (1.0 - (\frac{R_{pol}}{R_{eq}})^{2}) cos(lat_{rad})^{2}}} \]
 \section{Azimutal angle}
 L'angolo azimutale \(\theta \) (chiamato spesso anche angolo di posizione) è l'angolo che identifica la "direzione" in cui si trova il punto rispetto al centro del disco terrestre, come se guardassi la Terra attraverso un mirino telescopico.\\
 Rappresentazione visiva (Vista dal Satellite)\\
@@ -951,7 +2064,7 @@ plt.show()
 }
 \begin{figure}[!ht]
 \begin{center}
- \includegraphics[width=18cm]{Eartg_Rome_GEO.png}
+ \includegraphics[width=18cm]{Earth_Rome_GEO.png}
  % Eartg_Rome_GEO.png: 1000x960 px, 100dpi, 25.40x24.38 cm, bb=0 0 720 691
 \end{center}
 \caption{Earth-Rome-GEO(0,0)}
