@@ -1,0 +1,18 @@
+=== Circle Properties Example ===
+Center: (2.00, 3.00)
+Radius: 5.00
+Diameter: 10.00
+Circumference: 31.42
+Area: 78.54
+
+=== Arc and Sector Example ===
+Angle: 60.00° = 1.05 radians
+Arc length: 5.24
+Sector area: 13.09
+
+=== Circle Through 3 Points ===
+Points: (0.00,0.00), (4.00,0.00), (0.00,3.00)
+Circle center: (2.00, 1.50)
+Circle radius: 2.50
+
+GNUplot script created. Run 'gnuplot plot_circle.gnu' to generate plots.
