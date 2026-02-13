@@ -3,743 +3,853 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{gensymb}
+\usepackage{makeidx}
+\makeindex
 \DeclareUnicodeCharacter{2061}{}
 \DeclareUnicodeCharacter{2005}{}
 \DeclareUnicodeCharacter{200B}{}
 \DeclareUnicodeCharacter{200A}{}
 
 %opening
-\title{Gemini notes on Earth Orthographic geo-referencing}
+\title{Notes on planetary geo-referencing}
 \author{Francesco Lazzarotto (OAPD INAF) mailto:francesco.lazzarotto@inaf.it}
 
 \begin{document}
-
 \maketitle
-
 \begin{abstract}
+This article will show techniques for handling planetary satellite data, georeferencing, map creation and elevation data management (DTM).
+First examples are based on METEOSAT Geostationary satellite images. Graphs are produced with gnuplot and python matplotlib scripts..
+After a first part of mathematical theory, application example of real space missions data will be given, like NASA MESSENGER mission to planet Mercury, BepiColombo ESA/JAXA mission to Mercury, EXOMARS ESA/ROSSCOSMOS mission to Mars, LRO NASA lunar mission.
 \end{abstract}
-\section{Introduction}
-le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. La tua immagine è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate (0,0) , che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da EUMETSAT nel loro sistema di coordinate.
-\section{equazione di una sfera nello spazio}
-L'equazione della sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\), derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
-\(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\), \\
-dove il centro è \((-a/2,-b/2,-c/2)\) \\
-e il raggio si ricava dalla condizione \(a^{2}+b^{2}+c^{2}-4d\ge 0\).\\
-\subsubsection{Forma canonica (più usata)}
-\begin{itemize}
-\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\)
-\item Centro:  \(C(x_{0},y_{0},z_{0})\)
-\item Raggio:  \(R\)
-\end{itemize}
-\subsubsection{Forma generale}
-\begin{itemize}
-\item \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\)
-\item Centro:  \(C(-a/2,-b/2,-c/2)\)
-\item Raggio:  \(R=\sqrt{a^{2}/4+b^{2}/4+c^{2}/4-d}\) (o \(\sqrt{(-a/2)^{2}+(-b/2)^{2}+(-c/2)^{2}-d}\)).
-\end{itemize}
-\subsubsection{Esempio}
-\begin{itemize}
-\item Se centro \(C(1,2,-3)\) e raggio \(R=3\):
-\item \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\)
-\item \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).\\
-\end{itemize}
-\subsubsection{Per l'interno della sfera si usa una disequazione}
-\begin{itemize}
-\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).
-\end{itemize}
-\subsection{Equazione cartesiana} l'equazione cartesiana di una sfera con centro in \( (x_0, y_0, z_0) \) e raggio R è \\
-\( (x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = R^2. \) \\
-L'equazione cartesiana di una sfera nello spazio 3D, con centro \(C(x_{0},y_{0},z_{0})\) e raggio \(R>0\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
-Questa equazione rappresenta il luogo dei punti \((x,y,z)\) equidistanti dal centro, con la somma dei quadrati delle differenze coordinate pari al quadrato del raggio.
-\subsection{Forma Standard e Note}
-Equazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
-Centro: \(C=(x_{0},y_{0},z_{0})\). \\
-Raggio: \(R\). \\
-Forma estesa: \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\). \\
-Centro dalla forma estesa: \(C=\left(-\frac{a}{2},-\frac{b}{2},-\frac{c}{2}\right)\).\\
-Raggio dalla forma estesa: \(R=\sqrt{\frac{a^{2}}{4}+\frac{b^{2}}{4}+\frac{c^{2}}{4}-d}\) \\
-Una sfera è una quadrica caratterizzata da termini quadratici \(x^{2},y^{2},z^{2}\) con coefficienti uguali e assenza di termini misti \(xy,xz,yz\). Se il raggio è \(R=0\), l'equazione rappresenta un punto.
-\section{coordinate cartesiane}
-Le coordinate di un punto \((R_{x},R_{y},R_{z})\) su una sfera di raggio \(r\) centrata nell'origine sono espresse come \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
-\begin{itemize}
-\item Passaggio 1: \\
-Definizione dell'equazione cartesiana.\\
-L'equazione di una superficie sferica con centro nell'origine \((0,0,0)\) e raggio \(r\) è definita dalla relazione:\\
-\(x^{2}+y^{2}+z^{2}=r^{2}\)\\
-Ogni punto \((R_{x},R_{y},R_{z})\) che appartiene alla superficie deve soddisfare questa uguaglianza.\\
-Equazione cartesiana\\
-Un punto \((R_{x},R_{y},R_{z})\) appartiene alla superficie di una sfera con centro nell'origine se la sua distanza dall'origine è pari al raggio \(r\). L'equazione fondamentale è:\\
-\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)\\
-Equazione cartesiana della sfera\\
-In uno spazio tridimensionale, la distanza di un punto \((R_{x},R_{y},R_{z})\) dall'origine \((0,0,0)\) è data dal teorema di Pitagora in 3D.\\
-Affinché il punto si trovi sulla superficie di una sfera di raggio \(r\), questa distanza deve essere esattamente pari a \(r\):\\
-\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)
-\item Passaggio 2:\\
-Conversione in coordinate sferiche\\
-Per identificare univocamente un punto sulla superficie, si utilizzano solitamente due angoli:\\
-l'angolo di \emph{colatitudine} (o zenitale) \(\theta \) e l'angolo di \emph{azimut} \(\phi \).\\
-Le relazioni di trasformazione sono:\\
-\begin{enumerate}
-\item \(R_{x}=r\sin (\theta )\cos (\phi )\)
-\item \(R_{y}=r\sin (\theta )\sin (\phi )\)
-\item \(R_{z}=r\cos (\theta )\)
-\end{enumerate}
-\begin{figure}[!ht]
-\begin{center}
- \includegraphics[width=18cm]{decomposition_3d_sphere.png}
-\end{center}
-\caption{Projections of the point coordinates}
-\end{figure}
-
-Dove gli intervalli tipici sono \(\theta \in [0,\pi ]\) (da polo a polo) e \\
-\(\phi \in [0,2\pi ]\) (rotazione completa attorno all'asse \(z\)).\\
-Parametrizzazione sferica\\
-Per descrivere la posizione del punto mediante angoli (coordinate sferiche), si utilizzano:\\
-\(\theta \) (latitudine o angolo zenitale): l'angolo tra il raggio e l'asse positivo \(z\), con \(0\le \theta \le \pi \).\\
-\(\phi \) (longitudine o azimut): l'angolo sul piano \(xy\) misurato dall'asse positivo \(x\), con \(0\le \phi <2\pi \).\\
-Le formule di conversione sono:\\
-\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
-\(R_{y}=r\sin (\theta )\sin (\phi )\)
-\(R_{z}=r\cos (\theta )\)\\
-Passaggio alle coordinate sferiche\\
-Per identificare un punto specifico sulla superficie sferica, si usano solitamente due angoli:\\
-\(\theta \) (angolo zenitale/colatitudine):\\
-l'angolo rispetto all'asse positivo \(z\) (\(0\le \theta \le \pi \)).
-\(\phi \) (angolo azimutale/longitudine):\\
-l'angolo sul piano \(xy\) rispetto all'asse positivo \(x\) (\(0\le \phi <2\pi \)).\\
-Le formule risultanti per le coordinate cartesiane sono:\\
-\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
-\(R_{y}=r\sin (\theta )\sin (\phi )\)\\
-\(R_{z}=r\cos (\theta )\)\\
-\item Passaggio 3:\\
-Visualizzazione grafica\\
-Di seguito è riportato il codice per generare la rappresentazione tridimensionale della sfera e di un punto specifico sulla sua superficie.\\
-Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro nell'origine \((0,0,0)\) e raggio \(r\) sono espresse dalle relazioni\\
-\(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).\\
-Visualizzazione grafica\\
-L'immagine seguente mostra una sfera centrata in \((0,0,0)\) con un punto (in rosso) posizionato sulla sua superficie esterna.\\
-Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro in \((0,0,0)\) e raggio \(r\) sono descritte dalle equazioni \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
-Rappresentazione grafica\\
-Il seguente grafico illustra una sfera unitaria (\(r=1\)) con un punto \(P\) evidenziato sulla sua superficie calcolato per \(\theta =45^{\circ }\) e \(\phi =45^{\circ }\).\\
-(Immagine esemplificativa di una superficie sferica 3D)\\
-{\scriptsize
-\begin{verbatim}
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Parametri della sfera
-r = 1
-theta_p = np.pi / 4  # 45 gradi
-phi_p = np.pi / 4    # 45 gradi
-
-# Coordinate del punto specifico
-rx = r * np.sin(theta_p) * np.cos(phi_p)
-ry = r * np.sin(theta_p) * np.sin(phi_p)
-rz = r * np.cos(theta_p)
-
-# Creazione della superficie della sfera
-u = np.linspace(0, 2 * np.pi, 30)
-v = np.linspace(0, np.pi, 30)
-x = r * np.outer(np.cos(u), np.sin(v))
-y = r * np.outer(np.sin(u), np.sin(v))
-z = r * np.outer(np.ones(np.size(u)), np.cos(v))
-
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
-
-# Disegno della sfera (trasparente)
-ax.plot_surface(x, y, z, color='cyan', alpha=0.3, edgecolor='k', linewidth=0.1)
-
-# Disegno del punto
-ax.scatter([rx], [ry], [rz], color='red', s=100, label=f'Punto P({rx:.2f}, {ry:.2f}, {rz:.2f})')
-
-# Assi e etichette
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z')
-ax.set_title('Punto su superficie sferica')
-ax.legend()
-
-plt.show()
-\end{verbatim}
-}
-\end{itemize}
-\begin{figure}[!ht]
-\begin{center}
- \includegraphics[width=18cm]{point_on_sphere_001.png}
-\end{center}
-\caption{Point on the surface of a sphere}
-\end{figure}
-Cosa osservare nel grafico:\\
-Il Piano Arancio (Verticale):\\
-Questo è il piano "di taglio" che hai chiesto.\\
-Qui vedi chiaramente come l'altezza del punto sia il cateto adiacente all'angolo \(\theta \) (\(R\cos \theta \)).\\
-La Linea Verde sull'asse Z: Rappresenta fisicamente la coordinata \(R_{z}\).\\
-La Linea Blu tratteggiata: È l'ombra del raggio sul "pavimento" (piano \(XY\)).\\
-La sua lunghezza è esattamente \(R\sin \theta \).\\
-Il Triangolo Rettangolo Verticale: È formato dal raggio rosso (ipotenusa), dalla linea blu (cateto opposto a \(\theta \)) e dalla linea verde (cateto adiacente a \(\theta \)).
-\begin{itemize}
-\item Passaggio 1: Scomposizione nel piano verticale (Arancione) Hai identificato correttamente che il raggio \(R\) (ipotenusa) viene proiettato sul piano meridiano:\\
-Componente Verticale: Essendo adiacente all'angolo \(\theta \), si ha \(R_{z}=R\cos (\theta )\).\\
-Componente Orizzontale (diagonale \(d\)): Essendo l'altezza del triangolo o la proiezione sul "pavimento", è il cateto opposto a \(\theta \), quindi \(d=R\sin (\theta )\).
-\item Passaggio 2: Scomposizione nel piano orizzontale (Blu/XY)\\
-Ora la diagonale \(d\), che giace sul piano \(XY\), diventa a sua volta l'ipotenusa per un nuovo triangolo rettangolo "disteso" sul pavimento, dove l'angolo di riferimento è \(\phi \):\\
-Lungo l'asse X: Il segmento \(R_{x}\) è il cateto adiacente a \(\phi \), quindi \(R_{x}=d\cos (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{x}}\mathbf{=R}\sin \mathbf{(\theta )}\cos \mathbf{(\phi )}\).\\
-Lungo l'asse Y: Il segmento \(R_{y}\) è il cateto opposto a \(\phi \) (o adiacente al complementare), quindi \(R_{y}=d\sin (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{y}}\mathbf{=R}\sin \mathbf{(\theta )}\sin \mathbf{(\phi )}\).
-\end{itemize}
-La logica ipotenusa \(\times \) coseno (per l'adiacente) e ipotenusa \(\times \) seno (per l'opposto) è applicata correttamente in due passaggi sequenziali: Primo livello (3D -> 2D): Si passa dal raggio \(R\) alla sua ombra \(d\) sul piano \(XY\).\\
-Secondo livello (2D -> 1D): Si passa dall'ombra \(d\) alle singole coordinate \(R_{x}\) e \(R_{y}\).\\
-Le formule risultanti sono infatti:\\
-\(\begin{cases}R_{x}=R\sin (\theta )\cos (\phi )\\ R_{y}=R\sin (\theta )\sin (\phi )\\ R_{z}=R\cos (\theta )\end{cases}\)
-\section{application to planetary science}
-la geometria è la stessa, ma i nomi e i punti di riferimento cambiano quando passiamo dalla matematica alla geografia o all'astronomia. Ecco il confronto tra il modello che abbiamo usato e quello planetario:
-\begin{enumerate}
-\item Latitudine e Colatitudine (\(\theta \))
- In matematica (coordinate sferiche), \(\theta \) è la colatitudine o distanza zenitale: parte da \(0^{\circ }\) al Polo Nord e arriva a \(180^{\circ }\) al Polo Sud.\\
- In Geografia: Usiamo la latitudine (\(\delta \) o \(\phi _{lat}\)), che parte da \(0^{\circ }\) all'equatore.\\
- Relazione: \(\text{Latitudine}=90^{\circ }-\text{Colatitudine}\).\\
- Effetto sulle formule: Se usi la latitudine (\(\delta \)), le funzioni si invertono:\(R_{z}=R\sin (\delta )\) (perché ora è il cateto opposto all'angolo dall'equatore).\\
- \(d=R\cos (\delta )\) (la proiezione sul piano equatoriale diventa il cateto adiacente).
- \item Longitudine e Azimut (\(\phi \))\\
- Nella trigonometria piana, lo zero è l'asse \(X\) e si ruota in senso antiorario verso \(Y\).\\
- In Geografia (Longitudine):\\
- Lo zero è il Meridiano di Greenwich. Si conta verso Est (positivi) o Ovest (negativi) fino a \(180^{\circ }\).\\
- In Astronomia/Navigazione (Azimut): Qui c'è una sottile differenza. L'Azimut solitamente parte dal Nord (che è la proiezione del polo sul piano dell'osservatore) e ruota in senso orario:\\
- Nord = \(0^{\circ }\)Est = \(90^{\circ }\)Sud = \(180^{\circ }\)Ovest = \(270^{\circ }\)\\
- Il nord è anche 360 degrees \\
-\end{enumerate}
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Elemento}& \textbf{Matematico (Sferiche)}& \textbf{Geografico (Terrestre)}\\
-\hline
-Punto di origine& Centro della sfera &Centro della Terra\\
-\hline
-Angolo Verticale\(\,\theta \)& (Colatitudine) da Nord\(\,\delta \)& (Latitudine) dall'Equatore\\
-\hline
-Angolo Orizzontale\(\,\phi \)& (Azimut) da asse X\(\,\lambda \)& (Longitudine) da Greenwich\\
-\hline
-Asse Z& Polo Nord& Polo Nord\\
-\hline
-Asse X& Direzione \(0^{\circ }\) longitudine& Intersezione Greenwich-Equatore\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Confronto Sistemi di Coordinate}
-\end{table}
-Nello studio dei pianeti (Sistemi di Coordinate Planetocentriche), si seguono solitamente queste regole della IAU (International Astronomical Union):\\
-\begin{enumerate}
-
-\item Latitudine:\\
-Sempre \(0^{\circ }\) all'equatore, \(+90^{\circ }\) al polo nord, \(-90^{\circ }\) al polo sud.\\
-\item Longitudine:\\
-Dipende dal pianeta. Per la Terra e Marte è positiva verso Est. Per i pianeti che ruotano al contrario (Venere), si usano convenzioni specifiche.
-\item L'Azimut dell'osservatore:\\
-Se sei sulla superficie e guardi il cielo, l'Azimut si conta dal Nord verso Est. Se invece stai mappando l'intero pianeta dallo spazio, usi la Longitudine.
-Se vuoi calcolare le coordinate \((X,Y,Z)\) di una città o di un cratere lunare usando Latitudine (\(\delta \)) e Longitudine (\(\lambda \)):\\
-\(R_{x}=R\cos (\delta )\cos (\lambda )\)\\
-\(R_{y}=R\cos (\delta )\sin (\lambda )\)\\
-\(R_{z}=R\sin (\delta )\)\\
-Vedi come \(\cos \) e \(\sin \) si sono scambiati rispetto al disegno? Questo accade proprio perché la latitudine parte dall'equatore (piano \(XY\)) e non dal polo (asse \(Z\)).
-\end{enumerate}
-\subsection{cartografia planetaria}
-Per localizzare crateri o vulcani (come l'Olympus Mons su Marte), occorre padroneggiare le trasformazioni che proiettano questi punti \(P(R_{x},R_{y},R_{z})\) su un foglio bidimensionale \((u,v)\).\\
-Ecco come funzionano le due proiezioni principali che hai menzionato, partendo dalle coordinate geografiche \((\delta ,\lambda )\):\\
-\begin{enumerate}
-\item Proiezione Cilindrica Equidistante (Plate Carrée)\\
-È la più semplice, usata spesso per le mappe globali di Marte o della Luna.\\
-In pratica "srotoli" la sfera su un rettangolo.\\
-Coordinate Mappa:\\
-\(u=R\cdot \lambda \) (la longitudine diventa l'asse orizzontale)\\
-\(v=R\cdot \delta \) (la latitudine diventa l'asse verticale)\\
-Caratteristica: È ottima per i calcoli diretti, ma distorce enormemente le aree vicino ai poli (i poli diventano lunghe linee quanto l'equatore).\\
-\item Proiezione Ortografica\\
-È quella che vedi quando guardi un pianeta attraverso un telescopio o da una sonda molto lontana. Vedrai solo un emisfero, proprio come se fosse un disco piatto.\\ Se il centro della tua osservazione è l'equatore \((\delta =0,\lambda =0)\), le coordinate sulla mappa \((x_{map},y_{map})\) sono semplicemente:\\
-\(x_{map}=R\cos (\delta )\sin (\lambda )\)\\
-\(y_{map}=R\sin (\delta )\)\\
-due dettagli tecnici delle scienze planetarie:\\
-Il raggio \(R\) non è costante:\\
-Marte è un ellissoide schiacciato, non una sfera perfetta.\\
-Per calcoli di alta precisione (geodetici), si usa un raggio equatoriale (\(R_{eq}\approx 3396\) km) e uno polare (\(R_{pol}\approx 3376\) km).\\
-Sistemi Est vs Ovest: Per Marte, la IAU definisce le longitudini come "Planetocentriche" (crescenti verso Est da \(0\) a \(360^{\circ }\)).\\
-Mercurio ha un sistema simile. Assicurati sempre che il tuo \(\phi \) (o \(\lambda \)) segua la direzione corretta del pianeta che stai mappando.\\
-Implementare una funzione che:\\
-Prende in input le coordinate \((\delta ,\lambda )\) di un cratere (es. il cratere Gale su Marte).\\
-Calcola le coordinate 3D \((R_{x},R_{y},R_{z})\).\\
-Le "proietta" su un piano per mostrarti dove apparirebbe il cratere in una mappa piatta.
-\end{enumerate}
-\subsubsection{Punti planetari notevoli}
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Corpo Celeste}&\textbf{Raggio Medio} (\(R\)) & \textbf{Caratteristica principale}\\
-\hline
-Luna& \(1.737\) km& Superficie sferica molto regolare.\\
-\hline
-Marte& \(3.389\) km& Leggermente schiacciato ai poli.\\
-\hline
-Mercurio& \(2.440\) km& Molto denso, quasi perfettamente sferico.\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Dati Planetari per il Calcolo}
-\end{table}
-Punti Notevoli (Coordinate Geografiche/Planetocentriche)\\
-Le longitudini sono espresse nel sistema Est (\(0^{\circ }\) a \(360^{\circ }\)), che è lo standard matematico più comodo per i calcoli.\\
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{|l|l|l|l|l|}
-%{
-%\small
-\hline
-\textbf{Pianeta/Luna}&\textbf{Nome Dettaglio}& \textbf{Latitudine} (\(\delta \))& \textbf{Longitudine} (\(\lambda \))& \textbf{Tipo}\\
-\hline
-Luna& Tranquillitatis& \(+0.67^{\circ }\)& \(23.47^{\circ }\)& Mare (Pianura)\\
-\hline
-Luna& Tycho& \(-43.30^{\circ }\)& \(348.80^{\circ }\)& Cratere con raggi\\
-\hline
-Luna& Copernicus& \(+9.60^{\circ }\)& \(340.00^{\circ }\)& Cratere d'impatto\\
-\hline
-Marte& Olympus& \(+18.65^{\circ }\)& \(226.20^{\circ }\)& Vulcano più alto del SS\\
-\hline
-Marte& Valles Marineris& \(-13.90^{\circ } \)&\(300.80^{\circ }\)& Canyon immenso\\
-\hline
-Marte& Gale& \(-4.58^{\circ }\)& \(137.44^{\circ }\)& Cratere d'impatto\\
-\hline
-Mercurio& Caloris Planitia& \(+30.50^{\circ }\)& \(190.20^{\circ }\)& cratere gigante\\
-\hline
-Mercurio& Kuiper& \(-11.30^{\circ }\)& \(328.50^{\circ }\)& Cratere molto luminoso\\
-\hline
-Mercurio& Beethoven & \(-20.80^{\circ }\)& \(236.10^{\circ }\)& Grande bacino\\
-\hline
-%}
-\end{tabular}
-\end{center}
-\caption{Dati Planetari}
-\end{table}
-Occorre convertire i gradi in radianti:\\
-\(\text{rad}=\text{deg}\cdot \frac{\pi }{180}\)\\
-Ad esempio, per l'Olympus Mons su Marte:\\
-\(\delta =18.65^{\circ }\)\\
-\(\lambda =226.20^{\circ }\)\\
-\(R=3389\) km\\
-Calcoli:\\
-\begin{enumerate}
-\item \(R_{z}=3389\cdot \sin (18.65^{\circ })\approx 1083.8\) km\\
-\item \(d=3389\cdot \cos (18.65^{\circ })\approx 3211.2\) km\\
-\item \(R_{x}=3211.2\cdot \cos (226.20^{\circ })\approx -2222.8\) km\\
-\item \(R_{y}=3211.2\cdot \sin (226.20^{\circ })\approx -2317.7\) km\\
-\end{enumerate}
-Questi valori \((R_{x},R_{y},R_{z})\) rappresentano la posizione del vulcano rispetto al centro del pianeta.
-\subsection{Modello a ellissoide}
-Ecco il passaggio dalla sfera (modello ideale) all'ellissoide (forma reale dei pianeti).\\
-Volendo essere precisi per un pianeta "schiacciato" come la Terra o Marte, non si può usare un raggio unico.\\
-Occorre differenziare il raggio in base alla componente da calcolare.
-Ecco come procedere per la proiezione ortografica su un ellissoide:\\
-In un ellissoide di rotazione (dove il pianeta ruota attorno all'asse Z):\\
-\(a\) (Raggio Equatoriale):\\
-Si usa per le componenti che giacciono sul piano orizzontale (\(X\) e \(Y\)).\\
-\(b\) (Raggio Polare): Si usa per la componente verticale (\(Z\)).\\
-Perché questa differenza?\\
-Se guardi la Terra dallo spazio, la vedresti come un'ellisse, non come un cerchio perfetto. Sarebbe leggermente più "larga" che "alta".\\
-Usando \(a\) per la \(X\) e \(b\) per la \(Y\), la mappa rispetterà esattamente lo schiacciamento polare del pianeta.
-\subsubsection{Esempio Pratico: La Terra}
-Dati i valori:\\
-\(a\approx 6378.1\) km (Equatore)\\
-\(b\approx 6356.8\) km (Poli)\\
-Se si calcola la posizione di un punto a \(45^{\circ }\) di latitudine:\\
-La sua distanza "orizzontale" dal centro sarà scalata sul raggio maggiore (\(a\)).\\
-La sua "altezza" sopra l'equatore sarà scalata sul raggio minore (\(b\)).\\
-Quando usare il Raggio Medio (\(R_{mean}\))?\\
-Puoi usare il raggio medio (\(R=\frac{2a+b}{3}\)) senza commettere errori significativi se:\\
-\begin{itemize}
-\item Stai disegnando una mappa a piccola scala (dove il pianeta sembra un piccolo disco).\\
-\item Lavori su corpi quasi sferici come la Luna o Mercurio (dove la differenza tra \(a\) e \(b\) è minima, spesso meno di 1 km).\\
-\end{itemize}
-Per Marte, lo schiacciamento è circa lo \(0.6\%\): visivamente è quasi impercettibile, ma per la navigazione di un rover è fondamentale.
-\begin{enumerate}
-\item Le formule corrette per \(P(R_{x},R_{y},R_{z})\)\\
-Prima di arrivare alla mappa, le coordinate 3D del punto diventano:\\
-\(R_{x}=\mathbf{a}\cdot \cos (\delta )\cos (\lambda )\)\\
-\(R_{y}=\mathbf{a}\cdot \cos (\delta )\sin (\lambda )\)\\
-\(R_{z}=\mathbf{b}\cdot \sin (\delta )\)\\
+\tableofcontents
 \clearpage
-\item Coordinate sulla Mappa Ortografica (\(X_{map},Y_{map}\))\\
-Quando proietti ortograficamente (immaginando di guardare il pianeta dall'infinito, centrato sull'equatore a longitudine \(0^{\circ }\)), le formule diventano:\\
-\(X_{map}=a\cdot \cos (\delta )\sin (\lambda )\)\\
-\(Y_{map}=b\cdot \sin (\delta )\)\\
-In pratica la \(Y_{map}\) è orientata come l'asse z del caso tridimensionale.
+\section{Introduction}
+To understand planetary maps and projections we need to review math, equations, conic sections, plane trigonometry and spherical trigonometry, 2D plane geometry and 3D geometry in the space, rotations and coordinate transformations.
+\section{The Circle}
+We are going to show the basic maths about the circle, that is fundamental in astronomy and planetary science. We then
+will create a program in C computer language that demonstrates various aspects of circles, including:\\
+\begin{enumerate}
+\item Center and radius
+\item Arcs (length and area of sectors)
+\item Perimeter (circumference) and area of the circle
+\item Angles at the center in radians and degrees
+\item Equation of a circle (standard form)
+\item Parametric equation of a circle
+\item Circle passing through 3 points (circumcircle of a triangle)
 \end{enumerate}
-\subsection{Planet class}
-Ecco una classe in C++ progettata per gestire i calcoli su diversi pianeti. La classe Planet permette di definire il raggio equatoriale (\(a\)) e quello polare (\(b\)), calcolando sia le coordinate 3D che le proiezioni ortografiche basate sulla scomposizione che abbiamo discusso.\\
-Codice C++ (Standard 11 o superiore)\\
+We will use C for calculations and gnuplot for plotting.\\
+Steps:
+\begin{enumerate}
+\item Include necessary headers.
+\item Define structures for points and circles.
+\item Write functions for:
+    \begin{itemize}
+    \item Calculating distance between two points (to get radius).
+    \item Calculating circumference and area of a circle.
+    \item Converting between degrees and radians.
+    \item Calculating arc length and sector area.
+    \item Calculating the equation of a circle from center and radius.
+    \item Calculating the parametric equations.
+    \item Calculating the circle passing through three points (using the circumcircle of a triangle).
+    \end{itemize}
+\item Write a function to generate points on the circle for plotting.
+\item Use gnuplot to plot the circle and any additional features (like the three points and the circumcircle).
+\end{enumerate}
+Let's break it down step by step.\\
+Note: We assume the circle is in the 2D plane.\\
+We'll structure the code as follows:
+\begin{enumerate}
+\item Structures for Point and Circle.
+\item Function declarations.
+\item Main function that demonstrates the features with example values and plots using gnuplot.
+\end{enumerate}
+\subsubsection{Introduction to Circles}
+\begin{quote}
+A circle is a set of all points in a plane that are equidistant from a fixed point called the \emph{center}.                                                                                                            \end{quote}
+\subsubsection{Basic Elements}
+\emph{Center \((x_c, y_c)\)}\\
+The fixed point from which all points on the circle are equidistant.\\
+\emph{Radius (r)}\\
+The constant distance from the center to any point on the circle.\\
+\emph{Diameter (d)}\\
+The longest distance across the circle, equal to twice the radius: d = 2r\\
+\subsubsection{Circle Measurements}
+\emph{Perimeter (Circumference)}
+\begin{itemize}
+\item \emph{Formula}: \(C = 2 \pi r = \pi d \)
+\item \emph{Where}: \(\pi \approx 3.14159\)
+\end{itemize}
+\emph{Area}
+\begin{itemize}
+\item \emph{Formula}: \( A = \pi r^2 \)\\
+\end{itemize}
+\subsubsection{Arcs and Angles}
+\emph{Arc Length}
+\begin{itemize}
+\item \emph{Formula}: s = r\(\theta\) (where \(\theta\) is in radians)
+\item \emph{Alternative}: \( s = ( \theta / 360^{\circ} ) \cdot 2 \pi r \) (where \( \theta \) is in degrees)
+\end{itemize}
+\emph{Sector Area}
+\begin{itemize}
+\item \emph{Formula}: \(A = (\theta/2) \cdot r^2\) (radians)\\
+\item \emph{Alternative}:\( A = ( \theta / 360^{\circ} ) \cdot \pi r^2 \) (degrees) \\
+\end{itemize}
+\emph{Angles at Center}
+\begin{itemize}
+\item \emph{Radians}: \(360^{\circ} = 2\pi\,radians,\,\, 180^{\circ} = \pi\,radians\)
+\item \emph{Conversion}: \(radians = degrees \cdot \frac{\pi}{180},\,\, degrees = radians \cdot \frac{180}{\pi}\)
+\end{itemize}
+\subsubsection{Circle Equations}
+\emph{Standard Form}
+\[(x - x_c)^2 + (y - y_c)^2 = r^2\]
+\emph{General Form}
+\[x^2 + y^2 + Dx + Ey + F = 0\]
+\emph{Parametric Equations}
+\[ x = x_c + r \cdot \cos( \theta ), y = y_c + r \cdot \sin( \theta ) \] (where \(\theta\) is the parameter)
+\subsubsection{Circle Through 3 Points}
+To find the circle passing through three non-collinear points \((x_1,y_1), (x_2,y_2), (x_3,y_3)\):\\
+\begin{enumerate}
+\item Use the general form: \(x^2 + y^2 + Dx + Ey + F = 0\)
+\item Substitute each point to get three equations
+\item Solve the system for D, E, F
+\item Convert to center-radius form using: \(x_c = \frac{-D}{2},\, y_c = \frac{-E}{2},\, r = \sqrt{(x_c^2 + y_c^2 - F)} \)
+\end{enumerate}
+\clearpage
+C Program with gnuplot Visualization\\
+c
 {
 \scriptsize
 \begin{verbatim}
-#include <iostream>
-#include <cmath>
-#include <string>
-#include <iomanip>
 
-// Costante per conversione gradi in radianti
-const double PI = 3.14159265358979323846;
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 
-struct Point3D {
-    double x, y, z;
-};
+#define PI 3.14159265358979323846
 
-struct PointMap {
-    double u, v; // Coordinate su mappa piana
-};
+typedef struct {
+    double x, y;
+} Point;
 
-class Planet {
-private:
-    std::string name;
-    double r_equatorial; // raggio a
-    double r_polar;      // raggio b
+typedef struct {
+    Point center;
+    double radius;
+} Circle;
 
-    double toRadians(double degrees) const {
-        return degrees * (PI / 180.0);
+// Convert degrees to radians
+double to_radians(double degrees) {
+    return degrees * PI / 180.0;
+}
+
+// Convert radians to degrees
+double to_degrees(double radians) {
+    return radians * 180.0 / PI;
+}
+
+// Calculate distance between two points
+double distance(Point p1, Point p2) {
+    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+}
+
+// Calculate circle circumference
+double circumference(double radius) {
+    return 2 * PI * radius;
+}
+
+// Calculate circle area
+double circle_area(double radius) {
+    return PI * radius * radius;
+}
+
+// Calculate arc length
+double arc_length(double radius, double angle_rad) {
+    return radius * angle_rad;
+}
+
+// Calculate sector area
+double sector_area(double radius, double angle_rad) {
+    return 0.5 * radius * radius * angle_rad;
+}
+
+// Find circle through 3 points
+Circle circle_through_three_points(Point p1, Point p2, Point p3) {
+    Circle circle;
+    double a = p2.x - p1.x;
+    double b = p2.y - p1.y;
+    double c = p3.x - p1.x;
+    double d = p3.y - p1.y;
+
+    double e = a * (p1.x + p2.x) + b * (p1.y + p2.y);
+    double f = c * (p1.x + p3.x) + d * (p1.y + p3.y);
+    double g = 2 * (a * (p3.y - p2.y) - b * (p3.x - p2.x));
+
+    if (fabs(g) < 1e-10) {
+        printf("Points are collinear, no circle exists\n");
+        circle.center.x = 0;
+        circle.center.y = 0;
+        circle.radius = 0;
+        return circle;
     }
 
-public:
-    Planet(std::string n, double a, double b)
-        : name(n), r_equatorial(a), r_polar(b) {}
+    circle.center.x = (d * e - b * f) / g;
+    circle.center.y = (a * f - c * e) / g;
+    circle.radius = distance(circle.center, p1);
 
-    // 1. Calcolo coordinate Cartesiane 3D
-    Point3D getCartesian(double lat, double lon) const {
-        double delta = toRadians(lat);
-        double lambda = toRadians(lon);
+    return circle;
+}
 
-        Point3D p;
-        // La proiezione sul piano XY usa il raggio equatoriale (a)
-        double d = r_equatorial * cos(delta);
-        p.x = d * cos(lambda);
-        p.y = d * sin(lambda);
-
-        // La coordinata verticale usa il raggio polare (b)
-        p.z = r_polar * sin(delta);
-
-        return p;
+// Generate points for plotting circle
+void generate_circle_points(Circle circle, const char* filename) {
+    FILE *fp = fopen(filename, "w");
+    if (!fp) {
+        printf("Error opening file\n");
+        return;
     }
 
-    // 2. Proiezione Ortografica (vista frontale centrata su lon 0)
-    // Xmap usa il raggio equatoriale, Ymap usa il raggio polare
-    PointMap projectOrthographic(double lat, double lon) const {
-        double delta = toRadians(lat);
-        double lambda = toRadians(lon);
-
-        PointMap pm;
-        pm.u = r_equatorial * cos(delta) * sin(lambda);
-        pm.v = r_polar * sin(delta);
-
-        return pm;
+    for (int i = 0; i <= 360; i++) {
+        double angle = to_radians(i);
+        double x = circle.center.x + circle.radius * cos(angle);
+        double y = circle.center.y + circle.radius * sin(angle);
+        fprintf(fp, "%f %f\n", x, y);
     }
 
-    void printInfo(double lat, double lon) const {
-        Point3D p = getCartesian(lat, lon);
-        PointMap m = projectOrthographic(lat, lon);
+    fclose(fp);
+}
 
-        std::cout << "--- " << name << " ---" << std::endl;
-        std::cout << "Coordinate 3D: X=" << p.x << ", Y=" << p.y << ", Z=" << p.z << std::endl;
-        std::cout << "Mappa Ortografica: U=" << m.u << ", V=" << m.v << std::endl;
-        std::cout << "---------------------------" << std::endl << std::endl;
+// Generate points for arc visualization
+void generate_arc_points(Circle circle, double start_angle, double end_angle, const char* filename) {
+    FILE *fp = fopen(filename, "w");
+    if (!fp) {
+        printf("Error opening file\n");
+        return;
     }
-};
+
+    double start_rad = to_radians(start_angle);
+    double end_rad = to_radians(end_angle);
+
+    fprintf(fp, "%f %f\n", circle.center.x, circle.center.y); // Center point
+
+    for (double angle = start_rad; angle <= end_rad; angle += 0.01) {
+        double x = circle.center.x + circle.radius * cos(angle);
+        double y = circle.center.y + circle.radius * sin(angle);
+        fprintf(fp, "%f %f\n", x, y);
+    }
+
+    fclose(fp);
+}
 
 int main() {
-    // Definizione dei pianeti (Raggio Equatoriale, Raggio Polare in km)
-    Planet terra("Terra", 6378.1, 6356.8);
-    Planet marte("Marte", 3396.2, 3376.2);
-    Planet luna("Luna", 1737.4, 1737.4); // Sferica
+    // Example 1: Basic circle properties
+    Circle circle1 = {{2, 3}, 5};
 
-    // Test Olympus Mons su Marte
-    // Lat: 18.65, Lon: 226.2 (o -133.8)
-    std::cout << std::fixed << std::setprecision(2);
-    marte.printInfo(18.65, 226.2);
+    printf("=== Circle Properties Example ===\n");
+    printf("Center: (%.2f, %.2f)\n", circle1.center.x, circle1.center.y);
+    printf("Radius: %.2f\n", circle1.radius);
+    printf("Diameter: %.2f\n", 2 * circle1.radius);
+    printf("Circumference: %.2f\n", circumference(circle1.radius));
+    printf("Area: %.2f\n", circle_area(circle1.radius));
 
-    // Test Apollo 11 su Luna
-    luna.printInfo(0.67, 23.47);
+    // Arc and sector examples
+    double angle_deg = 60;
+    double angle_rad = to_radians(angle_deg);
+
+    printf("\n=== Arc and Sector Example ===\n");
+    printf("Angle: %.2f° = %.2f radians\n", angle_deg, angle_rad);
+    printf("Arc length: %.2f\n", arc_length(circle1.radius, angle_rad));
+    printf("Sector area: %.2f\n", sector_area(circle1.radius, angle_rad));
+
+    // Example 2: Circle through 3 points
+    Point p1 = {0, 0}, p2 = {4, 0}, p3 = {0, 3};
+    Circle circle2 = circle_through_three_points(p1, p2, p3);
+
+    printf("\n=== Circle Through 3 Points ===\n");
+    printf("Points: (%.2f,%.2f), (%.2f,%.2f), (%.2f,%.2f)\n",
+           p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+    printf("Circle center: (%.2f, %.2f)\n", circle2.center.x, circle2.center.y);
+    printf("Circle radius: %.2f\n", circle2.radius);
+
+    // Generate data files for gnuplot
+    generate_circle_points(circle1, "circle.dat");
+    generate_arc_points(circle1, 30, 120, "arc.dat");
+
+    // Generate points for circle through 3 points
+    generate_circle_points(circle2, "circle_3points.dat");
+
+    FILE *fp = fopen("points.dat", "w");
+    fprintf(fp, "%f %f\n", p1.x, p1.y);
+    fprintf(fp, "%f %f\n", p2.x, p2.y);
+    fprintf(fp, "%f %f\n", p3.x, p3.y);
+    fclose(fp);
+
+    // Create GNUplot script
+    FILE *gnuplot = fopen("plot_circle.gp", "w");
+    fprintf(gnuplot, "set terminal png enhanced size 1200,400\n");
+    fprintf(gnuplot, "set output 'circle_plots.png'\n");
+    fprintf(gnuplot, "set multiplot layout 1,3\n\n");
+
+    fprintf(gnuplot, "# Plot 1: Basic Circle\n");
+    fprintf(gnuplot, "set title 'Basic Circle Properties'\n");
+    fprintf(gnuplot, "set xlabel 'x'\n");
+    fprintf(gnuplot, "set ylabel 'y'\n");
+    fprintf(gnuplot, "set size ratio -1\n");
+    fprintf(gnuplot, "plot 'circle.dat' with lines title 'Circle', ");
+    fprintf(gnuplot, "'circle.dat' every 90 with points pt 7 title 'Points every 90°'\n\n");
+
+    fprintf(gnuplot, "# Plot 2: Arc and Sector\n");
+    fprintf(gnuplot, "set title 'Arc and Sector (30° to 120°)'\n");
+    fprintf(gnuplot, "plot 'arc.dat' with lines title 'Arc', ");
+    fprintf(gnuplot, "'arc.dat' using 1:2:(2-$1):(3-$2) with vectors nohead lt 2 title 'Radius'\n\n");
+
+    fprintf(gnuplot, "# Plot 3: Circle Through 3 Points\n");
+    fprintf(gnuplot, "set title 'Circle Through 3 Points'\n");
+    fprintf(gnuplot, "plot 'circle_3points.dat' with lines title 'Circle', ");
+    fprintf(gnuplot, "'points.dat' with points pt 7 ps 2 title 'Given Points', ");
+    fprintf(gnuplot, "'circle_3points.dat' every 120 with points pt 2 title 'Circle Points'\n\n");
+
+    fprintf(gnuplot, "unset multiplot\n");
+    fclose(gnuplot);
+
+    printf("\ngnuplot script created. Run 'gnuplot plot_circle.gp' to generate plots.\n");
 
     return 0;
 }
 \end{verbatim}
 }
-Caratteristiche del codice:\\
-Gestione dello schiacciamento:\\
-Come abbiamo discusso, p.z e pm.v (la coordinata verticale) usano r\_polar, mentre le componenti orizzontali usano r\_equatorial.\\
-Strutture Dati: Ho usato struct Point3D e PointMap per rendere il codice pulito e pronto per essere integrato in un motore grafico o in un software di analisi dati.\\
-Modularità: Puoi aggiungere facilmente nuovi pianeti nel main semplicemente passando i due raggi.\\
-Note tecniche per la tua implementazione:\\
-Longitudine:\\
-Nello script ho considerato la longitudine \(\lambda \) crescente verso Est (0-360).\\
-Se ricevi dati in formato Ovest, ricorda di trasformarli (es. \(350^{\circ }\text{\ Est}=-10^{\circ }\text{\ Ovest}\)).\\
-Visibilità: Nella proiezione ortografica reale, dovresti aggiungere un controllo:\\
-se \(\cos (\lambda )\) è negativo, il punto si trova "dietro" l'emisfero visibile e non andrebbe disegnato.
-\section{EUMETSAT Technical Parameters}
-Ho recuperato i parametri esatti utilizzati da EUMETSAT per mappare i dati grezzi in immagini Full Disk come la tua:
-\begin{itemize}
-\item Longitudine del Centro (Nominale): 0.0°
-\item Latitudine del Centro: 0.0° (Equatore)
-\item Distanza Satellite dal centro della Terra: \( (H=42164.0\,km)\)
-\item Raggio Equatoriale Terra: \( (R_{eq}=6378.137\,km)\) (modello standard WGS84)
-\end{itemize}
-Il tuo script gnuplot utilizza dei fattori di scala fissi (544.5 e 541.5). Questi valori sono approssimativi e non tengono conto della curvatura esatta e dell'altezza del satellite nel sistema di coordinate EUMETSAT.
-\section{The Solution}
-Usa i parametri standard.\\
-Il modo corretto per risolvere il problema è utilizzare i parametri orbitali e terrestri standard per calcolare la relazione tra coordinate geografiche (lat/lon) e coordinate immagine (x/y in pixel), invece di usare fattori di scala fissi. I file di dati EUMETSAT di Livello 1c utilizzano un sistema di riferimento standard. Se il tuo script può incorporare una proiezione geostazionaria esatta (a volte chiamata "viewpoint perspective" o "satellite projection"), funzionerà perfettamente con 0°,0°.Se devi continuare a usare lo script attuale, è più probabile che tu debba aggiustare la distanza nel calcolo della proiezione, non le coordinate centrali.
-\section{The correct formula} per la proiezione geostazionaria normalizzata, che utilizza l'altezza del satellite e il raggio terrestre invece dei valori approssimativi in pixel.
-Il problema che riscontri deriva dall'uso di una sfera perfetta e di fattori di scala approssimativi nel tuo script. La Terra è un elissoide oblato (schiacciato ai poli), e la proiezione geostazionaria tiene conto di questa forma.Qui di seguito trovi le formule esatte per la proiezione geostazionaria normalizzata, che mappano le coordinate geografiche (\(\phi ,\lambda \)) in coordinate di proiezione normalizzate (\(x,y\)).
-\section{Parametri Fondamentali (WGS84)}
-Sono usati questi valori precisi nel programma C e Gnuplot:
-\begin{itemize}
-\item Raggio Equatoriale: \(R_{eq}=6378.137\,km \)
-\item Raggio Polare: \(R_{p}=6356.7523\,km\)
-\item Distanza Terra-Satellite (dal centro): \(H=42164.0\,km\)
-\item Longitudine del Centro (\(\lambda _{0}\)): \(0.0^{\circ }\)
-\item Latitudine del Centro (\(\phi _{0}\)): \(0.0^{\circ }\)
-\item Fattore di schiacciamento inverso: \(f^{-1}=298.257223563\)
-\end{itemize}
-\section{Formule per la Proiezione Geostazionaria Normalizzata}
-La proiezione geostazionaria normalizzata è un sistema di coordinate cartografiche utilizzato per mappare immagini dai satelliti GEO, posizionati a circa 35.786 km sopra l'equatore. Questa proiezione trasforma angoli di visione (elevazione/azimut) in coordinate cartesiane normalizzate \((x,y)\), spesso scalate per rappresentare la vista disco-piena della Terra, semplificando l'analisi meteorologica e di telecomunicazione.
-Caratteristiche Principali:
-\begin{itemize}
-\item Punto di vista: Il satellite è fisso rispetto alla superficie terrestre, solitamente posizionato sopra l'equatore a una specifica longitudine.
-\item Normalizzazione: Le coordinate \(x\) e \(y\) sono spesso normalizzate in un intervallo, ad esempio, tra \(-1\) e \(1\) o basate sulla dimensione del disco terrestre visto dal satellite.
-\item Applicazioni: Ampiamente usata nel trattamento dati dei satelliti meteorologici (come Meteosat) per visualizzare l'intera faccia terrestre visibile in un'unica immagine.
-\item Distorsione: Aumenta significativamente verso i bordi del disco terrestre (limbo), dove la curvatura della Terra è più pronunciata.
-\end{itemize}
-La proiezione mappa il punto sub-satellitare al centro \((0,0)\) e i bordi della Terra ai limiti definiti dalla distanza del satellite
-Queste formule calcolano prima le coordinate cartesiane 3D (\(r_{x},r_{y},r_{z}\)) del punto sulla superficie terrestre, e poi le proiettano in coordinate piane (\(x,y\)).
-\begin{enumerate}
-\item Coordinate Cartesiane del punto sulla superficie (Latitudine \(\phi \), Longitudine \(\lambda \))\\
-Converti prima latitudine e longitudine in radianti.\\
-\(r_{x}=R_{eq}\cos (\phi )\cos (\lambda )\) \\
-\(r_{y}=R_{eq}\cos (\phi )\sin (\lambda )\) \\
-\(r_{z}=R_{p}\sin (\phi )\) \\
-(Nota: queste formule assumono una sfera per semplicità; per l'ellissoide, sono leggermente più complese, ma queste sono spesso sufficienti per la vista ortografica).
-\item Calcoli Intermedi per la Proiezione \\
-Definisci i valori relativi al punto sub-satellite (\(\phi _{0},\lambda _{0}\)): \\
-\(S_{1}=H-(r_{x}\cos (\phi _{0})\cos (\lambda _{0})+r_{y}\cos (\phi _{0})\sin (\lambda _{0})+r_{z}\sin (\phi _{0}))\) \\
-\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\) \\
-\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
-\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\) \\
-(Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).\\
-La definizione che hai riportato descrive la visibilità geometrica di un punto sulla superficie terrestre rispetto a un
-satellite.
-\subsection{ECEF coordinates}
-Il sistema di coordinate cartesiane ECEF (Earth-Centered, Earth-Fixed) è un sistema di riferimento geocentrico tridimensionale con origine nel centro di massa terrestre (0,0,0) e assi fissati rispetto alla rotazione terrestre (X, Y, Z). X punta al meridiano di Greenwich, Y a 90° est, Z al Polo Nord, solitamente misurato in metri.\\
-Caratteristiche Principali del Sistema ECEF
-\begin{itemize}
-\item Origine (0,0,0): Situata nel centro di massa della Terra.
-\item Rotazione: Ruota in modo solidale con la Terra, rendendo le coordinate (X, Y, Z) di un punto fisso sulla superficie quasi costanti nel tempo.
-\item Asse X: Interseca la superficie dell'ellissoide all'equatore e al meridiano primo (\(0^{\circ }\) latitudine, \(0^{\circ }\) longitudine).
-\item Asse Y: Interseca la superficie all'equatore e a \(90^{\circ }\) longitudine est.
-\item Asse Z: Allineato con l'asse di rotazione terrestre, verso il Polo Nord.
-\item Unità di misura: Metri.
-\end{itemize}
-\end{enumerate}
-\subsection{georeferenziazione e metadati}
-\begin{enumerate}
-\item Parametrizzazione del Fattore di Scala (\(K\))\\
-Il valore \(K\) non è magico: rappresenta quanti pixel ci sono per ogni radiante di scansione. Nelle immagini Meteosat standard, questo valore è fisso per ogni tipo di file (HRIT, Native, o derivati web). Per rendere lo script ripetibile, puoi definire \(K\) in funzione della dimensione dell'immagine (\(dim_{x}\)):\\
 
-\begin{center}
-\(K=\frac{dim\_x}{2\times \text{max\_scan\_angle(rad)}}\)\\                                                      \end{center}
-Dove per i satelliti MSG (Meteosat 8-11) l'angolo massimo è \(\approx 0.15185\) rad.\\
-Se \(dim\_x=3712\), allora \(K\approx 12222\).\\
-Se la tua immagine reale richiede \(K=11900\), significa che l'immagine PNG/JPG che stai usando ha un margine nero di circa il 2.6\% che "ruba" spazio al disco terrestre.\\
-Soluzione: Crea un file di configurazione .sh o un piccolo database che associ al "Provider" dell'immagine (es. EUMETSAT Web, RealEarth, NASA WorldView) il suo coefficiente \(K\) specifico.
-\item Utilizzo dei GCP (Ground Control Points) con GDAL\\
-Il modo più professionale per georeferenziare migliaia di immagini è usare GDAL per "iniettare" i punti che hai calcolato direttamente nei metadati dell'immagine.\\
-Puoi creare uno script che genera una lista di punti di controllo: Prendi le coordinate Lat/Lon di 10 capitali (quelle che hai già).\\
-Calcola con le tue formule xproj e yproj i pixel corrispondenti \((X,Y)\). Lancia il comando:\\
+How to Compile and Run\\
+\begin{enumerate}
+\item **Compile the C program:**\\
+   bash
 \begin{verbatim}
- gdal_translate -gcp [Lon] [Lat] [X_pixel] [Y_pixel] ... (per 10 punti) \
-               input_immagine.jpg immagine_con_metadati.tif
+   gcc -o circle_demo circle_demo.c -lm
 \end{verbatim}
-\item Infine, usa gdalwarp per trasformare l'immagine in una proiezione standard (es. Mercatore o Cilindrica):
-\begin{verbatim}
- gdalwarp -t_srs EPSG:4326 immagine_con_metadati.tif mappa_finale.tif
-\end{verbatim}
-\item Automatizzazione tramite SPICE (per Marte e Mercurio) Dato che il tuo obiettivo finale sono CaSSIS e SIMBIO-SYS, non potrai usare un \(K\) fisso perché quei satelliti si muovono. Per rendere lo studio ripetibile sui pianeti, dovrai sostituire i tuoi parametri \(H,R_{eq},R_{pol}\) con variabili caricate dai Kernel SPICE della NASA/ESA.Lo script gnuplot che hai scritto diventerà il tuo "validatore visivo": lo userai per controllare che il DTM o l'immagine di Marte prodotta dalla pipeline sia corretta prima di inviarla all'archivio ESA.
-\end{enumerate}
-applicarlo a Marte? Possiamo modificare lo script Gnuplot cambiando i raggi (\(R_{eq}=3396.19\), \(R_{pol}=3376.2\)) e calcolando l'altezza \(H\) per un ipotetico satellite "Areostazionario". Questo ti servirà per capire come variano le distorsioni su un pianeta più piccolo e più schiacciato. Vuoi che impostiamo insieme i parametri per il "Meteosat di Marte" così da vedere come cambia la griglia? [1, 2, 3]
-\subsection{GNSS Antenna}
-Un'antenna GNSS (Global Navigation Satellite System) è un dispositivo progettato per catturare le onde elettromagnetiche trasmesse dai satelliti in orbita e convertirle in segnali elettrici utilizzabili da un ricevitore.
-A differenza del termine "antenna GPS", che si riferisce specificamente al sistema statunitense, l'antenna GNSS è in grado di ricevere dati da più costellazioni contemporaneamente, come Galileo (Europa), GLONASS (Russia) e BeiDou (Cina).
-Funzioni principali\\
-\begin{itemize}
-\item Ricezione e filtraggio: Cattura segnali radio estremamente deboli (provenienti da circa 20.000 km di altezza) filtrando i disturbi e il rumore di fondo.
-\item Amplificazione: Molte antenne moderne sono "attive", ovvero includono un amplificatore integrato (LNA - Low Noise Amplifier) per potenziare il segnale prima che attraversi il cavo verso il ricevitore.
-\item Conversione: Trasforma le onde radio in corrente elettrica che contiene le informazioni di cronometraggio e posizione dei satelliti.
-\end{itemize}
-Tipologie comuni\\
-\begin{itemize}
-\item Antenne Patch: Piccole e piatte, sono quelle integrate negli smartphone, nei wearable o nei cruscotti delle auto.
-\item Antenne Geodetiche: Caratterizzate da una forma a "fungo" o dotate di un piano di massa circolare (choke ring), servono per rilievi topografici di alta precisione (centimetrica) e per minimizzare gli errori causati dai segnali riflessi (multipath).
-\item Antenne Aviation/Marine: Robuste e certificate per resistere a vibrazioni estreme, alte velocità e agenti atmosferici corrosivi.
-\end{itemize}
-Senza un'antenna di qualità, anche il ricevitore più avanzato non sarebbe in grado di calcolare una posizione precisa a causa della debolezza dei segnali satellitari.
-\subsubsection{Applications and Conversions}
-L'ECEF è fondamentale per i sistemi di navigazione satellitare come il GPS, poiché le posizioni dei satelliti e le misurazioni dell'antenna GNSS sono nativamente in questo sistema.\\
-Le coordinate ECEF possono essere convertite in coordinate geodetiche (latitudine \(\phi \), longitudine \(\lambda \), altezza ellissoidale \(h\)) utilizzando i parametri dell'ellissoide di riferimento (come WGS84).
-Differenze principali:\\
-A differenza delle coordinate geografiche (Latitudine/Longitudine), l'ECEF utilizza una terna \(XYZ\) rettilinea, evitando le singolarità ai poli e facilitando i calcoli vettoriali 3D.
-\begin{enumerate}
-\item Parametri Iniziali\\
-\((r_{x},r_{y},r_{z})\): Sono le coordinate cartesiane (ECEF) del punto sulla Terra che vuoi verificare.\\
-\((\phi _{0},\lambda _{0})\): Sono la latitudine e la longitudine del punto sub-satellite (dove il satellite è allo zenit).\\
-Per un satellite GEO, \(\phi _{0}\) è solitamente \(0^{\circ }\) (Equatore) e \(\lambda _{0}\) è la sua longitudine fissa.\\
-\(H\): È la distanza del satellite dal centro della Terra.\\
-Per un'orbita GEO, \(H\approx 42164\) km.
-\item Correzione delle Formule (\(S_{1},S_{2},S_{3}\))\\
-Le variabili rappresentano proiezioni vettoriali e distanze:\\
-\(S_{1}\) (Proiezione del vettore posizione del punto sul raggio del satellite):\\
-\(S_{1}=H-(r_{x}\cdot \cos \phi _{0}\cdot \cos \lambda _{0}+r_{y}\cdot \cos \phi _{0}\cdot \sin \lambda _{0}+r_{z}\cdot \sin \phi _{0})\)\\
-Qui hai sottratto a \(H\) il prodotto scalare tra il vettore posizione del punto e il versore della direzione del satellite.\\
-\(S_{2}\) (Quadrato della distanza del punto dal centro della Terra):\\
-\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\)\\
-Se il punto è sulla superficie, \(\sqrt{S_{2}}\approx R_{Terra}\).\\
-\(S_{3}\) (Quadrato della distanza tra il satellite e il punto):\\
-\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
-\item Il valore \(\gamma \) (Angolo di Nadir)\\
-L'angolo \(\gamma \) è l'angolo sotto il quale il satellite "vede" il punto rispetto alla sua verticale (nadir).\\
-\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\)
-Il controllo della visibilità:\\
-Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile.\\
-In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) (circa \(8.7^{\circ }\) per la copertura globale).
-\end{enumerate}
-In cartografia satellitare e telerilevamento, l'angolo di Nadir (spesso indicato come Off-Nadir Angle o ONA) è l'angolo formato tra la linea che congiunge il sensore al punto osservato sulla Terra e la verticale perfetta che scende dal satellite verso il centro del pianeta (il Nadir).
-I concetti chiave legati a questo angolo includono:
-\begin{enumerate}
-\item Definizione e Geometria
-\begin{itemize}
-\item Nadir (0°): Quando il satellite guarda esattamente verso il basso, l'angolo off-nadir è pari a 0°. Questa geometria offre la massima accuratezza geometrica e la minima distorsione.
-\item Off-Nadir (>0°): Quando il sensore viene inclinato per osservare un'area non direttamente sottostante, l'angolo cresce. Valori comuni per immagini ad alta risoluzione si attestano tra 0° e 30°.
-\end{itemize}
-\item Differenza tra Angoli
-Sebbene talvolta usati come sinonimi, esistono distinzioni tecniche importanti:
-\begin{itemize}
-\item Look Angle (Angolo di vista):
-È l'angolo di inclinazione del sensore rispetto al Nadir dal punto di vista del satellite.
-\item Incidence Angle (Angolo di incidenza):
-È l'angolo tra il raggio incidente e la normale alla superficie terrestre nel punto di osservazione.
-A causa della curvatura terrestre, l'angolo di incidenza è solitamente leggermente maggiore dell'angolo off-nadir.
-\end{itemize}
-\item Impatto sulla Cartografia
-L'aumento dell'angolo off-nadir comporta diversi effetti:
-\begin{itemize}
-\item Risoluzione: I pixel si "allungano" (pixel stretching), riducendo la risoluzione spaziale effettiva.
-\item Distorsione Geometrica: Gli edifici alti sembrano "inclinarsi" (effetto building-lean), rendendo più complessa la georeferenziazione e la creazione di modelli 3D.
-\item Vantaggi Operativi: Permette una maggiore frequenza di rivisitazione (il satellite può fotografare un punto anche se non ci passa sopra esattamente) e facilita l'acquisizione di coppie stereoscopiche per la creazione di modelli digitali di elevazione (DEM).
-\end{itemize}
-Per applicazioni di precisione, si preferiscono angoli definiti Near-Nadir (<= 15°) o Tight-Nadir (<= 10°).
-\item Coordinate Piane Proiettate (\(x,y\))\\
-Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
-\(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
-\(y=\frac{r_{x}\sin (\phi _{0})\cos (\lambda _{0})+r_{y}\sin (\phi _{0})\sin (\lambda _{0})-r_{z}\cos (\phi _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)
-\item Conversione in Pixel \\
-Per convertire le coordinate normalizzate \((x,y)\) in coordinate pixel \((Px,Py)\) per la tua immagine specifica (che è circa 1089x1083 pixel), devi conoscere il centro in pixel (es. \(C_{x}=544,C_{y}=541\)) e un fattore di scala in pixel/radiante (questo è il pezzo che ti manca).
-EUMETSAT utilizza un fattore di scala angolare standard di circa 3712 pixel per radiante.
-\[Px=C_{x}+x\times FattoreScalaPixel\]
-\[Py=C_{y}-y\times FattoreScalaPixel\]
-\end{enumerate}
-Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°.Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?\\
-OK il concetto di dimensione angolare, attenzione a non confondere la Longitudine Terrestre con l'Angolo di Nadir.
-Ecco il chiarimento definitivo:
-\begin{enumerate}
 
-\item La Terra come la Luna\\
-Sì, esattamente come la Luna copre circa \(0.5^{\circ }\) nel nostro cielo, la Terra vista da un satellite GEO (a 35.786 km di quota) è un disco che copre un arco di circa 17.4°.Se il satellite punta una camera al centro della Terra, il "bordo" del pianeta si trova a 8.7° di distanza dal centro dell'obiettivo.
-\item Il limite di Longitudine (Il vero "taglio")\\
-Qui c'è il punto fondamentale: un angolo di Nadir di 8.7° permette di vedere molto più di 8.7° di Longitudine sulla Terra. Grazie alla geometria, il satellite vede quasi un intero emisfero.Per un satellite GEO posizionato sopra l'equatore a longitudine \(0^{\circ }\):Punto Sub-satellite: Longitudine \(0^{\circ }\) (Nadir \(\gamma =0^{\circ }\)).Orizzonte (Limite visibile): Arriva fino a circa 81.3° Est e 81.3° Ovest di longitudine.
-Oltre l'orizzonte: Da \(81.3^{\circ }\) a \(180^{\circ }\) (e da \(-181.3^{\circ }\) a \(-180^{\circ }\)), i punti sono dietro la curvatura terrestre e non sono visibili.
-\item Perché quella formula diceva 90°?\\
-La formula che hai postato è una condizione di "visibilità geometrica locale": Se calcoli l'angolo tra il vettore satellite e il vettore punto, il limite è 90° rispetto al centro della terra (l'orizzonte geometrico).
+\item  **Run the program:**\\
+   bash
+\begin{verbatim}
+   ./circle_demo
+\end{verbatim}
+
+\item  **Generate plots with gnuplot:**\\
+   bash
+\begin{verbatim}
+   gnuplot plot_circle.gp
+\end{verbatim}
+
 \end{enumerate}
-Se un punto ha una longitudine (rispetto al satellite) superiore a circa 81.3°, l'angolo \(\gamma \) della tua formula supererà il limite fisico e il punto risulterà "nascosto". \\
-In sintesi per il tuo programma:\\
-Campo di vista del satellite (Nadir \(\gamma \)):\\
-Spazia solo da \(0^{\circ }\) a \(8.7^{\circ }\).\\
-Se superi \(8.7^{\circ }\), stai inquadrando le stelle, non la Terra.\\
-Copertura Terrestre (Longitudine \(\lambda \)):\\
-Il satellite "vede" una fetta di Terra larga circa 162.6° (da \(-81.3^{\circ }\) a \(+81.3^{\circ }\) rispetto alla sua posizione).\\
-Zona d'ombra: Tutto ciò che sta tra \(81.3^{\circ }\) e \(180^{\circ }\) di distanza angolare dal punto sub-satellite è invisibile.\\
-Quindi, se il tuo satellite è a \(0^{\circ }\) di longitudine, non vedrà mai l'Australia o il Pacifico Centrale, perché la loro longitudine è troppo elevata e "girano" dietro l'angolo della sfera.\\
-Per un satellite GEO centrato su (Lat,Lon) = (0°, 0°):\\
-L'intervallo di visibilità:\\
-I punti visibili sono solo quelli compresi tra 81.3°W e 81.3°E.\\
-Tutto ciò che si trova al di fuori di questa "fetta" di 162.6° totali è nascosto dalla curvatura terrestre.\\
-Il limite dei Poli:\\
-Lo stesso ragionamento vale per la latitudine. Il satellite non vedrà mai i poli Nord e Sud, ma si fermerà a circa 81.3°N e 81.3°S.\\
-L'illusione ottica:\\
-Anche se il satellite "vede" fino a 81° di longitudine, i territori vicini a quel limite (come l'estremo Alaska o l'est dell'Asia, a seconda di dove è posizionato il satellite) appariranno molto schiacciati e deformati perché sono visti quasi "di taglio" (tangenti all'orizzonte).\\
-Riassunto visivo:
-\begin{itemize}
-\item Longitudine \(0^{\circ }\): Pieno centro del disco (Nadir 0°).
-\item Longitudine \(81.3^{\circ }\): Bordo estremo del disco terrestre (Nadir 8.7°).
-\item Longitudine \(>81.3^{\circ }\): "Dietro" la Terra (Invisibile).
-\end{itemize}
-Questo è il motivo per cui servono almeno 3 satelliti GEO (distanziati di 120°) per coprire l'intera circonferenza terrestre (fatta eccezione per le calotte polari). Se ne avessi solo uno a 0°, non sapresti mai cosa succede a Tokyo (139°E) o Los Angeles (118°W)!
-\section{Parametric equation of the sphere}
-L'equazione parametrica è il modo più efficace per "disegnare" una sfera perché usa due angoli
-(come latitudine e longitudine) per mappare ogni punto della superficie.
-Ecco lo schema logico per non dimenticarla più:
-\begin{enumerate}
-\item I Componenti\\
-Per definire la sfera ti servono:\\
-\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.\\
-\(R\): Il Raggio.\\
-\(u,v\): I due Parametri (angoli).\\
-\item Lo Schema delle Coordinate\\
-L'equazione si basa sulle coordinate sferiche.\\
-Immagina di partire dal centro e muoverti sulla superficie:\\
-\(
-\begin{cases}
-x=c_{x}+R\cdot \cos (u)\cdot \cos (v)\\
-y=c_{y}+R\cdot \cos (u)\cdot \sin (v)\\
-z=c_{z}+R\cdot \sin (u)\\
-\end{cases}
-\)
-\item Significato degli Angoli (Cruciale per Gnuplot)\\
-Il segreto è capire come ruotano \(u\) e \(v\):
-\begin{table}[h!]
+This will create a file called \verb|circle_plots.png| with three subplots showing:
+\begin{figure}[!ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Parametro} & \textbf{Analogia} & \textbf{Range standard} & \textbf{Funzione} \\
-\hline
-\(u\) & Latitudine & \([-\pi /2,\pi /2]\)& Controlla l'altezza (da Polo Sud a Polo Nord).\\
-\hline
-\(v\) & Longitudine & \([0,2\pi ]\)& Ruota attorno all'asse verticale (il giro completo).\\
-\hline
-\end{tabular}
-\caption{Angles of the sphere}
+ \includegraphics[width=15cm]{circle_plots001.png}
 \end{center}
-\end{table}
-\item Perché funziona? (Il trucco visivo) \\
-La componente \(z\) dipende solo da \(\sin (u)\). \\
-Se \( u=\pi /2 \) (90°), allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)). \\
-Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli.\\
-All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero.\\
-\item Verifica rapida
-
+\caption{Circle's concepts}
+\end{figure}
+\begin{itemize}
+\item A basic circle with points marked every 90 degrees
+\item An arc with radius vectors
+\item A circle passing through three given points
+\end{itemize}
+\subsubsection{Key Mathematical Concepts}
+\begin{enumerate}
+\item \emph{Center-Radius Form}: \( (x-x_c)^2 + (y-y_c)^2 = r^2\)
+\item \emph{Parametric Equations}: \(  x = x_c + r\cdot \cos(\theta), y = y_c + r \cdot \sin(\theta)\)
+\item \emph{Circle through 3 Points}: Solving the system of equations
+\item \emph{Unit Conversions}: Degrees to radians and vice versa
+\item \emph{Geometric Calculations}: Circumference, area, arc length, sector area
 \end{enumerate}
-Se sommi i quadrati degli spostamenti dal centro:\((x-c_{x})^{2}+(y-c_{y})^{2}+(z-c_{z})^{2}\)
-sostituendo le parametriche otterrai sempre \(R^{2}\), che è l'equazione cartesiana della sfera.
-Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricordati di mantenere sempre
+The program provides both numerical outputs and visual representations to help understand these circle properties intuitively.
+\section{The ellipse}
+\subsection{Introduction}
+Here a mathematical description of ellipses in 2D plane, including definitions, equations, parametric equations, foci, semiaxes, eccentricity, area, perimeter (approximation), arcs, translation, and rotation. We will also provide a C program that demonstrates some of these concepts and generates data for plotting an ellipse using gnuplot. A comprehensive math lesson on ellipses in 2D plane, similar to your circle example, with definitions, equations, parametric equations, and visualization using C and gnuplot.
+Steps:\\
+\begin{enumerate}
+\item Definition of an Ellipse
+\item Standard Equation of an Ellipse
+\item Parametric Equations
+\item Foci and Eccentricity
+\item Semiaxes
+\item Area and Perimeter (Approximation)
+\item Arcs and Sector Area (Approximation)
+\item Translation of Ellipse
+\item Rotation of Ellipse
+\item Example with C Code and gnuplot
+\end{enumerate}
+Let's break down each step:\\
+\subsection{Mathematical description}
+\subsubsection{Definition:}
+\begin{quote}
+    An ellipse is the set of points in a plane such that the sum of the distances from two fixed points (foci) is constant.
+\end{quote}
+\subsubsection{Standard Equation:}
+For an ellipse centered at \((x_c, y_c)\) with semi-major axis a (horizontal) and semi-minor axis b (vertical):
+      \[  \frac{(x - x_c)^2}{a^2} + \frac{(y - y_c)^2}{b^2} = 1 \]
+    If the ellipse is oriented with the major axis vertical, then a and b swap roles.
+\subsubsection{Parametric Equations:}
+    \[ x = x_c + a \cdot cos(t) \]
+    \[ y = y_c + b \cdot sin(t) \]
+    where t is the parameter (usually from 0 to 2\(\pi\)).
+\subsubsection{Foci and Eccentricity:}
+    The foci are located at \((x_c \pm c, y_c)\) for a horizontal major axis,\\ where \(c = \sqrt{a^2 - b^2}\).\\
+    Eccentricity \(e = \frac{c}{a}\,\,(0 \leq e < 1)\).\\
+\subsubsection{Semiaxes:}
+    a: semi-major axis (longer)\\
+    b: semi-minor axis (shorter)\\
+\subsubsection{Area and Perimeter:}
+    Area = \( \pi \cdot a \cdot b \)\\
+    Perimeter (approximation): There is no closed-form formula, but one approximation is:
+       \[ P \approx \pi \cdot [ 3(a+b) - \sqrt{(3a+b)(a+3b)} ] \]
+\subsubsection{Arcs and Sector Area:}
+    The arc length of an ellipse is not expressible in elementary functions. We can use numerical methods.
+    Similarly, the sector area (area swept by an angle from the center) can be computed by integration.
+\subsubsection{Translation:}
+    To translate an ellipse, we change the center \((x_c, y_c)\).
+\subsubsection{Rotation:}
+    To rotate an ellipse by an angle \(\theta\), we use the rotation transformation on the parametric equations.
+\subsection{Example with C Code and gnuplot:}
+Here a C program that:\\
+\begin{itemize}
+\item Defines a structure for an ellipse (center, semi-major axis, semi-minor axis, rotation angle)
+\item Computes the area and an approximation of the perimeter.
+\item Generates points for plotting the ellipse (taking rotation into account).
+\item Demonstrates translation and rotation.
+\end{itemize}
+ We will also generate a gnuplot script to visualize the ellipse, its axes, foci, and possibly an arc.
+ Let's write the code accordingly.
+\begin{quote}
+ Note: The perimeter approximation formula we use is one of the simpler ones, but there are more accurate formulae (like Ramanujan's).
+\end{quote}
+Steps in the code:\\
+\begin{enumerate}
+\item Define an Ellipse structure.
+\item Functions to compute area, eccentricity, foci, and perimeter approximation.
+\item Function to generate points for the ellipse (with rotation).
+\item Function to generate points for an arc (between two angles).
+\item Main function with examples.
+\item Generate data files and a gnuplot script.
+\end{enumerate}
+The code:\\
+c\\
+{
+\scriptsize
 \begin{verbatim}
-set view equal xyz
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define PI 3.14159265358979323846
+
+typedef struct {
+    double x, y;
+} Point;
+
+typedef struct {
+    Point center;
+    double a;  // semi-major axis
+    double b;  // semi-minor axis
+    double rotation;  // rotation angle in radians
+} Ellipse;
+
+// Convert degrees to radians
+double to_radians(double degrees) {
+    return degrees * PI / 180.0;
+}
+
+// Convert radians to degrees
+double to_degrees(double radians) {
+    return radians * 180.0 / PI;
+}
+
+// Calculate distance between two points
+double distance(Point p1, Point p2) {
+    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+}
+
+// Calculate ellipse area
+double ellipse_area(double a, double b) {
+    return PI * a * b;
+}
+
+// Calculate ellipse perimeter (approximation using Ramanujan's formula)
+double ellipse_perimeter(double a, double b) {
+    double h = pow((a - b), 2) / pow((a + b), 2);
+    return PI * (a + b) * (1 + (3 * h) / (10 + sqrt(4 - 3 * h)));
+}
+
+// Calculate eccentricity
+double eccentricity(double a, double b) {
+    return sqrt(1 - (b * b) / (a * a));
+}
+
+// Calculate focal distance
+double focal_distance(double a, double b) {
+    return 2 * sqrt(a * a - b * b);
+}
+
+// Get focal points
+void get_foci(Ellipse ellipse, Point *f1, Point *f2) {
+    double c = sqrt(ellipse.a * ellipse.a - ellipse.b * ellipse.b);
+    f1->x = ellipse.center.x - c * cos(ellipse.rotation);
+    f1->y = ellipse.center.y - c * sin(ellipse.rotation);
+    f2->x = ellipse.center.x + c * cos(ellipse.rotation);
+    f2->y = ellipse.center.y + c * sin(ellipse.rotation);
+}
+
+// Generate points for plotting ellipse
+void generate_ellipse_points(Ellipse ellipse, const char* filename) {
+    FILE *fp = fopen(filename, "w");
+    if (!fp) {
+        printf("Error opening file\n");
+        return;
+    }
+
+    for (int i = 0; i <= 360; i++) {
+        double t = to_radians(i);
+        // Parametric equations for ellipse
+        double x = ellipse.a * cos(t);
+        double y = ellipse.b * sin(t);
+
+        // Apply rotation
+        double x_rot = x * cos(ellipse.rotation) - y * sin(ellipse.rotation);
+        double y_rot = x * sin(ellipse.rotation) + y * cos(ellipse.rotation);
+
+        // Apply translation
+        x_rot += ellipse.center.x;
+        y_rot += ellipse.center.y;
+
+        fprintf(fp, "%f %f\n", x_rot, y_rot);
+    }
+
+    fclose(fp);
+}
+
+// Generate points for arc visualization
+void generate_ellipse_arc_points(Ellipse ellipse, double start_angle, double end_angle, const char* filename) {
+    FILE *fp = fopen(filename, "w");
+    if (!fp) {
+        printf("Error opening file\n");
+        return;
+    }
+
+    double start_rad = to_radians(start_angle);
+    double end_rad = to_radians(end_angle);
+
+    fprintf(fp, "%f %f\n", ellipse.center.x, ellipse.center.y); // Center point
+
+    for (double t = start_rad; t <= end_rad; t += 0.01) {
+        double x = ellipse.a * cos(t);
+        double y = ellipse.b * sin(t);
+
+        // Apply rotation
+        double x_rot = x * cos(ellipse.rotation) - y * sin(ellipse.rotation);
+        double y_rot = x * sin(ellipse.rotation) + y * cos(ellipse.rotation);
+
+        // Apply translation
+        x_rot += ellipse.center.x;
+        y_rot += ellipse.center.y;
+
+        fprintf(fp, "%f %f\n", x_rot, y_rot);
+    }
+
+    fclose(fp);
+}
+
+// Generate axes lines
+void generate_axes(Ellipse ellipse, const char* filename) {
+    FILE *fp = fopen(filename, "w");
+    if (!fp) {
+        printf("Error opening file\n");
+        return;
+    }
+
+    // Major axis endpoints
+    Point maj1, maj2;
+    maj1.x = ellipse.center.x - ellipse.a * cos(ellipse.rotation);
+    maj1.y = ellipse.center.y - ellipse.a * sin(ellipse.rotation);
+    maj2.x = ellipse.center.x + ellipse.a * cos(ellipse.rotation);
+    maj2.y = ellipse.center.y + ellipse.a * sin(ellipse.rotation);
+
+    // Minor axis endpoints (perpendicular to major axis)
+    Point min1, min2;
+    min1.x = ellipse.center.x - ellipse.b * cos(ellipse.rotation + PI/2);
+    min1.y = ellipse.center.y - ellipse.b * sin(ellipse.rotation + PI/2);
+    min2.x = ellipse.center.x + ellipse.b * cos(ellipse.rotation + PI/2);
+    min2.y = ellipse.center.y + ellipse.b * sin(ellipse.rotation + PI/2);
+
+    fprintf(fp, "%f %f\n%f %f\n\n", maj1.x, maj1.y, maj2.x, maj2.y);
+    fprintf(fp, "%f %f\n%f %f\n", min1.x, min1.y, min2.x, min2.y);
+
+    fclose(fp);
+}
+
+int main() {
+    printf("=== ELLIPSE MATHEMATICS LESSON ===\n\n");
+
+    // Lesson content
+    printf("1. DEFINITION:\n");
+    printf("   An ellipse is the set of all points where the sum of distances\n");
+    printf("   to two fixed points (foci) is constant.\n\n");
+
+    printf("2. STANDARD EQUATION (center at origin, aligned with axes):\n");
+    printf("   x^2/a^2 + y^2/b^2 = 1\n");
+    printf("   where a = semi-major axis, b = semi-minor axis (a >= b > 0)\n\n");
+
+    printf("3. PARAMETRIC EQUATIONS:\n");
+    printf("   x = a·cos(t), y = b·sin(t) where t in [0, 2pi]\n\n");
+
+    printf("4. ECCENTRICITY:\n");
+    printf("   e = sqrt(1 - b^2/a^2) where 0 <= e < 1\n");
+    printf("   e = 0: circle, e → 1: highly elongated ellipse\n\n");
+
+    printf("5. FOCI:\n");
+    printf("   Located at (±c, 0) where c^2 = a^2 - b^2\n");
+    printf("   Distance between foci = 2c\n\n");
+
+    printf("6. AREA: A = pi*a*b\n\n");
+
+    printf("7. PERIMETER (approximation):\n");
+    printf("   P ~= pi[3(a+b) - sqrt((3a+b)(a+3b))] (Ramanujan's formula)\n\n");
+
+    printf("8. TRANSLATION:\n");
+    printf("   Center at (h,k): (x-h)^2/a^2 + (y-k)^2/b^2 = 1\n\n");
+
+    printf("9. ROTATION:\n");
+    printf("   Rotate coordinate system by angle theta using rotation matrix\n\n");
+
+    // Example 1: Basic ellipse properties
+    Ellipse ellipse1 = {{0, 0}, 5, 3, 0};
+
+    printf("=== Example 1: Basic Ellipse Properties ===\n");
+    printf("Center: (%.2f, %.2f)\n", ellipse1.center.x, ellipse1.center.y);
+    printf("Semi-major axis (a): %.2f\n", ellipse1.a);
+    printf("Semi-minor axis (b): %.2f\n", ellipse1.b);
+    printf("Major axis length: %.2f\n", 2 * ellipse1.a);
+    printf("Minor axis length: %.2f\n", 2 * ellipse1.b);
+    printf("Area: %.2f\n", ellipse_area(ellipse1.a, ellipse1.b));
+    printf("Perimeter (approx): %.2f\n", ellipse_perimeter(ellipse1.a, ellipse1.b));
+    printf("Eccentricity: %.4f\n", eccentricity(ellipse1.a, ellipse1.b));
+
+    Point f1, f2;
+    get_foci(ellipse1, &f1, &f2);
+    printf("Foci: (%.2f, %.2f) and (%.2f, %.2f)\n", f1.x, f1.y, f2.x, f2.y);
+    printf("Focal distance: %.2f\n", distance(f1, f2));
+
+    // Example 2: Translated and rotated ellipse
+    Ellipse ellipse2 = {{2, 1}, 4, 2, to_radians(30)};
+
+    printf("\n=== Example 2: Translated and Rotated Ellipse ===\n");
+    printf("Center: (%.2f, %.2f)\n", ellipse2.center.x, ellipse2.center.y);
+    printf("Semi-axes: a=%.2f, b=%.2f\n", ellipse2.a, ellipse2.b);
+    printf("Rotation: %.2f°\n", to_degrees(ellipse2.rotation));
+    printf("Area: %.2f\n", ellipse_area(ellipse2.a, ellipse2.b));
+    printf("Eccentricity: %.4f\n", eccentricity(ellipse2.a, ellipse2.b));
+
+    get_foci(ellipse2, &f1, &f2);
+    printf("Foci: (%.2f, %.2f) and (%.2f, %.2f)\n", f1.x, f1.y, f2.x, f2.y);
+
+    // Example 3: Circle as special case of ellipse (a = b)
+    Ellipse circle = {{0, 0}, 4, 4, 0};
+
+    printf("\n=== Example 3: Circle (Special Case of Ellipse) ===\n");
+    printf("When a = b = %.2f, we get a circle\n", circle.a);
+    printf("Eccentricity: %.4f (0 = perfect circle)\n", eccentricity(circle.a, circle.b));
+    printf("Area: %.2f (pi*r^2)\n", ellipse_area(circle.a, circle.b));
+    printf("Perimeter: %.2f (2pi*r)\n", ellipse_perimeter(circle.a, circle.b));
+
+    // Generate data files for gnuplot
+    generate_ellipse_points(ellipse1, "ellipse1.dat");
+    generate_ellipse_points(ellipse2, "ellipse2.dat");
+    generate_ellipse_points(circle, "circle_ellipse.dat");
+    generate_axes(ellipse1, "axes1.dat");
+    generate_axes(ellipse2, "axes.dat");
+    generate_ellipse_arc_points(ellipse1, 30, 150, "arc.dat");
+
+    // Generate foci points
+    FILE *fp = fopen("foci.dat", "w");
+    get_foci(ellipse1, &f1, &f2);
+    fprintf(fp, "%f %f\n", f1.x, f1.y);
+    fprintf(fp, "%f %f\n", f2.x, f2.y);
+    fclose(fp);
+    FILE *fp2 = fopen("foci2.dat", "w");
+    get_foci(ellipse2, &f1, &f2);
+    fprintf(fp2, "%f %f\n", f1.x, f1.y);
+    fprintf(fp2, "%f %f\n", f2.x, f2.y);
+    fclose(fp2);
+
+    // Create gnuplot script
+    FILE *gnuplot = fopen("plot_ellipse.gp", "w");
+    fprintf(gnuplot, "set terminal png enhanced size 1600,1200\n");
+    fprintf(gnuplot, "set output 'ellipse_plots.png'\n");
+    fprintf(gnuplot, "set multiplot layout 2,2\n\n");
+
+    fprintf(gnuplot, "# Plot 1: Basic Ellipse Properties\n");
+    fprintf(gnuplot, "set title 'Basic Ellipse (a=5, b=3)'\n");
+    fprintf(gnuplot, "set xlabel 'x'\n");
+    fprintf(gnuplot, "set ylabel 'y'\n");
+    fprintf(gnuplot, "set size ratio -1\n");
+    fprintf(gnuplot, "set xrange [-6:6]\n");
+    fprintf(gnuplot, "set yrange [-4:4]\n");
+    fprintf(gnuplot, "plot 'ellipse1.dat' with lines title 'Ellipse', ");
+    fprintf(gnuplot, "'foci.dat' index 0 with points pt 7 ps 2 title 'Foci', ");
+    fprintf(gnuplot, "'axes1.dat' index 0 with lines lt 2 title 'Major Axis', ");
+    fprintf(gnuplot, "'axes1.dat' index 1 with lines lt 3 title 'Minor Axis'\n\n");
+
+    fprintf(gnuplot, "# Plot 2: Translated and Rotated Ellipse\n");
+    fprintf(gnuplot, "set title 'Translated and Rotated Ellipse (30° rotation)'\n");
+    fprintf(gnuplot, "set xrange [-3:7]\n");
+    fprintf(gnuplot, "set yrange [-4:6]\n");
+    fprintf(gnuplot, "plot 'ellipse2.dat' with lines title 'Ellipse', ");
+    fprintf(gnuplot, "'foci2.dat' index 0 with points pt 7 ps 2 title 'Foci', ");
+    fprintf(gnuplot, "'axes.dat' index 0 with lines lt 2 title 'Major Axis', ");
+    fprintf(gnuplot, "'axes.dat' index 1 with lines lt 3 title 'Minor Axis'\n\n");
+
+    fprintf(gnuplot, "# Plot 3: Ellipse Arc\n");
+    fprintf(gnuplot, "set title 'Ellipse Arc (30° to 150°)'\n");
+    fprintf(gnuplot, "set xrange [-6:6]\n");
+    fprintf(gnuplot, "set yrange [-4:4]\n");
+    fprintf(gnuplot, "plot 'ellipse1.dat' with lines lt 1 title 'Full Ellipse', ");
+    fprintf(gnuplot, "'arc.dat' with lines lt 2 lw 3 title 'Arc'\n\n");
+
+    fprintf(gnuplot, "# Plot 4: Circle as Special Case of Ellipse\n");
+    fprintf(gnuplot, "set title 'Circle (a = b = 4)'\n");
+    fprintf(gnuplot, "set xrange [-5:5]\n");
+    fprintf(gnuplot, "set yrange [-5:5]\n");
+    fprintf(gnuplot, "plot 'circle_ellipse.dat' with lines title 'Circle'\n\n");
+
+    fprintf(gnuplot, "unset multiplot\n");
+    fclose(gnuplot);
+
+    printf("\ngnuplot script created. Run 'gnuplot plot_ellipse.gp' to generate plots.\n");
+    printf("\nKey concepts demonstrated:\n");
+    printf("- Standard and parametric ellipse equations\n");
+    printf("- Foci and eccentricity calculation\n");
+    printf("- Area and perimeter formulas\n");
+    printf("- Translation and rotation transformations\n");
+    printf("- Relationship between ellipses and circles\n");
+
+    return 0;
+}
 \end{verbatim}
-per forzare la stessa scala su tutti gli assi.
-\section{The oblate spheroid model}
-\subsection{The ellipse}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=18cm]{ellipse_plots.png}
+\end{center}
+\caption{ellipse plots}
+\end{figure}
+}
+bash\\
+\begin{verbatim}
+gcc ellipse_demo.c -o ellipse_demo -lm
+./ellipse_demo
+\end{verbatim}
+\clearpage
+\begin{verbatim}
+ === ELLIPSE MATHEMATICS LESSON ===
 
+1. DEFINITION:
+   An ellipse is the set of all points where the sum of distances
+   to two fixed points (foci) is constant.
 
-An ellipse is the geometric locus of points in a plane for which the sum of the distances from two fixed points F1 and F2, called foci, is constant. An ellipse is a non-degenerate conic section. If we indicate a generic point on the ellipse P, we can translate the definition into the following algebraic condition:\\
+2. STANDARD EQUATION (center at origin, aligned with axes):
+   x^2/a^2 + y^2/b^2 = 1
+   where a = semi-major axis, b = semi-minor axis (a >= b > 0)
+
+3. PARAMETRIC EQUATIONS:
+   x = a·cos(t), y = b·sin(t) where t in [0, 2pi]
+
+4. ECCENTRICITY:
+   e = sqrt(1 - b^2/a^2) where 0 <= e < 1
+   e = 0: circle, e → 1: highly elongated ellipse
+
+5. FOCI:
+   Located at (±c, 0) where c^2 = a^2 - b^2
+   Distance between foci = 2c
+
+6. AREA: A = pi*a*b
+
+7. PERIMETER (approximation):
+   P ~= pi[3(a+b) - sqrt((3a+b)(a+3b))] (Ramanujan's formula)
+
+8. TRANSLATION:
+   Center at (h,k): (x-h)^2/a^2 + (y-k)^2/b^2 = 1
+
+9. ROTATION:
+   Rotate coordinate system by angle theta using rotation matrix
+
+=== Example 1: Basic Ellipse Properties ===
+Center: (0.00, 0.00)
+Semi-major axis (a): 5.00
+Semi-minor axis (b): 3.00
+Major axis length: 10.00
+Minor axis length: 6.00
+Area: 47.12
+Perimeter (approx): 25.53
+Eccentricity: 0.8000
+Foci: (-4.00, 0.00) and (4.00, 0.00)
+Focal distance: 8.00
+
+=== Example 2: Translated and Rotated Ellipse ===
+Center: (2.00, 1.00)
+Semi-axes: a=4.00, b=2.00
+Rotation: 30.00°
+Area: 25.13
+Eccentricity: 0.8660
+Foci: (-1.00, -0.73) and (5.00, 2.73)
+
+=== Example 3: Circle (Special Case of Ellipse) ===
+When a = b = 4.00, we get a circle
+Eccentricity: 0.0000 (0 = perfect circle)
+Area: 50.27 (pi*r^2)
+Perimeter: 25.13 (2pi*r)
+
+gnuplot script created. Run 'gnuplot plot_ellipse.gp' to generate plots.
+
+Key concepts demonstrated:
+- Standard and parametric ellipse equations
+- Foci and eccentricity calculation
+- Area and perimeter formulas
+- Translation and rotation transformations
+- Relationship between ellipses and circles
+\end{verbatim}
+
+\subsection{ Key Mathematical Concepts Covered:}
+\begin{enumerate}
+\item \emph{Ellipse Definition}
+\begin{quote}
+An ellipse is the set of all points where the sum of distances to two fixed points (foci) is constant.                                                                                                      \end{quote}
+\item \emph{Standard Equation}
+\begin{itemize}
+\item Center at origin: \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\) \((a \geq b)\)
+\item Translated center: \(\frac{(x-x_c)^2}{a^2} + \frac{(y-y_c)^2}{b^2} = 1\)
+\end{itemize}
+\item \emph{Parametric Equations}
+\begin{itemize}
+\item \(x = a\cdot\cos(t)\), \(y = b\cdot\sin(t)\) where \(t \in [0, 2\pi]\)
+\item  For rotated ellipses, apply rotation matrix
+\end{itemize}
+
+\item \emph{Key Properties}
+\begin{itemize}
+\item \emph{Semi-major axis (a)}: longest radius
+\item \emph{Semi-minor axis (b)}: shortest radius
+\item \emph{Eccentricity}: \(e = \sqrt{(1 - b^2/a^2)}\) (\(0 \leq e < 1\))
+\item \emph{Foci}: located at distance \(c = \sqrt{(a^2 - b^2)}\) from center
+\end{itemize}
+
+\item \emph{Important Formulas}
+\begin{itemize}
+\item \emph{Area}: A = \(\pi a b\)
+\item \emph{Perimeter}: Approximated using Ramanujan's formula
+\item \emph{Focal distance}: \( 2c = 2\sqrt{(a^2 - b^2)}\)
+\end{itemize}
+\item \emph{Special Cases}
+\begin{itemize}
+\item When \(a = b\): ellipse becomes circle (e = 0)
+\item When \(e \rightarrow 1\): ellipse becomes highly elongated
+\end{itemize}
+\end{enumerate}
+The C program demonstrates these concepts with multiple examples and generates gnuplot visualizations showing ellipses with their axes, foci, arcs, and various transformations.\\
+An ellipse is the geometric locus of points in a plane for which the sum of the distances from two fixed points F1 and F2, called foci, is constant.\\
+An ellipse is a non-degenerate conic section. If we indicate a generic point on the ellipse P, we can translate the definition into the following algebraic condition:\\
 \[ PF_1 + PF_2 = constant \]
 L'equazione canonica dell'ellisse con centro nell'origine \(O(0,0)\) e assi coincidenti con gli assi cartesiani è\\
 \(\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1\),\\
@@ -1198,6 +1308,342 @@ f2_x,f2_y with points pt 7 ps 1.5 lc rgb "blue" title "Fuoco2"
     \end{itemize}
 \item Punti dei Fuochi: Verranno visualizzati come punti pieni (pt 7).
 \end{itemize}
+\section{La sfera nello spazio}
+\subsection{Costruzione per rotazione}
+La costruzione di una sfera tramite la rotazione di una circonferenza è un classico esempio di
+superficie di rotazione. Per ottenere una sfera di raggio r, dobbiamo far ruotare una semicirconferenza attorno al suo diametro (solitamente l'asse z). Ecco i passaggi e le formule necessarie.
+\begin{enumerate}
+\item La curva generatrice\\
+Partiamo da una semicirconferenza situata nel piano xz. Possiamo parametrizzarla usando l'angolo di latitudine \(\phi\) (che varia da \(-\pi/2\, a\, \pi/2)\):
+\begin{itemize}
+\item \(x(\phi) = R\cos(\phi)\)
+\item \(z(\phi) = R\sin(\phi)\)
+\end{itemize}
+\item La rotazione\\
+Per trasformare questa curva in una sfera, la facciamo ruotare di \(360^{\circ}\) (\(2\pi\) radianti) attorno all'asse z. Introduciamo quindi un secondo parametro, l'angolo di longitudine
+\(\theta\). \\
+Applicando la matrice di rotazione, otteniamo le equazioni parametriche della sfera:
+\[
+\begin{cases}
+x(\theta,\phi) = R\cos(\phi)\cos(\theta)\\
+y(\theta,\phi) = R\cos(\phi)\sin(\theta)\\
+z(\theta,\phi) = R\sin(\theta)\\
+\end{cases}
+\]
+\end{enumerate}
+\textbf{Parametri e Intervalli}\\
+Per coprire l'intera superficie della sfera senza sovrapposizioni, i parametri devono variare come segue:
+\begin{itemize}
+\item \(\phi\)(Latitudine):\([-\pi/2,\, \pi/2]\) — Muove il punto dal polo sud al polo nord.
+\item \(\theta\)(Longitudine):\([0,\, 2\pi]\) — Ruota il punto attorno all'asse verticale.
+\item \textbf{R}: È il raggio costante della sfera.
+\end{itemize}
+\textbf{Rappresentazione Alternativa (Coordinate Sferiche)}\\
+In molti contesti fisici o matematici, si preferisce usare l'angolo di colatitudine (partendo dal polo nord verso il basso). In questo caso, le formule cambiano leggermente:
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Parametro& Intervallo& Formula x& Formula y& Formula z\\
+\hline
+Colatitudine (u) & \([0,\, \pi]\)& \(R\sin(u)\cos(v)\) &\(R\sin(u)\sin(v)\) &\(R\cos(u)\) \\
+\hline
+Longitudine (v) & \([0,\, 2\pi]\)& & & \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Altra rappresentazione}
+\end{table}
+
+\begin{quote}
+    Nota: Questa seconda versione è quella più comunemente usata nei calcoli di analisi matematica (integrazione in coordinate sferiche).
+\end{quote}
+\textbf{Un piccolo trucco visivo}
+Immagina la semicirconferenza come il bordo di una fetta d'arancia:
+\begin{itemize}
+\item Il bordo è la tua \emph{curva generatrice}.
+\item L'asse dell'arancia è l'\emph{asse di rotazione}.
+\item Facendo girare la fetta velocemente su se stessa, la scia lasciata dal bordo disegna la \emph{superficie sferica}.\\
+\end{itemize}
+La sfera: come calcolare la superficie e il volume\\
+Superficie di rotazione\\
+\(    {\displaystyle {\begin{cases}x=x(u)\geq 0\\y=0\\z=z(u)\end{cases}}} \) è un parametro reale. attorno all'asse z,
+\subsection{Equazioni}
+L'equazione della \index{sfera}sfera nello spazio, centrata in \((x_{0},y_{0},z_{0})\) con raggio \(R\), è
+\[(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\] derivante dalla formula della distanza tra un punto generico \((x,y,z)\) sulla superficie e il centro, che deve essere uguale al raggio. \\ Se sviluppata, assume la forma generale \\
+\[x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\] \\
+dove il centro è \((-a/2,-b/2,-c/2)\) \\
+e il raggio si ricava dalla condizione \(a^{2}+b^{2}+c^{2}-4d\ge 0\).\\
+\subsubsection{Forma canonica (più usata)}
+\begin{itemize}
+\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\)
+\item Centro:  \(C(x_{0},y_{0},z_{0})\)
+\item Raggio:  \(R\)
+\end{itemize}
+\subsubsection{Forma generale}
+\begin{itemize}
+\item \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\)
+\item Centro:  \(C(-a/2,-b/2,-c/2)\)
+\item Raggio:  \(R=\sqrt{a^{2}/4+b^{2}/4+c^{2}/4-d}\) (o \(\sqrt{(-a/2)^{2}+(-b/2)^{2}+(-c/2)^{2}-d}\)).
+\end{itemize}
+\subsubsection{Esempio}
+\begin{itemize}
+\item Se centro \(C(1,2,-3)\) e raggio \(R=3\):
+\item \((x-1)^{2}+(y-2)^{2}+(z-(-3))^{2}=3^{2}\)
+\item \((x-1)^{2}+(y-2)^{2}+(z+3)^{2}=9\).\\
+\end{itemize}
+\subsubsection{Per l'interno della sfera si usa una disequazione}
+\begin{itemize}
+\item \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}\le R^{2}\) (inclusa la superficie).
+\end{itemize}
+\subsection{Equazione cartesiana} l'equazione cartesiana di una sfera con centro in \( (x_0, y_0, z_0) \) e raggio R è \\
+\( (x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = R^2. \) \\
+L'equazione cartesiana di una sfera nello spazio 3D, con centro \(C(x_{0},y_{0},z_{0})\) e raggio \(R>0\), è \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
+Questa equazione rappresenta il luogo dei punti \((x,y,z)\) equidistanti dal centro, con la somma dei quadrati delle differenze coordinate pari al quadrato del raggio.
+\subsection{Forma Standard e Note}
+Equazione: \((x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=R^{2}\). \\
+Centro: \(C=(x_{0},y_{0},z_{0})\). \\
+Raggio: \(R\). \\
+Forma estesa: \(x^{2}+y^{2}+z^{2}+ax+by+cz+d=0\). \\
+Centro dalla forma estesa: \(C=\left(-\frac{a}{2},-\frac{b}{2},-\frac{c}{2}\right)\).\\
+Raggio dalla forma estesa: \(R=\sqrt{\frac{a^{2}}{4}+\frac{b^{2}}{4}+\frac{c^{2}}{4}-d}\) \\
+Una sfera è una quadrica caratterizzata da termini quadratici \(x^{2},y^{2},z^{2}\) con coefficienti uguali e assenza di termini misti \(xy,xz,yz\). Se il raggio è \(R=0\), l'equazione rappresenta un punto.
+\section{coordinate cartesiane}
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) su una sfera di raggio \(r\) centrata nell'origine sono espresse come \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
+\begin{itemize}
+\item Passaggio 1: \\
+Definizione dell'equazione cartesiana.\\
+L'equazione di una superficie sferica con centro nell'origine \((0,0,0)\) e raggio \(r\) è definita dalla relazione:\\
+\(x^{2}+y^{2}+z^{2}=r^{2}\)\\
+Ogni punto \((R_{x},R_{y},R_{z})\) che appartiene alla superficie deve soddisfare questa uguaglianza.\\
+Equazione cartesiana\\
+Un punto \((R_{x},R_{y},R_{z})\) appartiene alla superficie di una sfera con centro nell'origine se la sua distanza dall'origine è pari al raggio \(r\). L'equazione fondamentale è:\\
+\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)\\
+Equazione cartesiana della sfera\\
+In uno spazio tridimensionale, la distanza di un punto \((R_{x},R_{y},R_{z})\) dall'origine \((0,0,0)\) è data dal teorema di Pitagora in 3D.\\
+Affinché il punto si trovi sulla superficie di una sfera di raggio \(r\), questa distanza deve essere esattamente pari a \(r\):\\
+\(R_{x}^{2}+R_{y}^{2}+R_{z}^{2}=r^{2}\)
+\item Passaggio 2:\\
+Conversione in coordinate sferiche\\
+Per identificare univocamente un punto sulla superficie, si utilizzano solitamente due angoli:\\
+l'angolo di \emph{colatitudine} (o zenitale) \(\theta \) e l'angolo di \emph{azimut} \(\phi \).\\
+Le relazioni di trasformazione sono:\\
+\begin{enumerate}
+\item \(R_{x}=r\sin (\theta )\cos (\phi )\)
+\item \(R_{y}=r\sin (\theta )\sin (\phi )\)
+\item \(R_{z}=r\cos (\theta )\)
+\end{enumerate}
+Dove gli intervalli tipici sono \(\theta \in [0,\pi ]\) (da polo a polo) e \\
+\(\phi \in [0,2\pi ]\) (rotazione completa attorno all'asse \(z\)).\\
+Parametrizzazione sferica\\
+Per descrivere la posizione del punto mediante angoli (coordinate sferiche), si utilizzano:\\
+\(\theta \) (latitudine o angolo zenitale): l'angolo tra il raggio e l'asse positivo \(z\), con \(0\le \theta \le \pi \).\\
+\(\phi \) (longitudine o azimut): l'angolo sul piano \(xy\) misurato dall'asse positivo \(x\), con \(0\le \phi <2\pi \).\\
+Le formule di conversione sono:\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
+\(R_{y}=r\sin (\theta )\sin (\phi )\)
+\(R_{z}=r\cos (\theta )\)\\
+Passaggio alle coordinate sferiche\\
+Per identificare un punto specifico sulla superficie sferica, si usano solitamente due angoli:\\
+\(\theta \) (angolo zenitale/colatitudine):\\
+l'angolo rispetto all'asse positivo \(z\) (\(0\le \theta \le \pi \)).
+\(\phi \) (angolo azimutale/longitudine):\\
+l'angolo sul piano \(xy\) rispetto all'asse positivo \(x\) (\(0\le \phi <2\pi \)).\\
+Le formule risultanti per le coordinate cartesiane sono:\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\)\\
+\(R_{y}=r\sin (\theta )\sin (\phi )\)\\
+\(R_{z}=r\cos (\theta )\)\\
+\item Passaggio 3:\\
+Visualizzazione grafica\\
+Di seguito è riportato il codice per generare la rappresentazione tridimensionale della sfera e di un punto specifico sulla sua superficie.\\
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro nell'origine \((0,0,0)\) e raggio \(r\) sono espresse dalle relazioni\\
+\(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).\\
+Visualizzazione grafica\\
+L'immagine seguente mostra una sfera centrata in \((0,0,0)\) con un punto (in rosso) posizionato sulla sua superficie esterna.\\
+Le coordinate di un punto \((R_{x},R_{y},R_{z})\) sulla superficie di una sfera con centro in \((0,0,0)\) e raggio \(r\) sono descritte dalle equazioni \(R_{x}=r\sin (\theta )\cos (\phi )\), \(R_{y}=r\sin (\theta )\sin (\phi )\) e \(R_{z}=r\cos (\theta )\).
+Rappresentazione grafica\\
+Il seguente grafico illustra una sfera unitaria (\(r=1\)) con un punto \(P\) evidenziato sulla sua superficie calcolato per \(\theta =45^{\circ }\) e \(\phi =45^{\circ }\).\\
+(Immagine esemplificativa di una superficie sferica 3D)\\
+{\scriptsize
+\begin{verbatim}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Parametri della sfera
+r = 1
+theta_p = np.pi / 4  # 45 gradi
+phi_p = np.pi / 4    # 45 gradi
+
+# Coordinate del punto specifico
+rx = r * np.sin(theta_p) * np.cos(phi_p)
+ry = r * np.sin(theta_p) * np.sin(phi_p)
+rz = r * np.cos(theta_p)
+
+# Creazione della superficie della sfera
+u = np.linspace(0, 2 * np.pi, 30)
+v = np.linspace(0, np.pi, 30)
+x = r * np.outer(np.cos(u), np.sin(v))
+y = r * np.outer(np.sin(u), np.sin(v))
+z = r * np.outer(np.ones(np.size(u)), np.cos(v))
+
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+
+# Disegno della sfera (trasparente)
+ax.plot_surface(x, y, z, color='cyan', alpha=0.3, edgecolor='k', linewidth=0.1)
+
+# Disegno del punto
+ax.scatter([rx], [ry], [rz], color='red', s=100, label=f'Punto P({rx:.2f}, {ry:.2f}, {rz:.2f})')
+
+# Assi e etichette
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('Punto su superficie sferica')
+ax.legend()
+
+plt.show()
+\end{verbatim}
+}
+\end{itemize}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=18cm]{decomposition_3d_sphere.png}
+\end{center}
+\caption{Projections of the point coordinates}
+\end{figure}
+\clearpage
+Cosa osservare nel grafico:\\
+Il Piano Arancio (Verticale):\\
+Questo è il piano "di taglio" che hai chiesto.\\
+Qui vedi chiaramente come l'altezza del punto sia il cateto adiacente all'angolo \(\theta \) (\(R\cos \theta \)).\\
+La Linea Verde sull'asse Z: Rappresenta fisicamente la coordinata \(R_{z}\).\\
+La Linea Blu tratteggiata: È l'ombra del raggio sul "pavimento" (piano \(XY\)).\\
+La sua lunghezza è esattamente \(R\sin \theta \).\\
+Il Triangolo Rettangolo Verticale: È formato dal raggio rosso (ipotenusa), dalla linea blu (cateto opposto a \(\theta \)) e dalla linea verde (cateto adiacente a \(\theta \)).
+\begin{itemize}
+\item Passaggio 1: Scomposizione nel piano verticale (Arancione) Hai identificato correttamente che il raggio \(R\) (ipotenusa) viene proiettato sul piano meridiano:\\
+Componente Verticale: Essendo adiacente all'angolo \(\theta \), si ha \(R_{z}=R\cos (\theta )\).\\
+Componente Orizzontale (diagonale \(d\)): Essendo l'altezza del triangolo o la proiezione sul "pavimento", è il cateto opposto a \(\theta \), quindi \(d=R\sin (\theta )\).
+\item Passaggio 2: Scomposizione nel piano orizzontale (Blu/XY)\\
+Ora la diagonale \(d\), che giace sul piano \(XY\), diventa a sua volta l'ipotenusa per un nuovo triangolo rettangolo "disteso" sul pavimento, dove l'angolo di riferimento è \(\phi \):\\
+Lungo l'asse X: Il segmento \(R_{x}\) è il cateto adiacente a \(\phi \), quindi \(R_{x}=d\cos (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{x}}\mathbf{=R}\sin \mathbf{(\theta )}\cos \mathbf{(\phi )}\).\\
+Lungo l'asse Y: Il segmento \(R_{y}\) è il cateto opposto a \(\phi \) (o adiacente al complementare), quindi \(R_{y}=d\sin (\phi )\). Sostituendo \(d\), otteniamo \(\mathbf{R}_{\mathbf{y}}\mathbf{=R}\sin \mathbf{(\theta )}\sin \mathbf{(\phi )}\).
+\end{itemize}
+La logica ipotenusa \(\times \) coseno (per l'adiacente) e ipotenusa \(\times \) seno (per l'opposto) è applicata correttamente in due passaggi sequenziali: Primo livello (3D -> 2D): Si passa dal raggio \(R\) alla sua ombra \(d\) sul piano \(XY\).\\
+Secondo livello (2D -> 1D): Si passa dall'ombra \(d\) alle singole coordinate \(R_{x}\) e \(R_{y}\).\\
+Le formule risultanti sono infatti:\\
+\(\begin{cases}R_{x}=R\sin (\theta )\cos (\phi )\\ R_{y}=R\sin (\theta )\sin (\phi )\\ R_{z}=R\cos (\theta )\end{cases}\)
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{point_on_sphere_001.png}
+\end{center}
+\caption{Point on the surface of a sphere}
+\end{figure}
+\section{application to planetary science}
+la geometria è la stessa, ma i nomi e i punti di riferimento cambiano quando passiamo dalla matematica alla geografia o all'astronomia. Ecco il confronto tra il modello che abbiamo usato e quello planetario:
+\begin{enumerate}
+\item \index{Latitudine}Latitudine e \index{Colatitudine}Colatitudine (\(\theta \))
+ In matematica (coordinate sferiche), \(\theta \) è la colatitudine o distanza zenitale: parte da \(0^{\circ }\) al Polo Nord e arriva a \(180^{\circ }\) al Polo Sud.\\
+ In Geografia: Usiamo la latitudine (\(\delta \) o \(\phi _{lat}\)), che parte da \(0^{\circ }\) all'equatore.\\
+ Relazione: \(\text{Latitudine}=90^{\circ }-\text{Colatitudine}\).\\
+ Effetto sulle formule: Se usi la latitudine (\(\delta \)), le funzioni si invertono:\(R_{z}=R\sin (\delta )\) (perché ora è il cateto opposto all'angolo dall'equatore).\\
+ \(d=R\cos (\delta )\) (la proiezione sul piano equatoriale diventa il cateto adiacente).
+ \item \index{Longitudine}Longitudine e \index{Azimut}Azimut (\(\phi \))\\
+ Nella trigonometria piana, lo zero è l'asse \(X\) e si ruota in senso antiorario verso \(Y\).\\
+ In Geografia (Longitudine):\\
+ Lo zero è il Meridiano di Greenwich. Si conta verso Est (positivi) o Ovest (negativi) fino a \(180^{\circ }\).\\
+ In Astronomia/Navigazione (Azimut): Qui c'è una sottile differenza. L'Azimut solitamente parte dal Nord (che è la proiezione del polo sul piano dell'osservatore) e ruota in senso orario:\\
+ Nord = \(0^{\circ }\)Est = \(90^{\circ }\)Sud = \(180^{\circ }\)Ovest = \(270^{\circ }\)\\
+ Il nord è anche 360 degrees \\
+\end{enumerate}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Elemento}& \textbf{Matematico (Sferiche)}& \textbf{Geografico (Terrestre)}\\
+\hline
+Punto di origine& Centro della sfera &Centro della Terra\\
+\hline
+Angolo Verticale\(\,\theta \)& (Colatitudine) da Nord\(\,\delta \)& (Latitudine) dall'Equatore\\
+\hline
+Angolo Orizzontale\(\,\phi \)& (Azimut) da asse X\(\,\lambda \)& (Longitudine) da Greenwich\\
+\hline
+Asse Z& Polo Nord& Polo Nord\\
+\hline
+Asse X& Direzione \(0^{\circ }\) longitudine& Intersezione Greenwich-Equatore\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Confronto Sistemi di Coordinate}
+\end{table}
+Nello studio dei pianeti (Sistemi di Coordinate Planetocentriche), si seguono solitamente queste regole della IAU (International Astronomical Union):\\
+\begin{enumerate}
+
+\item Latitudine:\\
+Sempre \(0^{\circ }\) all'equatore, \(+90^{\circ }\) al polo nord, \(-90^{\circ }\) al polo sud.\\
+\item Longitudine:\\
+Dipende dal pianeta. Per la Terra e Marte è positiva verso Est. Per i pianeti che ruotano al contrario (Venere), si usano convenzioni specifiche.
+\item L'Azimut dell'osservatore:\\
+Se sei sulla superficie e guardi il cielo, l'Azimut si conta dal Nord verso Est. Se invece stai mappando l'intero pianeta dallo spazio, usi la Longitudine.
+Se vuoi calcolare le coordinate \((X,Y,Z)\) di una città o di un cratere lunare usando Latitudine (\(\delta \)) e Longitudine (\(\lambda \)):\\
+\(R_{x}=R\cos (\delta )\cos (\lambda )\)\\
+\(R_{y}=R\cos (\delta )\sin (\lambda )\)\\
+\(R_{z}=R\sin (\delta )\)\\
+Vedi come \(\cos \) e \(\sin \) si sono scambiati rispetto al disegno? Questo accade proprio perché la latitudine parte dall'equatore (piano \(XY\)) e non dal polo (asse \(Z\)).
+\end{enumerate}
+\section{Parametric equation of the sphere}
+L'equazione parametrica è il modo più efficace per "disegnare" una sfera perché usa due angoli
+(come latitudine e longitudine) per mappare ogni punto della superficie.
+Ecco lo schema logico per non dimenticarla più:
+\begin{enumerate}
+\item I Componenti\\
+Per definire la sfera ti servono:\\
+\((c_{x},c_{y},c_{z})\): Le coordinate del Centro.\\
+\(R\): Il Raggio.\\
+\(u,v\): I due Parametri (angoli).\\
+\item Lo Schema delle Coordinate\\
+L'equazione si basa sulle coordinate sferiche.\\
+Immagina di partire dal centro e muoverti sulla superficie:\\
+\(
+\begin{cases}
+x=c_{x}+R\cdot \cos (u)\cdot \cos (v)\\
+y=c_{y}+R\cdot \cos (u)\cdot \sin (v)\\
+z=c_{z}+R\cdot \sin (u)\\
+\end{cases}
+\)
+\item Significato degli Angoli (Cruciale per Gnuplot)\\
+Il segreto è capire come ruotano \(u\) e \(v\):
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Parametro} & \textbf{Analogia} & \textbf{Range standard} & \textbf{Funzione} \\
+\hline
+\(u\) & Latitudine & \([-\pi /2,\pi /2]\)& Controlla l'altezza (da Polo Sud a Polo Nord).\\
+\hline
+\(v\) & Longitudine & \([0,2\pi ]\)& Ruota attorno all'asse verticale (il giro completo).\\
+\hline
+\end{tabular}
+\caption{Angles of the sphere}
+\end{center}
+\end{table}
+\item Perché funziona? (Il trucco visivo) \\
+La componente \(z\) dipende solo da \(\sin (u)\). \\
+Se \( u=\pi /2 \) (90°), allora \(\sin (u)=1\) e sei al punto più alto (\(c_{z}+R\)). \\
+Il termine \(\cos (u)\) che vedi in \(x\) e \(y\) serve a "restringere" il cerchio mentre sali verso i poli.\\
+All'equatore (\(\cos (0)=1\)) il cerchio è massimo, ai poli (\(\cos (\pi /2)=0\)) il raggio orizzontale diventa zero.\\
+\item Verifica rapida
+
+\end{enumerate}
+Se sommi i quadrati degli spostamenti dal centro:\((x-c_{x})^{2}+(y-c_{y})^{2}+(z-c_{z})^{2}\)
+sostituendo le parametriche otterrai sempre \(R^{2}\), che è l'equazione cartesiana della sfera.
+Consiglio per Gnuplot: Se vedi la sfera "schiacciata" o a forma di uovo, ricordati di mantenere sempre
+\begin{verbatim}
+set view equal xyz
+\end{verbatim}
+per forzare la stessa scala su tutti gli assi.
+\section{The oblate spheroid model}
 \subsection{Ellissoide di rotazione}
 è esattamente il ponte tra:
 \begin{itemize}
@@ -1462,7 +1908,7 @@ Esempio minimale che fa vedere proprio la rotazione:\\
 \verb|ellissoide_rotazione.plt|
 
 \begin{verbatim}
- set terminal pngcairo size 900,700
+set terminal pngcairo size 900,700
 set output "ellissoide.png"
 
 set hidden3d
@@ -1512,7 +1958,7 @@ quindi automaticamente:
 \end{itemize}
 \verb|ellissoide_costruzione.plt|
 \begin{verbatim}
- set terminal pngcairo size 1000,750
+set terminal pngcairo size 1000,750
 set output "ellissoide_costruzione.png"
 
 set hidden3d
@@ -1833,6 +2279,448 @@ Let's calculate the \emph{Earth radius at specific latitude} using the formula f
 \begin{verbatim}
 r_e(lat) = R_pol / sqrt(1.0 - (1.0 - (R_pol/R_eq)**2) * cos(deg2rad(lat))**2)                                                                             \end{verbatim}
 \[ r_e(lat) = \frac{R_{pol}}{\sqrt{1.0 - (1.0 - (\frac{R_{pol}}{R_{eq}})^{2}) cos(lat_{rad})^{2}}} \]
+\section{cartografia planetaria}
+Per localizzare crateri o vulcani (come l'Olympus Mons su Marte), occorre padroneggiare le trasformazioni che proiettano questi punti \(P(R_{x},R_{y},R_{z})\) su un foglio bidimensionale \((u,v)\).\\
+Ecco come funzionano le due proiezioni principali che hai menzionato, partendo dalle coordinate geografiche \((\delta ,\lambda )\):\\
+\begin{enumerate}
+\item Proiezione Cilindrica Equidistante (Plate Carrée)\\
+È la più semplice, usata spesso per le mappe globali di Marte o della Luna.\\
+In pratica "srotoli" la sfera su un rettangolo.\\
+Coordinate Mappa:\\
+\(u=R\cdot \lambda \) (la longitudine diventa l'asse orizzontale)\\
+\(v=R\cdot \delta \) (la latitudine diventa l'asse verticale)\\
+Caratteristica: È ottima per i calcoli diretti, ma distorce enormemente le aree vicino ai poli (i poli diventano lunghe linee quanto l'equatore).\\
+\item Proiezione Ortografica\\
+È quella che vedi quando guardi un pianeta attraverso un telescopio o da una sonda molto lontana. Vedrai solo un emisfero, proprio come se fosse un disco piatto.\\ Se il centro della tua osservazione è l'equatore \((\delta =0,\lambda =0)\), le coordinate sulla mappa \((x_{map},y_{map})\) sono semplicemente:\\
+\(x_{map}=R\cos (\delta )\sin (\lambda )\)\\
+\(y_{map}=R\sin (\delta )\)\\
+due dettagli tecnici delle scienze planetarie:\\
+Il raggio \(R\) non è costante:\\
+Marte è un ellissoide schiacciato, non una sfera perfetta.\\
+Per calcoli di alta precisione (geodetici), si usa un raggio equatoriale (\(R_{eq}\approx 3396\) km) e uno polare (\(R_{pol}\approx 3376\) km).\\
+Sistemi Est vs Ovest: Per Marte, la IAU definisce le longitudini come "Planetocentriche" (crescenti verso Est da \(0\) a \(360^{\circ }\)).\\
+Mercurio ha un sistema simile. Assicurati sempre che il tuo \(\phi \) (o \(\lambda \)) segua la direzione corretta del pianeta che stai mappando.\\
+Implementare una funzione che:\\
+Prende in input le coordinate \((\delta ,\lambda )\) di un cratere (es. il cratere Gale su Marte).\\
+Calcola le coordinate 3D \((R_{x},R_{y},R_{z})\).\\
+Le "proietta" su un piano per mostrarti dove apparirebbe il cratere in una mappa piatta.
+\end{enumerate}
+\subsubsection{Punti planetari notevoli}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Corpo Celeste}&\textbf{Raggio Medio} (\(R\)) & \textbf{Caratteristica principale}\\
+\hline
+Luna& \(1.737\) km& Superficie sferica molto regolare.\\
+\hline
+Marte& \(3.389\) km& Leggermente schiacciato ai poli.\\
+\hline
+Mercurio& \(2.440\) km& Molto denso, quasi perfettamente sferico.\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Dati Planetari per il Calcolo}
+\end{table}
+Punti Notevoli (Coordinate Geografiche/Planetocentriche)\\
+Le longitudini sono espresse nel sistema Est (\(0^{\circ }\) a \(360^{\circ }\)), che è lo standard matematico più comodo per i calcoli.\\
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+%{
+%\small
+\hline
+\textbf{Pianeta/Luna}&\textbf{Nome Dettaglio}& \textbf{Latitudine} (\(\delta \))& \textbf{Longitudine} (\(\lambda \))& \textbf{Tipo}\\
+\hline
+Luna& Tranquillitatis& \(+0.67^{\circ }\)& \(23.47^{\circ }\)& Mare (Pianura)\\
+\hline
+Luna& Tycho& \(-43.30^{\circ }\)& \(348.80^{\circ }\)& Cratere con raggi\\
+\hline
+Luna& Copernicus& \(+9.60^{\circ }\)& \(340.00^{\circ }\)& Cratere d'impatto\\
+\hline
+Marte& Olympus& \(+18.65^{\circ }\)& \(226.20^{\circ }\)& Vulcano più alto del SS\\
+\hline
+Marte& Valles Marineris& \(-13.90^{\circ } \)&\(300.80^{\circ }\)& Canyon immenso\\
+\hline
+Marte& Gale& \(-4.58^{\circ }\)& \(137.44^{\circ }\)& Cratere d'impatto\\
+\hline
+Mercurio& Caloris Planitia& \(+30.50^{\circ }\)& \(190.20^{\circ }\)& cratere gigante\\
+\hline
+Mercurio& Kuiper& \(-11.30^{\circ }\)& \(328.50^{\circ }\)& Cratere molto luminoso\\
+\hline
+Mercurio& Beethoven & \(-20.80^{\circ }\)& \(236.10^{\circ }\)& Grande bacino\\
+\hline
+%}
+\end{tabular}
+\end{center}
+\caption{Dati Planetari}
+\end{table}
+Occorre convertire i gradi in radianti:\\
+\(\text{rad}=\text{deg}\cdot \frac{\pi }{180}\)\\
+Ad esempio, per l'Olympus Mons su Marte:\\
+\(\delta =18.65^{\circ }\)\\
+\(\lambda =226.20^{\circ }\)\\
+\(R=3389\) km\\
+Calcoli:\\
+\begin{enumerate}
+\item \(R_{z}=3389\cdot \sin (18.65^{\circ })\approx 1083.8\) km\\
+\item \(d=3389\cdot \cos (18.65^{\circ })\approx 3211.2\) km\\
+\item \(R_{x}=3211.2\cdot \cos (226.20^{\circ })\approx -2222.8\) km\\
+\item \(R_{y}=3211.2\cdot \sin (226.20^{\circ })\approx -2317.7\) km\\
+\end{enumerate}
+Questi valori \((R_{x},R_{y},R_{z})\) rappresentano la posizione del vulcano rispetto al centro del pianeta.
+\subsection{Modello a ellissoide}
+Ecco il passaggio dalla sfera (modello ideale) all'ellissoide (forma reale dei pianeti).\\
+Volendo essere precisi per un pianeta "schiacciato" come la Terra o Marte, non si può usare un raggio unico.\\
+Occorre differenziare il raggio in base alla componente da calcolare.
+Ecco come procedere per la proiezione ortografica su un ellissoide:\\
+In un ellissoide di rotazione (dove il pianeta ruota attorno all'asse Z):\\
+\(a\) (Raggio Equatoriale):\\
+Si usa per le componenti che giacciono sul piano orizzontale (\(X\) e \(Y\)).\\
+\(b\) (Raggio Polare): Si usa per la componente verticale (\(Z\)).\\
+Perché questa differenza?\\
+Se guardi la Terra dallo spazio, la vedresti come un'ellisse, non come un cerchio perfetto. Sarebbe leggermente più "larga" che "alta".\\
+Usando \(a\) per la \(X\) e \(b\) per la \(Y\), la mappa rispetterà esattamente lo schiacciamento polare del pianeta.
+\subsubsection{Esempio Pratico: La Terra}
+Dati i valori:\\
+\(a\approx 6378.1\) km (Equatore)\\
+\(b\approx 6356.8\) km (Poli)\\
+Se si calcola la posizione di un punto a \(45^{\circ }\) di latitudine:\\
+La sua distanza "orizzontale" dal centro sarà scalata sul raggio maggiore (\(a\)).\\
+La sua "altezza" sopra l'equatore sarà scalata sul raggio minore (\(b\)).\\
+Quando usare il Raggio Medio (\(R_{mean}\))?\\
+Puoi usare il raggio medio (\(R=\frac{2a+b}{3}\)) senza commettere errori significativi se:\\
+\begin{itemize}
+\item Stai disegnando una mappa a piccola scala (dove il pianeta sembra un piccolo disco).\\
+\item Lavori su corpi quasi sferici come la Luna o Mercurio (dove la differenza tra \(a\) e \(b\) è minima, spesso meno di 1 km).\\
+\end{itemize}
+Per Marte, lo schiacciamento è circa lo \(0.6\%\): visivamente è quasi impercettibile, ma per la navigazione di un rover è fondamentale.
+\begin{enumerate}
+\item Le formule corrette per \(P(R_{x},R_{y},R_{z})\)\\
+Prima di arrivare alla mappa, le coordinate 3D del punto diventano:\\
+\(R_{x}=\mathbf{a}\cdot \cos (\delta )\cos (\lambda )\)\\
+\(R_{y}=\mathbf{a}\cdot \cos (\delta )\sin (\lambda )\)\\
+\(R_{z}=\mathbf{b}\cdot \sin (\delta )\)\\
+\clearpage
+\item Coordinate sulla Mappa Ortografica (\(X_{map},Y_{map}\))\\
+Quando proietti ortograficamente (immaginando di guardare il pianeta dall'infinito, centrato sull'equatore a longitudine \(0^{\circ }\)), le formule diventano:\\
+\(X_{map}=a\cdot \cos (\delta )\sin (\lambda )\)\\
+\(Y_{map}=b\cdot \sin (\delta )\)\\
+In pratica la \(Y_{map}\) è orientata come l'asse z del caso tridimensionale.
+\end{enumerate}
+\subsection{Planet class}
+Ecco una classe in C++ progettata per gestire i calcoli su diversi pianeti. La classe Planet permette di definire il raggio equatoriale (\(a\)) e quello polare (\(b\)), calcolando sia le coordinate 3D che le proiezioni ortografiche basate sulla scomposizione che abbiamo discusso.\\
+Codice C++ (Standard 11 o superiore)\\
+{
+\scriptsize
+\begin{verbatim}
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <iomanip>
+
+// Costante per conversione gradi in radianti
+const double PI = 3.14159265358979323846;
+
+struct Point3D {
+    double x, y, z;
+};
+
+struct PointMap {
+    double u, v; // Coordinate su mappa piana
+};
+
+class Planet {
+private:
+    std::string name;
+    double r_equatorial; // raggio a
+    double r_polar;      // raggio b
+
+    double toRadians(double degrees) const {
+        return degrees * (PI / 180.0);
+    }
+
+public:
+    Planet(std::string n, double a, double b)
+        : name(n), r_equatorial(a), r_polar(b) {}
+
+    // 1. Calcolo coordinate Cartesiane 3D
+    Point3D getCartesian(double lat, double lon) const {
+        double delta = toRadians(lat);
+        double lambda = toRadians(lon);
+
+        Point3D p;
+        // La proiezione sul piano XY usa il raggio equatoriale (a)
+        double d = r_equatorial * cos(delta);
+        p.x = d * cos(lambda);
+        p.y = d * sin(lambda);
+
+        // La coordinata verticale usa il raggio polare (b)
+        p.z = r_polar * sin(delta);
+
+        return p;
+    }
+
+    // 2. Proiezione Ortografica (vista frontale centrata su lon 0)
+    // Xmap usa il raggio equatoriale, Ymap usa il raggio polare
+    PointMap projectOrthographic(double lat, double lon) const {
+        double delta = toRadians(lat);
+        double lambda = toRadians(lon);
+
+        PointMap pm;
+        pm.u = r_equatorial * cos(delta) * sin(lambda);
+        pm.v = r_polar * sin(delta);
+
+        return pm;
+    }
+
+    void printInfo(double lat, double lon) const {
+        Point3D p = getCartesian(lat, lon);
+        PointMap m = projectOrthographic(lat, lon);
+
+        std::cout << "--- " << name << " ---" << std::endl;
+        std::cout << "Coordinate 3D: X=" << p.x << ", Y=" << p.y << ", Z=" << p.z << std::endl;
+        std::cout << "Mappa Ortografica: U=" << m.u << ", V=" << m.v << std::endl;
+        std::cout << "---------------------------" << std::endl << std::endl;
+    }
+};
+
+int main() {
+    // Definizione dei pianeti (Raggio Equatoriale, Raggio Polare in km)
+    Planet terra("Terra", 6378.1, 6356.8);
+    Planet marte("Marte", 3396.2, 3376.2);
+    Planet luna("Luna", 1737.4, 1737.4); // Sferica
+
+    // Test Olympus Mons su Marte
+    // Lat: 18.65, Lon: 226.2 (o -133.8)
+    std::cout << std::fixed << std::setprecision(2);
+    marte.printInfo(18.65, 226.2);
+
+    // Test Apollo 11 su Luna
+    luna.printInfo(0.67, 23.47);
+
+    return 0;
+}
+\end{verbatim}
+}
+Caratteristiche del codice:\\
+Gestione dello schiacciamento:\\
+Come abbiamo discusso, p.z e pm.v (la coordinata verticale) usano r\_polar, mentre le componenti orizzontali usano r\_equatorial.\\
+Strutture Dati: Ho usato struct Point3D e PointMap per rendere il codice pulito e pronto per essere integrato in un motore grafico o in un software di analisi dati.\\
+Modularità: Puoi aggiungere facilmente nuovi pianeti nel main semplicemente passando i due raggi.\\
+Note tecniche per la tua implementazione:\\
+Longitudine:\\
+Nello script ho considerato la longitudine \(\lambda \) crescente verso Est (0-360).\\
+Se ricevi dati in formato Ovest, ricorda di trasformarli (es. \(350^{\circ }\text{\ Est}=-10^{\circ }\text{\ Ovest}\)).\\
+Visibilità: Nella proiezione ortografica reale, dovresti aggiungere un controllo:\\
+se \(\cos (\lambda )\) è negativo, il punto si trova "dietro" l'emisfero visibile e non andrebbe disegnato.
+
+\section{georeferencing EUMETSAT images}
+\subsection{Introduction}
+le immagini per la divulgazione spesso omettono i metadati precisi necessari per la georeferenziazione esatta. L'immagine utilizzata è una vista "Full Disk" (FDI) che utilizza una proiezione geostazionaria normalizzata, non esattamente un'ortografica pura (che assume un punto di vista infinito), ma una sua variante geometricamente molto simile. Il problema non risiede nelle coordinate (0,0) , che sono quelle corrette, ma nei parametri di proiezione geometrica specifici utilizzati da \index{EUMETSAT}EUMETSAT nel loro sistema di coordinate.
+Ho recuperato i parametri esatti utilizzati da EUMETSAT per mappare i dati grezzi in immagini Full Disk come la tua:
+\begin{itemize}
+\item Longitudine del Centro (Nominale): 0.0°
+\item Latitudine del Centro: 0.0° (Equatore)
+\item Distanza Satellite dal centro della Terra: \( (H=42164.0\,km)\)
+\item Raggio Equatoriale Terra: \( (R_{eq}=6378.137\,km)\) (modello standard WGS84)
+\end{itemize}
+Il tuo script gnuplot utilizza dei fattori di scala fissi (544.5 e 541.5). Questi valori sono approssimativi e non tengono conto della curvatura esatta e dell'altezza del satellite nel sistema di coordinate EUMETSAT.
+\subsection{The Solution}
+Usa i parametri standard.\\
+Il modo corretto per risolvere il problema è utilizzare i parametri orbitali e terrestri standard per calcolare la relazione tra coordinate geografiche (lat/lon) e coordinate immagine (x/y in pixel), invece di usare fattori di scala fissi. I file di dati EUMETSAT di Livello 1c utilizzano un sistema di riferimento standard. Se il tuo script può incorporare una proiezione geostazionaria esatta (a volte chiamata "viewpoint perspective" o "satellite projection"), funzionerà perfettamente con 0°,0°.Se devi continuare a usare lo script attuale, è più probabile che tu debba aggiustare la distanza nel calcolo della proiezione, non le coordinate centrali.
+\subsection{The correct formula} per la proiezione geostazionaria normalizzata, che utilizza l'altezza del satellite e il raggio terrestre invece dei valori approssimativi in pixel.
+Il problema che riscontri deriva dall'uso di una sfera perfetta e di fattori di scala approssimativi nel tuo script. La Terra è un elissoide oblato (schiacciato ai poli), e la proiezione geostazionaria tiene conto di questa forma.Qui di seguito trovi le formule esatte per la proiezione geostazionaria normalizzata, che mappano le coordinate geografiche (\(\phi ,\lambda \)) in coordinate di proiezione normalizzate (\(x,y\)).
+\subsection{Parametri Fondamentali (WGS84)}
+Sono usati questi valori precisi nel programma C e Gnuplot:
+\begin{itemize}
+\item Raggio Equatoriale: \(R_{eq}=6378.137\,km \)
+\item Raggio Polare: \(R_{p}=6356.7523\,km\)
+\item Distanza Terra-Satellite (dal centro): \(H=42164.0\,km\)
+\item Longitudine del Centro (\(\lambda _{0}\)): \(0.0^{\circ }\)
+\item Latitudine del Centro (\(\phi _{0}\)): \(0.0^{\circ }\)
+\item Fattore di schiacciamento inverso: \(f^{-1}=298.257223563\)
+\end{itemize}
+\subsection{Formule per la Proiezione Geostazionaria Normalizzata}
+La proiezione geostazionaria normalizzata è un sistema di coordinate cartografiche utilizzato per mappare immagini dai satelliti GEO, posizionati a circa 35.786 km sopra l'equatore. Questa proiezione trasforma angoli di visione (elevazione/azimut) in coordinate cartesiane normalizzate \((x,y)\), spesso scalate per rappresentare la vista disco-piena della Terra, semplificando l'analisi meteorologica e di telecomunicazione.
+Caratteristiche Principali:
+\begin{itemize}
+\item Punto di vista: Il satellite è fisso rispetto alla superficie terrestre, solitamente posizionato sopra l'equatore a una specifica longitudine.
+\item Normalizzazione: Le coordinate \(x\) e \(y\) sono spesso normalizzate in un intervallo, ad esempio, tra \(-1\) e \(1\) o basate sulla dimensione del disco terrestre visto dal satellite.
+\item Applicazioni: Ampiamente usata nel trattamento dati dei satelliti meteorologici (come Meteosat) per visualizzare l'intera faccia terrestre visibile in un'unica immagine.
+\item Distorsione: Aumenta significativamente verso i bordi del disco terrestre (limbo), dove la curvatura della Terra è più pronunciata.
+\end{itemize}
+La proiezione mappa il punto sub-satellitare al centro \((0,0)\) e i bordi della Terra ai limiti definiti dalla distanza del satellite
+Queste formule calcolano prima le coordinate cartesiane 3D (\(r_{x},r_{y},r_{z}\)) del punto sulla superficie terrestre, e poi le proiettano in coordinate piane (\(x,y\)).
+\begin{enumerate}
+\item Coordinate Cartesiane del punto sulla superficie (Latitudine \(\phi \), Longitudine \(\lambda \))\\
+Converti prima latitudine e longitudine in radianti.\\
+\(r_{x}=R_{eq}\cos (\phi )\cos (\lambda )\) \\
+\(r_{y}=R_{eq}\cos (\phi )\sin (\lambda )\) \\
+\(r_{z}=R_{p}\sin (\phi )\) \\
+(Nota: queste formule assumono una sfera per semplicità; per l'ellissoide, sono leggermente più complese, ma queste sono spesso sufficienti per la vista ortografica).
+\item Calcoli Intermedi per la Proiezione \\
+Definisci i valori relativi al punto sub-satellite (\(\phi _{0},\lambda _{0}\)): \\
+\(S_{1}=H-(r_{x}\cos (\phi _{0})\cos (\lambda _{0})+r_{y}\cos (\phi _{0})\sin (\lambda _{0})+r_{z}\sin (\phi _{0}))\) \\
+\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\) \\
+\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
+\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\) \\
+(Questo \(\gamma \) è l'angolo di vista; se è maggiore di 90 gradi, il punto non è visibile dal satellite).\\
+La definizione che hai riportato descrive la visibilità geometrica di un punto sulla superficie terrestre rispetto a un
+satellite.
+\subsubsection{ECEF coordinates}
+Il sistema di coordinate cartesiane ECEF (Earth-Centered, Earth-Fixed) è un sistema di riferimento geocentrico tridimensionale con origine nel centro di massa terrestre (0,0,0) e assi fissati rispetto alla rotazione terrestre (X, Y, Z). X punta al meridiano di Greenwich, Y a 90° est, Z al Polo Nord, solitamente misurato in metri.\\
+Caratteristiche Principali del Sistema ECEF
+\begin{itemize}
+\item Origine (0,0,0): Situata nel centro di massa della Terra.
+\item Rotazione: Ruota in modo solidale con la Terra, rendendo le coordinate (X, Y, Z) di un punto fisso sulla superficie quasi costanti nel tempo.
+\item Asse X: Interseca la superficie dell'ellissoide all'equatore e al meridiano primo (\(0^{\circ }\) latitudine, \(0^{\circ }\) longitudine).
+\item Asse Y: Interseca la superficie all'equatore e a \(90^{\circ }\) longitudine est.
+\item Asse Z: Allineato con l'asse di rotazione terrestre, verso il Polo Nord.
+\item Unità di misura: Metri.
+\end{itemize}
+\end{enumerate}
+\subsection{georeferenziazione e metadati}
+\begin{enumerate}
+\item Parametrizzazione del Fattore di Scala (\(K\))\\
+Il valore \(K\) non è magico: rappresenta quanti pixel ci sono per ogni radiante di scansione. Nelle immagini Meteosat standard, questo valore è fisso per ogni tipo di file (HRIT, Native, o derivati web). Per rendere lo script ripetibile, puoi definire \(K\) in funzione della dimensione dell'immagine (\(dim_{x}\)):\\
+\begin{center}
+\(K=\frac{dim\_x}{2\times \text{max\_scan\_angle(rad)}}\)\\                                                      \end{center}
+Dove per i satelliti MSG (Meteosat 8-11) l'angolo massimo è \(\approx 0.15185\) rad.\\
+Se \(dim\_x=3712\), allora \(K\approx 12222\).\\
+Se la tua immagine reale richiede \(K=11900\), significa che l'immagine PNG/JPG che stai usando ha un margine nero di circa il 2.6\% che "ruba" spazio al disco terrestre.\\
+Soluzione: Crea un file di configurazione .sh o un piccolo database che associ al "Provider" dell'immagine (es. EUMETSAT Web, RealEarth, NASA WorldView) il suo coefficiente \(K\) specifico.
+\item Utilizzo dei GCP (Ground Control Points) con GDAL\\
+Il modo più professionale per georeferenziare migliaia di immagini è usare GDAL per "iniettare" i punti che hai calcolato direttamente nei metadati dell'immagine.\\
+Puoi creare uno script che genera una lista di punti di controllo: Prendi le coordinate Lat/Lon di 10 capitali (quelle che hai già).\\
+Calcola con le tue formule xproj e yproj i pixel corrispondenti \((X,Y)\). Lancia il comando:\\
+\begin{verbatim}
+ gdal_translate -gcp [Lon] [Lat] [X_pixel] [Y_pixel] ... (per 10 punti) \
+               input_immagine.jpg immagine_con_metadati.tif
+\end{verbatim}
+\item Infine, usa gdalwarp per trasformare l'immagine in una proiezione standard (es. Mercatore o Cilindrica):
+\begin{verbatim}
+ gdalwarp -t_srs EPSG:4326 immagine_con_metadati.tif mappa_finale.tif
+\end{verbatim}
+\item Automatizzazione tramite SPICE (per Marte e Mercurio) Dato che il tuo obiettivo finale sono CaSSIS e SIMBIO-SYS, non potrai usare un \(K\) fisso perché quei satelliti si muovono. Per rendere lo studio ripetibile sui pianeti, dovrai sostituire i tuoi parametri \(H,R_{eq},R_{pol}\) con variabili caricate dai Kernel SPICE della NASA/ESA.Lo script gnuplot che hai scritto diventerà il tuo "validatore visivo": lo userai per controllare che il DTM o l'immagine di Marte prodotta dalla pipeline sia corretta prima di inviarla all'archivio ESA.
+\end{enumerate}
+applicarlo a Marte? Possiamo modificare lo script Gnuplot cambiando i raggi (\(R_{eq}=3396.19\), \(R_{pol}=3376.2\)) e calcolando l'altezza \(H\) per un ipotetico satellite "Areostazionario". Questo ti servirà per capire come variano le distorsioni su un pianeta più piccolo e più schiacciato. Vuoi che impostiamo insieme i parametri per il "Meteosat di Marte" così da vedere come cambia la griglia? [1, 2, 3]
+\subsection{GNSS Antenna}
+Un'antenna GNSS (Global Navigation Satellite System) è un dispositivo progettato per catturare le onde elettromagnetiche trasmesse dai satelliti in orbita e convertirle in segnali elettrici utilizzabili da un ricevitore.
+A differenza del termine "antenna GPS", che si riferisce specificamente al sistema statunitense, l'antenna GNSS è in grado di ricevere dati da più costellazioni contemporaneamente, come Galileo (Europa), GLONASS (Russia) e BeiDou (Cina).
+Funzioni principali\\
+\begin{itemize}
+\item Ricezione e filtraggio: Cattura segnali radio estremamente deboli (provenienti da circa 20.000 km di altezza) filtrando i disturbi e il rumore di fondo.
+\item Amplificazione: Molte antenne moderne sono "attive", ovvero includono un amplificatore integrato (LNA - Low Noise Amplifier) per potenziare il segnale prima che attraversi il cavo verso il ricevitore.
+\item Conversione: Trasforma le onde radio in corrente elettrica che contiene le informazioni di cronometraggio e posizione dei satelliti.
+\end{itemize}
+Tipologie comuni\\
+\begin{itemize}
+\item Antenne Patch: Piccole e piatte, sono quelle integrate negli smartphone, nei wearable o nei cruscotti delle auto.
+\item Antenne Geodetiche: Caratterizzate da una forma a "fungo" o dotate di un piano di massa circolare (choke ring), servono per rilievi topografici di alta precisione (centimetrica) e per minimizzare gli errori causati dai segnali riflessi (multipath).
+\item Antenne Aviation/Marine: Robuste e certificate per resistere a vibrazioni estreme, alte velocità e agenti atmosferici corrosivi.
+\end{itemize}
+Senza un'antenna di qualità, anche il ricevitore più avanzato non sarebbe in grado di calcolare una posizione precisa a causa della debolezza dei segnali satellitari.
+\subsubsection{Applications and Conversions}
+L'ECEF è fondamentale per i sistemi di navigazione satellitare come il GPS, poiché le posizioni dei satelliti e le misurazioni dell'antenna GNSS sono nativamente in questo sistema.\\
+Le coordinate ECEF possono essere convertite in coordinate geodetiche (latitudine \(\phi \), longitudine \(\lambda \), altezza ellissoidale \(h\)) utilizzando i parametri dell'ellissoide di riferimento (come WGS84).
+Differenze principali:\\
+A differenza delle coordinate geografiche (Latitudine/Longitudine), l'ECEF utilizza una terna \(XYZ\) rettilinea, evitando le singolarità ai poli e facilitando i calcoli vettoriali 3D.
+\begin{enumerate}
+\item Parametri Iniziali\\
+\((r_{x},r_{y},r_{z})\): Sono le coordinate cartesiane (ECEF) del punto sulla Terra che vuoi verificare.\\
+\((\phi _{0},\lambda _{0})\): Sono la latitudine e la longitudine del punto sub-satellite (dove il satellite è allo zenit).\\
+Per un satellite GEO, \(\phi _{0}\) è solitamente \(0^{\circ }\) (Equatore) e \(\lambda _{0}\) è la sua longitudine fissa.\\
+\(H\): È la distanza del satellite dal centro della Terra.\\
+Per un'orbita GEO, \(H\approx 42164\) km.
+\item Correzione delle Formule (\(S_{1},S_{2},S_{3}\))\\
+Le variabili rappresentano proiezioni vettoriali e distanze:\\
+\(S_{1}\) (Proiezione del vettore posizione del punto sul raggio del satellite):\\
+\(S_{1}=H-(r_{x}\cdot \cos \phi _{0}\cdot \cos \lambda _{0}+r_{y}\cdot \cos \phi _{0}\cdot \sin \lambda _{0}+r_{z}\cdot \sin \phi _{0})\)\\
+Qui hai sottratto a \(H\) il prodotto scalare tra il vettore posizione del punto e il versore della direzione del satellite.\\
+\(S_{2}\) (Quadrato della distanza del punto dal centro della Terra):\\
+\(S_{2}=r_{x}^{2}+r_{y}^{2}+r_{z}^{2}\)\\
+Se il punto è sulla superficie, \(\sqrt{S_{2}}\approx R_{Terra}\).\\
+\(S_{3}\) (Quadrato della distanza tra il satellite e il punto):\\
+\(S_{3}=(H\cos (\phi _{0})\cos (\lambda _{0})-r_{x})^{2}+(H\cos (\phi _{0})\sin (\lambda _{0})-r_{y})^{2}+(H\sin (\phi _{0})-r_{z})^{2}\) \\
+\item Il valore \(\gamma \) (Angolo di Nadir)\\
+L'angolo \(\gamma \) è l'angolo sotto il quale il satellite "vede" il punto rispetto alla sua verticale (nadir).\\
+\(\gamma =\arctan \left(\frac{\sqrt{S_{2}-S_{1}^{2}}}{S_{1}}\right)\)
+Il controllo della visibilità:\\
+Se \(\gamma >90^{\circ }\), il punto si trova "dietro" la curvatura della Terra rispetto al satellite e quindi non è visibile.\\
+In realtà, per i satelliti GEO, il limite pratico è l'angolo di tangenza all'orizzonte, che è molto più piccolo di \(90^{\circ }\) (circa \(8.7^{\circ }\) per la copertura globale).
+\end{enumerate}
+In cartografia satellitare e telerilevamento, l'angolo di Nadir (spesso indicato come Off-Nadir Angle o ONA) è l'angolo formato tra la linea che congiunge il sensore al punto osservato sulla Terra e la verticale perfetta che scende dal satellite verso il centro del pianeta (il Nadir).
+I concetti chiave legati a questo angolo includono:
+\begin{enumerate}
+\item Definizione e Geometria
+\begin{itemize}
+\item Nadir (0°): Quando il satellite guarda esattamente verso il basso, l'angolo off-nadir è pari a 0°. Questa geometria offre la massima accuratezza geometrica e la minima distorsione.
+\item Off-Nadir (>0°): Quando il sensore viene inclinato per osservare un'area non direttamente sottostante, l'angolo cresce. Valori comuni per immagini ad alta risoluzione si attestano tra 0° e 30°.
+\end{itemize}
+\item Differenza tra Angoli
+Sebbene talvolta usati come sinonimi, esistono distinzioni tecniche importanti:
+\begin{itemize}
+\item Look Angle (Angolo di vista):
+È l'angolo di inclinazione del sensore rispetto al Nadir dal punto di vista del satellite.
+\item Incidence Angle (Angolo di incidenza):
+È l'angolo tra il raggio incidente e la normale alla superficie terrestre nel punto di osservazione.
+A causa della curvatura terrestre, l'angolo di incidenza è solitamente leggermente maggiore dell'angolo off-nadir.
+\end{itemize}
+\item Impatto sulla Cartografia
+L'aumento dell'angolo off-nadir comporta diversi effetti:
+\begin{itemize}
+\item Risoluzione: I pixel si "allungano" (pixel stretching), riducendo la risoluzione spaziale effettiva.
+\item Distorsione Geometrica: Gli edifici alti sembrano "inclinarsi" (effetto building-lean), rendendo più complessa la georeferenziazione e la creazione di modelli 3D.
+\item Vantaggi Operativi: Permette una maggiore frequenza di rivisitazione (il satellite può fotografare un punto anche se non ci passa sopra esattamente) e facilita l'acquisizione di coppie stereoscopiche per la creazione di modelli digitali di elevazione (DEM).
+\end{itemize}
+Per applicazioni di precisione, si preferiscono angoli definiti Near-Nadir (<= 15°) o Tight-Nadir (<= 10°).
+\item Coordinate Piane Proiettate (\(x,y\))\\
+Queste sono le coordinate normalizzate in un sistema che va da -1 a 1 (o giù di lì, a seconda di come normalizzi).\\
+\(x=\frac{r_{x}\sin (\lambda _{0})-r_{y}\cos (\lambda _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)\\ \\
+\(y=\frac{r_{x}\sin (\phi _{0})\cos (\lambda _{0})+r_{y}\sin (\phi _{0})\sin (\lambda _{0})-r_{z}\cos (\phi _{0})}{H-r_{x}\cos (\lambda _{0})\cos (\phi _{0})-r_{y}\sin (\lambda _{0})\cos (\phi _{0})-r_{z}\sin (\phi _{0})}\)
+\item Conversione in Pixel \\
+Per convertire le coordinate normalizzate \((x,y)\) in coordinate pixel \((Px,Py)\) per la tua immagine specifica (che è circa 1089x1083 pixel), devi conoscere il centro in pixel (es. \(C_{x}=544,C_{y}=541\)) e un fattore di scala in pixel/radiante (questo è il pezzo che ti manca).
+EUMETSAT utilizza un fattore di scala angolare standard di circa 3712 pixel per radiante.
+\[Px=C_{x}+x\times FattoreScalaPixel\]
+\[Py=C_{y}-y\times FattoreScalaPixel\]
+\end{enumerate}
+Usando queste formule precise e i parametri orbitali standard, dovresti riuscire a posizionare correttamente Roma e Lisbona al centro 0°,0°.Se implementi queste formule, vuoi condividere il tuo codice C o Gnuplot per verificare l'esatta conversione in pixel prima di lanciare il plot finale?\\
+OK il concetto di dimensione angolare, attenzione a non confondere la Longitudine Terrestre con l'Angolo di Nadir.
+Ecco il chiarimento definitivo:
+\begin{enumerate}
+\item La Terra come la Luna\\
+Sì, esattamente come la Luna copre circa \(0.5^{\circ }\) nel nostro cielo, la Terra vista da un satellite GEO (a 35.786 km di quota) è un disco che copre un arco di circa 17.4°.Se il satellite punta una camera al centro della Terra, il "bordo" del pianeta si trova a 8.7° di distanza dal centro dell'obiettivo.
+\item Il limite di Longitudine (Il vero "taglio")\\
+Qui c'è il punto fondamentale: un angolo di Nadir di 8.7° permette di vedere molto più di 8.7° di Longitudine sulla Terra. Grazie alla geometria, il satellite vede quasi un intero emisfero.Per un satellite GEO posizionato sopra l'equatore a longitudine \(0^{\circ }\):Punto Sub-satellite: Longitudine \(0^{\circ }\) (Nadir \(\gamma =0^{\circ }\)).Orizzonte (Limite visibile): Arriva fino a circa 81.3° Est e 81.3° Ovest di longitudine.
+Oltre l'orizzonte: Da \(81.3^{\circ }\) a \(180^{\circ }\) (e da \(-181.3^{\circ }\) a \(-180^{\circ }\)), i punti sono dietro la curvatura terrestre e non sono visibili.
+\item Perché quella formula diceva 90°?\\
+La formula che hai postato è una condizione di "visibilità geometrica locale": Se calcoli l'angolo tra il vettore satellite e il vettore punto, il limite è 90° rispetto al centro della terra (l'orizzonte geometrico).
+\end{enumerate}
+Se un punto ha una longitudine (rispetto al satellite) superiore a circa 81.3°, l'angolo \(\gamma \) della tua formula supererà il limite fisico e il punto risulterà "nascosto". \\
+In sintesi per il tuo programma:\\
+Campo di vista del satellite (Nadir \(\gamma \)):\\
+Spazia solo da \(0^{\circ }\) a \(8.7^{\circ }\).\\
+Se superi \(8.7^{\circ }\), stai inquadrando le stelle, non la Terra.\\
+Copertura Terrestre (Longitudine \(\lambda \)):\\
+Il satellite "vede" una fetta di Terra larga circa 162.6° (da \(-81.3^{\circ }\) a \(+81.3^{\circ }\) rispetto alla sua posizione).\\
+Zona d'ombra: Tutto ciò che sta tra \(81.3^{\circ }\) e \(180^{\circ }\) di distanza angolare dal punto sub-satellite è invisibile.\\
+Quindi, se il tuo satellite è a \(0^{\circ }\) di longitudine, non vedrà mai l'Australia o il Pacifico Centrale, perché la loro longitudine è troppo elevata e "girano" dietro l'angolo della sfera.\\
+Per un satellite GEO centrato su (Lat,Lon) = (0°, 0°):\\
+L'intervallo di visibilità:\\
+I punti visibili sono solo quelli compresi tra 81.3°W e 81.3°E.\\
+Tutto ciò che si trova al di fuori di questa "fetta" di 162.6° totali è nascosto dalla curvatura terrestre.\\
+Il limite dei Poli:\\
+Lo stesso ragionamento vale per la latitudine. Il satellite non vedrà mai i poli Nord e Sud, ma si fermerà a circa 81.3°N e 81.3°S.\\
+L'illusione ottica:\\
+Anche se il satellite "vede" fino a 81° di longitudine, i territori vicini a quel limite (come l'estremo Alaska o l'est dell'Asia, a seconda di dove è posizionato il satellite) appariranno molto schiacciati e deformati perché sono visti quasi "di taglio" (tangenti all'orizzonte).\\
+Riassunto visivo:
+\begin{itemize}
+\item Longitudine \(0^{\circ }\): Pieno centro del disco (Nadir 0°).
+\item Longitudine \(81.3^{\circ }\): Bordo estremo del disco terrestre (Nadir 8.7°).
+\item Longitudine \(>81.3^{\circ }\): "Dietro" la Terra (Invisibile).
+\end{itemize}
+Questo è il motivo per cui servono almeno 3 satelliti GEO (distanziati di 120°) per coprire l'intera circonferenza terrestre (fatta eccezione per le calotte polari). Se ne avessi solo uno a 0°, non sapresti mai cosa succede a Tokyo (139°E) o Los Angeles (118°W)!
 \section{Azimutal angle}
 L'angolo azimutale \(\theta \) (chiamato spesso anche angolo di posizione) è l'angolo che identifica la "direzione" in cui si trova il punto rispetto al centro del disco terrestre, come se guardassi la Terra attraverso un mirino telescopico.\\
 Rappresentazione visiva (Vista dal Satellite)\\
@@ -2124,7 +3012,7 @@ Man mano che ci si sposta in senso orario:
 \end{itemize}
  \begin{center}
 \begin{figure}[!th]
- \includegraphics[width=18cm]{romavsgeo_003.png}
+ \includegraphics[width=12cm]{romavsgeo_003.png}
  % romavsgeo_002.png: 1920x1107 px, 100dpi, 48.77x28.12 cm, bb=0 0 1382 797
 \caption{azimut angle}
 \end{figure}
@@ -2182,8 +3070,9 @@ Per la Terra, GDAL usa solitamente WGS84. Per gli altri pianeti, devi definire i
 Luna: Raggio \(\approx 1737.1\text{\ km}\)\\
 Marte: Raggio \(\approx 3389.5\text{\ km}\)\\
 Mercurio: Raggio \(\approx 2439.7\,km\)\\
-In GDAL (tramite gdalwarp o \(gdal_translate\)), puoi specificare il sistema di riferimento usando stringhe PROJ.\\
-Ad esempio, per Marte:\verb|+proj=longlat +a=3389500 +b=3389500 +no_defs|\\
+In GDAL (tramite gdalwarp o gdal\_translate), puoi specificare il sistema di riferimento usando stringhe PROJ.\\
+Ad esempio, per Marte:\\
+\verb|+proj=longlat +a=3389500 +b=3389500 +no_defs|\\
 \item Proiezione Ortografica e Cilindrica con GDAL\\
 Dato che il tuo obiettivo è la proiezione piana, ecco come impostare i comandi GDAL per i due tipi che stai studiando:\\
 \begin{itemize}
@@ -2343,5 +3232,6 @@ Vuoi che ti aiuti a calcolare l'offset corretto dei pixel per Roma partendo da u
 \bibliography{cassis_001}{}
 \bibliographystyle{alpha}
 }
+\printindex
 \end{document}
 

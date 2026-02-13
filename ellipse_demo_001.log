@@ -1,0 +1,66 @@
+=== ELLIPSE MATHEMATICS LESSON ===
+
+1. DEFINITION:
+   An ellipse is the set of all points where the sum of distances
+   to two fixed points (foci) is constant.
+
+2. STANDARD EQUATION (center at origin, aligned with axes):
+   x^2/a^2 + y^2/b^2 = 1
+   where a = semi-major axis, b = semi-minor axis (a >= b > 0)
+
+3. PARAMETRIC EQUATIONS:
+   x = a·cos(t), y = b·sin(t) where t in [0, 2pi]
+
+4. ECCENTRICITY:
+   e = sqrt(1 - b^2/a^2) where 0 <= e < 1
+   e = 0: circle, e → 1: highly elongated ellipse
+
+5. FOCI:
+   Located at (±c, 0) where c^2 = a^2 - b^2
+   Distance between foci = 2c
+
+6. AREA: A = pi*a*b
+
+7. PERIMETER (approximation):
+   P ~= pi[3(a+b) - sqrt((3a+b)(a+3b))] (Ramanujan's formula)
+
+8. TRANSLATION:
+   Center at (h,k): (x-h)^2/a^2 + (y-k)^2/b^2 = 1
+
+9. ROTATION:
+   Rotate coordinate system by angle theta using rotation matrix
+
+=== Example 1: Basic Ellipse Properties ===
+Center: (0.00, 0.00)
+Semi-major axis (a): 5.00
+Semi-minor axis (b): 3.00
+Major axis length: 10.00
+Minor axis length: 6.00
+Area: 47.12
+Perimeter (approx): 25.53
+Eccentricity: 0.8000
+Foci: (-4.00, 0.00) and (4.00, 0.00)
+Focal distance: 8.00
+
+=== Example 2: Translated and Rotated Ellipse ===
+Center: (2.00, 1.00)
+Semi-axes: a=4.00, b=2.00
+Rotation: 30.00°
+Area: 25.13
+Eccentricity: 0.8660
+Foci: (-1.00, -0.73) and (5.00, 2.73)
+
+=== Example 3: Circle (Special Case of Ellipse) ===
+When a = b = 4.00, we get a circle
+Eccentricity: 0.0000 (0 = perfect circle)
+Area: 50.27 (pi*r^2)
+Perimeter: 25.13 (2pi*r)
+
+gnuplot script created. Run 'gnuplot plot_ellipse.gp' to generate plots.
+
+Key concepts demonstrated:
+- Standard and parametric ellipse equations
+- Foci and eccentricity calculation
+- Area and perimeter formulas
+- Translation and rotation transformations
+- Relationship between ellipses and circles
