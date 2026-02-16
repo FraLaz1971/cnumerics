@@ -1,0 +1,37 @@
+CIRCLE: "The locus of the plane of points with the same distance r (radius) from a point C(xc,yc) called centre"
+
+Equation of the circle (standard form):
+
+(x-xc)^2 + (y-yc)^2 = r^2
+
+Equation of the circle (general form):
+
+x^2 + y^2 + Ax +By + C = 0
+
+Parametric equation of the circle
+x = xc + r * cos(theta), y = yc + r * sin(theta)
+
+if xc=,yc=0
+(r*sin(theta))^2+(r*cos(theta))^2=r^2
+ex. theta = 90° = pi/2
+(r*1)^2 + (r*0)^2 = 3^2
+r^2 = r^2 *
+ex. theta = 45° = pi/4
+(r*0.7)^2 + (r.0.7)^2 = r^2
+0.5*r^2 + 0.5*r^2 = r^2
+r^2 = r^2
+
+Perimeter (circumference) of the circle:
+
+2*pi*r
+(pi~=3.141593)
+
+Area of the circle:
+
+pi*r^2
+
+angles:
+can be measured in degrees [0°,360°] or in radians [0,2*pi]
+1 radians = (1/pi)*180 ~= 57.3°
+v radians = (v/pi)*180
+d degrees = (d/180)*pi ex. 90° = pi*(90/180) = pi/2 ~= 1.57

@@ -1,0 +1,20 @@
+EQUAZIONE DELLA CIRCONFERENZA di centro C(xc,yc) e raggio r.
+
+(x-xc)^2 + (y-yc)^2 = r^2
+
+example:
+C = (3,7)
+r = 2
+STANDARD FORM
+(x-3)^2 + (y-7)^2 = 4
+x^2 + 9 - 6x + y^2 + 49 -14y = 4
+x^2 - 6x +y^2 -14y + 9 + 49 = 4
+x^2 - 6x +y^2 -14y + 54 = 0
+x(x-6)+y(y-14) + 54 = 0
+
+GENERAL FORM
+x^2 +y^2 -6x -14y + 54 = 0
+
+
+#x,y
+0

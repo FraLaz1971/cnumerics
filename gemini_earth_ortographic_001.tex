@@ -358,9 +358,10 @@ This will create a file called \verb|circle_plots.png| with three subplots showi
 \item \emph{Geometric Calculations}: Circumference, area, arc length, sector area
 \end{enumerate}
 The program provides both numerical outputs and visual representations to help understand these circle properties intuitively.
+\clearpage
 \section{The ellipse}
 \subsection{Introduction}
-Here a mathematical description of ellipses in 2D plane, including definitions, equations, parametric equations, foci, semiaxes, eccentricity, area, perimeter (approximation), arcs, translation, and rotation. We will also provide a C program that demonstrates some of these concepts and generates data for plotting an ellipse using gnuplot. A comprehensive math lesson on ellipses in 2D plane, similar to your circle example, with definitions, equations, parametric equations, and visualization using C and gnuplot.
+Here a mathematical description of ellipses in the 2D plane, including definitions, equations, parametric equations, foci, semiaxes, eccentricity, area, perimeter (approximation), arcs, translation, and rotation. We will also provide a C program that demonstrates some of these concepts and generates data for plotting an ellipse using gnuplot.\\
 Steps:\\
 \begin{enumerate}
 \item Definition of an Ellipse
@@ -918,7 +919,7 @@ y0 = 4\\
 semiassi\\
 a = 8\\
 b = 3\\
-con il seguente script gnuplot
+con il seguente script gnuplot \verb|ellipse001.plt|
 \begin{verbatim}
 set datafile separator ","
 set terminal pngcairo
@@ -1080,6 +1081,106 @@ molto diverso!
 \caption{anomalia eccentrica vs angolo al centro}
 \end{figure}
 
+This is the gnuplot script \verb|ellipse002.plt| that creates the \verb|ellipse002.png| graph.\\
+\begin{verbatim}
+set datafile separator ","
+#set terminal wxt persist
+set terminal pngcairo size 900,600
+set output "ellipse002.png"
+
+set parametric
+set trange [0:2*pi]
+set samples 800
+set size ratio -1
+set grid
+
+# =========================
+# Parametri ellisse
+# =========================
+x0 = 2
+y0 = 4
+a  = 8
+b  = 3
+
+# Parametro scelto
+t0 = pi/4
+
+# =========================
+# Parametrizzazione ellisse
+# =========================
+xe(t) = x0 + a*cos(t)
+ye(t) = y0 + b*sin(t)
+
+# =========================
+# Cerchio ausiliario r=a
+# =========================
+xc(t) = x0 + a*cos(t)
+yc(t) = y0 + a*sin(t)
+
+# Punto sul cerchio (anomalia eccentrica)
+Cx = x0 + a*cos(t0)
+Cy = y0 + a*sin(t0)
+
+# Punto sull’ellisse (proiezione)
+Px = x0 + a*cos(t0)
+Py = y0 + b*sin(t0)
+
+# Angolo polare reale theta
+theta = atan2(Py-y0, Px-x0)
+
+# =========================
+# Assi principali
+# =========================
+set arrow from x0-a, y0 to x0+a, y0 nohead lc rgb "blue" dt 2
+set arrow from x0, y0-b to x0, y0+b nohead lc rgb "red"  dt 2
+
+# =========================
+# Proiezioni cartesiane
+# =========================
+set arrow from Px,y0 to Px,Py nohead lc rgb "green" dt 3
+set arrow from x0,Py to Px,Py nohead lc rgb "green" dt 3
+
+# =========================
+# Segmenti angolari
+# =========================
+
+# Raggio verso punto ellisse (theta)
+set arrow from x0,y0 to Px,Py nohead lc rgb "black"
+
+# Raggio verso punto cerchio (t)
+set arrow from x0,y0 to Cx,Cy nohead lc rgb "purple"
+
+# =========================
+# Archi angoli (approssimati)
+# =========================
+
+# arco per t (anomalia eccentrica)
+set object 1 circle at x0,y0 size 1 arc [0:45] fs empty border lc rgb "purple"
+
+# arco per theta (angolo polare)
+set object 2 circle at x0,y0 size 2 arc [0:20.5] fs empty border lc rgb "black"
+
+# =========================
+# Labels
+# =========================
+set label "t" at x0+1.0,y0+0.8 tc rgb "purple" font ",14"
+set label "{/Symbol q}" at x0+2.0,y0+0.5 tc rgb "black" font ",14"
+
+set label sprintf("P(%.2f, %.2f)",Px,Py) at Px+0.3,Py+0.3
+set label sprintf("C(%.2f, %.2f)",Cx,Cy) at Cx+0.3,Cy+0.3
+
+# =========================
+# Plot finale
+# =========================
+set xrange [x0-a-3:x0+a+3]
+set yrange [y0-a-3:y0+a+3]
+
+plot xe(t),ye(t) w l lw 2 title "Ellisse", \
+     xc(t),yc(t) w l lw 1 dt 2 title "Cerchio r=a", \
+     "+" using (Px):(Py) w p pt 7 ps 1.5 lc rgb "green" title "P", \
+     "+" using (Cx):(Cy) w p pt 7 ps 1.5 lc rgb "purple" title "C"
+
+\end{verbatim}
 \subsubsection{Perché si usa t e non \(\theta\)?}
 Qui arriva la parte orbitale.\\
 \begin{enumerate}
@@ -1096,7 +1197,6 @@ r(\theta)=\frac{1}{\sqrt{\frac{cos⁡^2\theta}{a^2}+\frac{sin^⁡2\theta}{b^2}}}
 ​
 Molto più complicato.\\
 \item \textbf{Dinamica kepleriana: il tempo}
-
 Nel moto orbitale (fuoco, non centro!) vale l’equazione di Keplero:
 \[
 M=E-esin⁡E
@@ -1324,7 +1424,7 @@ Per trasformare questa curva in una sfera, la facciamo ruotare di \(360^{\circ}\
 \(\theta\). \\
 Applicando la matrice di rotazione, otteniamo le equazioni parametriche della sfera:
 \[
-\begin{cases}
+\begin{cases}&
 x(\theta,\phi) = R\cos(\phi)\cos(\theta)\\
 y(\theta,\phi) = R\cos(\phi)\sin(\theta)\\
 z(\theta,\phi) = R\sin(\theta)\\
@@ -1749,17 +1849,16 @@ Esempi:\\
 \textbf{Marte (approssimazione)}\\
 Marte è meno schiacciato:
 \begin{itemize}
-\item \(a\approx3396.2 km\)
-\item \(b\approx3376.2 km\)
+\item \(a\approx3396.2\, km\)
+\item \(b\approx3376.2\, km\)
 \end{itemize}
 Schiacciamento:\\
 \[ f\approx1/169 \]
 \textbf{Giove}\\
 Molto più oblato perché ruota velocemente:\\
-
 \begin{itemize}
-\item \(a\approx71492 km\)
-\item \(b\approx66854 km\)
+\item \(a\approx71492\, km\)
+\item \(b\approx66854\, km\)
 \end{itemize}
 Qui lo schiacciamento è enorme.\\
 \[ f\approx1/16 \]

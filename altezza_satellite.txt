@@ -1,0 +1,19 @@
+Altezza del satellite
+La terza legge di Keplero afferma:
+«I quadrati dei periodi di rivoluzione dei pianeti sono proporzionali ai cubi dei semiassi maggiori delle
+loro orbite: d3 = KT 2 ».
+Il semiasse maggiore d può essere inteso anche come il raggio medio dell’orbita.
+I satelliti geostazionari, che costituiscono la maggior parte dei satelliti per comunicazioni, 
+hanno un periodo di rotazione di circa 24 ore, per cui restano sempre allineati al di sopra 
+dello stesso punto della Terra.
+Sapendo  che K=GM/4*pi, dove G = 6.67 * 10^-11 m^3s^2kg-1 è la costante
+di gravitazione universale, M = 5,98 * 10^24 kg è la massa della Terra,
+e che il periodo di rotazione T deve essere pari al giorno
+siderale, ovvero 23 h 56 min 4,09 s, determina
+a quale distanza dalla Terra deve ruotare
+un satellite geostazionario.
+- Un altro satellite di osservazione deve
+passare su ogni punto della Terra
+almeno ogni ora e mezza.
+Qual è la distanza massima
+dalla Terra a cui deve viaggiare?

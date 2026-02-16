@@ -1,0 +1,74 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{Change of Base for Logarithms}
+\author{DeepSeek \& Francesco Lazzarotto}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We are going to demonstrate the change of base formula for logarithms.
+\end{abstract}
+
+\section{The formula}
+
+The formula is: \(log_a(b) = log_c(b) / log_c(a)\)
+ We will use the definition of logarithms and the properties of exponents.
+
+Let \( x = log_a(b) \). \\
+Then, by the definition of logarithm, we have:
+\(   a^x = b \).\\
+
+Now, we take the logarithm base c of both sides:
+\(   log_c(a^x) = log_c(b).\)\\
+
+Using the power rule of logarithms (which says \(log_c(m^n) = n \cdot log_c(m))\), we get:
+\(   x \cdot log_c(a) = log_c(b).\)\\
+
+Now, solve for x:
+\(   x = log_c(b) / log_c(a). \)\\
+
+But recall that \(x = log_a(b)\). Therefore, we have:
+\(   log_a(b) = log_c(b) / log_c(a). \)\\
+This completes the proof.\\
+Let's also note that this formula allows us to compute logarithms in any base using a calculator that might only have logarithms in base 10 or base e.\\
+Example: To compute \(log_2(8)\) using natural logarithms (base e, denoted as ln):
+  \( log_2(8) = ln(8) / ln(2) = (2.079441...) / (0.693147...) \approx 3.\)\\
+And indeed, \(2^3 = 8\), so it checks out.\\
+To demonstrate the logarithm property \(\log_a(b) = \frac{\log_c(b)}{\log_c(a)}\), we start by letting \(x = \log_a(b)\). By the definition of logarithms, this is equivalent to:
+\[
+a^x = b.
+\]
+Next, we take the logarithm base \(c\) of both sides:
+\[
+\log_c(a^x) = \log_c(b).
+\]
+Using the power rule of logarithms, \(\log_c(m^n) = n \log_c(m)\), we simplify the left side:
+\[
+x \cdot \log_c(a) = \log_c(b).
+\]
+Solving for \(x\):
+\[
+x = \frac{\log_c(b)}{\log_c(a)}.
+\]
+Since \(x = \log_a(b)\), we substitute back:
+\[
+\log_a(b) = \frac{\log_c(b)}{\log_c(a)}.
+\]
+
+This derivation shows that the logarithm of \(b\) base \(a\) can be expressed as the ratio of the logarithms of \(b\) and \(a\) with respect to any base \(c\), provided \(c > 0\) and \(c \neq 1\). This is the \emph{change of base formula}.\\
+
+\emph{Example Verification:}\\
+Compute \(\log_2(8)\) using natural logarithms (base \(e\)):
+\[
+\log_2(8) = \frac{\ln(8)}{\ln(2)} = \frac{2.07944}{0.69315} \approx 3.
+\]
+This matches the fact that \(2^3 = 8\), confirming the property.
+\end{document}
+
+
+
+

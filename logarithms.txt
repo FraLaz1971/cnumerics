@@ -1,0 +1,26 @@
+log_a(b) = log_c(b)/log_c(a)
+
+log_a(b) = x
+
+a^x = b
+
+log_c(a^x) = log_c(b)
+
+x*log_c(a) = log_c(b)
+
+x = log_c(b)/log_c(a)
+
+log_a(b) = log_c(b)/log_c(a)
+
+
+
+example 
+log_10(100) = ln(100)/ln(10)
+
+log_10(100)*ln(10) = ln(100)
+
+e^[log_10(100)*ln(10)] = e^[ln(100)]
+
+[e^(ln(10))]^[log_10^(100)] = 100
+10^(log_10^(100)) = 100
+10^2 = 100
