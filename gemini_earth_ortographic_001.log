@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  16 FEB 2026 14:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  17 FEB 2026 09:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -684,157 +684,190 @@ Underfull \hbox (badness 10000) in paragraph at lines 1233--1235
 
  []
 
+<ellipse003.png, id=131, 642.4pt x 481.8pt>
+File: ellipse003.png Graphic file (type png)
+<use ellipse003.png>
+Package pdftex.def Info: ellipse003.png  used on input line 1242.
+(pdftex.def)             Requested size: 455.24408pt x 341.4408pt.
+
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1242--1243
+ [] 
+ []
+
 [32]
-Underfull \hbox (badness 10000) in paragraph at lines 1244--1247
+Underfull \hbox (badness 10000) in paragraph at lines 1250--1253
+
+ []
+
+[33 <./ellipse003.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1257--1259
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1251--1253
+Underfull \hbox (badness 10000) in paragraph at lines 1266--1268
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1260--1262
+Underfull \hbox (badness 10000) in paragraph at lines 1268--1270
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1262--1264
+Underfull \hbox (badness 10000) in paragraph at lines 1273--1275
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1267--1269
+Underfull \hbox (badness 10000) in paragraph at lines 1277--1279
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1271--1273
+Underfull \hbox (badness 10000) in paragraph at lines 1289--1290
 
  []
 
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 1283--1284
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1301--1306
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 1307--1312
 
  []
 
 
-Overfull \hbox (374.24373pt too wide) in paragraph at lines 1315--1315
+Overfull \hbox (374.24373pt too wide) in paragraph at lines 1321--1321
 []\OT1/cmtt/m/n/10 plot x0 + a*cos(t), y0 + b*sin(t) title "Ellisse C(2,4) a=8 
 b=3" lw 2                                                                    []
  
  []
 
-[34]
-Underfull \hbox (badness 10000) in paragraph at lines 1317--1321
+
+Underfull \hbox (badness 10000) in paragraph at lines 1323--1327
 
  []
 
 [35]
-Overfull \hbox (90.74496pt too wide) in paragraph at lines 1349--1349
+Overfull \hbox (90.74496pt too wide) in paragraph at lines 1355--1355
 []\OT1/cmtt/m/n/10 plot x(t), y(t) with lines title sprintf("Ellisse ruotata di
  %d\TS1/cmtt/m/n/10 °\OT1/cmtt/m/n/10 ", angolo_deg) lw 2[] 
  []
 
-[36]
-Overfull \hbox (90.0991pt too wide) in paragraph at lines 1399--1399
+<rotated_ellipse001.png, id=145, 642.4pt x 481.8pt>
+File: rotated_ellipse001.png Graphic file (type png)
+<use rotated_ellipse001.png>
+Package pdftex.def Info: rotated_ellipse001.png  used on input line 1358.
+(pdftex.def)             Requested size: 455.24408pt x 341.4408pt.
+
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1358--1359
+ [] 
+ []
+
+[36] [37 <./rotated_ellipse001.png>]
+Overfull \hbox (90.0991pt too wide) in paragraph at lines 1411--1411
 []\OT1/cmtt/m/n/7 set arrow from x0 - a*cos(alpha), y0 - a*sin(alpha) to x0 + a
 *cos(alpha), y0 + a*sin(alpha) nohead lc rgb "blue" dt 2[] 
  []
 
 
-Overfull \hbox (86.38031pt too wide) in paragraph at lines 1399--1399
+Overfull \hbox (86.38031pt too wide) in paragraph at lines 1411--1411
 []\OT1/cmtt/m/n/7 set arrow from x0 + b*sin(alpha), y0 - b*cos(alpha) to x0 - b
 *sin(alpha), y0 + b*cos(alpha) nohead lc rgb "red" dt 2[] 
  []
 
+<rotated_ellipse002.png, id=153, 642.4pt x 481.8pt>
+File: rotated_ellipse002.png Graphic file (type png)
+<use rotated_ellipse002.png>
+Package pdftex.def Info: rotated_ellipse002.png  used on input line 1415.
+(pdftex.def)             Requested size: 455.24408pt x 341.4408pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1402--1403
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1415--1416
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1421--1422
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1403--1404
+Underfull \hbox (badness 10000) in paragraph at lines 1422--1423
+
+ []
+
+[38 <./rotated_ellipse002.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1424--1425
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1405--1406
+Underfull \hbox (badness 10000) in paragraph at lines 1425--1426
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1406--1407
+Underfull \hbox (badness 10000) in paragraph at lines 1426--1427
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1407--1408
-
- []
-
-[37]
-Overfull \hbox (15.82474pt too wide) in paragraph at lines 1416--1418
+Overfull \hbox (15.82474pt too wide) in paragraph at lines 1435--1437
 \OT1/cmr/m/n/10 Partiamo da una semi-cir-con-ferenza sit-u-ata nel pi-ano xz. P
 os-si-amo parametriz-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1466--1467
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
- []
-
-[38]
-Underfull \hbox (badness 10000) in paragraph at lines 1473--1474
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1474--1477
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 1485--1486
 
  []
 
 
-Overfull \hbox (22.94563pt too wide) in paragraph at lines 1487--1488
+Underfull \hbox (badness 10000) in paragraph at lines 1492--1493
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1493--1496
+
+ []
+
+[40]
+Overfull \hbox (22.94563pt too wide) in paragraph at lines 1506--1507
 []\OT1/cmr/m/n/10 Raggio: $\OML/cmm/m/it/10 R \OT1/cmr/m/n/10 = []$ (o $[]$). 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1493--1494
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1513
 
  []
 
-[39]
-Overfull \hbox (8.51768pt too wide) in paragraph at lines 1512--1513
+
+Overfull \hbox (8.51768pt too wide) in paragraph at lines 1531--1532
 \OT1/cmr/m/n/10 Le co-or-di-nate di un punto $(\OML/cmm/m/it/10 R[]; R[]; R[]\O
 T1/cmr/m/n/10 )$ su una sfera di rag-gio $\OML/cmm/m/it/10 r$ \OT1/cmr/m/n/10 c
 en-trata nell'origine
  []
 
 
-Overfull \hbox (14.89507pt too wide) in paragraph at lines 1514--1526
+Overfull \hbox (14.89507pt too wide) in paragraph at lines 1533--1545
 \OT1/cmr/m/n/10 In uno spazio tridi-men-sion-ale, la dis-tanza di un punto $(\O
 ML/cmm/m/it/10 R[]; R[]; R[]\OT1/cmr/m/n/10 )$ dall'origine
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1526--1531
-
- []
-
-[40]
-Underfull \hbox (badness 10000) in paragraph at lines 1536--1556
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 1545--1550
 
  []
 
 
-Overfull \hbox (12.33159pt too wide) in paragraph at lines 1556--1568
+Underfull \hbox (badness 10000) in paragraph at lines 1555--1575
+
+ []
+
+
+Overfull \hbox (12.33159pt too wide) in paragraph at lines 1575--1587
 \OT1/cmr/m/n/10 cen-tro in $(0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it
 /10 ; \OT1/cmr/m/n/10 0)$ e rag-gio $\OML/cmm/m/it/10 r$ \OT1/cmr/m/n/10 sono d
 e-scritte dalle equazioni $\OML/cmm/m/it/10 R[] \OT1/cmr/m/n/10 = \OML/cmm/m/it
@@ -843,72 +876,72 @@ e-scritte dalle equazioni $\OML/cmm/m/it/10 R[] \OT1/cmr/m/n/10 = \OML/cmm/m/it
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1556--1568
+Underfull \hbox (badness 10000) in paragraph at lines 1575--1587
 
  []
 
-[41]
-Overfull \hbox (37.00443pt too wide) in paragraph at lines 1606--1606
+[42]
+Overfull \hbox (37.00443pt too wide) in paragraph at lines 1625--1625
  []\OT1/cmtt/m/n/7 ax.scatter([rx], [ry], [rz], color='red', s=100, label=f'Pun
 to P({rx:.2f}, {ry:.2f}, {rz:.2f})')[] 
  []
 
-<decomposition_3d_sphere.png, id=163, 867.24pt x 722.7pt>
+<decomposition_3d_sphere.png, id=169, 867.24pt x 722.7pt>
 File: decomposition_3d_sphere.png Graphic file (type png)
 <use decomposition_3d_sphere.png>
-Package pdftex.def Info: decomposition_3d_sphere.png  used on input line 1611.
+Package pdftex.def Info: decomposition_3d_sphere.png  used on input line 1630.
 (pdftex.def)             Requested size: 512.1496pt x 426.80835pt.
 
-Overfull \hbox (167.1496pt too wide) in paragraph at lines 1611--1612
+Overfull \hbox (167.1496pt too wide) in paragraph at lines 1630--1631
  [] 
  []
 
-[42] [43 <./decomposition_3d_sphere.png>]
-Overfull \hbox (2.3711pt too wide) in paragraph at lines 1625--1628
+[43] [44 <./decomposition_3d_sphere.png>]
+Overfull \hbox (2.3711pt too wide) in paragraph at lines 1644--1647
 \OT1/cmr/m/n/10 Componente Ver-ti-cale: Es-sendo adi-a-cente all'angolo $\OML/c
 mm/m/it/10 ^^R$\OT1/cmr/m/n/10 , si ha $\OML/cmm/m/it/10 R[] \OT1/cmr/m/n/10 = 
 \OML/cmm/m/it/10 R []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R\OT1/cmr/m/n/10 )$. 
  []
 
 
-Overfull \hbox (36.00932pt too wide) in paragraph at lines 1628--1632
+Overfull \hbox (36.00932pt too wide) in paragraph at lines 1647--1651
 \OT1/cmr/m/n/10 ple-mentare), quindi $\OML/cmm/m/it/10 R[] \OT1/cmr/m/n/10 = \O
 ML/cmm/m/it/10 d []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^^\OT1/cmr/m/n/10 )$. Sos
 -tituendo $\OML/cmm/m/it/10 d$\OT1/cmr/m/n/10 , ot-te-ni-amo $\OT1/cmr/bx/n/10 
 R[][] [] [] [] []$\OT1/cmr/m/n/10 . 
  []
 
-<point_on_sphere_001.png, id=173, 1387.584pt x 800.0289pt>
+<point_on_sphere_001.png, id=179, 1387.584pt x 800.0289pt>
 File: point_on_sphere_001.png Graphic file (type png)
 <use point_on_sphere_001.png>
-Package pdftex.def Info: point_on_sphere_001.png  used on input line 1639.
+Package pdftex.def Info: point_on_sphere_001.png  used on input line 1658.
 (pdftex.def)             Requested size: 455.24408pt x 262.47221pt.
 
-Overfull \hbox (110.24408pt too wide) in paragraph at lines 1639--1640
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1658--1659
  [] 
  []
 
-[44
+[45
 
 ]
-Overfull \hbox (18.26923pt too wide) in paragraph at lines 1652--1659
+Overfull \hbox (18.26923pt too wide) in paragraph at lines 1671--1678
 \OT1/cmr/m/n/10 In As-trono-mia/Navigazione (Az-imut): Qui c'^^Re una sot-tile 
 dif-ferenza. L'Azimut
  []
 
 
-Overfull \hbox (26.75061pt too wide) in paragraph at lines 1652--1659
+Overfull \hbox (26.75061pt too wide) in paragraph at lines 1671--1678
 \OT1/cmr/m/n/10 soli-ta-mente parte dal Nord (che ^^Re la proiezione del polo s
 ul pi-ano dell'osservatore)
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1652--1659
+Underfull \hbox (badness 10000) in paragraph at lines 1671--1678
 
  []
 
 
-Overfull \hbox (38.78448pt too wide) in paragraph at lines 1662--1677
+Overfull \hbox (38.78448pt too wide) in paragraph at lines 1681--1696
  [] 
  []
 
@@ -916,22 +949,22 @@ Overfull \hbox (38.78448pt too wide) in paragraph at lines 1662--1677
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1680--1681
+Underfull \hbox (badness 10000) in paragraph at lines 1699--1700
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1683--1685
+Underfull \hbox (badness 10000) in paragraph at lines 1702--1704
 
  []
 
-[45 <./point_on_sphere_001.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1700--1705
+[46 <./point_on_sphere_001.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1719--1724
 
  []
 
 
-Overfull \hbox (106.84845pt too wide) in paragraph at lines 1719--1728
+Overfull \hbox (106.84845pt too wide) in paragraph at lines 1738--1747
  [] 
  []
 
@@ -939,97 +972,82 @@ Overfull \hbox (106.84845pt too wide) in paragraph at lines 1719--1728
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1731--1736
-
- []
-
-[46]
-Underfull \hbox (badness 10000) in paragraph at lines 1764--1765
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1766--1768
+Underfull \hbox (badness 10000) in paragraph at lines 1750--1755
 
  []
 
 [47]
-Underfull \hbox (badness 10000) in paragraph at lines 1769--1776
+Underfull \hbox (badness 10000) in paragraph at lines 1783--1784
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1776--1778
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1778--1780
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1780--1783
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1785--1786
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1807--1808
+Underfull \hbox (badness 10000) in paragraph at lines 1785--1787
 
  []
 
 [48]
-Underfull \hbox (badness 10000) in paragraph at lines 1808--1811
+Underfull \hbox (badness 10000) in paragraph at lines 1788--1795
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1818--1822
+Underfull \hbox (badness 10000) in paragraph at lines 1795--1797
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1823--1824
+Underfull \hbox (badness 10000) in paragraph at lines 1797--1799
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1827--1829
+Underfull \hbox (badness 10000) in paragraph at lines 1799--1802
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1830--1831
+Underfull \hbox (badness 10000) in paragraph at lines 1804--1805
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1831--1833
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1836--1837
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1844--1845
+Underfull \hbox (badness 10000) in paragraph at lines 1826--1827
 
  []
 
 [49]
-Underfull \hbox (badness 10000) in paragraph at lines 1855--1856
+Underfull \hbox (badness 10000) in paragraph at lines 1827--1830
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1856--1859
+Underfull \hbox (badness 10000) in paragraph at lines 1837--1841
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1842--1843
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1846--1848
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1849--1850
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1850--1852
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1855--1856
 
  []
 
@@ -1038,18 +1056,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 1863--1864
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1866--1867
-
- []
-
 [50]
-Underfull \hbox (badness 10000) in paragraph at lines 1902--1903
+Underfull \hbox (badness 10000) in paragraph at lines 1874--1875
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1909--1910
+Underfull \hbox (badness 10000) in paragraph at lines 1875--1878
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1882--1883
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1885--1886
+
+ []
+
+[51]
+Underfull \hbox (badness 10000) in paragraph at lines 1921--1922
 
  []
 
@@ -1059,453 +1087,458 @@ Underfull \hbox (badness 10000) in paragraph at lines 1928--1929
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1936--1937
-
- []
-
-[51]
-Underfull \hbox (badness 10000) in paragraph at lines 1939--1942
+Underfull \hbox (badness 10000) in paragraph at lines 1947--1948
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1946--1948
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1949--1951
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1953--1954
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1957--1959
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1959--1961
-
- []
-
-<ellissoide.png, id=202, 903.375pt x 702.625pt>
-File: ellissoide.png Graphic file (type png)
-<use ellissoide.png>
-Package pdftex.def Info: ellissoide.png  used on input line 1965.
-(pdftex.def)             Requested size: 455.24408pt x 354.08841pt.
-
-Overfull \hbox (110.24408pt too wide) in paragraph at lines 1965--1966
- [] 
- []
-
-<ellissoide_costruzione.png, id=203, 1003.75pt x 752.8125pt>
-File: ellissoide_costruzione.png Graphic file (type png)
-<use ellissoide_costruzione.png>
-Package pdftex.def Info: ellissoide_costruzione.png  used on input line 1973.
-(pdftex.def)             Requested size: 455.24408pt x 341.43895pt.
-
-Overfull \hbox (110.24408pt too wide) in paragraph at lines 1973--1974
- [] 
- []
-
-<ellissoide_geofisico.png, id=204, 1104.125pt x 803.0pt>
-File: ellissoide_geofisico.png Graphic file (type png)
-<use ellissoide_geofisico.png>
-Package pdftex.def Info: ellissoide_geofisico.png  used on input line 1981.
-(pdftex.def)             Requested size: 455.24408pt x 331.09456pt.
-
-Overfull \hbox (110.24408pt too wide) in paragraph at lines 1981--1982
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1986--1988
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1988--1990
+Underfull \hbox (badness 10000) in paragraph at lines 1955--1956
 
  []
 
 [52]
-Underfull \hbox (badness 10000) in paragraph at lines 2002--2004
+Underfull \hbox (badness 10000) in paragraph at lines 1958--1961
 
  []
 
-[53 <./ellissoide.png>] [54 <./ellissoide_costruzione.png>] [55 <./ellissoide_g
-eofisico.png>] [56]
-Overfull \hbox (48.74657pt too wide) in paragraph at lines 2134--2134
+
+Underfull \hbox (badness 10000) in paragraph at lines 1965--1967
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1968--1970
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1972--1973
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1976--1978
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1978--1980
+
+ []
+
+<ellissoide.png, id=208, 903.375pt x 702.625pt>
+File: ellissoide.png Graphic file (type png)
+<use ellissoide.png>
+Package pdftex.def Info: ellissoide.png  used on input line 1984.
+(pdftex.def)             Requested size: 455.24408pt x 354.08841pt.
+
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1984--1985
+ [] 
+ []
+
+<ellissoide_costruzione.png, id=209, 1003.75pt x 752.8125pt>
+File: ellissoide_costruzione.png Graphic file (type png)
+<use ellissoide_costruzione.png>
+Package pdftex.def Info: ellissoide_costruzione.png  used on input line 1992.
+(pdftex.def)             Requested size: 455.24408pt x 341.43895pt.
+
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 1992--1993
+ [] 
+ []
+
+<ellissoide_geofisico.png, id=210, 1104.125pt x 803.0pt>
+File: ellissoide_geofisico.png Graphic file (type png)
+<use ellissoide_geofisico.png>
+Package pdftex.def Info: ellissoide_geofisico.png  used on input line 2000.
+(pdftex.def)             Requested size: 455.24408pt x 331.09456pt.
+
+Overfull \hbox (110.24408pt too wide) in paragraph at lines 2000--2001
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2005--2007
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2007--2009
+
+ []
+
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 2021--2023
+
+ []
+
+[54 <./ellissoide.png>] [55 <./ellissoide_costruzione.png>] [56 <./ellissoide_g
+eofisico.png>] [57]
+Overfull \hbox (48.74657pt too wide) in paragraph at lines 2153--2153
 []   \OT1/cmtt/m/n/10 xC(u),yC(u),zC(u) with lines lw 3 title "Circonferenza ge
 nerata da P", \[] 
  []
 
-[57]
-Underfull \hbox (badness 10000) in paragraph at lines 2140--2142
+[58]
+Underfull \hbox (badness 10000) in paragraph at lines 2159--2161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2152--2153
+Underfull \hbox (badness 10000) in paragraph at lines 2171--2172
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2172--2173
+Underfull \hbox (badness 10000) in paragraph at lines 2191--2192
 
  []
 
-[58] [59]
-Overfull \hbox (32.9967pt too wide) in paragraph at lines 2250--2250
+[59] [60]
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 2269--2269
 []   \OT1/cmtt/m/n/10 x(u,v),y(u,v),z(u,v) with lines lw 1 title "Ellissoide pl
 anetario", \[] 
  []
 
 
-Overfull \hbox (27.74675pt too wide) in paragraph at lines 2250--2250
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 2269--2269
 []   \OT1/cmtt/m/n/10 xC(u),yC(u),zC(u) with lines lw 3 title "Parallelo genera
 to da P", \[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2277--2278
-
- []
-
-[60]
-Underfull \hbox (badness 10000) in paragraph at lines 2303--2304
+Underfull \hbox (badness 10000) in paragraph at lines 2296--2297
 
  []
 
 [61]
-Underfull \hbox (badness 10000) in paragraph at lines 2335--2336
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2340--2341
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2344--2345
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2348--2349
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2353--2359
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2353--2359
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2360--2361
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2361--2362
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2362--2363
+Underfull \hbox (badness 10000) in paragraph at lines 2322--2323
 
  []
 
 [62]
+Underfull \hbox (badness 10000) in paragraph at lines 2354--2355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2359--2360
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 2363--2364
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2365--2366
+Underfull \hbox (badness 10000) in paragraph at lines 2367--2368
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2367--2369
+Underfull \hbox (badness 10000) in paragraph at lines 2372--2378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2369--2372
+Underfull \hbox (badness 10000) in paragraph at lines 2372--2378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2372--2374
+Underfull \hbox (badness 10000) in paragraph at lines 2379--2380
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2375--2376
+Underfull \hbox (badness 10000) in paragraph at lines 2380--2381
 
  []
 
 
-Overfull \hbox (458.243pt too wide) in paragraph at lines 2379--2379
+Underfull \hbox (badness 10000) in paragraph at lines 2381--2382
+
+ []
+
+[63]
+Underfull \hbox (badness 10000) in paragraph at lines 2382--2383
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2384--2385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2386--2388
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2388--2391
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2391--2393
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2394--2395
+
+ []
+
+
+Overfull \hbox (458.243pt too wide) in paragraph at lines 2398--2398
 []\OT1/cmtt/m/n/10 r_e(lat) = R_pol / sqrt(1.0 - (1.0 - (R_pol/R_eq)**2) * cos(
 deg2rad(lat))**2)                                                              
               [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2382--2384
+Underfull \hbox (badness 10000) in paragraph at lines 2401--2403
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2385--2392
+Underfull \hbox (badness 10000) in paragraph at lines 2404--2411
 
  []
 
-[63]
-Overfull \hbox (31.42119pt too wide) in paragraph at lines 2410--2421
+[64]
+Overfull \hbox (31.42119pt too wide) in paragraph at lines 2429--2440
  [] 
  []
 
 
-Overfull \hbox (113.05789pt too wide) in paragraph at lines 2428--2454
+Overfull \hbox (113.05789pt too wide) in paragraph at lines 2447--2473
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2424--2464
+Underfull \hbox (badness 10000) in paragraph at lines 2443--2483
 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[64]
-Underfull \hbox (badness 10000) in paragraph at lines 2465--2466
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2466--2467
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2467--2468
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2468--2469
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2484--2492
-
- []
-
 [65]
-Underfull \hbox (badness 10000) in paragraph at lines 2493--2494
+Underfull \hbox (badness 10000) in paragraph at lines 2484--2485
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2494--2495
+Underfull \hbox (badness 10000) in paragraph at lines 2485--2486
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2498--2503
+Underfull \hbox (badness 10000) in paragraph at lines 2486--2487
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2487--2488
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2503--2511
 
  []
 
 [66]
-Underfull \hbox (badness 10000) in paragraph at lines 2511--2515
+Underfull \hbox (badness 10000) in paragraph at lines 2512--2513
 
  []
 
-[67
+
+Underfull \hbox (badness 10000) in paragraph at lines 2513--2514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2517--2522
+
+ []
+
+[67]
+Underfull \hbox (badness 10000) in paragraph at lines 2530--2534
+
+ []
+
+[68
 
 ]
-Overfull \hbox (8.2856pt too wide) in paragraph at lines 2603--2603
+Overfull \hbox (8.2856pt too wide) in paragraph at lines 2622--2622
 []        \OT1/cmtt/m/n/7 std::cout << "Coordinate 3D: X=" << p.x << ", Y=" << 
 p.y << ", Z=" << p.z << std::endl;[] 
  []
 
 
-Overfull \hbox (14.38019pt too wide) in paragraph at lines 2605--2616
+Overfull \hbox (14.38019pt too wide) in paragraph at lines 2624--2635
 \OT1/cmr/m/n/10 Se ricevi dati in for-mato Ovest, ri-corda di trasfor-marli (es
 . $350[][] = \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 10[][]$). 
  []
 
-[68]
-Overfull \hbox (6.45203pt too wide) in paragraph at lines 2625--2626
+[69]
+Overfull \hbox (6.45203pt too wide) in paragraph at lines 2644--2645
 []\OT1/cmr/m/n/10 Raggio Equa-to-ri-ale Terra: $(\OML/cmm/m/it/10 R[] \OT1/cmr/
 m/n/10 = 6378\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 137 \OML/cmm/m/it/10 km\OT1/cmr/
 m/n/10 )$ (mod-ello stan-dard WGS84) 
  []
 
 
-Overfull \hbox (6.02841pt too wide) in paragraph at lines 2644--2646
+Overfull \hbox (6.02841pt too wide) in paragraph at lines 2663--2665
 \OT1/cmr/m/n/10 La proiezione geostazionaria nor-mal-iz-zata ^^Re un sis-tema d
 i co-or-di-nate car-tografiche
  []
 
 
-Overfull \hbox (10.82478pt too wide) in paragraph at lines 2644--2646
+Overfull \hbox (10.82478pt too wide) in paragraph at lines 2663--2665
 \OT1/cmr/m/n/10 so-pra l'equatore. Questa proiezione trasforma an-goli di vi-si
 one (el-e-vazione/azimut)
  []
 
-[69] [70]
-Underfull \hbox (badness 10000) in paragraph at lines 2684--2686
+[70] [71]
+Underfull \hbox (badness 10000) in paragraph at lines 2703--2705
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2692--2696
+Underfull \hbox (badness 10000) in paragraph at lines 2711--2715
 
  []
 
 
-Overfull \hbox (63.24669pt too wide) in paragraph at lines 2699--2699
+Overfull \hbox (63.24669pt too wide) in paragraph at lines 2718--2718
  [] \OT1/cmtt/m/n/10 gdal_translate -gcp [Lon] [Lat] [X_pixel] [Y_pixel] ... (p
 er 10 punti) \[] 
  []
 
-[71]
-Overfull \hbox (42.24687pt too wide) in paragraph at lines 2703--2703
+[72]
+Overfull \hbox (42.24687pt too wide) in paragraph at lines 2722--2722
  [] \OT1/cmtt/m/n/10 gdalwarp -t_srs EPSG:4326 immagine_con_metadati.tif mappa_
 finale.tif[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2708--2711
+Underfull \hbox (badness 10000) in paragraph at lines 2727--2730
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2716--2717
-
- []
-
-[72]
-Underfull \hbox (badness 10000) in paragraph at lines 2735--2745
+Underfull \hbox (badness 10000) in paragraph at lines 2735--2736
 
  []
 
 [73]
-Overfull \hbox (6.27754pt too wide) in paragraph at lines 2758--2759
+Underfull \hbox (badness 10000) in paragraph at lines 2754--2764
+
+ []
+
+[74]
+Overfull \hbox (6.27754pt too wide) in paragraph at lines 2777--2778
 []\OT1/cmr/m/n/10 Off-Nadir (>0\TS1/cmr/m/n/10 °\OT1/cmr/m/n/10 ): Quando il se
 n-sore viene in-cli-nato per os-ser-vare un'area
  []
 
 
-Overfull \hbox (0.38951pt too wide) in paragraph at lines 2774--2775
+Overfull \hbox (0.38951pt too wide) in paragraph at lines 2793--2794
 []\OT1/cmr/m/n/10 Vantaggi Op-er-a-tivi: Per-me-tte una mag-giore fre-quenza di
  riv-is-i-tazione
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2777--2781
+Underfull \hbox (badness 10000) in paragraph at lines 2796--2800
 
  []
 
 
-Overfull \hbox (3.71114pt too wide) in paragraph at lines 2781--2784
+Overfull \hbox (3.71114pt too wide) in paragraph at lines 2800--2803
 \OT1/cmr/m/n/10 Per con-ver-tire le co-or-di-nate nor-mal-iz-zate $(\OML/cmm/m/
 it/10 x; y\OT1/cmr/m/n/10 )$ in co-or-di-nate pixel $(\OML/cmm/m/it/10 Px; Py\O
 T1/cmr/m/n/10 )$
  []
 
-[74]
-Overfull \hbox (2.26125pt too wide) in paragraph at lines 2799--2817
+[75]
+Overfull \hbox (2.26125pt too wide) in paragraph at lines 2818--2836
 \OT1/cmr/m/n/10 l'angolo $\OML/cmm/m/it/10 ^^M$ \OT1/cmr/m/n/10 della tua for-m
 ula su-perer^^Ra il lim-ite fisico e il punto risul-ter^^Ra "nascosto". 
  []
 
-[75]
-Underfull \hbox (badness 10000) in paragraph at lines 2824--2828
-
- []
-
 [76]
-Underfull \hbox (badness 10000) in paragraph at lines 2854--2858
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2859--2860
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2861--2862
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2863--2865
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2865--2867
+Underfull \hbox (badness 10000) in paragraph at lines 2843--2847
 
  []
 
 [77]
-Overfull \hbox (12.2367pt too wide) in paragraph at lines 2876--2883
+Underfull \hbox (badness 10000) in paragraph at lines 2873--2877
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2878--2879
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2880--2881
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2882--2884
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2884--2886
+
+ []
+
+[78]
+Overfull \hbox (12.2367pt too wide) in paragraph at lines 2895--2902
 \OT1/cmr/m/n/10 Questa proiezione ^^Re tec-ni-ca-mente chia-mata Proiezione Geo
 stazionaria (o Proiezione
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2886--2892
+Underfull \hbox (badness 10000) in paragraph at lines 2905--2911
 
  []
 
 
-Overfull \hbox (17.21127pt too wide) in paragraph at lines 2892--2900
+Overfull \hbox (17.21127pt too wide) in paragraph at lines 2911--2919
 \OT1/cmr/m/n/10 L'angolo az-imu-tale si ri-cava soli-ta-mente tramite:$\OML/cmm
 /m/it/10  \OT1/cmr/m/n/10 = 180[] + [] []$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2892--2900
-
- []
-
-[78]
-Overfull \hbox (79.97292pt too wide) in paragraph at lines 2905--2916
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2930--2936
+Underfull \hbox (badness 10000) in paragraph at lines 2911--2919
 
  []
 
 [79]
-Underfull \hbox (badness 10000) in paragraph at lines 2936--2937
+Overfull \hbox (79.97292pt too wide) in paragraph at lines 2924--2935
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2949--2955
+
+ []
+
+[80]
+Underfull \hbox (badness 10000) in paragraph at lines 2955--2956
 
  []
 
 
-Overfull \hbox (47.79211pt too wide) in paragraph at lines 2943--2945
+Overfull \hbox (47.79211pt too wide) in paragraph at lines 2962--2964
 \OT1/cmr/m/n/10 i dati di Roma:$^^A\OML/cmm/m/it/10 L \OT1/cmr/m/n/10 = 12\OML/
 cmm/m/it/10 :\OT1/cmr/m/n/10 45[]$$[](41\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 92[])
  \OMS/cmsy/m/n/10 ^^Y \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 668$$[
@@ -1514,291 +1547,291 @@ cmm/m/it/10 :\OT1/cmr/m/n/10 45[]$$[](41\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 92[])
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2943--2945
+Underfull \hbox (badness 10000) in paragraph at lines 2962--2964
 
  []
 
 
-Overfull \hbox (116.13068pt too wide) in paragraph at lines 2989--2989
+Overfull \hbox (116.13068pt too wide) in paragraph at lines 3008--3008
 []\OT1/cmtt/m/n/7 ax.plot_wireframe(r_terra*np.cos(u)*np.sin(v), r_terra*np.sin
 (u)*np.sin(v), r_terra*np.cos(v), color="lightblue", alpha=0.3)[] 
  []
 
 
-Overfull \hbox (23.16078pt too wide) in paragraph at lines 2989--2989
+Overfull \hbox (23.16078pt too wide) in paragraph at lines 3008--3008
 []\OT1/cmtt/m/n/7 ax.plot([x_r, x_s], [y_r, y_s], [z_r, z_s], color='red', labe
 l='Linea di Vista (LOS)', linewidth=2)[] 
  []
 
-[80]
-Overfull \hbox (48.16081pt too wide) in paragraph at lines 3050--3050
+[81]
+Overfull \hbox (48.16081pt too wide) in paragraph at lines 3069--3069
  []\OT1/cmtt/m/n/7 ax.plot([x_r, x_s], [y_r, y_s], [z_r, z_s], color='red', lab
 el='Linea di Vista (LOS)', linewidth=2)[] 
  []
 
-<Earth_Rome_GEO.png, id=297, 722.7pt x 693.792pt>
+<Earth_Rome_GEO.png, id=303, 722.7pt x 693.792pt>
 File: Earth_Rome_GEO.png Graphic file (type png)
 <use Earth_Rome_GEO.png>
-Package pdftex.def Info: Earth_Rome_GEO.png  used on input line 3054.
+Package pdftex.def Info: Earth_Rome_GEO.png  used on input line 3073.
 (pdftex.def)             Requested size: 512.1496pt x 491.66415pt.
 
-Overfull \hbox (167.1496pt too wide) in paragraph at lines 3054--3056
+Overfull \hbox (167.1496pt too wide) in paragraph at lines 3073--3075
  [] 
  []
 
-[81] [82 <./Earth_Rome_GEO.png>]
-Overfull \hbox (25.84804pt too wide) in paragraph at lines 3099--3099
+[82] [83 <./Earth_Rome_GEO.png>]
+Overfull \hbox (25.84804pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 # La convenzione di Matplotlib per i grafici polari ^^Re ant
 ioraria, quindi aggiustiamo l'angolo[] 
  []
 
 
-Overfull \hbox (115.09914pt too wide) in paragraph at lines 3099--3099
+Overfull \hbox (115.09914pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 angle_plot = np.radians(90 - azimut_deg) # Converti da [0-36
 0 Clockwise from North] a [0-2pi Anticlockwise from East][] 
  []
 
 
-Overfull \hbox (74.19142pt too wide) in paragraph at lines 3099--3099
+Overfull \hbox (74.19142pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 ax.plot([0, angle_plot], [0, 1], color='red', linewidth=3, l
 abel=f'Azimut: {azimut_deg:.1f}\TS1/cmtt/m/n/7 ° \OT1/cmtt/m/n/7 (Sud-Ovest)')[
 ] 
  []
 
 
-Overfull \hbox (100.22395pt too wide) in paragraph at lines 3099--3099
+Overfull \hbox (100.22395pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 ax.text(angle_plot/2, 0.6, 'Azimut', rotation=0, ha='center'
 , va='center', color='darkorange', fontweight='bold')[] 
  []
 
 
-Overfull \hbox (22.12924pt too wide) in paragraph at lines 3099--3099
+Overfull \hbox (22.12924pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 ax.set_theta_direction(-1)      # Imposta la direzione in se
 nso orario (come l'Azimut reale)[] 
  []
 
 
-Overfull \hbox (81.62901pt too wide) in paragraph at lines 3099--3099
+Overfull \hbox (81.62901pt too wide) in paragraph at lines 3118--3118
  []\OT1/cmtt/m/n/7 ax.set_title(f'Vista Orizzontale da Roma: Angolo di Azimut\n
 Elevazione: {elevazione_deg:.1f}\TS1/cmtt/m/n/7 °\OT1/cmtt/m/n/7 ', va='bottom'
 )[] 
  []
 
-<romavsgeo_003.png, id=305, 578.16pt x 578.16pt>
+<romavsgeo_003.png, id=311, 578.16pt x 578.16pt>
 File: romavsgeo_003.png Graphic file (type png)
 <use romavsgeo_003.png>
-Package pdftex.def Info: romavsgeo_003.png  used on input line 3114.
+Package pdftex.def Info: romavsgeo_003.png  used on input line 3133.
 (pdftex.def)             Requested size: 341.43306pt x 341.42903pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 3128--3129
+Underfull \hbox (badness 10000) in paragraph at lines 3147--3148
 
  []
 
-[83]
-<Azimuth-Altitude_schematic_it.png, id=309, 1284.8pt x 1236.62pt>
+[84]
+<Azimuth-Altitude_schematic_it.png, id=315, 1284.8pt x 1236.62pt>
 File: Azimuth-Altitude_schematic_it.png Graphic file (type png)
 <use Azimuth-Altitude_schematic_it.png>
 Package pdftex.def Info: Azimuth-Altitude_schematic_it.png  used on input line 
-3140.
+3159.
 (pdftex.def)             Requested size: 426.79134pt x 410.78416pt.
 
-Overfull \hbox (81.79134pt too wide) in paragraph at lines 3140--3141
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 3159--3160
  [] 
  []
 
 
-Overfull \hbox (2.4698pt too wide) in paragraph at lines 3136--3144
+Overfull \hbox (2.4698pt too wide) in paragraph at lines 3155--3163
 \OT1/cmr/m/n/10 us-are [][]\OT1/cmtt/m/n/10 ax.set_theta_direction(-1) []\OT1/c
 mr/m/n/10 e [][]\OT1/cmtt/m/n/10 set_theta_zero_location('N')[]\OT1/cmr/m/n/10 
 . Senza
  []
 
 
-Overfull \hbox (0.97276pt too wide) in paragraph at lines 3146--3147
+Overfull \hbox (0.97276pt too wide) in paragraph at lines 3165--3166
 \OT1/cmr/m/n/10 Dato che stai la-vo-rando sulla geo-ref-eren-zi-azione, la scel
 ta di queste due proiezioni
  []
 
-[84 <./romavsgeo_003.png>] [85 <./Azimuth-Altitude_schematic_it.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 3158--3166
+[85 <./romavsgeo_003.png>] [86 <./Azimuth-Altitude_schematic_it.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 3177--3185
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3167--3175
+Underfull \hbox (badness 10000) in paragraph at lines 3186--3194
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3175--3177
+Underfull \hbox (badness 10000) in paragraph at lines 3194--3196
 
  []
 
 
-Overfull \hbox (416.00882pt too wide) in paragraph at lines 3184--3184
+Overfull \hbox (416.00882pt too wide) in paragraph at lines 3203--3203
  []\OT1/cmtt/m/n/7 gdalwarp -t_srs "+proj=eqc +lat_0=0 +lon_0=0 +a=3389500 +b=3
 389500" input.tif output_mars_cyl.tif                                          
                                                      [] 
  []
 
-[86]
-Underfull \hbox (badness 10000) in paragraph at lines 3186--3190
+[87]
+Underfull \hbox (badness 10000) in paragraph at lines 3205--3209
 
  []
 
 
-Overfull \hbox (442.04039pt too wide) in paragraph at lines 3192--3192
+Overfull \hbox (442.04039pt too wide) in paragraph at lines 3211--3211
  []\OT1/cmtt/m/n/7 dalwarp -t_srs "+proj=ortho +lat_0=0 +lon_0=0 +a=1737100 +b=
 1737100" input.tif output_moon_ortho.tif                                       
                                                             [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3195--3197
+Underfull \hbox (badness 10000) in paragraph at lines 3214--3216
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3198--3199
+Underfull \hbox (badness 10000) in paragraph at lines 3217--3218
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3199--3200
+Underfull \hbox (badness 10000) in paragraph at lines 3218--3219
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3206--3208
+Underfull \hbox (badness 10000) in paragraph at lines 3225--3227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3209--3215
+Underfull \hbox (badness 10000) in paragraph at lines 3228--3234
 
  []
 
 
-Overfull \hbox (394.00882pt too wide) in paragraph at lines 3217--3217
+Overfull \hbox (394.00882pt too wide) in paragraph at lines 3236--3236
  []\OT1/cmtt/m/n/7 gdalwarp -t_srs "+proj=eqc +lat_0=0 +lon_0=0 +a=3389500 +b=3
 389500" input.tif output_mars_cyl.tif                                          
                                                      [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3219--3223
+Underfull \hbox (badness 10000) in paragraph at lines 3238--3242
 
  []
 
 
-Overfull \hbox (427.47798pt too wide) in paragraph at lines 3225--3225
+Overfull \hbox (427.47798pt too wide) in paragraph at lines 3244--3244
  []\OT1/cmtt/m/n/7 gdalwarp -t_srs "+proj=ortho +lat_0=0 +lon_0=0 +a=1737100 +b
 =1737100" input.tif output_moon_ortho.tif                                      
                                                               [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3227--3229
-
- []
-
-[87]
-Underfull \hbox (badness 10000) in paragraph at lines 3231--3232
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3241--3242
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3243--3250
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3250--3256
+Underfull \hbox (badness 10000) in paragraph at lines 3246--3248
 
  []
 
 [88]
-Overfull \hbox (3.65334pt too wide) in paragraph at lines 3256--3260
+Underfull \hbox (badness 10000) in paragraph at lines 3250--3251
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3260--3261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3262--3269
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3269--3275
+
+ []
+
+[89]
+Overfull \hbox (3.65334pt too wide) in paragraph at lines 3275--3279
 \OT1/cmr/m/n/10 Dato che i satel-liti plan-e-tari non sono fissi come i GEO, il
  cal-colo dell'azimut
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3256--3260
+Underfull \hbox (badness 10000) in paragraph at lines 3275--3279
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3260--3262
+Underfull \hbox (badness 10000) in paragraph at lines 3279--3281
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3264--3265
+Underfull \hbox (badness 10000) in paragraph at lines 3283--3284
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3265--3266
+Underfull \hbox (badness 10000) in paragraph at lines 3284--3285
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3266--3267
+Underfull \hbox (badness 10000) in paragraph at lines 3285--3286
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3274--3276
-
- []
-
-[89]
-Underfull \hbox (badness 10000) in paragraph at lines 3277--3278
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3278--3279
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3279--3280
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3281--3284
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3284--3288
+Underfull \hbox (badness 10000) in paragraph at lines 3293--3295
 
  []
 
 [90]
-Overfull \hbox (34.31717pt too wide) in paragraph at lines 3316--3316
+Underfull \hbox (badness 10000) in paragraph at lines 3296--3297
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3297--3298
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3298--3299
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3300--3303
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3303--3307
+
+ []
+
+[91]
+Overfull \hbox (34.31717pt too wide) in paragraph at lines 3335--3335
 []\OT1/cmtt/m/n/7 gdal_translate -a_srs "+proj=geos +h=35785831 +lon_0=0 +x_0=0
  +y_0=0 +ellps=WGS84 +units=m +no_defs" \[] 
  []
 
-(./gemini_earth_ortographic_001.bbl [91]) (./gemini_earth_ortographic_001.ind
-[92] [93
+(./gemini_earth_ortographic_001.bbl [92]) (./gemini_earth_ortographic_001.ind
+[93] [94
 
 
 ]) (./gemini_earth_ortographic_001.aux) ) 
 Here is how much of TeX's memory you used:
- 2275 strings out of 480163
- 37104 string characters out of 5894093
+ 2296 strings out of 480163
+ 37603 string characters out of 5894093
  341655 words of memory out of 5000000
- 20196 multiletter control sequences out of 15000+600000
+ 20214 multiletter control sequences out of 15000+600000
  478445 words of font info for 60 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  55i,11n,62p,1242b,437s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1826,10 +1859,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf/fonts/type1/public
 /cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.p
 fb>
-Output written on gemini_earth_ortographic_001.pdf (93 pages, 1934128 bytes).
+Output written on gemini_earth_ortographic_001.pdf (94 pages, 1993171 bytes).
 PDF statistics:
- 451 PDF objects out of 1000 (max. 8388607)
- 282 compressed objects within 3 object streams
+ 457 PDF objects out of 1000 (max. 8388607)
+ 284 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 76 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

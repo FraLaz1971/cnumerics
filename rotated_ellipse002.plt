@@ -1,4 +1,6 @@
-set terminal wxt persist
+#set terminal wxt persist
+set terminal pngcairo
+set output 'rotated_ellipse002.png'
 set parametric
 set trange [0:2*pi]
 set samples 500

@@ -1,0 +1,254 @@
+We are going to explain direction cosines and then show how they are used in 2D and 3D 
+rotations. Then we will create gnuplot scripts to display the rotations.
+
+Direction Cosines:
+In geometry, the direction cosines of a vector are the cosines of the angles between the
+vector and the three coordinate axes.
+For a 3D vector v = (x, y, z), the direction cosines are:
+   l = cos(α) = x / |v|
+   m = cos(β) = y / |v|
+   n = cos(γ) = z / |v|
+where α, β, γ are the angles that the vector makes with the x, y, z axes respectively, and |v|
+is the magnitude of the vector.
+
+ In 2D, we only have two angles with the x and y axes.
+
+Direction cosines are useful for representing the orientation of a vector and are used in
+rotation matrices.
+
+Rotation Matrices using Direction Cosines:
+In 3D, the rotation matrix that aligns a vector with the x-axis (for example) can be
+constructed using direction cosines.
+However, note that direction cosines are more about describing the direction of a vector
+relative to the axes.
+
+For a rotation that takes a vector v to the x-axis, we can use the following idea:
+
+Let u = (l, m, n) be the unit vector in the direction of v. Then the rotation matrix that
+rotates the coordinate system so that the x-axis align with u can be given by:
+
+   R = [ [ l, m, n ],
+         [ ... ] ]   but note: this is not the standard way.
+
+Actually, the standard rotation matrix that rotates a vector about an axis by an angle θ is
+given by the Rodrigues' rotation formula or by using Euler angles. But if we want to rotate the 
+coordinate system so that the x-axis becomes aligned with a given vector (with direction 
+cosines l, m, n), we need to find a rotation that does that.
+
+However, note: direction cosines are also used to define the rotation matrix for a rotation
+about an arbitrary axis. But let's stick to the standard rotations.
+
+Alternatively, we can think of the direction cosines as defining the new basis vectors. In
+fact, the direction cosines of the new axes relative to the old axes form the rows (or columns, 
+depending on convention) of the rotation matrix.
+
+But let's simplify: for 2D and 3D rotations about the coordinate axes, we use the standard
+rotation matrices.
+
+Application to 2D and 3D Rotations:
+
+In 2D, a rotation by an angle θ about the origin is given by:
+   x' = x*cos(θ) - y*sin(θ)
+   y' = x*sin(θ) + y*cos(θ)
+
+In 3D, we have rotations about the x, y, and z axes. For example, rotation about the z-axis by
+angle θ:
+   x' = x*cos(θ) - y*sin(θ)
+   y' = x*sin(θ) + y*cos(θ)
+   z' = z
+
+Similarly, we can rotate about x or y.
+
+But if we want to rotate about an arbitrary axis, we can use the direction cosines of the axis
+vector to form the rotation matrix.
+
+However, for simplicity, we'll demonstrate rotations about the coordinate axes.
+
+Now, let's create gnuplot scripts for 2D and 3D rotations.
+
+2D Rotation Example:
+We'll take a 2D figure (a square) and rotate it by an angle (say 45 degrees).
+
+3D Rotation Example:
+We'll take a 3D solid (a cube) and rotate it by an angle about the z-axis.
+
+We'll plot the original and rotated figures.
+
+Let's write the gnuplot scripts.
+
+2D Rotation Script:
+
+Steps:
+ 1. Define the original square (4 points).
+ 2. Apply a 2D rotation matrix to each point.
+ 3. Plot the original and rotated squares.
+
+3D Rotation Script:
+
+ Steps:
+ 1. Define the original cube (8 points and edges).
+ 2. Apply a 3D rotation matrix (about z-axis) to each point.
+ 3. Plot the original and rotated cubes.
+
+We'll use gnuplot's ability to plot lines and polygons.
+
+Let's start with 2D.
+
+2D Gnuplot Script:
+
+### Direction Cosines: Meaning and Use
+
+**Direction cosines** are the cosines of the angles between a vector and the coordinate axes. 
+For a vector \(\mathbf{v} = (x, y, z)\):
+- \(l = \cos \alpha = \frac{x}{\|\mathbf{v}\|}\) (angle with x-axis),
+- \(m = \cos \beta = \frac{y}{\|\mathbf{v}\|}\) (angle with y-axis),
+- \(n = \cos \gamma = \frac{z}{\|\mathbf{v}\|}\) (angle with z-axis).
+
+They define the orientation of \(\mathbf{v}\) and satisfy \(l^2 + m^2 + n^2 = 1\). In 
+rotations, direction cosines help construct **rotation matrices** that transform vectors or 
+objects.
+
+---
+
+### Rotation Matrices Using Direction Cosines
+
+#### 2D Rotation
+For rotation by angle \(\theta\) (counterclockwise):
+\[
+\begin{bmatrix}
+x' \\ y'
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix}.
+\]
+
+#### 3D Rotation
+For rotation about an axis defined by unit vector \(\mathbf{u} = (l, m, n)\), the rotation 
+matrix \(R\) (Rodrigues' formula) is:
+\[
+R = I + (\sin\theta) K + (1 - \cos\theta) K^2,
+\]
+where \(K = \begin{bmatrix} 0 & -n & m \\ n & 0 & -l \\ -m & l & 0 \end{bmatrix}\).
+
+---
+
+### Gnuplot Scripts for Visualizing Rotations
+
+#### 1. 2D Rotation (Square)
+**Script**:
+```gnuplot
+set term png size 800,400
+set output "2d_rotation.png"
+set multiplot layout 1,2
+
+# Original square
+set title "Before Rotation"
+set xrange [-2:2]
+set yrange [-2:2]
+set size ratio 1
+plot '-' with lines title "Square"
+1 1
+1 -1
+-1 -1
+-1 1
+1 1
+e
+
+# Rotated square (45 degrees)
+set title "After Rotation (45°)"
+theta = pi/4
+s = sin(theta)
+c = cos(theta)
+plot '-' using (c*$1 - s*$2):(s*$1 + c*$2) with lines title "Rotated Square"
+1 1
+1 -1
+-1 -1
+-1 1
+1 1
+e
+
+unset multiplot
+```
+
+**Explanation**:  
+- Plots a square before and after a 45° rotation.
+- The transformation is applied using the 2D rotation matrix.
+
+---
+
+#### 2. 3D Rotation (Cube)
+**Script**:
+```gnuplot
+set term png size 800,400
+set output "3d_rotation.png"
+set multiplot layout 1,2
+
+# Original cube
+set title "Before Rotation"
+set xrange [-2:2]
+set yrange [-2:2]
+set zrange [-2:2]
+set view 60, 45, 1.5
+splot 'cube.dat' with lines title "Cube"
+
+# Rotated cube (45° about z-axis)
+set title "After Rotation (45° about Z)"
+theta = pi/4
+s = sin(theta)
+c = cos(theta)
+splot 'cube.dat' using (c*$1 - s*$2):(s*$1 + c*$2):3 with lines title "Rotated Cube"
+
+unset multiplot
+```
+
+**Data File (`cube.dat`)**:
+```
+1 1 1
+1 -1 1
+-1 -1 1
+-1 1 1
+1 1 1
+
+1 1 -1
+1 -1 -1
+-1 -1 -1
+-1 1 -1
+1 1 -1
+
+1 1 1
+1 1 -1
+
+1 -1 1
+1 -1 -1
+
+-1 -1 1
+-1 -1 -1
+
+-1 1 1
+-1 1 -1
+```
+
+**Explanation**:  
+- Plots a cube before and after a 45° rotation about the z-axis.
+- The transformation uses the 3D rotation matrix for the z-axis.
+
+---
+
+### Running the Scripts
+1. Save the scripts as `.plt` files and the cube data as `cube.dat`.
+2. Run with:
+   ```bash
+   gnuplot 2d_rotation.plt
+   gnuplot 3d_rotation.plt
+   ```
+3. Outputs: `2d_rotation.png` and `3d_rotation.png`.
+
+This demonstrates how direction cosines underpin rotation matrices and their visual effects in 
+2D/3D spaces.
+

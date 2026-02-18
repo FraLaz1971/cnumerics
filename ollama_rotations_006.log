@@ -1,0 +1,424 @@
+We are going to create a gnuplot script that visualizes a 3D cube and its rotation around all three axes (x, y, z). 
+ The rotation will be defined by a rotation matrix that combines rotations around each axis. 
+ We'll use the following rotation matrices:
+
+   R_x(α) = [1, 0, 0; 0, cos(α), -sin(α); 0, sin(α), cos(α)]
+   R_y(β) = [cos(β), 0, sin(β); 0, 1, 0; -sin(β), 0, cos(β)]
+   R_z(γ) = [cos(γ), -sin(γ), 0; sin(γ), cos(γ), 0; 0, 0, 1]
+
+ The combined rotation matrix R = R_z(γ) * R_y(β) * R_x(α) (applied in order: x, then y, then z).
+
+ However, note: the order of multiplication matters. We'll define the rotation as:
+   [x']   [cos(γ) -sin(γ) 0] [cos(β)  0  sin(β)] [1     0      0   ] [x]
+   [y'] = [sin(γ)  cos(γ) 0] [0       1     0   ] [0  cos(α) -sin(α)] [y]
+   [z']   [0       0      1] [-sin(β) 0  cos(β)] [0  sin(α)  cos(α)] [z]
+
+ We can break it down step by step, but in gnuplot we can apply the matrix multiplication by breaking into steps or precomputing the combined matrix.
+
+ Alternatively, we can apply the rotations in the following order (which is common in aerospace, for example, using Euler angles):
+   First rotate around x-axis by α, then around y-axis by β, then around z-axis by γ.
+
+ Let's define:
+   alpha = rotation around x-axis (in radians)
+   beta  = rotation around y-axis (in radians)
+   gamma = rotation around z-axis (in radians)
+
+ We will create a function for the rotated coordinates:
+
+   x_rot = cos(gamma)*cos(beta)*x + (cos(gamma)*sin(beta)*sin(alpha) - sin(gamma)*cos(alpha))*y + (cos(gamma)*sin(beta)*cos(alpha) + sin(gamma)*sin(alpha))*z
+   y_rot = sin(gamma)*cos(beta)*x + (sin(gamma)*sin(beta)*sin(alpha) + cos(gamma)*cos(alpha))*y + (sin(gamma)*sin(beta)*cos(alpha) - cos(gamma)*sin(alpha))*z
+   z_rot = -sin(beta)*x + cos(beta)*sin(alpha)*y + cos(beta)*cos(alpha)*z
+
+ But note: the above is the combined rotation matrix for the order: x, then y, then z.
+
+ However, let me derive step by step:
+
+ Step 1: Rotate around x by alpha:
+   x1 = x
+   y1 = y*cos(alpha) - z*sin(alpha)
+   z1 = y*sin(alpha) + z*cos(alpha)
+
+ Step 2: Rotate around y by beta:
+   x2 = x1*cos(beta) + z1*sin(beta)
+   y2 = y1
+   z2 = -x1*sin(beta) + z1*cos(beta)
+
+ Step 3: Rotate around z by gamma:
+   x3 = x2*cos(gamma) - y2*sin(gamma)
+   y3 = x2*sin(gamma) + y2*cos(gamma)
+   z3 = z2
+
+ So we can write the transformation in gnuplot as:
+
+   x_rot = (x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(beta)) * cos(gamma) - (y*cos(alpha) - z*sin(alpha)) * sin(gamma)
+   y_rot = (x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(beta)) * sin(gamma) + (y*cos(alpha) - z*sin(alpha)) * cos(gamma)
+   z_rot = -x*sin(beta) + (y*sin(alpha) + z*cos(alpha))*cos(beta)
+
+ Let's set some example angles, say 45 degrees around each axis.
+
+ But note: the above is one common order (Z-Y-X). There are multiple conventions. We'll stick with this.
+
+ We'll create a data file for a cube. The cube data file 'cube.dat' should contain the coordinates of the cube's edges.
+
+ Let's generate the cube data. The cube has 8 vertices and we'll draw 12 edges.
+
+ Alternatively, we can use a function to generate the cube, but let's assume we have a file 'cube.dat' that has the data in the format:
+
+   x1 y1 z1
+   x2 y2 z2
+   ... 
+
+ and we use `with lines` to connect the points. We need to define the edges appropriately.
+
+ We can create a cube with vertices at (±1, ±1, ±1). We'll list the edges in order.
+
+ Let me create the cube data:
+
+   -1 -1 -1
+    1 -1 -1
+    1  1 -1
+   -1  1 -1
+   -1 -1 -1  (close the bottom face)
+
+   -1 -1  1
+    1 -1  1
+    1  1  1
+   -1  1  1
+   -1 -1  1  (close the top face)
+
+   Then draw the vertical edges:
+   -1 -1 -1
+   -1 -1  1
+
+    1 -1 -1
+    1 -1  1
+
+    1  1 -1
+    1  1  1
+
+   -1  1 -1
+   -1  1  1
+
+ But note: the data must be separated by blank lines to break the lines.
+
+ Alternatively, we can structure the data to draw each face as a closed loop and then the vertical edges.
+
+ However, for simplicity, we can create a file with the following structure (12 edges, each edge two points, separated by blank line):
+
+   -1 -1 -1
+    1 -1 -1
+
+    1 -1 -1
+    1  1 -1
+
+    1  1 -1
+   -1  1 -1
+
+   -1  1 -1
+   -1 -1 -1
+
+   -1 -1  1
+    1 -1  1
+
+    1 -1  1
+    1  1  1
+
+    1  1  1
+   -1  1  1
+
+   -1  1  1
+   -1 -1  1
+
+   -1 -1 -1
+   -1 -1  1
+
+    1 -1 -1
+    1 -1  1
+
+    1  1 -1
+    1  1  1
+
+   -1  1 -1
+   -1  1  1
+
+ But note: gnuplot `with lines` will connect consecutive points. So we can also do:
+
+   -1 -1 -1
+    1 -1 -1
+    1  1 -1
+   -1  1 -1
+   -1 -1 -1
+
+   -1 -1  1
+    1 -1  1
+    1  1  1
+   -1  1  1
+   -1 -1  1
+
+   -1 -1 -1
+   -1 -1  1
+
+    1 -1 -1
+    1 -1  1
+
+    1  1 -1
+    1  1  1
+
+   -1  1 -1
+   -1  1  1
+
+ And separate each block with two blank lines? Actually, gnuplot requires one blank line to separate data blocks.
+
+ But we are going to use the following structure for the cube.dat:
+
+   # bottom face
+   -1 -1 -1
+    1 -1 -1
+    1  1 -1
+   -1  1 -1
+   -1 -1 -1
+
+   # top face
+   -1 -1  1
+    1 -1  1
+    1  1  1
+   -1  1  1
+   -1 -1  1
+
+   # vertical edges
+   -1 -1 -1
+   -1 -1  1
+
+    1 -1 -1
+    1 -1  1
+
+    1  1 -1
+    1  1  1
+
+   -1  1 -1
+   -1  1  1
+
+ And we separate each block (face and each edge) by a blank line.
+
+ Now, we'll write the gnuplot script.
+
+ Steps:
+   1. Set terminal and output.
+   2. Set multiplot to show original and rotated cube side by side.
+   3. Define the rotation angles (in degrees, then convert to radians).
+   4. For the rotated cube, apply the rotation to each point.
+
+ Let's set:
+
+   alpha = 45  # around x
+   beta  = 45  # around y
+   gamma = 45  # around z
+
+ But note: 45 degrees in radians is pi/4.
+
+ We'll define:
+
+   a = alpha * pi/180
+   b = beta * pi/180
+   c = gamma * pi/180
+
+ Then use the formulas:
+
+   x_rot = (x*cos(b) + (y*sin(a) + z*cos(a))*sin(b)) * cos(c) - (y*cos(a) - z*sin(a)) * sin(c)
+   y_rot = (x*cos(b) + (y*sin(a) + z*cos(a))*sin(b)) * sin(c) + (y*cos(a) - z*sin(a)) * cos(c)
+   z_rot = -x*sin(b) + (y*sin(a) + z*cos(a))*cos(b)
+
+ We'll plot the original cube and the rotated cube.
+
+ Let's write the script.
+...done thinking.
+
+I'll create an example of 3D rotation with rotation matrices and modify the gnuplot script accordingly. Here's a comprehensive approach:
+
+## Rotation Matrices for 3D Rotation
+
+The rotation matrices around each axis are:
+
+**Rotation around X-axis (α):**
+```
+R_x(α) = [1     0        0    ]
+         [0   cos(α)   -sin(α)]
+         [0   sin(α)    cos(α)]
+```
+
+**Rotation around Y-axis (β):**
+```
+R_y(β) = [cos(β)    0    sin(β)]
+         [0         1       0   ]
+         [-sin(β)   0    cos(β)]
+```
+
+**Rotation around Z-axis (γ):**
+```
+R_z(γ) = [cos(γ)   -sin(γ)   0]
+         [sin(γ)    cos(γ)   0]
+         [0          0       1]
+```
+
+## Modified Gnuplot Script
+
+```gnuplot
+# Set terminal and output
+set terminal pngcairo enhanced font "Arial,12" size 1600,800
+set output "3d_rotation_complete.png"
+
+# Set margins and layout
+set multiplot layout 2,2 spacing 20
+
+# Common settings
+set xyplane at 0
+set view 60, 30, 1.2, 1
+set border 4095
+set ticslevel 0
+set hidden3d
+set view equal xyz
+
+# Define rotation angles (in degrees)
+alpha = 30 * pi/180  # 30 degrees around X-axis
+beta = 45 * pi/180   # 45 degrees around Y-axis
+gamma = 60 * pi/180  # 60 degrees around Z-axis
+
+# First plot: Original cube
+set title "Original Cube" offset 0,-1
+set xlabel "X Axis" offset 0,1
+set ylabel "Y Axis" offset 0,1
+set zlabel "Z Axis" rotate by 90 offset -1,0
+splot 'cube.dat' using 1:2:3 with lines title "" lw 2
+
+# Second plot: Rotated around X-axis
+set title "Rotation around X-axis (α=30°)" offset 0,-1
+splot 'cube.dat' using 1:($2*cos(alpha) - $3*sin(alpha)):($2*sin(alpha) + $3*cos(alpha)) with lines title "" lw 2
+
+# Third plot: Rotated around Y-axis
+set title "Rotation around Y-axis (β=45°)" offset 0,-1
+splot 'cube.dat' using ($1*cos(beta) + $3*sin(beta)):2:(-$1*sin(beta) + $3*cos(beta)) with lines title "" lw 2
+
+# Fourth plot: Rotated around Z-axis
+set title "Rotation around Z-axis (γ=60°)" offset 0,-1
+splot 'cube.dat' using ($1*cos(gamma) - $2*sin(gamma)):($1*sin(gamma) + $2*cos(gamma)):3 with lines title "" lw 2
+
+unset multiplot
+
+# Combined rotation plot
+set terminal pngcairo enhanced font "Arial,12" size 1200,600
+set output "3d_rotation_combined.png"
+set multiplot layout 1,2 spacing 20
+
+# Combined rotation (R_z * R_y * R_x)
+set title "Original Cube" offset 0,-1
+splot 'cube.dat' using 1:2:3 with lines title "" lw 2
+
+set title "Combined Rotation (R_z(60°)·R_y(45°)·R_x(30°))" offset 0,-1
+splot 'cube.dat' using \
+    (($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(beta))*cos(gamma) - (($2*cos(alpha) - $3*sin(alpha))*sin(gamma))), \
+    (($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(beta))*sin(gamma) + (($2*cos(alpha) - $3*sin(alpha))*cos(gamma))), \
+    (-$1*sin(beta) + ($2*sin(alpha) + $3*cos(alpha))*cos(beta)) \
+    with lines title "" lw 2
+
+unset multiplot
+```
+
+## Cube Data File (`cube.dat`)
+
+Create a file called `cube.dat` with the following content:
+
+```
+# Cube vertices
+-1 -1 -1
+1 -1 -1
+1 1 -1
+-1 1 -1
+-1 -1 -1
+
+-1 -1 1
+1 -1 1
+1 1 1
+-1 1 1
+-1 -1 1
+
+1 -1 -1
+1 -1 1
+
+1 1 -1
+1 1 1
+
+-1 1 -1
+-1 1 1
+
+-1 -1 -1
+-1 -1 1
+```
+
+## Alternative Script with Step-by-Step Visualization
+
+```gnuplot
+# Step-by-step rotation visualization
+set terminal pngcairo enhanced font "Arial,12" size 1600,1200
+set output "3d_rotation_step_by_step.png"
+
+set multiplot layout 3,3 spacing 15
+
+# Define angles
+alpha = 30 * pi/180
+beta = 45 * pi/180  
+gamma = 60 * pi/180
+
+# Row 1: X-axis rotation steps
+set view 60, 30
+set title "Original" offset 0,-1
+splot 'cube.dat' using 1:2:3 with lines lw 2
+
+set title "After R_x(30°)" offset 0,-1
+splot 'cube.dat' using 1:($2*cos(alpha) - $3*sin(alpha)):($2*sin(alpha) + $3*cos(alpha)) with lines lw 2
+
+set title "After R_x(30°)·R_y(45°)" offset 0,-1
+splot 'cube.dat' using \
+    ($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(beta)) : \
+    ($2*cos(alpha) - $3*sin(alpha)) : \
+    (-$1*sin(beta) + ($2*sin(alpha) + $3*cos(alpha))*cos(beta)) \
+    with lines lw 2
+
+# Row 2: Y-axis rotation steps
+set title "Original" offset 0,-1
+splot 'cube.dat' using 1:2:3 with lines lw 2
+
+set title "After R_y(45°)" offset 0,-1
+splot 'cube.dat' using ($1*cos(beta) + $3*sin(beta)):2:(-$1*sin(beta) + $3*cos(beta)) with lines lw 2
+
+set title "After R_y(45°)·R_z(60°)" offset 0,-1
+splot 'cube.dat' using \
+    (($1*cos(beta) + $3*sin(beta))*cos(gamma) - $2*sin(gamma)) : \
+    (($1*cos(beta) + $3*sin(beta))*sin(gamma) + $2*cos(gamma)) : \
+    (-$1*sin(beta) + $3*cos(beta)) \
+    with lines lw 2
+
+# Row 3: Z-axis rotation steps  
+set title "Original" offset 0,-1
+splot 'cube.dat' using 1:2:3 with lines lw 2
+
+set title "After R_z(60°)" offset 0,-1
+splot 'cube.dat' using ($1*cos(gamma) - $2*sin(gamma)):($1*sin(gamma) + $2*cos(gamma)):3 with lines lw 2
+
+set title "After R_z(60°)·R_x(30°)" offset 0,-1
+splot 'cube.dat' using \
+    ($1*cos(gamma) - $2*sin(gamma)) : \
+    (($1*sin(gamma) + $2*cos(gamma))*cos(alpha) - $3*sin(alpha)) : \
+    (($1*sin(gamma) + $2*cos(gamma))*sin(alpha) + $3*cos(alpha)) \
+    with lines lw 2
+
+unset multiplot
+```
+
+This script demonstrates:
+
+1. **Individual rotations** around each axis (X, Y, Z)
+2. **Combined rotations** showing the effect of applying multiple rotation matrices
+3. **Step-by-step visualization** showing how rotations accumulate
+
+The rotation matrices are applied in the order specified (note that matrix multiplication is not commutative, so order matters).
+

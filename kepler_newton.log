@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  16 FEB 2026 13:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.1.30)  18 FEB 2026 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -113,6 +113,14 @@ LaTeX Info: Redefining \] on input line 2939.
 (/usr/share/texlive/texmf-dist/tex/latex/was/gensymb.sty
 Package: gensymb 2003/07/02 v1.0 (WaS)
 )
+(/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2021/10/04 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `kepler_newton.idx'.
+
+
+Writing index file kepler_newton.idx
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count271
@@ -121,20 +129,20 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 (./kepler_newton.aux)
 \openout1 = `kepler_newton.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -158,127 +166,617 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \celsius on input line 10.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 10.
+LaTeX Info: Redefining \celsius on input line 12.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 12.
 
 
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 10.
-Package gensymb Info: Using \Omega for \ohm on input line 10.
+LaTeX Info: Redefining \ohm on input line 12.
+Package gensymb Info: Using \Omega for \ohm on input line 12.
 
 Package gensymb Warning: Not defining \micro.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<Kepler2ndLow.png, id=11, 1484.54625pt x 1004.75375pt>
-File: Kepler2ndLow.png Graphic file (type png)
-<use Kepler2ndLow.png>
-Package pdftex.def Info: Kepler2ndLow.png  used on input line 44.
-(pdftex.def)             Requested size: 426.79134pt x 288.8568pt.
-
-Overfull \hbox (81.79134pt too wide) in paragraph at lines 44--45
- [] 
- []
-
-
-Overfull \hbox (0.36177pt too wide) in paragraph at lines 69--73
-\OT1/cmr/m/n/10 Kepler de-rived this law through metic-u-lous ob-ser-va-tion of
- plan-e-tary data (specif-
- []
-
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./kepler_newton.toc
 [2
 
-] [3 <./Kepler2ndLow.png>]
-Overfull \hbox (15.02957pt too wide) in paragraph at lines 101--114
- [] 
- []
+])
+\tf@toc=\write4
+\openout4 = `kepler_newton.toc'.
 
+ [3] [4
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--117
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 134--139
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 164--165
+]
+Underfull \hbox (badness 10000) in paragraph at lines 70--83
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 174--175
+Underfull \hbox (badness 10000) in paragraph at lines 109--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
+Underfull \hbox (badness 10000) in paragraph at lines 128--140
 
  []
 
 [6]
-Overfull \hbox (61.86159pt too wide) in paragraph at lines 220--233
+<cube_1.png, id=38, 462.528pt x 346.896pt>
+File: cube_1.png Graphic file (type png)
+<use cube_1.png>
+Package pdftex.def Info: cube_1.png  used on input line 185.
+(pdftex.def)             Requested size: 426.79134pt x 320.11154pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 185--186
+ [] 
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
+
+ []
+
+[8 <./cube_1.png>]
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+265.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 265--265
+[]\OT1/cmtt/m/n/10 plot '-' using (c*$1 - s*$2):(s*$1 + c*$2) with lines title 
+"Rotated Square"[] 
+ []
+
+<2d_rotation.png, id=48, 803.0pt x 401.5pt>
+File: 2d_rotation.png Graphic file (type png)
+<use 2d_rotation.png>
+Package pdftex.def Info: 2d_rotation.png  used on input line 269.
+(pdftex.def)             Requested size: 426.79134pt x 213.40048pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 269--270
+ [] 
+ []
+
+[9] [10 <./2d_rotation.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 280--283
+
+ []
+
+
+Overfull \hbox (74.99634pt too wide) in paragraph at lines 338--338
+[]\OT1/cmtt/m/n/10 /* This program plots a square on the X,Y plane with edge 1 
+parallel to the axes[] 
+ []
+
+
+Overfull \hbox (95.99615pt too wide) in paragraph at lines 338--338
+[] \OT1/cmtt/m/n/10 and then plots the same square rotated by an angle theta gi
+ven in input by the user[] 
+ []
+
+
+Overfull \hbox (17.24684pt too wide) in paragraph at lines 338--338
+[]    \OT1/cmtt/m/n/10 fprintf(gpp,"plot 'square.dat' with lines title 'Square'
+, \\\n");[] 
+ []
+
+
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 338--338
+[]    \OT1/cmtt/m/n/10 fprintf(gpp,"'square.dat' with labels notitle offset 0.6
+,0.5 \n");[] 
+ []
+
+
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 338--338
+[]    \OT1/cmtt/m/n/10 fprintf(gpp,"plot 'square.dat' using (c*$1 - s*$2):(s*$1
+ + c*$2) \[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 338--338
+[]    \OT1/cmtt/m/n/10 fprintf(gpp,"'square.dat'using (c*$1 - s*$2):(s*$1 + c*$
+2):3 \[] 
+ []
+
+[11
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 339--341
+
+ []
+
+<2d_rotation_input.png, id=59, 803.0pt x 401.5pt>
+File: 2d_rotation_input.png Graphic file (type png)
+<use 2d_rotation_input.png>
+Package pdftex.def Info: 2d_rotation_input.png  used on input line 350.
+(pdftex.def)             Requested size: 426.79134pt x 213.40048pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 350--351
+ [] 
+ []
+
+<2d_rotated_triangle.png, id=60, 803.0pt x 401.5pt>
+File: 2d_rotated_triangle.png Graphic file (type png)
+<use 2d_rotated_triangle.png>
+Package pdftex.def Info: 2d_rotated_triangle.png  used on input line 358.
+(pdftex.def)             Requested size: 426.79134pt x 213.40048pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 358--359
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 364--367
+
+ []
+
+[12 <./2d_rotation_input.png>] [13 <./2d_rotated_triangle.png>]
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 423--423
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(theta) - $2*sin(theta)):($1*s
+in(theta) + \[] 
+ []
+
+
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 423--423
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(theta2) - $2*sin(theta2)):($1
+*sin(theta2) + \[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 424--427
+
+ []
+
+[14]
+<3d_rotation_alternative.png, id=71, 1204.5pt x 602.25pt>
+File: 3d_rotation_alternative.png Graphic file (type png)
+<use 3d_rotation_alternative.png>
+Package pdftex.def Info: 3d_rotation_alternative.png  used on input line 455.
+(pdftex.def)             Requested size: 426.79134pt x 213.4005pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 455--456
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 467--469
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 473--474
+
+ []
+
+[15 <./3d_rotation_alternative.png>] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 528--531
+
+ []
+
+[17]
+Overfull \hbox (115.74623pt too wide) in paragraph at lines 555--555
+ []\OT1/cmtt/m/n/10 # Since we are looking along Z, the Z coordinate will be ig
+nored in the projection,[] 
+ []
+
+
+Overfull \hbox (21.24582pt too wide) in paragraph at lines 555--555
+ []\OT1/cmtt/m/n/10 set title "Cube Rotated 60\TS1/cmtt/m/n/10 ° \OT1/cmtt/m/n/
+10 around Z Axis (Top-Down)" offset 0,-1[] 
+ []
+
+
+Overfull \hbox (68.49664pt too wide) in paragraph at lines 555--555
+ []\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(theta2) - $2*sin(theta2)):($
+1*sin(theta2) \[] 
+ []
+
+
+Overfull \hbox (42.24687pt too wide) in paragraph at lines 556--566
+[][]\OT1/cmtt/m/n/10 ($1*cos(theta2) - $2*sin(theta2)):($1*sin(theta2) + $2*cos
+(theta2)):3
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 556--566
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 572--574
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 604--607
+
+ []
+
+[19]
+Overfull \hbox (72.03604pt too wide) in paragraph at lines 641--641
+[]   \OT1/cmtt/m/n/5 x_rot = cos(gamma)*cos(beta)*x + (cos(gamma)*sin(beta)*sin
+(alpha) - sin(gamma)*cos(alpha))*y + (cos(gamma)*sin(beta)*cos(alpha) + sin(gam
+ma)*sin(alpha))*z[] 
+ []
+
+
+Overfull \hbox (72.03604pt too wide) in paragraph at lines 641--641
+[]   \OT1/cmtt/m/n/5 y_rot = sin(gamma)*cos(beta)*x + (sin(gamma)*sin(beta)*sin
+(alpha) + cos(gamma)*cos(alpha))*y + (sin(gamma)*sin(beta)*cos(alpha) - cos(gam
+ma)*sin(alpha))*z[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 643--645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 665--668
+
+ []
+
+
+Overfull \hbox (116.13068pt too wide) in paragraph at lines 672--672
+[]   \OT1/cmtt/m/n/7 x_rot = (x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(b
+eta)) * cos(gamma) - (y*cos(alpha) - z*sin(alpha)) * sin(gamma)[] 
+ []
+
+
+Overfull \hbox (116.13068pt too wide) in paragraph at lines 672--672
+[]   \OT1/cmtt/m/n/7 y_rot = (x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(b
+eta)) * sin(gamma) + (y*cos(alpha) - z*sin(alpha)) * cos(gamma)[] 
+ []
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 752--753
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 758--760
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 767--770
+
+ []
+
+
+Overfull \hbox (4.5668pt too wide) in paragraph at lines 774--774
+[]   \OT1/cmtt/m/n/7 x_rot = (x*cos(b) + (y*sin(a) + z*cos(a))*sin(b)) * cos(c)
+ - (y*cos(a) - z*sin(a)) * sin(c)[] 
+ []
+
+
+Overfull \hbox (4.5668pt too wide) in paragraph at lines 774--774
+[]   \OT1/cmtt/m/n/7 y_rot = (x*cos(b) + (y*sin(a) + z*cos(a))*sin(b)) * sin(c)
+ + (y*cos(a) - z*sin(a)) * cos(c)[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 776--781
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 789--791
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 799--801
+
+ []
+
+[22]
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 875--875
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using 1:($2*cos(alpha) - $3*sin(alpha)):($2
+*sin(alpha) \[] 
+ []
+
+
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 875--875
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(beta) + $3*sin(beta)):2:(-$1*
+sin(beta) \[] 
+ []
+
+
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 875--875
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(gamma) - $2*sin(gamma)):($1*s
+in(gamma) \[] 
+ []
+
+[23]
+Overfull \hbox (22.49062pt too wide) in paragraph at lines 875--875
+[]\OT1/cmtt/m/n/10 set title "Combined Rotation (R_z(60\TS1/cmtt/m/n/10 °\OT1/c
+mtt/m/n/10 )\TS1/cmtt/m/n/10 ·\OT1/cmtt/m/n/10 R_y(45\TS1/cmtt/m/n/10 °\OT1/cmt
+t/m/n/10 )\TS1/cmtt/m/n/10 ·\OT1/cmtt/m/n/10 R_x(30\TS1/cmtt/m/n/10 °\OT1/cmtt/
+m/n/10 ))" offset 0,-1[] 
+ []
+
+
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 875--875
+[]    \OT1/cmtt/m/n/10 (($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(bet
+a))*cos(gamma) \[] 
+ []
+
+
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 875--875
+[]    \OT1/cmtt/m/n/10 (($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(bet
+a))*sin(gamma) \[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 876--879
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 905--907
+
+ []
+
+[24]
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 966--966
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using 1:($2*cos(alpha) - $3*sin(alpha)):($2
+*sin(alpha) \[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 966--966
+[]    \OT1/cmtt/m/n/10 ($1*cos(beta) + ($2*sin(alpha) + $3*cos(alpha))*sin(beta
+)) : \[] 
+ []
+
+
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 966--966
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(beta) + $3*sin(beta)):2:(-$1*
+sin(beta) \[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 966--966
+[]    \OT1/cmtt/m/n/10 (($1*cos(beta) + $3*sin(beta))*cos(gamma) - $2*sin(gamma
+)) : \[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 966--966
+[]    \OT1/cmtt/m/n/10 (($1*cos(beta) + $3*sin(beta))*sin(gamma) + $2*cos(gamma
+)) : \[] 
+ []
+
+[25]
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 966--966
+[]\OT1/cmtt/m/n/10 splot 'cube.dat' using ($1*cos(gamma) - $2*sin(gamma)):($1*s
+in(gamma) \[] 
+ []
+
+
+Overfull \hbox (11.99689pt too wide) in paragraph at lines 966--966
+[]    \OT1/cmtt/m/n/10 (($1*sin(gamma) + $2*cos(gamma))*cos(alpha) - $3*sin(alp
+ha)) : \[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 966--966
+[]    \OT1/cmtt/m/n/10 (($1*sin(gamma) + $2*cos(gamma))*sin(alpha) + $3*cos(alp
+ha)) \[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 967--968
+
+ []
+
+<Kepler2ndLow.png, id=108, 1484.54625pt x 1004.75375pt>
+File: Kepler2ndLow.png Graphic file (type png)
+<use Kepler2ndLow.png>
+Package pdftex.def Info: Kepler2ndLow.png  used on input line 998.
+(pdftex.def)             Requested size: 426.79134pt x 288.8568pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 998--999
+ [] 
+ []
+
+[26]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (0.36177pt too wide) in paragraph at lines 1023--1027
+\OT1/cmr/m/n/10 Kepler de-rived this law through metic-u-lous ob-ser-va-tion of
+ plan-e-tary data (specif-
+ []
+
+[27 <./Kepler2ndLow.png>]
+Overfull \hbox (15.02957pt too wide) in paragraph at lines 1054--1067
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1051--1071
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 1088--1093
+
+ []
+
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 1110--1111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1128--1129
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1135--1136
+
+ []
+
+[30] [31]
+Overfull \hbox (61.86159pt too wide) in paragraph at lines 1172--1185
+ [] 
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 1201--1202
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1208--1211
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1216--1218
+
+ []
+
+[33] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 1275--1276
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1308--1309
+
+ []
+
+<Yaw_Axis_Corrected001.png, id=141, 1927.2pt x 1449.415pt>
+File: Yaw_Axis_Corrected001.png Graphic file (type png)
+<use Yaw_Axis_Corrected001.png>
+Package pdftex.def Info: Yaw_Axis_Corrected001.png  used on input line 1317.
+(pdftex.def)             Requested size: 426.79134pt x 320.97333pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 1317--1318
+ [] 
+ []
+
+[35] [36 <./Yaw_Axis_Corrected001.png>]
+Overfull \hbox (24.72296pt too wide) in paragraph at lines 1350--1363
+ [] 
+ []
+
+[37]
+Overfull \hbox (7.85155pt too wide) in paragraph at lines 1406--1408
+\OT1/cmr/m/n/10 where $\OML/cmm/m/it/10 ![]$ \OT1/cmr/m/n/10 is treated as a "p
+ure" quater-nion with a scalar part of zero: $[\OML/cmm/m/it/10 p; q; r; \OT1/c
+mr/m/n/10 0][]$. 
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1436--1438
+
+ []
+
+[39]
+Overfull \hbox (1.05196pt too wide) in paragraph at lines 1480--1483
+\OT1/cmr/m/it/10 Correcting Spin (Im-age Rec-ti-fi-ca-tion) \OT1/cmr/m/n/10 If 
+the satel-lite is spin-ning, a "Push-broom"
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1480--1483
+
+ []
+
+
+Overfull \hbox (120.49052pt too wide) in paragraph at lines 1490--1501
  [] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 250--251
-
+[40] [41]
+Overfull \hbox (12.0044pt too wide) in paragraph at lines 1571--1571
+[]        \OT1/cmtt/m/n/7 R = np.array([[1, 0, 0], [0, np.cos(rad), -np.sin(rad
+)], [0, np.sin(rad), np.cos(rad)]])[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--260
-
+Overfull \hbox (12.0044pt too wide) in paragraph at lines 1571--1571
+[]        \OT1/cmtt/m/n/7 R = np.array([[np.cos(rad), 0, np.sin(rad)], [0, 1, 0
+], [-np.sin(rad), 0, np.cos(rad)]])[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--267
+Overfull \hbox (12.0044pt too wide) in paragraph at lines 1571--1571
+[]        \OT1/cmtt/m/n/7 R = np.array([[np.cos(rad), -np.sin(rad), 0], [np.sin
+(rad), np.cos(rad), 0], [0, 0, 1]])[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1574--1575
 
  []
 
-[8] [9] (./kepler_newton.aux) ) 
+<satdrift_1.png, id=165, 722.7pt x 505.89pt>
+File: satdrift_1.png Graphic file (type png)
+<use satdrift_1.png>
+Package pdftex.def Info: satdrift_1.png  used on input line 1582.
+(pdftex.def)             Requested size: 426.79134pt x 298.75812pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 1582--1583
+ [] 
+ []
+
+[42] [43 <./satdrift_1.png>] (./kepler_newton.aux) ) 
 Here is how much of TeX's memory you used:
- 2087 strings out of 480163
- 32288 string characters out of 5894093
- 328779 words of memory out of 5000000
- 20045 multiletter control sequences out of 15000+600000
- 476608 words of font info for 53 fonts, out of 8000000 for 9000
+ 2204 strings out of 480163
+ 34915 string characters out of 5894093
+ 332848 words of memory out of 5000000
+ 20139 multiletter control sequences out of 15000+600000
+ 478387 words of font info for 60 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 55i,10n,62p,491b,298s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-su
-per-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on kepler_newton.pdf (9 pages, 476431 bytes).
+ 55i,10n,62p,676b,346s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc
+/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sftt1000.pfb>
+Output written on kepler_newton.pdf (43 pages, 972863 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 269 PDF objects out of 1000 (max. 8388607)
+ 166 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
