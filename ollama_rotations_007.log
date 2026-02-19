@@ -1,0 +1,473 @@
+We are going to plot a rotated cube using gnuplot.
+ Steps:
+ 1. Define the vertices of a cube (centered at origin, side length 2 for simplicity).
+ 2. Define the rotation (for example, around multiple axes) and a projection (like a simple 
+perspective or orthographic).
+ 3. Define the edges by connecting the vertices.
+ 4. Plot the edges using gnuplot.
+
+ Let's assume we do a rotation around the x-axis by 30 degrees and around the y-axis by 45 
+degrees.
+ We'll use orthographic projection for simplicity.
+
+ Vertices of the cube (side length 2, centered at origin):
+   (-1, -1, -1)
+   ( 1, -1, -1)
+   ( 1,  1, -1)
+   (-1,  1, -1)
+   (-1, -1,  1)
+   ( 1, -1,  1)
+   ( 1,  1,  1)
+   (-1,  1,  1)
+
+ We'll define a rotation matrix for rotation around x and y.
+
+ Rotation around x by angle α (alpha):
+   [1, 0, 0; 0, cos(α), -sin(α); 0, sin(α), cos(α)]
+
+ Rotation around y by angle β (beta):
+   [cos(β), 0, sin(β); 0, 1, 0; -sin(β), 0, cos(β)]
+
+ We'll combine them: first rotate around x, then around y.
+
+ Let α = 30°, β = 45°.
+
+ We can compute the combined rotation matrix R = R_y * R_x.
+
+ Alternatively, we can do the rotations step by step for each vertex.
+
+ However, for simplicity in gnuplot, we can define functions to rotate a point.
+
+ But note: gnuplot doesn't have matrix multiplication built-in, so we'll do the transformation 
+step by step.
+
+ Steps for each vertex (x, y, z):
+  1. Rotate around x-axis: 
+        y1 = y*cos(α) - z*sin(α)
+        z1 = y*sin(α) + z*cos(α)
+        x1 = x
+  2. Then rotate around y-axis:
+        x2 = x1*cos(β) + z1*sin(β)
+        z2 = -x1*sin(β) + z1*cos(β)
+        y2 = y1
+
+ Alternatively, we can combine the two steps and write functions for the transformed x, y, z.
+
+ Let's define:
+   alpha = 30 * pi/180
+   beta = 45 * pi/180
+
+ Then for a point (x,y,z):
+   x_rot = x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(beta)
+   y_rot = y*cos(alpha) - z*sin(alpha)
+   z_rot = -x*sin(beta) + (y*sin(alpha) + z*cos(alpha))*cos(beta)
+
+ But we are going to use an orthographic projection, so we can just use (x_rot, y_rot) as the 
+2D coordinates.
+
+ However, to make it look 3D, we might want to hide edges that are behind? But gnuplot doesn't 
+do hidden line removal by default in 2D plots.
+
+ Alternatively, we can use a simple perspective projection.
+
+ Let's try a perspective projection:
+   Let the camera be at (0,0,d) and the projection plane at z=0.
+   Then the projection of a point (x,y,z) is (x*d/(d-z), y*d/(d-z)).
+
+ But note: if we rotate the cube, we need to project the rotated points.
+
+ We can do:
+
+   After rotation, we have (x_rot, y_rot, z_rot). Then project with d=5 (for example).
+
+   x_proj = d * x_rot / (d - z_rot)
+   y_proj = d * y_rot / (d - z_rot)
+
+ But note: if d is too small, we might get distortion. Let d=5.
+
+ However, for a cube from -1 to 1, the farthest point after rotation might be around sqrt(3) ~ 
+1.73, so d=5 is safe.
+
+ Let's plan:
+
+   We have 8 vertices. We'll define them in an array-like manner using gnuplot's notation.
+
+   We'll define a function for rotation and projection.
+
+   Then we define the edges as a set of vertex indices pairs.
+
+   We'll plot each edge as a line between the projected vertices.
+
+ Since gnuplot doesn't have arrays in the same way as programming languages, we can use a 
+string to store vertex coordinates and then use a loop to plot.
+
+ Alternatively, we can use a datablock to store the rotated and projected vertices.
+
+ Steps:
+
+  1. Define the vertices in a datablock.
+  2. Rotate and project each vertex and store in a new datablock.
+  3. Define the edges by listing pairs of indices (from the datablock) and then plot lines 
+between them.
+
+ But note: gnuplot can also do the rotation and projection on the fly without storing in a 
+datablock, but for clarity we can precompute.
+
+ However, let's do it in a way that we can change the rotation angles easily.
+
+ We'll use:
+
+   alpha = 30.0 * pi/180
+   beta = 45.0 * pi/180
+   d = 5.0
+
+   Then for each vertex (x,y,z) we compute:
+
+   x1 = x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(beta)
+   y1 = y*cos(alpha) - z*sin(alpha)
+   z1 = -x*sin(beta) + (y*sin(alpha) + z*cos(alpha))*cos(beta)
+
+   Then project:
+   xp = d * x1 / (d - z1)
+   yp = d * y1 / (d - z1)
+
+   We'll create a datablock for the projected vertices.
+
+   Then we define the edges by specifying which vertices to connect.
+
+   The edges of the cube are:
+
+   Bottom face: 1-2, 2-3, 3-4, 4-1
+   Top face: 5-6, 6-7, 7-8, 8-5
+   Vertical edges: 1-5, 2-6, 3-7, 4-8
+
+   We have 12 edges.
+
+   We can plot each edge by taking two points from the projected vertices datablock.
+
+   We'll create a second datablock for the edges, each line containing the two points (each 
+point as xp, yp) for an edge.
+
+   But note: we can also plot by indexing the datablock. However, gnuplot cannot directly index 
+datablock lines by number in the plot command.
+
+   Alternatively, we can use a loop from 0 to 11 for the 12 edges, and for each edge, we know 
+the two vertex indices.
+
+   We can do:
+
+     set table $Edges
+     ... but we don't need to set table, we can generate the edge datablock by reading from the 
+vertices datablock.
+
+   Another idea: we can create a datablock for edges that contains the projected coordinates of 
+the two endpoints for each edge, and then plot this datablock with lines.
+
+   How to create the edges datablock?
+
+   We can:
+
+     # First, create the projected vertices datablock $Vertices with 8 lines.
+
+     # Then, create $Edges as:
+        print "" > $Edges  # clear or create
+        # For each edge, we print the two points and an empty line.
+        # We'll define an array of edges as pairs of indices.
+
+     But gnuplot doesn't have arrays, so we can use a string of indices.
+
+   Alternatively, we can avoid creating an edges datablock and use a function that, given an 
+edge index, returns the two points? But that's complex.
+
+   Let me try a different approach: we can plot each edge by using a function that maps the 
+edge index to the two vertex indices, and then we use the $Vertices datablock to get the 
+coordinates.
+
+   However, gnuplot 5.2 and above supports indexing datablocks with `using (column(0))` and 
+then using the line number to get the vertex.
+
+   We can do:
+
+     array indices[12] = [1,2, 2,3, 3,4, 4,1, 5,6, 6,7, 7,8, 8,5, 1,5, 2,6, 3,7, 4,8]
+
+   But gnuplot doesn't have arrays. Instead, we can use a string and split it.
+
+   Alternatively, we can use a loop from 1 to 12 and use a condition to set the two vertex 
+indices for each edge.
+
+   Since we have only 12 edges, we can write a function that returns the vertex indices for a 
+given edge index.
+
+   Let's define:
+
+     edge(i) = i==1 ? "1 2" : i==2 ? "2 3" : ... 
+
+   But that's tedious.
+
+   Another idea: we can store the edges in a datablock:
+
+     $EdgeIndices << EOD
+     1 2
+     2 3
+     3 4
+     4 1
+     5 6
+     6 7
+     7 8
+     8 5
+     1 5
+     2 6
+     3 7
+     4 8
+     EOD
+
+   Then we can loop over the edges in $EdgeIndices and for each edge, we get the two vertex 
+indices, then we get the coordinates from $Vertices.
+
+   We can do:
+
+     plot for [i=1:12] $Vertices using (getx($EdgeIndices, i)) ... 
+
+   But that's complex because we need to get the two vertices for each edge and then plot a 
+line segment.
+
+   Alternatively, we can create a new datablock that contains the projected coordinates for 
+each edge, with two points per edge and a blank line between edges.
+
+   Let's do that:
+
+     # First, create $Vertices with 8 lines, each line has: xp, yp
+
+     # Then, create $Edges:
+        set print $Edges
+        do for [i=1:12] {
+            # Get the two vertex indices for edge i
+            # We'll hardcode the indices for each edge in an array-like string.
+            # We can use a string of 24 numbers: "1 2 2 3 ..."
+            # Then we can use `word` function to get the two indices for edge i.
+
+            # Let's define a string with all the vertex indices for edges:
+            indices = "1 2 2 3 3 4 4 1 5 6 6 7 7 8 8 5 1 5 2 6 3 7 4 8"
+            i1 = int(word(indices, 2*i-1))
+            i2 = int(word(indices, 2*i))
+
+            # Now, get the coordinates from $Vertices for line i1 and i2.
+            # We can use `word` to get the x and y from the i1-th line of $Vertices.
+
+            # But note: $Vertices has 8 lines, each line has two numbers: xp and yp.
+
+            # We can use:
+            x1 = word($Vertices[i1], 1)
+            y1 = word($Vertices[i1], 2)
+            x2 = word($Vertices[i2], 1)
+            y2 = word($Vertices[i2], 2)
+
+            print sprintf("%s %s", x1, y1)
+            print sprintf("%s %s", x2, y2)
+            print ""  # empty line for separation
+        }
+        unset print
+
+   Then we can plot $Edges with lines.
+
+   But note: the $Vertices datablock must be created before we create $Edges.
+
+   Let's create $Vertices:
+
+        set print $Vertices
+        # Original vertices: 8 points
+        original_vertices = "-1 -1 -1  1 -1 -1  1 1 -1  -1 1 -1  -1 -1 1  1 -1 1  1 1 1  -1 1 
+1"
+        do for [i=1:8] {
+            x = word(original_vertices, 3*i-2)
+            y = word(original_vertices, 3*i-1)
+            z = word(original_vertices, 3*i)
+            # Rotate and project
+            x1 = x*cos(beta) + (y*sin(alpha) + z*cos(alpha))*sin(beta)
+            y1 = y*cos(alpha) - z*sin(alpha)
+            z1 = -x*sin(beta) + (y*sin(alpha) + z*cos(alpha))*cos(beta)
+            xp = d * x1 / (d - z1)
+            yp = d * y1 / (d - z1)
+            print sprintf("%f %f", xp, yp)
+        }
+        unset print
+
+   Then create $Edges as above.
+
+   Finally, plot $Edges with lines.
+
+   However, note that the cube might have some edges that should be hidden. We are not doing 
+hidden line removal, so it will be a wireframe.
+
+   Let's code accordingly.
+
+   We'll use:
+
+        alpha = 30.0 * pi/180
+        beta = 45.0 * pi/180
+        d = 5.0
+
+   And then the steps above.
+
+   But note: the original_vertices string must have the 8 points in order from 1 to 8.
+
+   We defined the original_vertices as:
+
+       1: (-1,-1,-1)
+       2: (1,-1,-1)
+       3: (1,1,-1)
+       4: (-1,1,-1)
+       5: (-1,-1,1)
+       6: (1,-1,1)
+       7: (1,1,1)
+       8: (-1,1,1)
+
+   This order is important for the edge indices.
+
+   Let's write the gnuplot script.
+
+   We'll use gnuplot 5.2 or above for datablocks.
+
+   Note: We are using `set print` to create datablocks.
+
+   Let's write the code.
+...done thinking.
+
+Here's a step-by-step guide to plot a rotated cube using gnuplot:
+
+## Method 1: Using Parametric Equations
+
+```gnuplot
+# Set up the plot
+set parametric
+set isosamples 2
+set hidden3d
+set view 60, 30, 1, 1
+set xrange [-2:2]
+set yrange [-2:2]
+set zrange [-2:2]
+
+# Define rotation angles (in degrees)
+angle_x = 30
+angle_y = 45
+angle_z = 15
+
+# Rotation functions
+rx(t) = t*cos(angle_x*pi/180)
+ry(t) = t*sin(angle_x*pi/180)
+rz(t) = t
+
+# Plot the cube edges
+splot \
+rx(u), ry(u), rz(v) title "Cube" with lines, \
+rx(v), ry(u), rz(u) with lines, \
+rx(u), ry(v), rz(u) with lines
+```
+
+## Method 2: Explicit Cube Coordinates with Rotation
+
+```gnuplot
+# Define cube vertices (centered at origin, side length 2)
+$cube << EOD
+-1 -1 -1
+1 -1 -1
+1 1 -1
+-1 1 -1
+-1 -1 -1
+
+-1 -1 1
+1 -1 1
+1 1 1
+-1 1 1
+-1 -1 1
+
+-1 -1 -1
+-1 -1 1
+
+1 -1 -1
+1 -1 1
+
+1 1 -1
+1 1 1
+
+-1 1 -1
+-1 1 1
+EOD
+
+# Set rotation matrix
+alpha = 30 * pi/180  # X-axis rotation
+beta = 45 * pi/180   # Y-axis rotation
+gamma = 15 * pi/180  # Z-axis rotation
+
+# Rotation matrix
+Rx11 = cos(beta)*cos(gamma)
+Rx12 = cos(beta)*sin(gamma)
+Rx13 = -sin(beta)
+
+Rx21 = sin(alpha)*sin(beta)*cos(gamma) - cos(alpha)*sin(gamma)
+Rx22 = sin(alpha)*sin(beta)*sin(gamma) + cos(alpha)*cos(gamma)
+Rx23 = sin(alpha)*cos(beta)
+
+Rx31 = cos(alpha)*sin(beta)*cos(gamma) + sin(alpha)*sin(gamma)
+Rx32 = cos(alpha)*sin(beta)*sin(gamma) - sin(alpha)*cos(gamma)
+Rx33 = cos(alpha)*cos(beta)
+
+# Apply rotation function
+rot_x(x,y,z) = Rx11*x + Rx12*y + Rx13*z
+rot_y(x,y,z) = Rx21*x + Rx22*y + Rx23*z
+rot_z(x,y,z) = Rx31*x + Rx32*y + Rx33*z
+
+# Plot the rotated cube
+set view equal xyz
+splot $cube using (rot_x($1,$2,$3)):(rot_y($1,$2,$3)):(rot_z($1,$2,$3)) with lines title 
+"Rotated Cube"
+```
+
+## Method 3: Simple Rotation using view angles
+
+```gnuplot
+# Simple approach - let gnuplot handle rotation with 'set view'
+set parametric
+set isosamples 2
+set view 45, 45, 1, 1  # Rotate 45° around z and 45° around x
+
+# Define cube surfaces
+set urange [-1:1]
+set vrange [-1:1]
+
+splot \
+u, -1, v with lines title "", \
+u, 1, v with lines title "", \
+-1, u, v with lines title "", \
+1, u, v with lines title "", \
+u, v, -1 with lines title "", \
+u, v, 1 with lines title "Cube"
+```
+
+## Method 4: Interactive Rotation
+
+```gnuplot
+# For interactive rotation (run this, then rotate with mouse)
+set parametric
+set isosamples 2
+set xrange [-2:2]
+set yrange [-2:2]
+set zrange [-2:2]
+
+# Define cube function
+cube(u,v,face) = (face==1 || face==2) ? u : (face==3 || face==4) ? v : (face==5 || face==6) ? u 
+: u
+
+splot \
+cube(u,v,1), cube(u,v,2), cube(u,v,3) with lines title "Cube - Rotate with mouse"
+```
+
+## Tips:
+-[x] Use `set mouse` to enable interactive rotation with your mouse
+-[x] Adjust `set view azimuth, elevation` to change rotation angles
+-[x] Use `set hidden3d` for hidden line removal
+-[x] Modify the rotation angles in the formulas to get different orientations
+
+The second method gives you the most control over the exact rotation matrix, while the third 
+method is simpler and uses gnuplot's built-in view rotation.
+

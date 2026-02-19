@@ -1237,6 +1237,12 @@ prendi un cerchio di raggio a
 e schiaccialo verticalmente di un fattore b/a
 \end{quote}
 Questa è una trasformazione affine.
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{ellipse003.png}
+\end{center}
+\caption{Ellipse with Foci}
+\end{figure}
 \subsubsection{Parti dal cerchio ausiliario}
 Cerchio di raggio a:
 
@@ -1283,7 +1289,7 @@ cioè
 Quindi:\\
 \begin{quote}
 l’ellisse è un cerchio “stirato” in  x e “schiacciato” in y                                                           \end{quote}
-\subsection{ellipse gnuplot script}
+\subsection{ellipses with gnuplot}
 \subsubsection{Defining variables and parameters}
 Definiamo le costanti fornite: il centro \((x_{0},y_{0})\) e i semiassi \(a\) e \(b\). Impostiamo inoltre la modalità parametrica per permettere a Gnuplot di plottare funzioni del tipo \(x(t)\) e \(y(t)\).
 \begin{verbatim}
@@ -1347,6 +1353,12 @@ set yrange [y0-10 : y0+10]
 # Plot
 plot x(t), y(t) with lines title sprintf("Ellisse ruotata di %d°", angolo_deg) lw 2
 \end{verbatim}
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{rotated_ellipse001.png}
+\end{center}
+\caption{Rotated Ellipse}
+\end{figure}
 Per visualizzare i fuochi e gli assi, dobbiamo prima calcolare la distanza focale lineare\\
 \(c=\sqrt{a^{2}-b^{2}}\).\\
 Poiché l'ellisse è ruotata, anche la posizione dei fuochi e l'orientamento degli assi devono subire la stessa trasformazione geometrica applicata prima.\\
@@ -1398,6 +1410,13 @@ f1_x,f1_y with points pt 7 ps 1.5 lc rgb "forest-green" title "Fuoco1",\
 f2_x,f2_y with points pt 7 ps 1.5 lc rgb "blue" title "Fuoco2"
 \end{verbatim}
 }
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[width=16cm]{rotated_ellipse002.png}
+\end{center}
+\caption{Rotated Ellipse with Foci}
+\end{figure}
+
 \begin{itemize}
 \item c\_dist: Rappresenta la distanza dal centro a ciascun fuoco lungo l'asse maggiore.\\
 \item set arrow: Ho utilizzato questo comando per disegnare i due assi.\\

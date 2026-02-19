@@ -1,0 +1,31 @@
+
+\begin{verbatim}
+        gnuplot_cmd(handle, "set xyplane at 0");
+        gnuplot_cmd(handle, "set view 60, 30, 1.2, 1");
+        gnuplot_cmd(handle, "set border 4095");
+        gnuplot_cmd(handle, "set ticslevel 0");
+        gnuplot_cmd(handle, "set hidden3d");
+        gnuplot_cmd(handle, "set view equal xyz");
+
+        gnuplot_cmd(handle, "set multiplot layout 2,2");
+
+        // First subplot
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+        gnuplot_splot(handle, x_orig, y_orig, z_orig, n, "");
+
+        // Second subplot
+        gnuplot_cmd(handle, "set title 'Rotation around X-axis (α=30°)'");
+        gnuplot_splot(handle, x_xrot, y_xrot, z_xrot, n, "");
+
+        ... and so on.
+
+        gnuplot_cmd(handle, "unset multiplot");
+\end{verbatim}
+
+Note: the title for the second subplot changes with the angle. We have to update the title for each step.
+We can do:\\
+For the second subplot, we set the title as:
+
+\begin{verbatim}
+            gnuplot_cmd(handle, "set title 'Rotation around X-axis (α=%f°)'", alpha_i * 180/pi);
+\end{verbatim}

@@ -1,0 +1,31 @@
+# Makefile
+CC = gcc
+CFLAGS = -Wall -g -O2
+LIBS = -lm
+
+# Source files
+SOURCES1 = rotation_animation.c gnuplot_i.c
+SOURCES2 = gnuplot_i.c composite_animation.c
+OBJECTS1 = $(SOURCES1:.c=.o)
+OBJECTS2 = $(SOURCES2:.c=.o)
+TARGET1 = rotation_animation
+TARGET2 = composite_animation
+
+.PHONY: all clean
+
+all: $(TARGET1) $(TARGET2)
+
+$(TARGET1): $(OBJECTS1)
+	$(CC) $(OBJECTS1) -o $(TARGET1) $(LIBS)
+
+$(TARGET2): $(OBJECTS2)
+	$(CC) $(OBJECTS2) -o $(TARGET2) $(LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJECTS1) $(OBJECTS2) $(TARGET1) $(TARGET2) *.gif
+
+install: $(TARGET1) $(TARGET2)
+	cp $(TARGET1) $(TARGET1) ~/bin/
