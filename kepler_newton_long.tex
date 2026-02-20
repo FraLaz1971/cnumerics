@@ -230,7 +230,7 @@ where \(K = \begin{bmatrix} 0 & -n & m \\ n & 0 & -l \\ -m & l & 0 \end{bmatrix}
 \clearpage
 \subsubsection{Scripts for Visualization}
 \emph{1. 2D Rotation (Square)}\\
-gnuplot
+```gnuplot
 \begin{verbatim}
 set term png size 800,400
 set output "2d_rotation.png"
@@ -266,7 +266,7 @@ e
 
 unset multiplot
 \end{verbatim}
-
+```\\
 \begin{figure}[!ht]
 \begin{center}
  \includegraphics[width=15cm]{2d_rotation.png}
@@ -364,7 +364,7 @@ gcc rotated_square.c -o rotated_square
 \subsubsection{3D examples}
 \emph{2. 3D Rotation (Cube)}\\
 \emph{Script}:\\
-gnuplot\\
+```gnuplot\\
 \begin{verbatim}
 # Set terminal and output
 set terminal pngcairo enhanced font "Arial,12" size 1200,600
@@ -422,9 +422,9 @@ $2*cos(theta2)):3 with lines title "" lw 2
 
 unset multiplot
 \end{verbatim}
-
+```\\
 \emph{Data File} (\verb|`cube.dat`|):\\
-
+```\\
 \begin{verbatim}
 1 1 1
 1 -1 1
@@ -450,7 +450,7 @@ unset multiplot
 -1 1 1
 -1 1 -1
 \end{verbatim}
-
+```\\
 \begin{figure}[!ht]
 \begin{center}
  \includegraphics[width=15cm]{3d_rotation_alternative.png}
@@ -466,12 +466,12 @@ unset multiplot
 \begin{enumerate}
 \item Save the scripts as `.plt` files and the cube data as `cube.dat`.
 \item Run with:
-   bash\\
+   ```bash\\
 \begin{verbatim}
    gnuplot 2d_rotation.plt
    gnuplot 3d_rotation.plt
 \end{verbatim}
-
+   ```\\
 \item Outputs: \verb|`2d_rotation.png` and `3d_rotation.png`|.\\
  Let's consider an edge of the cube that originally was parallel to the X axis. For example, a vector along the X axis: (1, 0, 0).\\
  After rotation by $\theta$=60°, this vector becomes:
@@ -558,10 +558,10 @@ But note: in top-down view, the Z coordinate is ignored because we are looking f
 Alternatively, we can plot only the top face or bottom face to avoid confusion.\\
 But let's assume the cube data file is standard and drawn with lines. The top-down view will show the XY projection. This will clearly show the rotation angle in the XY plane.
 In the script, the 60° rotation is applied \emph{only around the Z-axis} using this transformation:\\
-
+```\\
 gnuplot\\
 \verb|($1*cos(theta2) - $2*sin(theta2)):($1*sin(theta2) + $2*cos(theta2)):3|
-
+```\\
 This is a rotation matrix for rotation around the Z-axis by angle $\theta$:\\
 \[
 \begin{bmatrix}
@@ -582,9 +582,9 @@ However, there's a \emph{key point} about the visualization: In a 3D perspective
 \end{enumerate}
 So while mathematically the projection onto the XY-plane has the 60°/30° relationship you described, the perspective distortion in the 3D view might make these angles appear different on screen.
 If you want to see the true XY-plane projection angles, you could add a third view with:
-gnuplot\\
+```gnuplot\\
 \verb|set view 0, 0  # Look straight down the Z-axis|\\
-
+```\\
 This would show the pure 2D projection where the angles would be exactly 60° and 30° as calculated.
 \end{enumerate}
 This demonstrates how direction cosines underpin rotation matrices and their visual effects in
@@ -804,7 +804,7 @@ R_z(\gamma)
 \end{bmatrix}
 \]
 \emph{Modified Gnuplot Script}\\
-gnuplot
+```gnuplot
 {
 \scriptsize
 \begin{verbatim}
@@ -861,7 +861,7 @@ with lines lw 2 notitle
 unset multiplot
 \end{verbatim}
 }
-
+```\\
 \emph{Cube Data File} (`cube.dat`)\\
 We use a file called `cube.dat` with the following content:\\
 {
@@ -902,7 +902,7 @@ We use a file called `cube.dat` with the following content:\\
 \end{figure}
 \clearpage
 \emph{Alternative Script with Step-by-Step Visualization}\\
-gnuplot\\
+```gnuplot\\
 \begin{verbatim}
 # Step-by-step rotation visualization
 set terminal pngcairo enhanced font "Arial,12" size 1600,1200
@@ -962,7 +962,7 @@ with lines lw 2
 
 unset multiplot
 \end{verbatim}
-
+```\\
 \begin{figure}[!ht]
 \begin{center}
  \includegraphics[width=15cm]{3d_rotation_combined.png}
@@ -1120,6 +1120,7 @@ Alternatively, we can do:
 \item Part 3: Y rotation (0 to 45) on result A \(\rightarrow\) result B
 \item Part 4: Z rotation (0 to 60) on result B \(\rightarrow\) result C
 \end{itemize}
+
 That would be a cumulative rotation, which is different from the script.
 Since the script does not do cumulative, but each rotation is independent, we'll do independent rotations.
 However, the combined rotation in the script is applied as a single transformation \verb|(R_z * R_y * R_x)| to the original.
@@ -1145,18 +1146,46 @@ herefore, we can structure the animation as:\\
                 (alpha_i, beta_i, gamma_i) in a single plot?
                 or in the multiplot?
 \end{verbatim}
-We can break the animation into segments:
+But the script has two multiplots: one for the individual rotations and one for the combined.
+We can do:\\
+        First multiplot: 4 subplots (original, X, Y, Z) for each step i.\\
+        Then, second multiplot: 2 subplots (original and combined) for each step i.\\
+That would require 6 plots per step, which might be heavy and the animation might be slow.
+Alternatively, we can break the animation into segments:
 \begin{itemize}
-\item Segment 1: Individual rotations for steps i=0..N.
-\item Segment 2: Combined rotation for steps i=0..N.
+\item Segment 1: Individual rotations (multiplot with 4 subplots) for steps i=0..N.
+\item Segment 2: Combined rotation (multiplot with 2 subplots) for steps i=0..N.
 \end{itemize}
 Note: the combined rotation uses the same angles as the individual, so we can do:
+\begin{verbatim}
+        For each step i from 0 to N:
+            Show the multiplot of individual rotations (original, X, Y, Z)
+            and the combined (original and combined) in two separate frames?
+\end{verbatim}
 Actually, the script produces two images: one with the individual rotations and one with the combined.
 We are going to produce an animation that shows:
+
+\begin{verbatim}
+        Frame 0: Original cube
+        (all four subplots show the original?
+        but then we rotate the other three)
+
+        Then, for i=1 to N:
+            In the second subplot, show the cube rotated by X (alpha_i)
+            In the third subplot, show the cube rotated by Y (beta_i)
+            In the fourth subplot, show the cube rotated by Z (gamma_i)
+
+        Then, for the combined, we can do a separate animation:
+
+            Frame 0: Original cube (in both subplots)
+            Then, for i=1 to N:
+                Left subplot: original cube
+                Right subplot: cube rotated by (alpha_i, beta_i, gamma_i)
+\end{verbatim}
 So we'll create two animations:\\
 \begin{itemize}
-\item Animation 1: Individual rotations
-\item Animation 2: Combined rotation
+\item Animation 1: Individual rotations (4 subplots)
+\item Animation 2: Combined rotation (2 subplots)
 \end{itemize}
 We can either combine them into one video (first animation1, then animation2) or make two separate files.
 Let's do:
@@ -1167,6 +1196,117 @@ Let's do:
         If screen output, we'll show first the individual rotation animation
         and then the combined.
 \end{verbatim}
+Steps:
+\begin{itemize}
+\item Part 1: Individual rotations\\
+            Set multiplot layout 2,2\\
+            For each step i from 0 to N:
+\begin{itemize}
+       \item    Set the title for each subplot.
+       \item    Plot the original cube in the first subplot.
+       \item    Plot the X-rotated cube in the second subplot (angle = \verb|alpha_i|).
+       \item    Plot the Y-rotated cube in the third subplot (angle = \verb|beta_i|).
+       \item    Plot the Z-rotated cube in the fourth subplot (angle = \verb|gamma_i|).
+\end{itemize}
+            Unset multiplot.
+\item Part 2: Combined rotation
+            Set multiplot layout 1,2\\
+            For each step i from 0 to N:
+\begin{itemize}
+       \item    Plot the original cube in the first subplot.
+       \item    Plot the combined rotated cube in the second subplot (angles = \verb|alpha_i, beta_i, gamma_i|).
+\end{itemize}
+            Unset multiplot.
+\end{itemize}
+We need to send the multiplot commands via \verb|gnuplot_cmd|.\\
+However, the \verb|gnuplot_i| library does not have a built-in function for multiplot. We have to send the commands as strings.
+We can do:
+\begin{verbatim}
+        gnuplot_cmd(handle, "set multiplot layout 2,2");
+        ... then for each subplot, we set the title and plot the data ...
+\end{verbatim}
+Note: when we use multiplot, we have to set the title and labels for each subplot individually.\\
+We can set the title for each subplot by:
+\begin{verbatim}
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+        gnuplot_cmd(handle, "splot ...");
+\end{verbatim}
+but then the next plot will be in the next subplot.\\
+However, the \verb|gnuplot_i| library's plotting functions (like \verb|gnuplot_plot_coordinates|) do not work well with multiplot because they use the "plot" or "splot" command without considering the multiplot.
+We might have to use \verb|gnuplot_cmd| for all the plotting in multiplot mode.
+Alternatively, we can create temporary files for each plot and then use the \verb|gnuplot_cmd| to splot them in the multiplot.
+The \verb|gnuplot_i| library already creates temporary files for the data, we can use that.
+However, the library's functions for plotting (like \verb|gnuplot_splot|) send a "splot" command and then the data. In multiplot, we need to issue multiple splot commands before ending the multiplot.
+We can do:
+\begin{verbatim}
+        gnuplot_cmd(handle, "set multiplot layout 2,2");
+
+        // For the first subplot
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+        gnuplot_splot(handle, ...);  // This will send the data for the first subplot
+
+        // But then the next plot command will be for the next subplot?
+\end{verbatim}
+Actually, in gnuplot, when you set multiplot, each plot command will place the plot in the next subplot (according to the layout). So we can:
+\begin{verbatim}
+        set multiplot layout 2,2
+        set title "Original Cube"
+        splot ... for first subplot
+        set title "X rotation"
+        splot ... for second subplot
+        set title "Y rotation"
+        splot ... for third subplot
+        set title "Z rotation"
+        splot ... for fourth subplot
+        unset multiplot
+\end{verbatim}
+But the \verb|gnuplot_splot| function in the library sends the splot command and the data, and then flushes. So we can use it for each subplot. However, the library function \verb|gnuplot_splot| uses the same style and title for the plot. We can use it, but we have to set the title for the subplot separately.
+Let's try:\\
+
+\begin{verbatim}
+        gnuplot_cmd(handle, "set multiplot layout 2,2");
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+        gnuplot_splot(handle, x_orig, y_orig, z_orig, n, "");
+
+        gnuplot_cmd(handle, "set title 'X rotation'");
+        gnuplot_splot(handle, x_xrot, y_xrot, z_xrot, n, "");
+
+        ... and so on.
+
+        gnuplot_cmd(handle, "unset multiplot");
+\end{verbatim}
+
+Note: the \verb|gnuplot_splot| function sends a "splot" command and then the data. In multiplot, we want to send all the splot commands and then display them together. Actually, in gnuplot, when in multiplot, each plot command will draw the plot immediately in the current subplot and then move to the next subplot. So we can do:\\
+
+\begin{verbatim}
+        set multiplot layout 2,2
+        set title "Original Cube"
+        splot ... data for original
+
+        set title "X rotation"
+        splot ... data for x rotation
+
+        ...
+
+        unset multiplot
+\end{verbatim}
+This should work.\\
+The \verb|gnuplot_i| library's \verb|gnuplot_splot| function writes the data to a temporary file and then sends the splot command. So it will work.
+Note: the library function \verb|gnuplot_splot| does not allow to set the title of the subplot. We set the title of the plot (the legend) but not the subplot title.
+We can set the subplot title by:
+\begin{verbatim}
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+\end{verbatim}
+and then call \verb|gnuplot_splot| with an empty string for the title (so it doesn't show a legend) or with a legend if we want.
+We can also set the labels for the axes for each subplot? Actually, in multiplot, the axes labels are set for the entire plot, unless we set them for each subplot. We can set the labels for the entire multiplot? Or we can set them for each subplot.
+The script sets:
+\begin{verbatim}
+        set xlabel "X Axis"
+        set ylabel "Y Axis"
+        set zlabel "Z Axis"
+\end{verbatim}
+for each subplot? Actually, the script sets them once and then the multiplot uses the same labels.
+We can set the labels once before the multiplot.
 Let's try to replicate the script:
 \begin{verbatim}
         set xyplane at 0
@@ -1177,6 +1317,37 @@ Let's try to replicate the script:
         set view equal xyz
 \end{verbatim}
 These are global settings. We can set them once.
+Then, for the multiplot, we set the layout and then for each subplot we set the title and then splot.
+We'll do:
+\begin{verbatim}
+        gnuplot_cmd(handle, "set xyplane at 0");
+        gnuplot_cmd(handle, "set view 60, 30, 1.2, 1");
+        gnuplot_cmd(handle, "set border 4095");
+        gnuplot_cmd(handle, "set ticslevel 0");
+        gnuplot_cmd(handle, "set hidden3d");
+        gnuplot_cmd(handle, "set view equal xyz");
+
+        gnuplot_cmd(handle, "set multiplot layout 2,2");
+
+        // First subplot
+        gnuplot_cmd(handle, "set title 'Original Cube'");
+        gnuplot_splot(handle, x_orig, y_orig, z_orig, n, "");
+
+        // Second subplot
+        gnuplot_cmd(handle, "set title 'Rotation around X-axis (α=30°)'");
+        gnuplot_splot(handle, x_xrot, y_xrot, z_xrot, n, "");
+
+        ... and so on.
+
+        gnuplot_cmd(handle, "unset multiplot");
+\end{verbatim}
+
+Note: the title for the second subplot changes with the angle. We have to update the title for each step.
+We can do: For the second subplot, we set the title as:
+\begin{verbatim}
+            gnuplot_cmd(handle, "set title 'Rotation around X-axis (α=%f°)'",
+            alpha_i * 180/pi);
+\end{verbatim}
 Similarly for the others. We'll break the program into functions:
 \begin{itemize}
 \item Function to rotate a point around X, Y, Z individually and combined.
@@ -1199,6 +1370,7 @@ The cube.dat file:
 
         ... etc.
 \end{verbatim}
+
 So we have 24 points. We'll store them in an array of 24 points (each point has x,y,z).
 We can define:
 \begin{verbatim}
@@ -1235,6 +1407,233 @@ Note: the script's combined rotation is exactly this order: X, then Y, then Z.\\
 For individual rotations, we can use the same function by setting the other angles to zero.\\
 We can then compute the rotated cube for a given set of angles by applying this function to each of the 24 points.\\
 We'll create an array for the rotated cube (24 points).\\
+Now, the program structure:\\
+\begin{verbatim}
+        int main(int argc, char *argv[]) {
+            // Parse command line for gif or screen
+
+            // Hardcode the cube data (24 points)
+
+            // Initialize gnuplot
+
+            // Set up terminal (if gif, set terminal gif and output file)
+
+            // Set the common settings (view, xyplane, etc.)
+
+            // Part 1: Individual rotations
+
+            int steps = 30; // or 30 steps? We can make it configurable.
+
+            for (int i=0; i<=steps; i++) {
+                double alpha = (30.0 * i / steps) * M_PI / 180.0;
+                double beta  = (45.0 * i / steps) * M_PI / 180.0;
+                double gamma = (60.0 * i / steps) * M_PI / 180.0;
+
+                // Compute the rotated cubes for individual rotations:
+
+                // For X rotation: set beta=0, gamma=0
+                double cube_x[24][3];
+                for (int j=0; j<24; j++) {
+                    rotate_point(cube_original[j][0], cube_original[j][1],
+                    cube_original[j][2], alpha, 0, 0, &cube_x[j][0], &cube_x[j][1],
+                    &cube_x[j][2]);
+                }
+
+                // For Y rotation: set alpha=0, gamma=0
+                double cube_y[24][3];
+                for (int j=0; j<24; j++) {
+                    rotate_point(cube_original[j][0], cube_original[j][1],
+                    cube_original[j][2], 0, beta, 0, &cube_y[j][0], &cube_y[j][1],
+                    &cube_y[j][2]);
+                }
+
+                // For Z rotation: set alpha=0, beta=0
+                double cube_z[24][3];
+                for (int j=0; j<24; j++) {
+                    rotate_point(cube_original[j][0], cube_original[j][1],
+                    cube_original[j][2], 0, 0, gamma, &cube_z[j][0], &cube_z[j][1],
+                    &cube_z[j][2]);
+                }
+
+                // Now, set multiplot layout 2,2
+                gnuplot_cmd(handle, "set multiplot layout 2,2");
+
+                // First subplot: original cube
+                gnuplot_cmd(handle, "set title 'Original Cube'");
+                // We need to plot the original cube. We have the original points.
+
+                // We'll create arrays for x, y, z for the original cube (24 points)
+                double x_orig[24], y_orig[24], z_orig[24];
+                for (int j=0; j<24; j++) {
+                    x_orig[j] = cube_original[j][0];
+                    y_orig[j] = cube_original[j][1];
+                    z_orig[j] = cube_original[j][2];
+                }
+                gnuplot_splot(handle, x_orig, y_orig, z_orig, 24, "");
+
+                // Second subplot: X rotation
+                double x_x[24], y_x[24], z_x[24];
+                for (int j=0; j<24; j++) {
+                    x_x[j] = cube_x[j][0];
+                    y_x[j] = cube_x[j][1];
+                    z_x[j] = cube_x[j][2];
+                }
+                gnuplot_cmd(handle, "set title 'Rotation around X-axis (α=%.0f°)'",
+                alpha * 180/M_PI);
+                gnuplot_splot(handle, x_x, y_x, z_x, 24, "");
+
+                // Third subplot: Y rotation
+                double x_y[24], y_y[24], z_y[24];
+                for (int j=0; j<24; j++) {
+                    x_y[j] = cube_y[j][0];
+                    y_y[j] = cube_y[j][1];
+                    z_y[j] = cube_y[j][2];
+                }
+                gnuplot_cmd(handle, "set title 'Rotation around Y-axis (β=%.0f°)'",
+                beta * 180/M_PI);
+                gnuplot_splot(handle, x_y, y_y, z_y, 24, "");
+
+                // Fourth subplot: Z rotation
+                double x_z[24], y_z[24], z_z[24];
+                for (int j=0; j<24; j++) {
+                    x_z[j] = cube_z[j][0];
+                    y_z[j] = cube_z[j][1];
+                    z_z[j] = cube_z[j][2];
+                }
+                gnuplot_cmd(handle, "set title 'Rotation around Z-axis (γ=%.0f°)'",
+                gamma * 180/M_PI);
+                gnuplot_splot(handle, x_z, y_z, z_z, 24, "");
+
+                gnuplot_cmd(handle, "unset multiplot");
+
+                // Now, if we are in gif mode, we need to output the frame?
+                // Actually, in gif mode, we set the terminal to gif and then
+                // each plot command will output a frame.
+
+                // But in gif mode, we have to set the terminal to gif and
+                // then use set output and then plot. Then, after the loop,
+                // we set the terminal back.
+
+                // However, the gnuplot_i library does not support gif
+                // animation natively. We have to use the gnuplot_cmd
+                // to set the terminal and output.
+
+                // We can do:
+
+                //   if (gif_mode) {
+                //      gnuplot_cmd(handle, "set terminal gif animate delay 10");
+                //      gnuplot_cmd(handle, "set output 'animation.gif'");
+                //   }
+
+                // But note: we are doing multiple plots per frame (multiplot).
+                // The gif terminal will create a multiplot frame.
+
+                // However, the gif terminal does not support multiplot?
+                // Actually, it does.
+
+                // But we are going to do:
+
+                //   For each step, we create a multiplot and then
+                // that multiplot becomes one frame.
+
+                //   Then, we need to set the terminal for gif and then set the
+                // output file at the beginning of the animation.
+
+                //   Then, after the loop, we set the terminal back to the original.
+
+                //   But if we are in screen mode, we don't set the gif terminal.
+
+                //   We can do:
+
+                //      if (gif_mode) {
+                //          gnuplot_cmd(handle, "set terminal gif animate delay 10");
+                //          gnuplot_cmd(handle, "set output 'individual_rotation.gif'");
+                //      }
+
+                //   Then, after the individual rotation animation,
+                // we do the combined rotation.
+
+                //   But note: the gif terminal will append frames to the same file?
+                // Yes, if we set the output once and then plot multiple times.
+
+                //   However, we want two separate gif files:
+                // one for individual and one for combined.
+
+                //   So we'll do:
+
+                //      For individual rotation:
+                //          set terminal gif and output to individual.gif
+                //          then for each step, plot the multiplot.
+
+                //      Then, for combined rotation:
+                //          set terminal gif and output to combined.gif
+                //          then for each step, plot the multiplot.
+
+                //   But if we are in screen mode, we don't set the
+                // gif terminal and we show the plots in the window.
+
+                //   We can pause between steps in screen mode
+                // to make the animation visible.
+
+                //   We'll use usleep() for screen mode.
+
+                //   In gif mode, we don't need to pause.
+
+                //   So:
+
+                //      if (!gif_mode) {
+                //          usleep(100000); // 100 ms between frames
+                //      }
+
+            }
+
+            // Part 2: Combined rotation
+
+            // Set the terminal for combined gif if in gif mode
+
+            for (int i=0; i<=steps; i++) {
+                double alpha = (30.0 * i / steps) * M_PI / 180.0;
+                double beta  = (45.0 * i / steps) * M_PI / 180.0;
+                double gamma = (60.0 * i / steps) * M_PI / 180.0;
+
+                // Compute the combined rotated cube
+                double cube_combined[24][3];
+                for (int j=0; j<24; j++) {
+                    rotate_point(cube_original[j][0], cube_original[j][1],
+                    cube_original[j][2], alpha, beta, gamma, &cube_combined[j][0],
+                    &cube_combined[j][1], &cube_combined[j][2]);
+                }
+
+                // Set multiplot layout 1,2
+                gnuplot_cmd(handle, "set multiplot layout 1,2");
+
+                // First subplot: original
+                gnuplot_cmd(handle, "set title 'Original Cube'");
+                gnuplot_splot(handle, x_orig, y_orig, z_orig, 24, "");
+
+                // Second subplot: combined
+                double x_c[24], y_c[24], z_c[24];
+                for (int j=0; j<24; j++) {
+                    x_c[j] = cube_combined[j][0];
+                    y_c[j] = cube_combined[j][1];
+                    z_c[j] = cube_combined[j][2];
+                }
+                gnuplot_cmd(handle, "set title 'Combined Rotation'");
+                gnuplot_splot(handle, x_c, y_c, z_c, 24, "");
+
+                gnuplot_cmd(handle, "unset multiplot");
+
+                if (!gif_mode) {
+                    usleep(100000);
+                }
+            }
+
+            // Close gnuplot
+            gnuplot_close(handle);
+        }
+\end{verbatim}
+However, note: the \verb|gnuplot_splot| function in the library creates a temporary file and then splots it. But in the multiplot, we are doing multiple splots. The temporary files might be overwritten?
+Actually, the \verb|gnuplot_splot| function creates a new temporary file for each call. So it's safe.
 But note: the library limits the number of temporary files to 64. We are doing 4 splots per step and 2 steps (individual and combined) and each step creates 4 temporary files? Actually, each \verb|gnuplot_splot| creates one temporary file. So for each step in the individual rotation, we create 4 temporary files. For 30 steps, that's 120 temporary files. But the library only allows 64.
 We need to change the library to allow more temporary files? Or we can delete the temporary files after each step.
 Alternatively, we can use the \verb|gnuplot_cmd| to plot the data without using the library's temporary files.
@@ -1271,6 +1670,21 @@ We can create a helper function:
             gnuplot_cmd(handle, "e");
         }
 \end{verbatim}
+Note: the library already has a function \verb|gnuplot_splot| that uses temporary files. We can modify the library to use this method? Or we can write our own function. Let's write our own function to avoid the temporary files.
+We'll create a function:
+\begin{verbatim}
+        void my_gnuplot_splot(gnuplot_ctrl *handle, double *x,
+        double *y, double *z, int n, char *title) {
+            char cmd[GP_CMD_SIZE];
+            sprintf(cmd, "splot '-' with lines title '%s'",
+            title ? title : "");
+            gnuplot_cmd(handle, cmd);
+            for (int i=0; i<n; i++) {
+                gnuplot_cmd(handle, "%g %g %g", x[i], y[i], z[i]);
+            }
+            gnuplot_cmd(handle, "e");
+        }
+\end{verbatim}
 Note: the library's \verb|gnuplot_splot| function uses the current plot style. We should use the same style? The script uses "with lines". We can set the style to "lines" at the beginning.
 We'll set the style to "lines" at the beginning of the program.
 Alternatively, we can use the style that is set in the handle. The handle has a pstyle member.
@@ -1287,24 +1701,27 @@ Let's set the style at the beginning:
 Then, we can use the above function.
 We'll use this function instead of the library's \verb|gnuplot_splot| to avoid temporary files.
 We'll also need to set the title for the subplot and then call this function.
+So we'll replace:
+\begin{verbatim}
+        gnuplot_splot(handle, ...) with my_gnuplot_splot(handle, ...)
+\end{verbatim}
 Note: the library's \verb|gnuplot_splot| function also increments the nplots counter. We don't need that because we are not using the library's plot counting. We can ignore the nplots for now.\\
 Steps:
 \begin{enumerate}
  \item Copy the \verb|gnuplot_i|.h and \verb|gnuplot_i|.c files and then compile with the program.
  \item Define the cube data.
  \item Write the \verb|rotate_point| function.
+ \item Write the \verb|my_gnuplot_splot| function.
  \item Parse command line arguments.
  \item Main loop.
 \end{enumerate}
 Here a C program that uses the \verb|gnuplot_i| library to create an animated 3D rotation visualization. This will show step-by-step rotations around each axis and a combined rotation.
 Here's the complete solution:\\
 \emph{Main Animation Program} \verb|('rotation_animation.c')|\\
-c\\
+```c\\
 \begin{verbatim}
-/* c gnuplot animation */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 #include <unistd.h>
 #include "gnuplot_i.h"
@@ -1313,7 +1730,7 @@ c\\
 #define M_PI 3.14159265358979323846
 #endif
 
-// Cube vertices (8 vertices) - centered at origin
+// Cube vertices (8 vertices)
 double cube_vertices[8][3] = {
     {1, 1, 1},    // 0
     {1, -1, 1},   // 1
@@ -1356,91 +1773,66 @@ void rotate_z(double *point, double angle) {
     point[1] = x * sin(angle) + y * cos(angle);
 }
 
-// Function to plot cube edges - FIXED VERSION
-void plot_cube(gnuplot_ctrl *handle, double vertices[8][3]) {
-    char cmd[2048];
-    char point_str[256];
-    int edge_count = 0;
+// Function to apply combined rotation (Z * Y * X)
+void rotate_combined(double *point, double alpha, double beta, double gamma) {
+    // Rotate around X
+    double y = point[1];
+    double z = point[2];
+    point[1] = y * cos(alpha) - z * sin(alpha);
+    point[2] = y * sin(alpha) + z * cos(alpha);
 
-    // Start building the splot command
-    strcpy(cmd, "splot ");
+    // Rotate around Y
+    double x = point[0];
+    z = point[2];
+    point[0] = x * cos(beta) + z * sin(beta);
+    point[2] = -x * sin(beta) + z * cos(beta);
 
-    // Add each edge to the command
+    // Rotate around Z
+    x = point[0];
+    y = point[1];
+    point[0] = x * cos(gamma) - y * sin(gamma);
+    point[1] = x * sin(gamma) + y * cos(gamma);
+}
+
+// Function to plot cube edges
+void plot_cube(gnuplot_ctrl *handle, double vertices[8][3], char *title) {
+    double x[2], y[2], z[2];
+
     for (int i = 0; i < 12; i++) {
         int v1 = cube_edges[i][0];
         int v2 = cube_edges[i][1];
 
-        // Format the two points for this edge
-        if (edge_count > 0) strcat(cmd, ", ");
+        x[0] = vertices[v1][0];
+        y[0] = vertices[v1][1];
+        z[0] = vertices[v1][2];
 
-        sprintf(point_str, "'-' u 1:2:3 with lines lw 2 notitle");
-        strcat(cmd, point_str);
-        edge_count++;
-    }
+        x[1] = vertices[v2][0];
+        y[1] = vertices[v2][1];
+        z[1] = vertices[v2][2];
 
-    // Send the plot command
-    gnuplot_cmd(handle, "%s", cmd);
-
-    // Send the data for each edge
-    for (int i = 0; i < 12; i++) {
-        int v1 = cube_edges[i][0];
-        int v2 = cube_edges[i][1];
-
-        // Send the two points for this edge
-        gnuplot_cmd(handle, "%g %g %g", vertices[v1][0], vertices[v1][1],
-        vertices[v1][2]);
-        gnuplot_cmd(handle, "%g %g %g", vertices[v2][0], vertices[v2][1],
-        vertices[v2][2]);
-        gnuplot_cmd(handle, "e"); // End of data for this dataset
+        gnuplot_splot(handle, x, y, z, 2, title);
     }
 }
 
 // Function to set up gnuplot parameters
 void setup_gnuplot(gnuplot_ctrl *handle) {
     gnuplot_cmd(handle, "set xyplane at 0");
-    gnuplot_cmd(handle, "set view 60, 30, 1.5, 1");
+    gnuplot_cmd(handle, "set view 60, 30, 1.2, 1");
     gnuplot_cmd(handle, "set border 4095");
     gnuplot_cmd(handle, "set ticslevel 0");
-    gnuplot_cmd(handle, "set xrange [-2:2]");
-    gnuplot_cmd(handle, "set yrange [-2:2]");
-    gnuplot_cmd(handle, "set zrange [-2:2]");
+    gnuplot_cmd(handle, "set hidden3d");
+    gnuplot_cmd(handle, "set view equal xyz");
     gnuplot_cmd(handle, "set xlabel 'X Axis'");
     gnuplot_cmd(handle, "set ylabel 'Y Axis'");
     gnuplot_cmd(handle, "set zlabel 'Z Axis'");
-    gnuplot_cmd(handle, "set key off");
-}
-
-// Simple function for single rotation animation
-void animate_rotation(gnuplot_ctrl *handle, int gif_mode,
-                      void (*rotate_func)(double *, double),
-                      const char *axis_name, int total_frames) {
-    double current_vertices[8][3];
-
-    for (int frame = 0; frame <= total_frames; frame++) {
-        double angle = 2 * M_PI * frame / total_frames;
-
-        // Copy and rotate vertices
-        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
-        for (int j = 0; j < 8; j++) {
-            rotate_func(current_vertices[j], angle);
-        }
-
-        gnuplot_resetplot(handle);
-        gnuplot_cmd(handle, "set title 'Rotation around %s-axis (%d°)'",
-                    axis_name, (int)(angle * 180 / M_PI));
-        plot_cube(handle, current_vertices);
-
-        if (!gif_mode) {
-            usleep(100000); // 100ms delay
-        }
-    }
+    gnuplot_setstyle(handle, "lines");
 }
 
 int main(int argc, char *argv[]) {
     gnuplot_ctrl *handle;
+    int steps = 36; // 10° steps (360/10 = 36)
     int gif_mode = 0;
     char *output_file = "rotation_animation.gif";
-    int frames_per_rotation = 36; // 10° steps
 
     // Check for GIF output option
     if (argc > 1) {
@@ -1453,36 +1845,181 @@ int main(int argc, char *argv[]) {
     }
 
     printf("*** 3D Rotation Animation ***\n");
-    handle = gnuplot_init();
+    handle = \verb|gnuplot_i|nit();
 
     // Set up GIF output if requested
     if (gif_mode) {
-        printf("Creating GIF animation: %s\n", output_file);
-        // Use simpler GIF setup
-        gnuplot_cmd(handle, "set terminal gif animate optimize delay 5 size 800,600");
+        gnuplot_cmd(handle, "set terminal gif animate delay 10 size 800,600");
         gnuplot_cmd(handle, "set output '%s'", output_file);
+        printf("Creating GIF animation: %s\n", output_file);
     } else {
-        // Use wxt terminal for interactive display
         gnuplot_setterm(handle, "wxt", 800, 600);
     }
 
     setup_gnuplot(handle);
 
+    // Make a copy of original vertices
+    double current_vertices[8][3];
+
+    // Animation: Rotation around X-axis (360°)
     printf("Animating rotation around X-axis...\n");
-    animate_rotation(handle, gif_mode, rotate_x, "X", frames_per_rotation);
+    for (int i = 0; i <= steps; i++) {
+        double angle = 2 * M_PI * i / steps; // 0 to 360 degrees
 
+        // Copy original vertices
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+
+        // Apply X rotation
+        for (int j = 0; j < 8; j++) {
+            rotate_x(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Rotation around X-axis (%d°)'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(100000); // 100ms delay for smooth animation
+    }
+
+    // Animation: Rotation around Y-axis (360°)
     printf("Animating rotation around Y-axis...\n");
-    animate_rotation(handle, gif_mode, rotate_y, "Y", frames_per_rotation);
+    for (int i = 0; i <= steps; i++) {
+        double angle = 2 * M_PI * i / steps;
 
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+
+        for (int j = 0; j < 8; j++) {
+            rotate_y(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Rotation around Y-axis (%d°)'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(100000);
+    }
+
+    // Animation: Rotation around Z-axis (360°)
     printf("Animating rotation around Z-axis...\n");
-    animate_rotation(handle, gif_mode, rotate_z, "Z", frames_per_rotation);
+    for (int i = 0; i <= steps; i++) {
+        double angle = 2 * M_PI * i / steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+
+        for (int j = 0; j < 8; j++) {
+            rotate_z(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Rotation around Z-axis (%d°)'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(100000);
+    }
+
+    // Animation: Combined rotation (X, Y, Z simultaneously)
+    printf("Animating combined rotation...\n");
+    for (int i = 0; i <= steps; i++) {
+        double angle_x = 2 * M_PI * i / steps;
+        double angle_y = 2 * M_PI * i / steps;
+        double angle_z = 2 * M_PI * i / steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+
+        for (int j = 0; j < 8; j++) {
+            rotate_combined(current_vertices[j], angle_x, angle_y, angle_z);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Combined Rotation (X,Y,Z: %d°)'",
+        (int)(angle_x * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(100000);
+    }
+
+    // Show all rotations in sequence with smaller steps (like your original script)
+    printf("Animating step-by-step rotations (30°, 45°, 60°)...\n");
+    int demo_steps = 10; // Smaller steps for the demo
+
+    // X rotation to 30°
+    for (int i = 0; i <= demo_steps; i++) {
+        double angle = (30.0 * M_PI / 180) * i / demo_steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+        for (int j = 0; j < 8; j++) {
+            rotate_x(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'X-axis rotation to %d°'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(150000);
+    }
+
+    // Y rotation to 45°
+    for (int i = 0; i <= demo_steps; i++) {
+        double angle = (45.0 * M_PI / 180) * i / demo_steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+        for (int j = 0; j < 8; j++) {
+            rotate_y(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Y-axis rotation to %d°'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(150000);
+    }
+
+    // Z rotation to 60°
+    for (int i = 0; i <= demo_steps; i++) {
+        double angle = (60.0 * M_PI / 180) * i / demo_steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+        for (int j = 0; j < 8; j++) {
+            rotate_z(current_vertices[j], angle);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Z-axis rotation to %d°'",
+        (int)(angle * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(150000);
+    }
+
+    // Final combined rotation (30°, 45°, 60°)
+    for (int i = 0; i <= demo_steps; i++) {
+        double angle_x = (30.0 * M_PI / 180) * i / demo_steps;
+        double angle_y = (45.0 * M_PI / 180) * i / demo_steps;
+        double angle_z = (60.0 * M_PI / 180) * i / demo_steps;
+
+        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
+        for (int j = 0; j < 8; j++) {
+            rotate_combined(current_vertices[j], angle_x, angle_y, angle_z);
+        }
+
+        gnuplot_resetplot(handle);
+        gnuplot_cmd(handle, "set title 'Combined: X:%d° Y:%d° Z:%d°'",
+                    (int)(angle_x * 180 / M_PI),
+                    (int)(angle_y * 180 / M_PI),
+                    (int)(angle_z * 180 / M_PI));
+        plot_cube(handle, current_vertices, "");
+
+        if (!gif_mode) usleep(150000);
+    }
 
     if (gif_mode) {
         gnuplot_cmd(handle, "set output"); // Close GIF file
         printf("Animation saved to %s\n", output_file);
-    } else {
-        printf("Press Enter to exit...\n");
-        getchar(); // Wait for user input before closing
     }
 
     gnuplot_close(handle);
@@ -1490,9 +2027,11 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 \end{verbatim}
+```\\
 
 \emph{Compilation Instructions}\\
 Create a Makefile to compile the program:\\
+``` makefile
 \begin{verbatim}
 # Makefile
 CC = gcc
@@ -1500,55 +2039,48 @@ CFLAGS = -Wall -g -O2
 LIBS = -lm
 
 # Source files
-SOURCES1 = rotation_animation.c gnuplot_i.c
-SOURCES2 = gnuplot_i.c composite_animation.c
-OBJECTS1 = $(SOURCES1:.c=.o)
-OBJECTS2 = $(SOURCES2:.c=.o)
-TARGET1 = rotation_animation
-TARGET2 = composite_animation
+SOURCES = rotation_animation.c gnuplot_i.c
+OBJECTS = $(SOURCES:.c=.o)
+TARGET = rotation_animation
 
 .PHONY: all clean
 
-all: $(TARGET1) $(TARGET2)
+all: $(TARGET)
 
-$(TARGET1): $(OBJECTS1)
-	$(CC) $(OBJECTS1) -o $(TARGET1) $(LIBS)
-
-$(TARGET2): $(OBJECTS2)
-	$(CC) $(OBJECTS2) -o $(TARGET2) $(LIBS)
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(TARGET) $(LIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS1) $(OBJECTS2) $(TARGET1) $(TARGET2) *.gif
+	rm -f $(OBJECTS) $(TARGET) *.gif
 
-install: $(TARGET1) $(TARGET2)
-	cp $(TARGET1) $(TARGET1) ~/bin/
- \end{verbatim}
-
+install: $(TARGET)
+	cp $(TARGET) ~/bin/ || echo "Please run as root for system-wide installation"	                                                                                      \end{verbatim}
+```\\
 \begin{verbatim}
 ## Usage
 
 1. **Compile the program:**
-bash
+```bash
 make
-
+```
 
 2. **Run with screen display (default):**
-bash
+```bash
 ./rotation_animation
-
+```
 
 3. **Create a GIF animation:**
-bash
+```bash
 ./rotation_animation gif
-
+```
 
 4. **Create GIF with custom filename:**
-bash
+```bash
 ./rotation_animation gif my_animation.gif
-
+```
 \end{verbatim}
 \emph{Features}\\
 This program provides:
@@ -1569,271 +2101,6 @@ The animation shows:
 \item Smooth transitions between rotation states
 \end{itemize}
 The program uses the \verb|gnuplot_i| library, creating a pipe connection to gnuplot and sending commands to generate the 3D visualizations.
-We are going to create now a program that animates a composite rotation around the three axes (X, Y, Z) simultaneously.
-The idea is to rotate the cube by a certain angle around each axis in each frame, so that by the end of the animation, the cube has been rotated by a total of 360 degrees around each axis (or any other desired total angles).
-We can define a total rotation angle for each axis (for example, 2*pi for a full rotation) and then break it down into steps.
-We'll modify the existing code to include a function that rotates the cube around all three axes by a given set of angles.\\
-Steps:
-\begin{enumerate}
-\item We'll define a function that rotates a point around X, Y, and Z by given angles (in radians).
-\item We'll create an animation function that, for each frame, computes the current rotation angles (increasing from 0 to the total desired rotation for each axis) and then rotates the cube accordingly.
-\item We'll plot the cube for each frame.
-\end{enumerate}
-We can choose the total rotations for each axis. For example, we can set:
-\verb|total_rotation_x = 2*M_PI, total_rotation_y = 2*M_PI, total_rotation_z = 2*M_PI|
-and then for each frame, we'll compute:
-\begin{verbatim}
-   current_angle_x = (total_rotation_x * frame) / total_frames
-   current_angle_y = (total_rotation_y * frame) / total_frames
-   current_angle_z = (total_rotation_z * frame) / total_frames
-\end{verbatim}
-Then we rotate the cube by \verb|current_angle_x| around X, then by \verb|current_angle_y| around Y, then by \verb|current_angle_z| around Z (or in any order, but we'll do X, then Y, then Z). Alternatively, we can rotate in a different order. The order matters because rotations are not commutative. We'll stick to the order X, Y, Z.
-Let's write the function for composite rotation:
-\begin{verbatim}
-   void rotate_xyz(double *point, double angle_x, double angle_y, double angle_z) {
-        rotate_x(point, angle_x);
-        rotate_y(point, angle_y);
-        rotate_z(point, angle_z);
-   }
-\end{verbatim}
-Note: the existing rotate functions modify the point in place. So we can call them sequentially.
-We'll create a new animation function for the composite rotation.
-We also need to adjust the title to show the current angles for each axis.
-Here's a modified program that creates a composite 3-axes rotation animation:
-\emph{Second Main Animation Program} \verb|('composite_animation.c')|\\
-\begin{verbatim}
-/* c gnuplot animation - Composite 3-Axes Rotation */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <unistd.h>
-#include "gnuplot_i.h"
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-// Cube vertices (8 vertices) - centered at origin
-double cube_vertices[8][3] = {
-    {1, 1, 1},    // 0
-    {1, -1, 1},   // 1
-    {-1, -1, 1},  // 2
-    {-1, 1, 1},   // 3
-    {1, 1, -1},   // 4
-    {1, -1, -1},  // 5
-    {-1, -1, -1}, // 6
-    {-1, 1, -1}   // 7
-};
-
-// Cube edges (12 edges connecting vertices)
-int cube_edges[12][2] = {
-    {0, 1}, {1, 2}, {2, 3}, {3, 0},  // Top face
-    {4, 5}, {5, 6}, {6, 7}, {7, 4},  // Bottom face
-    {0, 4}, {1, 5}, {2, 6}, {3, 7}   // Vertical edges
-};
-
-// Function to rotate a point around X axis
-void rotate_x(double *point, double angle) {
-    double y = point[1];
-    double z = point[2];
-    point[1] = y * cos(angle) - z * sin(angle);
-    point[2] = y * sin(angle) + z * cos(angle);
-}
-
-// Function to rotate a point around Y axis
-void rotate_y(double *point, double angle) {
-    double x = point[0];
-    double z = point[2];
-    point[0] = x * cos(angle) + z * sin(angle);
-    point[2] = -x * sin(angle) + z * cos(angle);
-}
-
-// Function to rotate a point around Z axis
-void rotate_z(double *point, double angle) {
-    double x = point[0];
-    double y = point[1];
-    point[0] = x * cos(angle) - y * sin(angle);
-    point[1] = x * sin(angle) + y * cos(angle);
-}
-
-// Composite rotation function - applies rotation in X, Y, Z order
-void rotate_xyz(double *point, double angle_x, double angle_y, double angle_z) {
-    rotate_x(point, angle_x);
-    rotate_y(point, angle_y);
-    rotate_z(point, angle_z);
-}
-
-// Function to plot cube edges
-void plot_cube(gnuplot_ctrl *handle, double vertices[8][3]) {
-    char cmd[2048];
-    char point_str[256];
-    int edge_count = 0;
-
-    // Start building the splot command
-    strcpy(cmd, "splot ");
-
-    // Add each edge to the command
-    for (int i = 0; i < 12; i++) {
-        int v1 = cube_edges[i][0];
-        int v2 = cube_edges[i][1];
-
-        // Format the two points for this edge
-        if (edge_count > 0) strcat(cmd, ", ");
-
-        sprintf(point_str, "'-' u 1:2:3 with lines lw 2 notitle");
-        strcat(cmd, point_str);
-        edge_count++;
-    }
-
-    // Send the plot command
-    gnuplot_cmd(handle, "%s", cmd);
-
-    // Send the data for each edge
-    for (int i = 0; i < 12; i++) {
-        int v1 = cube_edges[i][0];
-        int v2 = cube_edges[i][1];
-
-        // Send the two points for this edge
-        gnuplot_cmd(handle, "%g %g %g", vertices[v1][0], vertices[v1][1],
-        vertices[v1][2]);
-        gnuplot_cmd(handle, "%g %g %g", vertices[v2][0], vertices[v2][1],
-        vertices[v2][2]);
-        gnuplot_cmd(handle, "e"); // End of data for this dataset
-    }
-}
-
-// Function to set up gnuplot parameters
-void setup_gnuplot(gnuplot_ctrl *handle) {
-    gnuplot_cmd(handle, "set xyplane at 0");
-    gnuplot_cmd(handle, "set view 60, 30, 1.5, 1");
-    gnuplot_cmd(handle, "set border 4095");
-    gnuplot_cmd(handle, "set ticslevel 0");
-    gnuplot_cmd(handle, "set xrange [-2:2]");
-    gnuplot_cmd(handle, "set yrange [-2:2]");
-    gnuplot_cmd(handle, "set zrange [-2:2]");
-    gnuplot_cmd(handle, "set xlabel 'X Axis'");
-    gnuplot_cmd(handle, "set ylabel 'Y Axis'");
-    gnuplot_cmd(handle, "set zlabel 'Z Axis'");
-    gnuplot_cmd(handle, "set key off");
-}
-
-// Composite rotation animation function
-void animate_composite_rotation(gnuplot_ctrl *handle, int gif_mode, int total_frames) {
-    double current_vertices[8][3];
-
-    // Define final rotation angles (in radians)
-    double final_angle_x = M_PI;      // 180 degrees
-    double final_angle_y = M_PI/2;    // 90 degrees
-    double final_angle_z = M_PI/4;    // 45 degrees
-
-    for (int frame = 0; frame <= total_frames; frame++) {
-        // Calculate intermediate angles for this frame
-        double progress = (double)frame / total_frames;
-        double angle_x = progress * final_angle_x;
-        double angle_y = progress * final_angle_y;
-        double angle_z = progress * final_angle_z;
-
-        // Copy and rotate vertices using composite rotation
-        memcpy(current_vertices, cube_vertices, sizeof(cube_vertices));
-        for (int j = 0; j < 8; j++) {
-            rotate_xyz(current_vertices[j], angle_x, angle_y, angle_z);
-        }
-
-        gnuplot_resetplot(handle);
-        gnuplot_cmd(handle, "set title 'Composite Rotation: X:%.0f° \
-Y:%.0f° Z:%.0f° (Frame %d/%d)'",
-                    angle_x * 180/M_PI, angle_y * 180/M_PI, angle_z * 180/M_PI,
-                    frame, total_frames);
-        plot_cube(handle, current_vertices);
-
-        if (!gif_mode) {
-            usleep(100000); // 100ms delay
-        }
-    }
-}
-
-int main(int argc, char *argv[]) {
-    gnuplot_ctrl *handle;
-    int gif_mode = 0;
-    char *output_file = "composite_rotation.gif";
-    int total_frames = 72; // More frames for smoother composite animation
-
-    // Check for GIF output option
-    if (argc > 1) {
-        if (strcmp(argv[1], "gif") == 0) {
-            gif_mode = 1;
-            if (argc > 2) {
-                output_file = argv[2];
-            }
-        }
-    }
-    printf("*** 3D Composite Rotation Animation ***\n");
-    handle = gnuplot_init();
-
-    // Set up GIF output if requested
-    if (gif_mode) {
-        printf("Creating GIF animation: %s\n", output_file);
-        gnuplot_cmd(handle, "set terminal gif animate optimize delay 5 size 800,600");
-        gnuplot_cmd(handle, "set output '%s'", output_file);
-    } else {
-        // Use wxt terminal for interactive display
-        gnuplot_setterm(handle, "wxt", 800, 600);
-    }
-
-    setup_gnuplot(handle);
-
-    printf("Animating composite rotation (X:180°, Y:90°, Z:45°)...\n");
-    animate_composite_rotation(handle, gif_mode, total_frames);
-
-    if (gif_mode) {
-        gnuplot_cmd(handle, "set output"); // Close GIF file
-        printf("Animation saved to %s\n", output_file);
-    } else {
-        printf("Press Enter to exit...\n");
-        getchar(); // Wait for user input before closing
-    }
-
-    gnuplot_close(handle);
-    printf("Animation complete!\n");
-    return 0;
-}
-\end{verbatim}
-This modified program features:\\
-\emph{Key Changes:}
-\begin{enumerate}
-\item \emph{Composite Rotation Function}: \verb|`rotate_xyz()`| applies rotations around all three axes simultaneously
-\item \emph{Single Animation Sequence}: Shows the cube rotating from initial position to a final position with specified rotations on all three axes
-\item \emph{Progressive Rotation}: Smoothly interpolates from (0°, 0°, 0°) to (180°, 90°, 45°) rotation
-\item \emph{Enhanced Display}: Shows current rotation angles for each axis in the title
-\end{enumerate}
-\emph{Usage:}
-\begin{itemize}
-\item Interactive mode: \verb|`./composite_animation`|
-\item GIF mode: \verb|`./composite_animation gif [filename.gif]`|
-\end{itemize}
-\emph{Features:}
-\begin{itemize}
-\item The cube rotates simultaneously around X (180°), Y (90°), and Z (45°) axes
-\item Real-time display of current rotation angles
-\item Smooth animation with 72 frames for better visual quality
-\item Same terminal hsupport (wxt for interactive, gif for file output)
-\end{itemize}
-The animation will show the cube undergoing a complex 3D transformation as it rotates through all three axes simultaneously, arriving at the final rotated position.
-\begin{figure}[!ht]
-\begin{center}
- \includegraphics[width=12cm]{rotation_animation.png}
-\end{center}
-\caption{Animation of rotations on 3 Axes}
-\label{anim1}
-\end{figure}
-\begin{figure}[!ht]
-\begin{center}
- \includegraphics[width=12cm]{composite_rotation.png}
-\end{center}
-\caption{Composite rotation animation}
-\label{anim2}
-\end{figure}
 \clearpage
 \begin{figure}[!ht]
 \begin{center}
