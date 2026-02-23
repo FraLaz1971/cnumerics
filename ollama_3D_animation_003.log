@@ -1,4 +1,3 @@
-
 We are going to create a program that animates a composite rotation around the three axes (X, Y, Z) simultaneously.
  The idea is to rotate the cube by a certain angle around each axis in each frame, so that by the end of the animation, the cube has been rotated by a total of 360 degrees around each axis (or any other desired total angles).
 

@@ -200,7 +200,6 @@ I will now provide the corrected `rotation_animation.c` file with the changes.
 Note: I will also remove the `gnuplot_splot` call and replace it with our own temporary file handling.
 
 Here is the corrected `rotation_animation.c` file:
-...done thinking.
 
 Looking at your code, I can identify several issues that are causing the problems with the rotation animation. Let me help you fix them:
 

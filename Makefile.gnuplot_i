@@ -1,0 +1,37 @@
+# Makefile
+CC = gcc
+CFLAGS = -Wall -g -O2
+LIBS = -lm
+
+# Source files
+SOURCES1 = ex_1_27_1.c gnuplot_i.c
+SOURCES2 = ex_1_27_2.c gnuplot_i.c
+SOURCES3 = ex_1_27_4.c gnuplot_i.c
+OBJECTS1 = $(SOURCES1:.c=.o)
+OBJECTS2 = $(SOURCES2:.c=.o)
+OBJECTS3 = $(SOURCES3:.c=.o)
+TARGET1 = ex_1_27_1
+TARGET2 = ex_1_27_2
+TARGET3 = ex_1_27_4
+
+.PHONY: all clean
+
+all: $(TARGET1) $(TARGET2) $(TARGET3)
+
+$(TARGET1): $(OBJECTS1)
+	$(CC) $(OBJECTS1) -o $(TARGET1) $(LIBS)
+
+$(TARGET2): $(OBJECTS2)
+	$(CC) $(OBJECTS2) -o $(TARGET2) $(LIBS)
+
+$(TARGET3): $(OBJECTS3)
+	$(CC) $(OBJECTS3) -o $(TARGET3) $(LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJECTS1) $(TARGET1) $(OBJECTS2) $(TARGET2) $(OBJECTS3) $(TARGET3)
+
+install: $(TARGET1) $(TARGET2) $(TARGET3)
+	cp $(TARGET1) $(TARGET2) ~/bin/
