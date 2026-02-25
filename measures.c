@@ -34,7 +34,7 @@ int main(int argc, char **argv){
     er[i] = fabs(ea[i])/xm;
   fprintf(stderr, "xm=%5.3f rel_err = %8.5f\n",xm, er[i]);
   /* correct number of digits */
-  fprintf(stderr, "xm=%g\n",x[i]);
+  fprintf(stderr, "x=%g\n",x[i]);
   }
   return 0;
 }

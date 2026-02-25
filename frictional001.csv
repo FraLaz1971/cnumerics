@@ -1,0 +1,18 @@
+#Surfaces, u_s (static), u_d (dynamic)
+Wood - wood, 0.50, 0.30
+Steel - steel, 0.78, 0.42
+Steel - steel lubricated, 0.11, 0.05
+Steel - aluminum, 0.61, 0.47
+Steel - brass, 0.51, 0.44
+Steel - teflon, 0.04, 0.04
+Steel - ice, 0.027, 0.014
+Steel - air, 0.001, 0.001
+Steel - lead, 0.90, nan
+Steel - cast iron, 0.40, nan
+Steel - grafite, 0.10, nan
+Steel - plexiglas, 0.80, nan
+Steel - polistirene, 0.50, nan
+Copper - steel, 1.05, 0.29
+Copper - glass, 0.68, 0.53
+Rubber - asphalt(dry), 1.0, 0.8
+Rubber - asphalt(wet), 0.7, 0.6
