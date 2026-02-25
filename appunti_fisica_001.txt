@@ -186,5 +186,285 @@ E_a = 36 - 35.8 cm  = 0.2 cm   2/10     2      1
 E_r = 0.2/36                  = ----  = ---- = --- = 0.005555555
                                  36     360    180
 E_% = 0.55 %
+------44
+Nove misure diverse della larghezza della cattedra forniscono la seguente serie di risultati: 1.21m, 1.23m,
+1.20m, 1.20m, 1.19m, 1.24m, 1.22m, 1.21m, 1.21m. Si determinino il valore medio, l'errore assoluto,
+l'errore relativo e si riporti il risultato della misura con il corretto numero di cifre
+significative.
+------45
+Si supponga che una misura, dei lati, di un banco fornisca i seguenti valori: lato a = ( 75,0 ± 0,1 )cm e lato b = ( 50,6 ± 0,1 )cm. Calcola il perimetro e l’area del banco.
+p = 251.2 +- 0.4 cm
+a = 3795.0 +- 13 cm^2
+------46
+Supponiamo di aver effettuato le misure di due pesi e di aver ottenuto come risultato p1 = (21.3 ±0.4) g e p2 = (19.61 ± 0.06) g. Usando le regole di propagazione degli errori si calcolino p1 + p2, p1- p2 , p1 · p2, p1 : p2, con il corretto numero di cifre significative.
+p1 = (21.3 ±0.4) g
+p2 = (19.61 ± 0.06) g
+
+p1 + p2 = 40.91 +- 0.46 g
+p1 - p2 =  1.69 +- 0.46 g
+p1 * p2 = 417.693 + (~0.019+~0.003)*417.693 = 417.693 +- 9.12 g^2
+p1 / p2 = 1.086 + 0.023
+------47
+Siano dati i lati di un parallelepipedo, a = ( 28,9 ± 0,1 ) cm, b = ( 14,5 ± 0,1 ) cm, c = ( 9,0 ± 0,1 )cm. Valutare il volume ed il suo errore assoluto.
+a = ( 28,9 ± 0,1 ) cm, e_r = 0.003
+b = ( 14,5 ± 0,1 ) cm, e_r = 0.007
+c = (  9,0 ± 0,1 ) cm, e_r = 0.011
+V = 3771.45 + (13.05+26.01+41.9)/3 = 3771.45 +- 26.99
+----
+1 N = 1kg*1m/s^2
+
+= la quantità di forza necessaria per imprimere ad 1 kg di massa una accelerazione di un metro al secondo quadrato. Le sue dimensioni in termini di unità base SI sono [kg*m*s^-2]
+
+Vettori
+Un vettore è un elemento geometrico rappresentato da un segmento orientato, munito cioè di una
+freccia in una delle sue estremità, e caratterizzato da quattro elementi:
+- modulo: rappresenta la lunghezza del vettore (indicata da un valore e un'unità di misura);
+- direzione: è individuata dal fascio di rette parallele alla retta su cui giace il vettore; quindi
+non solo la retta su cui agisce ma anche le rette ad essa parallela;
+- verso: il verso è descritto dalla punta del vettore stesso, rappresentato da un segmento orien-
+tato;
+- punto di applicazione: il punto antecedente a tutti gli altri, ossia il punto iniziale.
+I vettori vengono indicati nel seguente modo: a^->.
+vettori che formano un angolo α tra di loro.
+La somma di due vettori a e b è definita come il vettore a + b, diagonale del parallelogramma formato dai vettori a e b
+Conoscendo i moduli dei due vettori e l'angolo α formato dai due vettori, sfruttando il teorema del
+coseno (richiamo di trigonometria), la somma a + b è data da:
+a+b = sqrt(a^2+b^2-2ab*cos(pi-α)) 
+Prodotto di un vettore per uno scalare
+Il prodotto di un vettore a per uno scalare k è un vettore che ha la stessa direzione di a, verso
+positivo se k è positivo e negativo se k è negativo ma modulo uguale a |k| * |a| .
+Se |k| > 1 il vettore viene dilatato, se 0 < |k| < 1 il vettore viene contratto.
+mentre sarà di verso opposto quando: k < 0.
+
+Prodotto scalare di due vettori (dot product)  associa a due vettori uno scalare.
+u*v = u*v*cos(theta)
+ci dice quanto due vettori "vanno nella stessa direzione".
+Il prodotto scalare è nullo se almeno uno dei due vettori è il vettore nullo, oppure se essi sono tra loro perpendicolari ( theta = 90° )
+1. Definizione Algebrica (Coordinate)
+Se conosci le componenti dei vettori in uno spazio n-dimensionale, il prodotto scalare si ottiene sommando il prodotto delle componenti corrispondenti.
+Dati due vettori a = (a_1,a_2) e b = (b_1,b_2)
+a * b = a_1*b_1 + a_2*b_2
 
 
+    Esempio: Se a = (3,-2) e b = (4,1), allora:
+    a*b = (3*4+(-2)*1) = 12-2 = 10
+
+2. Definizione Geometrica (Angoli)
+Questa formula è fondamentale per capire la relazione spaziale tra i vettori:
+      a * b = ||a|| * ||b|| * cos(theta)
+Dove:
+- ||a||  e ||b|| sono le lunghezze (moduli) dei vettori.
+- theta  è l'angolo compreso tra i due vettori.
+
+3. Cosa ci dice il risultato?
+Il segno del prodotto scalare è un indicatore immediato dell'angolo tra i vettori:
+------------------------------------------------------------------------------
+Risultato 	Angolo (theta)	Significato Visivo
+------------------------------------------------------------------------------
+Positivo (>0)	Acuto (<90°)	I vettori puntano nella stessa direzione generale.
+------------------------------------------------------------------------------
+Zero (=0)	    Retto (90°)	    I vettori sono ortogonali (perpendicolari).
+------------------------------------------------------------------------------
+Negativo (<0)	Ottuso (>90°)	I vettori puntano in direzioni opposte.
+------------------------------------------------------------------------------
+
+es.
+a(1,2) b(-1,-2), a*b = -1+-4 = -5 --> i vettori puntano in direzioni opposte.
+
+4. Applicazioni comuni
+
+-  Calcolare l'angolo: Puoi invertire la formula geometrica per trovare l'angolo:
+
+                   a*b
+    cos(theta) = -------                    .
+               ||a||*||b||
+
+-  Lavoro in Fisica: Il lavoro compiuto da una forza F per uno spostamento s
+    è proprio
+    L = F*s   .
+
+- Proiezioni: Serve a capire quanto "pesa" un vettore lungo la direzione di un altro.
+
+esempio: calcolo dell'angolo tra due vettori.
+esempio passo dopo passo con due vettori nel piano xy.
+I Dati
+Siano i vettori:
+- a = (3,4)
+- b = (1,2)
+Vogliamo trovare l'angolo theta compreso tra essi.
+
+1. Calcolare il prodotto scalare (a*b)
+Moltiplichiamo le componenti corrispondenti e sommiamo i risultati:
+a*b = (a_x * b_x) + (a_y*b_y)
+a*b = (3*1 + 4*2) = 11
+2. Calcolare i moduli (lunghezze) dei vettori
+Usiamo il teorema di Pitagora per ogni vettore:
+
+||a|| = sqrt(9+16) = sqrt(25) = 5
+||b|| = sqrt(1+4) = sqrt(5) ~= 2.24
+
+cos(theta) = 11/(5*2.24) = (0.983870) ~ 0.98
+
+theta_r = acos(0.98) = 0.179853 rad =  10.30° .
+2.9 Prodotto vettoriale di due vettori
+Esempio 2
+ r = 15 m
+ theta = 30°
+ r_x, r_y = ??
+
+ r_x = r*cos(30°) = 15*0.867 = 12.99 ~ 13 m
+ r_y = r*sin(30°) = 15*0.5   =  7.5 m
+
+Forze Elastiche
+
+Legge di Hooke
+F_e = -k*deltaS
+
+F_e = forza elastica
+k = coefficiente elastico [N/m]
+deltaS = allungamento della molla rispetto alla posizione iniziale
+il segno meno mostra che la forza è opposta rispetto alla sollecitazione
+F_e è una Forza di Richiamo
+
+Forze di Attrito
+La forza d'attrito si oppone al movimento del corpo, quindi ha sempre la stessa direzione del
+movimento (o del tentativo di movimento) del corpo e verso opposto.
+- attrito statico
+- attrito dinamico
+  - attrito radente
+  - attrito volvente
+  - attrito viscoso
+
+L’attrito dipende da:
+ La natura chimica delle superfici a contatto (cioè i materiali di cui sono costituite).
+ Lo stato fisico delle superfici a contatto (lisce o ruvide, asciutte o bagnate o lubrificate...).
+ La forza premente (determina la profondità dei micro-incastri responsabili dell'attrito).
+Il Coefficiente di attrito radente u è un numero puro, il cui valore dipende dalla natura chimica e
+dallo stato fisico delle superfici a contatto
+
+       F_a = u * F_p (2)
+
+F_p = forza premente
+F_a = forza d'attrito
+
+Alcuni valori del coefficiente di attrito radente
+
+Superfici u_s (statico) u_d (dinamico)
+Legno - legno 0,50 0,30
+Acciaio - acciaio 0,78 0,42
+Acciaio - acciaio lubrificato 0,11 0,05
+Acciaio - alluminio 0,61 0,47
+Acciaio - ottone 0,51 0,44
+Acciaio - teflon 0,04 0,04
+Acciaio - ghiaccio 0,027 0,014
+Acciaio - aria 0,001 0,001
+Acciaio - piombo 0,90 n.d.
+Acciaio - ghisa 0,40 n.d.
+Acciaio - grafite 0,10 n.d.
+ Acciaio - plexiglas 0,80 n.d.
+Acciaio - polistirene 0,50 n.d.
+Rame - acciaio 1,05 0,29
+Rame - vetro 0,68 0,53
+Gomma - asfalto (asciutto) 1,0 0,8
+Gomma - asfalto (bagnato) 0,7 0,6
+-------
+Massa e (Forza) Peso
+differenza tra misurare la
+forza peso (che dipende dalla gravità) e la massa (che è una proprietà intrinseca dell'oggetto).
+1. Bilancia a Molla (Dinamometro)
+È il sistema più semplice, basato sulla Legge di Hooke:
+       F = -k*deltas.
+- Funzionamento: L’oggetto viene appeso a una molla. La forza di gravità tira l'oggetto verso il basso, allungando la molla finché la forza elastica non equilibra il peso.
+- Cosa misura: Tecnicamente misura una forza (il peso).
+- Limite: Se porti questa bilancia sulla Luna, segnerà un valore circa 6 volte inferiore, perché la molla si allungherà meno, anche se l'oggetto è lo stesso.
+- Esempio: La classica bilancia pesapersone meccanica da bagno o il dinamometro del macellaio.
+
+2. Bilancia a Torsione
+Funziona in modo simile alla molla, ma sfrutta la resistenza alla rotazione di un filo o di una barra (momento torcente).
+- Funzionamento: Invece di allungarsi, un filo metallico viene ritorto. L'angolo di rotazione theta è proporzionale alla forza applicata:
+    M = tau*theta .
+- Cosa misura: Anche questa misura una forza o un momento di forza.
+- Caratteristica: È estremamente sensibile. Fu usata da Cavendish per misurare la costante di gravitazione universale e da Coulomb per le forze elettrostatiche.
+- Limite: Come la bilancia a molla, risente delle variazioni locali della gravità.
+
+3. Bilancia a Contrappeso (Bilancia a bracci o Stadera)
+Questo è un sistema di confronto diretto.
+- Funzionamento: Si basa sul principio della leva. Da un lato metti l'oggetto ignoto, dall'altro metti delle "masse campione" (i pesetti).
+- Cosa misura: Misura la massa per confronto.
+- Il vantaggio cruciale: Poiché la gravità agisce contemporaneamente sia sull'oggetto che sul contrappeso, l'equilibrio dipende solo dalle masse.
+        Se porti una bilancia a bracci sulla Luna, essa segnerà lo stesso valore della Terra. Se l'oggetto bilancia un peso da 1kg sulla Terra, lo bilancerà anche sulla Luna, perché la gravità si annulla nel rapporto tra i due bracci.
+    Esempio: La bilancia del farmacista o la stadera.
+
+Sintesi delle differenze
+Caratteristica,	Bilancia a Molla / Torsione,	Bilancia a Contrappeso
+Grandezza misurata,	Forza Peso (P = m*g),	Massa (m)
+Sensibilità alla gravità,	Sì (varia se cambia),	No (il confronto è costante)
+Componente chiave,	Deformazione elastica,	Equilibrio di momenti (Leva)
+Precisione,	Soggetta a usura della molla,	Molto elevata (standard di riferimento)
+
+Come ogni altra forza, nel Sistema Internazionale la forza peso si misura in newton (N).
+accelerazione gravitazionale g
+sulla Terra mediamente
+           N
+g = 9.81  --- (Newton su metro)
+           m
+
+      P = m*g  (Il peso è uguale alla massa per accelerazione di gravità)
+
+      forza peso sugli altri corpi celesti
+
+#Object, Resp.Earth, N/m
+Sun    ,27.90, 274.1
+Mercury, 0.3770,  3.703
+Venus  , 0.9032,  8.872
+Earth  , 1     ,  9.81
+Moon   , 0.1655,  1.625
+Mars   , 0.3895,  3.728
+Giove  , 2.640 , 25.93
+Saturn , 1.139 , 11.19
+Uranus , 0.917 ,  9.01
+Neptune, 1.148 , 11.28
+--------------------------
+Richiami di Goniometria e di Trigonometria
+Coseno e seno goniometrici
+Dato un sistema di assi cartesiani x0y, costruiamo una circonferenza di raggio 1 avente centro coincidente con l’origine degli assi.
+Da 0 facciamo partire la semiretta che intercetta la circonferenza nel punto A. Dal punto A tracciamo il segmento parallelo all’asse delle ordinate y. Questo intercetta l’asse delle ascisse x nel punto W.
+Il triangolo goniometrico (quello di lato OA=1) così formato è
+un triangolo rettangolo (per costruzione) retto nel punto W,
+mentre α rappresenta l’angolo formato dalla semiretta OA e
+l’asse x.
+Si definisce coseno goniometrico dell’angolo α , indicato con cos  , il rapporto tra il segmento
+OW e il segmento OA, ovvero:
+cos  
+ OW
+ (4)
+OA
+Ma risultando che OA  1 , si ottiene:
+cos   OW
+ (5)
+In maniera analoga possiamo definire il seno goniometrico dell’angolo α , indicato con sen , il
+rapporto tra il segmento AW e il segmento OA, ovvero:
+sen 
+ AW
+ (6)
+OA
+e risultando anche in questo caso OA  1 , si ottiene:
+
+---
+#p*n,a(rad),a(deg),sin(),cos()
+pi*0,0,0,0,1
+pi/6,0.5236,30,0.5,0.866
+pi/4,0.7854,45,0.7071,0.7071
+pi/3,1.0472,60,0.866,0.5
+pi/2,1.5708,90,1,0
+Pi*2/3,2.0944,120,0.866,-0.5
+Pi*3/4,2.3561,135,0.7071,-0.7071
+Pi*5/6,2.6179,150,0.5,-0.866
+pi,3.1416,180,0,-1
+pi*7/6,3.6652,210,-0.5,-0.866
+pi*5/4,3.927,225,-0.7071,-0.7071
+pi*3/2,4.7124,270,-1,0
+Pi*5/3,5.2359,300,-0.866,0.5
+Pi*7/4,5.4977,315,-0.7071,0.7071
+Pi*11/6,5.7595,330,-0.5,0.866
+2*pi,6.2832,360,0,1

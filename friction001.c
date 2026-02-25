@@ -4,7 +4,7 @@
 #include "gnuplot_i.h"
 
 #define DIM 1024
-#define NPOINTS 50 // Aumentato per sicurezza
+#define NPOINTS 50
 #define DEBUG 0
 typedef struct FricRow {
   char surfaces[128];
@@ -119,8 +119,6 @@ int plot_coeff(FricRow *fr, int dim, gnuplot_ctrl *handle, char *ifname){
     gnuplot_cmd(handle, "set style data histograms");
     gnuplot_cmd(handle, "set style histogram cluster gap 1");
     gnuplot_cmd(handle, "set style fill solid 0.6 border -1");
-
-    gnuplot_cmd(handle, "set style data histograms");
 /*    gnuplot_cmd(handle, "set style fill solid 1.0 border -1"); */
     gnuplot_cmd(handle, "set xtics rotate by -45 font 'arial,10'");
 

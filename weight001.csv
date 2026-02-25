@@ -1,0 +1,11 @@
+#Object, Resp2Earth, N/m
+Sun    , 27.90 ,  274.1
+Mercury, 0.3770,  3.703
+Venus  , 0.9032,  8.872
+Earth  , 1     ,  9.81
+Moon   , 0.1655,  1.625
+Mars   , 0.3895,  3.728
+Jupiter, 2.640 , 25.93
+Saturn , 1.139 , 11.19
+Uranus , 0.917 ,  9.01
+Neptune, 1.148 , 11.28
