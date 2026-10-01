@@ -7,7 +7,7 @@ int main(){
 	const double LY1=9.46E+12;
 	const double PCLY1=3.26;
 	const double PCKM1=3.087E+13;
-	const double LSKMS=299.791;
+	const double LSKMS=299791;
 	printf("1 Angstrom\t= %G cm\n",A1);
 	printf("1 Astr.Unit(AU)\t= %G km\n",AU1);
 	printf("1 LightSpeed\t= %G km/s\n",LSKMS);
