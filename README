@@ -246,10 +246,15 @@ Run
 		gnuplot plot_ellipse.gp
 to generate plots.
 
+![plotting ellipse graph](./ellipse_plots.png)
+
 Run
 		gnuplot -p parellipse.plt
 
 to generate an ellipse using the parametric equations
+
+![plotting paramatric ellipse graph](./parametric_ellipse1.png)
+
 
 Example of a run
 
