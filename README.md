@@ -333,6 +333,23 @@ Example of a run
     - Translation and rotation transformations
     - Relationship between ellipses and circles
 
+###
+The gnuplot code to plot the ellipse using parametric equation is the following. It is much
+more convenient using the parametric form instead of plotting a succession of points.
+(gnuplot and graphic library take care of transform the equation in points to plot on the screen)
+
+	# 1. Environment configuration
+	set parametric
+	set size ratio -1
+	set grid
+	# 2. Shape Parameters definition (e.g.: a=5, b=3)
+	a = 5
+	b = 3
+	# 3. Set the interval of the t parameter (from 0 to 2*pi for a complete loop)
+	set trange [0:2*pi]
+	# 4. Plot the ellipse
+	plot a*cos(t), b*sin(t) title "Parametric Ellipse"
+
 ### list of the programs
     francesco@squirrel:~/projects/c_cpp/cnumerics$ tree ../cnumerics
     ../cnumerics
