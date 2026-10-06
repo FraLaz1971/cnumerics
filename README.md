@@ -243,11 +243,11 @@ the file err.log
 This program gives a mathematics lesson about the ellipses geometrical shape in the space.
 I creates also a gnuplot script for graphics.
 Run
-	gnuplot plot_ellipse.gp
+		gnuplot plot_ellipse.gp
 to generate plots.
 
 Run
-	gnuplot -p parellipse.plt
+		gnuplot -p parellipse.plt
 
 to generate an ellipse using the parametric equations
 
