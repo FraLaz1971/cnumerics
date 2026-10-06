@@ -14,89 +14,127 @@ TARGET5 = angles
 TARGET6 = arrays
 TARGET7 = arrays2
 TARGET8 = astroconst
-TARGET9 = bases
-TARGET10 = bignum
-TARGET11 = blowup
-TARGET12 = c2f
-TARGET13 = checkprimenoret
-TARGET14 = checkprimeret
-TARGET15 = checkprimevoid
-TARGET16 = conbinatorics
-TARGET17 = const
-TARGET18 = conversions
-TARGET19 = cosin
-TARGET20 = couples
-TARGET21 = cowlegs
-TARGET22 = create_cities_file
-TARGET23 = dd2deg
-TARGET24 = decodd
-TARGET25 = deg2dd
-TARGET26 = deg2rad
-TARGET27 = dices
-TARGET28 = doublerow
-TARGET29 = doublevec
-TARGET30 = e_what
-TARGET31 = f2c
-TARGET32 = factors
-TARGET33 = floaterr
-TARGET34 = floatformats
-TARGET35 = floatlimits
-TARGET36 = fpow
-TARGET37 = fun1
-TARGET38 = gcd
-TARGET39 = gcd_base
-TARGET40 = gcd_school
-TARGET41 = gimme_five
-TARGET42 = gimme_numbers
-TARGET43 = gravity
-TARGET44 = hyperbola
-TARGET45 = incodd
-TARGET46 = intlimits
-TARGET47 = lights2
-TARGET48 = limits
-TARGET49 = loopbyte
-TARGET50 = loopint
-TARGET51 = max
-TARGET52 = parabola
-TARGET53 = parpow
-TARGET54 = pi
-TARGET55 = pow
-TARGET56 = precision
-TARGET57 = predecodd
-TARGET58 = preincodd
-TARGET59 = primes
-TARGET60 = primes001
-TARGET61 = printval
-TARGET62 = printwidth
-TARGET63 = proc2dvec
-TARGET64 = proj_geo_norm
-TARGET65 = random1
-TARGET66 = random2
-TARGET67 = realarrays
-TARGET68 = rndicples
-TARGET69 = rndrcples
-TARGET70 = shares
-TARGET71 = show_pt
-TARGET72 = simpshares
-TARGET73 = sin
-TARGET74 = sizes
-TARGET75 = solvequad
-TARGET76 = sphere001
-TARGET77 = squares
-TARGET78 = statsn
-TARGET79 = sum10
-TARGET80 = sum4co
-TARGET81 = sumn
-TARGET82 = taxes
-TARGET83 = test1
-TARGET84 = test2
-TARGET85 = test_limits
-TARGET86 = toobig
-TARGET87 = trial
-TARGET88 = typesize
-TARGET89 = ugravity
-TARGET90 = voidprint5
-TARGETS = voidprint5 ugravity typesize trial toobig test_limits test2 test1 taxes sumn sum4co sum10 statsn squares sphere001 solvequad sizes sin simpshares show_pt shares rndrcples rndicples realarrays random2 random1 proj_geo_norm proc2dvec printwidth printval primes001 primes preincodd predecodd precision pow pi parpow parabola max loopint loopbyte limits lights2 intlimits incodd hyperbola gravity gimme_numbers gimme_five gcd_school gcd_base gcd fun1 fpow floatlimits floatformats floaterr factors f2c e_what doublevec doublerow dices deg2rad deg2dd decodd dd2deg create_cities_file cowlegs couples cosin conversions const conbinatorics checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases astroconst arrays2 arrays angles alphanums accuracy 3pcircle 1_div_sin 1_div_cos
+TARGET9 = atan
+TARGET10 = atan2_001
+TARGET11 = atans
+TARGET12 = atans001
+TARGET13 = baku
+TARGET14 = bases
+TARGET15 = bignum
+TARGET16 = blowup
+TARGET17 = c2f
+TARGET18 = checkprimenoret
+TARGET19 = checkprimeret
+TARGET20 = checkprimevoid
+TARGET21 = circle_demo
+TARGET22 = circle_inputs
+TARGET23 = composite_animation
+TARGET24 = conbinatorics
+TARGET25 = const
+TARGET26 = conversions
+TARGET27 = coord2pix
+TARGET28 = cosin
+TARGET29 = couples
+TARGET30 = cowlegs
+TARGET31 = create_cities_file
+TARGET32 = dd2deg
+TARGET33 = decodd
+TARGET34 = deg2dd
+TARGET35 = deg2rad
+TARGET36 = dices
+TARGET37 = doublerow
+TARGET38 = doublevec
+TARGET39 = e_what
+TARGET40 = ellipse_demo
+TARGET41 = ex_1_27_1
+TARGET42 = ex_1_27_2
+TARGET43 = ex_1_27_4
+TARGET44 = f2c
+TARGET45 = factors
+TARGET46 = floaterr
+TARGET47 = floatformats
+TARGET48 = floatlimits
+TARGET49 = fpow
+TARGET50 = friction001
+TARGET51 = fun1
+TARGET52 = gauss
+TARGET53 = gcd
+TARGET54 = gcd_base
+TARGET55 = gcd_school
+TARGET56 = generate_ellipse_003
+TARGET57 = gimme_five
+TARGET58 = gimme_numbers
+TARGET59 = gnuplot_i
+TARGET60 = gravity
+TARGET61 = hyperbola
+TARGET62 = incodd
+TARGET63 = intlimits
+TARGET64 = lights2
+TARGET65 = limits
+TARGET66 = lines_bundle
+TARGET67 = loopbyte
+TARGET68 = loopint
+TARGET69 = max
+TARGET70 = measures
+TARGET71 = parabola
+TARGET72 = parpow
+TARGET73 = pi
+TARGET74 = piangles
+TARGET75 = plot2sphere
+TARGET76 = pow
+TARGET77 = precision
+TARGET78 = predecodd
+TARGET79 = preincodd
+TARGET80 = primes
+TARGET81 = primes001
+TARGET82 = printval
+TARGET83 = printwidth
+TARGET84 = proc2dvec
+TARGET85 = proj_geo_norm
+TARGET86 = proj_geo_norm_final
+TARGET87 = proj_geo_norm_fixed
+TARGET88 = random1
+TARGET89 = random2
+TARGET90 = realarrays
+TARGET91 = rndicples
+TARGET92 = rndrcples
+TARGET93 = rotated_square
+TARGET94 = rotated_triangle
+TARGET95 = rotation_animation
+TARGET96 = shares
+TARGET97 = show_pt
+TARGET98 = simpshares
+TARGET99 = sin
+TARGET100 = sizes
+TARGET101 = skycoords
+TARGET102 = skycoords_utc
+TARGET103 = solvequad
+TARGET104 = sphere001
+TARGET105 = squares
+TARGET106 = statsn
+TARGET107 = sum10
+TARGET108 = sum4co
+TARGET109 = sumn
+TARGET110 = tan
+TARGET111 = taxes
+TARGET112 = test1
+TARGET113 = test2
+TARGET114 = test3
+TARGET115 = test_baku_correct
+TARGET116 = test_limits
+TARGET117 = toobig
+TARGET118 = trial
+TARGET119 = trigonom001
+TARGET120 = trigonom002
+TARGET121 = trigonom003
+TARGET122 = trigonom004
+TARGET123 = trigonom005
+TARGET124 = typesize
+TARGET125 = ugravity
+TARGET126 = voidprint5
+TARGET127 = weight001
+TARGET128 = write_geo_conf
+TARGETS = write_geo_conf weight001 voidprint5 ugravity typesize trigonom005 trigonom004 trigonom003 trigonom002 trigonom001 trial toobig test_limits test_baku_correct test3 test2 test1 taxes tan sumn sum4co sum10 statsn squares sphere001 solvequad skycoords_utc skycoords sizes sin simpshares show_pt shares rotation_animation rotated_triangle rotated_square rndrcples rndicples realarrays random2 random1 proj_geo_norm_fixed proj_geo_norm_final proj_geo_norm proc2dvec printwidth printval primes001 primes preincodd predecodd precision pow plot2sphere piangles pi parpow parabola measures max loopint loopbyte lines_bundle limits lights2 intlimits incodd hyperbola gravity gnuplot_i gimme_numbers gimme_five generate_ellipse_003 gcd_school gcd_base gcd gauss fun1 friction001 fpow floatlimits floatformats floaterr factors f2c ex_1_27_4 ex_1_27_2 ex_1_27_1 ellipse_demo e_what doublevec doublerow dices deg2rad deg2dd decodd dd2deg create_cities_file cowlegs couples cosin coord2pix conversions const conbinatorics composite_animation circle_inputs circle_demo checkprimevoid checkprimeret checkprimenoret c2f blowup bignum bases baku atans001 atans atan2_001 atan astroconst arrays2 arrays angles alphanums accuracy 3pcircle 1_div_sin 1_div_cos
 all: $(TARGETS)
 $(TARGET0).o: 1_div_cos.c
 	$(CC) -c   $< -o 1_div_cos.o $(CPPFLAGS)
@@ -134,334 +172,486 @@ $(TARGET8).o: astroconst.c
 	$(CC) -c   $< -o astroconst.o $(CPPFLAGS)
 $(TARGET8): astroconst.o
 	$(CC) -o astroconst $< $(LDFLAGS)
-$(TARGET9).o: bases.c
+$(TARGET9).o: atan.c
+	$(CC) -c   $< -o atan.o $(CPPFLAGS)
+$(TARGET9): atan.o
+	$(CC) -o atan $< $(LDFLAGS)
+$(TARGET10).o: atan2_001.c
+	$(CC) -c   $< -o atan2_001.o $(CPPFLAGS)
+$(TARGET10): atan2_001.o
+	$(CC) -o atan2_001 $< $(LDFLAGS)
+$(TARGET11).o: atans.c
+	$(CC) -c   $< -o atans.o $(CPPFLAGS)
+$(TARGET11): atans.o
+	$(CC) -o atans $< $(LDFLAGS)
+$(TARGET12).o: atans001.c
+	$(CC) -c   $< -o atans001.o $(CPPFLAGS)
+$(TARGET12): atans001.o
+	$(CC) -o atans001 $< $(LDFLAGS)
+$(TARGET13).o: baku.c
+	$(CC) -c   $< -o baku.o $(CPPFLAGS)
+$(TARGET13): baku.o
+	$(CC) -o baku $< $(LDFLAGS)
+$(TARGET14).o: bases.c
 	$(CC) -c   $< -o bases.o $(CPPFLAGS)
-$(TARGET9): bases.o
+$(TARGET14): bases.o
 	$(CC) -o bases $< $(LDFLAGS)
-$(TARGET10).o: bignum.c
+$(TARGET15).o: bignum.c
 	$(CC) -c   $< -o bignum.o $(CPPFLAGS)
-$(TARGET10): bignum.o
+$(TARGET15): bignum.o
 	$(CC) -o bignum $< $(LDFLAGS)
-$(TARGET11).o: blowup.c
+$(TARGET16).o: blowup.c
 	$(CC) -c   $< -o blowup.o $(CPPFLAGS)
-$(TARGET11): blowup.o
+$(TARGET16): blowup.o
 	$(CC) -o blowup $< $(LDFLAGS)
-$(TARGET12).o: c2f.c
+$(TARGET17).o: c2f.c
 	$(CC) -c   $< -o c2f.o $(CPPFLAGS)
-$(TARGET12): c2f.o
+$(TARGET17): c2f.o
 	$(CC) -o c2f $< $(LDFLAGS)
-$(TARGET13).o: checkprimenoret.c
+$(TARGET18).o: checkprimenoret.c
 	$(CC) -c   $< -o checkprimenoret.o $(CPPFLAGS)
-$(TARGET13): checkprimenoret.o
+$(TARGET18): checkprimenoret.o
 	$(CC) -o checkprimenoret $< $(LDFLAGS)
-$(TARGET14).o: checkprimeret.c
+$(TARGET19).o: checkprimeret.c
 	$(CC) -c   $< -o checkprimeret.o $(CPPFLAGS)
-$(TARGET14): checkprimeret.o
+$(TARGET19): checkprimeret.o
 	$(CC) -o checkprimeret $< $(LDFLAGS)
-$(TARGET15).o: checkprimevoid.c
+$(TARGET20).o: checkprimevoid.c
 	$(CC) -c   $< -o checkprimevoid.o $(CPPFLAGS)
-$(TARGET15): checkprimevoid.o
+$(TARGET20): checkprimevoid.o
 	$(CC) -o checkprimevoid $< $(LDFLAGS)
-$(TARGET16).o: conbinatorics.c
+$(TARGET21).o: circle_demo.c
+	$(CC) -c   $< -o circle_demo.o $(CPPFLAGS)
+$(TARGET21): circle_demo.o
+	$(CC) -o circle_demo $< $(LDFLAGS)
+$(TARGET22).o: circle_inputs.c
+	$(CC) -c   $< -o circle_inputs.o $(CPPFLAGS)
+$(TARGET22): circle_inputs.o
+	$(CC) -o circle_inputs $< $(LDFLAGS)
+$(TARGET23).o: composite_animation.c
+	$(CC) -c   $< -o composite_animation.o $(CPPFLAGS)
+$(TARGET23): composite_animation.o
+	$(CC) -o composite_animation $< $(LDFLAGS)
+$(TARGET24).o: conbinatorics.c
 	$(CC) -c   $< -o conbinatorics.o $(CPPFLAGS)
-$(TARGET16): conbinatorics.o
+$(TARGET24): conbinatorics.o
 	$(CC) -o conbinatorics $< $(LDFLAGS)
-$(TARGET17).o: const.c
+$(TARGET25).o: const.c
 	$(CC) -c   $< -o const.o $(CPPFLAGS)
-$(TARGET17): const.o
+$(TARGET25): const.o
 	$(CC) -o const $< $(LDFLAGS)
-$(TARGET18).o: conversions.c
+$(TARGET26).o: conversions.c
 	$(CC) -c   $< -o conversions.o $(CPPFLAGS)
-$(TARGET18): conversions.o
+$(TARGET26): conversions.o
 	$(CC) -o conversions $< $(LDFLAGS)
-$(TARGET19).o: cosin.c
+$(TARGET27).o: coord2pix.c
+	$(CC) -c   $< -o coord2pix.o $(CPPFLAGS)
+$(TARGET27): coord2pix.o
+	$(CC) -o coord2pix $< $(LDFLAGS)
+$(TARGET28).o: cosin.c
 	$(CC) -c   $< -o cosin.o $(CPPFLAGS)
-$(TARGET19): cosin.o
+$(TARGET28): cosin.o
 	$(CC) -o cosin $< $(LDFLAGS)
-$(TARGET20).o: couples.c
+$(TARGET29).o: couples.c
 	$(CC) -c   $< -o couples.o $(CPPFLAGS)
-$(TARGET20): couples.o
+$(TARGET29): couples.o
 	$(CC) -o couples $< $(LDFLAGS)
-$(TARGET21).o: cowlegs.c
+$(TARGET30).o: cowlegs.c
 	$(CC) -c   $< -o cowlegs.o $(CPPFLAGS)
-$(TARGET21): cowlegs.o
+$(TARGET30): cowlegs.o
 	$(CC) -o cowlegs $< $(LDFLAGS)
-$(TARGET22).o: create_cities_file.c
+$(TARGET31).o: create_cities_file.c
 	$(CC) -c   $< -o create_cities_file.o $(CPPFLAGS)
-$(TARGET22): create_cities_file.o
+$(TARGET31): create_cities_file.o
 	$(CC) -o create_cities_file $< $(LDFLAGS)
-$(TARGET23).o: dd2deg.c
+$(TARGET32).o: dd2deg.c
 	$(CC) -c   $< -o dd2deg.o $(CPPFLAGS)
-$(TARGET23): dd2deg.o
+$(TARGET32): dd2deg.o
 	$(CC) -o dd2deg $< $(LDFLAGS)
-$(TARGET24).o: decodd.c
+$(TARGET33).o: decodd.c
 	$(CC) -c   $< -o decodd.o $(CPPFLAGS)
-$(TARGET24): decodd.o
+$(TARGET33): decodd.o
 	$(CC) -o decodd $< $(LDFLAGS)
-$(TARGET25).o: deg2dd.c
+$(TARGET34).o: deg2dd.c
 	$(CC) -c   $< -o deg2dd.o $(CPPFLAGS)
-$(TARGET25): deg2dd.o
+$(TARGET34): deg2dd.o
 	$(CC) -o deg2dd $< $(LDFLAGS)
-$(TARGET26).o: deg2rad.c
+$(TARGET35).o: deg2rad.c
 	$(CC) -c   $< -o deg2rad.o $(CPPFLAGS)
-$(TARGET26): deg2rad.o
+$(TARGET35): deg2rad.o
 	$(CC) -o deg2rad $< $(LDFLAGS)
-$(TARGET27).o: dices.c
+$(TARGET36).o: dices.c
 	$(CC) -c   $< -o dices.o $(CPPFLAGS)
-$(TARGET27): dices.o
+$(TARGET36): dices.o
 	$(CC) -o dices $< $(LDFLAGS)
-$(TARGET28).o: doublerow.c
+$(TARGET37).o: doublerow.c
 	$(CC) -c   $< -o doublerow.o $(CPPFLAGS)
-$(TARGET28): doublerow.o
+$(TARGET37): doublerow.o
 	$(CC) -o doublerow $< $(LDFLAGS)
-$(TARGET29).o: doublevec.c
+$(TARGET38).o: doublevec.c
 	$(CC) -c   $< -o doublevec.o $(CPPFLAGS)
-$(TARGET29): doublevec.o
+$(TARGET38): doublevec.o
 	$(CC) -o doublevec $< $(LDFLAGS)
-$(TARGET30).o: e_what.c
+$(TARGET39).o: e_what.c
 	$(CC) -c   $< -o e_what.o $(CPPFLAGS)
-$(TARGET30): e_what.o
+$(TARGET39): e_what.o
 	$(CC) -o e_what $< $(LDFLAGS)
-$(TARGET31).o: f2c.c
+$(TARGET40).o: ellipse_demo.c
+	$(CC) -c   $< -o ellipse_demo.o $(CPPFLAGS)
+$(TARGET40): ellipse_demo.o
+	$(CC) -o ellipse_demo $< $(LDFLAGS)
+$(TARGET41).o: ex_1_27_1.c
+	$(CC) -c   $< -o ex_1_27_1.o $(CPPFLAGS)
+$(TARGET41): ex_1_27_1.o
+	$(CC) -o ex_1_27_1 $< $(LDFLAGS)
+$(TARGET42).o: ex_1_27_2.c
+	$(CC) -c   $< -o ex_1_27_2.o $(CPPFLAGS)
+$(TARGET42): ex_1_27_2.o
+	$(CC) -o ex_1_27_2 $< $(LDFLAGS)
+$(TARGET43).o: ex_1_27_4.c
+	$(CC) -c   $< -o ex_1_27_4.o $(CPPFLAGS)
+$(TARGET43): ex_1_27_4.o
+	$(CC) -o ex_1_27_4 $< $(LDFLAGS)
+$(TARGET44).o: f2c.c
 	$(CC) -c   $< -o f2c.o $(CPPFLAGS)
-$(TARGET31): f2c.o
+$(TARGET44): f2c.o
 	$(CC) -o f2c $< $(LDFLAGS)
-$(TARGET32).o: factors.c
+$(TARGET45).o: factors.c
 	$(CC) -c   $< -o factors.o $(CPPFLAGS)
-$(TARGET32): factors.o
+$(TARGET45): factors.o
 	$(CC) -o factors $< $(LDFLAGS)
-$(TARGET33).o: floaterr.c
+$(TARGET46).o: floaterr.c
 	$(CC) -c   $< -o floaterr.o $(CPPFLAGS)
-$(TARGET33): floaterr.o
+$(TARGET46): floaterr.o
 	$(CC) -o floaterr $< $(LDFLAGS)
-$(TARGET34).o: floatformats.c
+$(TARGET47).o: floatformats.c
 	$(CC) -c   $< -o floatformats.o $(CPPFLAGS)
-$(TARGET34): floatformats.o
+$(TARGET47): floatformats.o
 	$(CC) -o floatformats $< $(LDFLAGS)
-$(TARGET35).o: floatlimits.c
+$(TARGET48).o: floatlimits.c
 	$(CC) -c   $< -o floatlimits.o $(CPPFLAGS)
-$(TARGET35): floatlimits.o
+$(TARGET48): floatlimits.o
 	$(CC) -o floatlimits $< $(LDFLAGS)
-$(TARGET36).o: fpow.c
+$(TARGET49).o: fpow.c
 	$(CC) -c   $< -o fpow.o $(CPPFLAGS)
-$(TARGET36): fpow.o
+$(TARGET49): fpow.o
 	$(CC) -o fpow $< $(LDFLAGS)
-$(TARGET37).o: fun1.c
+$(TARGET50).o: friction001.c
+	$(CC) -c   $< -o friction001.o $(CPPFLAGS)
+$(TARGET50): friction001.o
+	$(CC) -o friction001 $< $(LDFLAGS)
+$(TARGET51).o: fun1.c
 	$(CC) -c   $< -o fun1.o $(CPPFLAGS)
-$(TARGET37): fun1.o
+$(TARGET51): fun1.o
 	$(CC) -o fun1 $< $(LDFLAGS)
-$(TARGET38).o: gcd.c
+$(TARGET52).o: gauss.c
+	$(CC) -c   $< -o gauss.o $(CPPFLAGS)
+$(TARGET52): gauss.o
+	$(CC) -o gauss $< $(LDFLAGS)
+$(TARGET53).o: gcd.c
 	$(CC) -c   $< -o gcd.o $(CPPFLAGS)
-$(TARGET38): gcd.o
+$(TARGET53): gcd.o
 	$(CC) -o gcd $< $(LDFLAGS)
-$(TARGET39).o: gcd_base.c
+$(TARGET54).o: gcd_base.c
 	$(CC) -c   $< -o gcd_base.o $(CPPFLAGS)
-$(TARGET39): gcd_base.o
+$(TARGET54): gcd_base.o
 	$(CC) -o gcd_base $< $(LDFLAGS)
-$(TARGET40).o: gcd_school.c
+$(TARGET55).o: gcd_school.c
 	$(CC) -c   $< -o gcd_school.o $(CPPFLAGS)
-$(TARGET40): gcd_school.o
+$(TARGET55): gcd_school.o
 	$(CC) -o gcd_school $< $(LDFLAGS)
-$(TARGET41).o: gimme_five.c
+$(TARGET56).o: generate_ellipse_003.c
+	$(CC) -c   $< -o generate_ellipse_003.o $(CPPFLAGS)
+$(TARGET56): generate_ellipse_003.o
+	$(CC) -o generate_ellipse_003 $< $(LDFLAGS)
+$(TARGET57).o: gimme_five.c
 	$(CC) -c   $< -o gimme_five.o $(CPPFLAGS)
-$(TARGET41): gimme_five.o
+$(TARGET57): gimme_five.o
 	$(CC) -o gimme_five $< $(LDFLAGS)
-$(TARGET42).o: gimme_numbers.c
+$(TARGET58).o: gimme_numbers.c
 	$(CC) -c   $< -o gimme_numbers.o $(CPPFLAGS)
-$(TARGET42): gimme_numbers.o
+$(TARGET58): gimme_numbers.o
 	$(CC) -o gimme_numbers $< $(LDFLAGS)
-$(TARGET43).o: gravity.c
+$(TARGET59).o: gnuplot_i.c
+	$(CC) -c   $< -o gnuplot_i.o $(CPPFLAGS)
+$(TARGET59): gnuplot_i.o
+	$(CC) -o gnuplot_i $< $(LDFLAGS)
+$(TARGET60).o: gravity.c
 	$(CC) -c   $< -o gravity.o $(CPPFLAGS)
-$(TARGET43): gravity.o
+$(TARGET60): gravity.o
 	$(CC) -o gravity $< $(LDFLAGS)
-$(TARGET44).o: hyperbola.c
+$(TARGET61).o: hyperbola.c
 	$(CC) -c   $< -o hyperbola.o $(CPPFLAGS)
-$(TARGET44): hyperbola.o
+$(TARGET61): hyperbola.o
 	$(CC) -o hyperbola $< $(LDFLAGS)
-$(TARGET45).o: incodd.c
+$(TARGET62).o: incodd.c
 	$(CC) -c   $< -o incodd.o $(CPPFLAGS)
-$(TARGET45): incodd.o
+$(TARGET62): incodd.o
 	$(CC) -o incodd $< $(LDFLAGS)
-$(TARGET46).o: intlimits.c
+$(TARGET63).o: intlimits.c
 	$(CC) -c   $< -o intlimits.o $(CPPFLAGS)
-$(TARGET46): intlimits.o
+$(TARGET63): intlimits.o
 	$(CC) -o intlimits $< $(LDFLAGS)
-$(TARGET47).o: lights2.c
+$(TARGET64).o: lights2.c
 	$(CC) -c   $< -o lights2.o $(CPPFLAGS)
-$(TARGET47): lights2.o
+$(TARGET64): lights2.o
 	$(CC) -o lights2 $< $(LDFLAGS)
-$(TARGET48).o: limits.c
+$(TARGET65).o: limits.c
 	$(CC) -c   $< -o limits.o $(CPPFLAGS)
-$(TARGET48): limits.o
+$(TARGET65): limits.o
 	$(CC) -o limits $< $(LDFLAGS)
-$(TARGET49).o: loopbyte.c
+$(TARGET66).o: lines_bundle.c
+	$(CC) -c   $< -o lines_bundle.o $(CPPFLAGS)
+$(TARGET66): lines_bundle.o
+	$(CC) -o lines_bundle $< $(LDFLAGS)
+$(TARGET67).o: loopbyte.c
 	$(CC) -c   $< -o loopbyte.o $(CPPFLAGS)
-$(TARGET49): loopbyte.o
+$(TARGET67): loopbyte.o
 	$(CC) -o loopbyte $< $(LDFLAGS)
-$(TARGET50).o: loopint.c
+$(TARGET68).o: loopint.c
 	$(CC) -c   $< -o loopint.o $(CPPFLAGS)
-$(TARGET50): loopint.o
+$(TARGET68): loopint.o
 	$(CC) -o loopint $< $(LDFLAGS)
-$(TARGET51).o: max.c
+$(TARGET69).o: max.c
 	$(CC) -c   $< -o max.o $(CPPFLAGS)
-$(TARGET51): max.o
+$(TARGET69): max.o
 	$(CC) -o max $< $(LDFLAGS)
-$(TARGET52).o: parabola.c
+$(TARGET70).o: measures.c
+	$(CC) -c   $< -o measures.o $(CPPFLAGS)
+$(TARGET70): measures.o
+	$(CC) -o measures $< $(LDFLAGS)
+$(TARGET71).o: parabola.c
 	$(CC) -c   $< -o parabola.o $(CPPFLAGS)
-$(TARGET52): parabola.o
+$(TARGET71): parabola.o
 	$(CC) -o parabola $< $(LDFLAGS)
-$(TARGET53).o: parpow.c
+$(TARGET72).o: parpow.c
 	$(CC) -c   $< -o parpow.o $(CPPFLAGS)
-$(TARGET53): parpow.o
+$(TARGET72): parpow.o
 	$(CC) -o parpow $< $(LDFLAGS)
-$(TARGET54).o: pi.c
+$(TARGET73).o: pi.c
 	$(CC) -c   $< -o pi.o $(CPPFLAGS)
-$(TARGET54): pi.o
+$(TARGET73): pi.o
 	$(CC) -o pi $< $(LDFLAGS)
-$(TARGET55).o: pow.c
+$(TARGET74).o: piangles.c
+	$(CC) -c   $< -o piangles.o $(CPPFLAGS)
+$(TARGET74): piangles.o
+	$(CC) -o piangles $< $(LDFLAGS)
+$(TARGET75).o: plot2sphere.c
+	$(CC) -c   $< -o plot2sphere.o $(CPPFLAGS)
+$(TARGET75): plot2sphere.o
+	$(CC) -o plot2sphere $< $(LDFLAGS)
+$(TARGET76).o: pow.c
 	$(CC) -c   $< -o pow.o $(CPPFLAGS)
-$(TARGET55): pow.o
+$(TARGET76): pow.o
 	$(CC) -o pow $< $(LDFLAGS)
-$(TARGET56).o: precision.c
+$(TARGET77).o: precision.c
 	$(CC) -c   $< -o precision.o $(CPPFLAGS)
-$(TARGET56): precision.o
+$(TARGET77): precision.o
 	$(CC) -o precision $< $(LDFLAGS)
-$(TARGET57).o: predecodd.c
+$(TARGET78).o: predecodd.c
 	$(CC) -c   $< -o predecodd.o $(CPPFLAGS)
-$(TARGET57): predecodd.o
+$(TARGET78): predecodd.o
 	$(CC) -o predecodd $< $(LDFLAGS)
-$(TARGET58).o: preincodd.c
+$(TARGET79).o: preincodd.c
 	$(CC) -c   $< -o preincodd.o $(CPPFLAGS)
-$(TARGET58): preincodd.o
+$(TARGET79): preincodd.o
 	$(CC) -o preincodd $< $(LDFLAGS)
-$(TARGET59).o: primes.c
+$(TARGET80).o: primes.c
 	$(CC) -c   $< -o primes.o $(CPPFLAGS)
-$(TARGET59): primes.o
+$(TARGET80): primes.o
 	$(CC) -o primes $< $(LDFLAGS)
-$(TARGET60).o: primes001.c
+$(TARGET81).o: primes001.c
 	$(CC) -c   $< -o primes001.o $(CPPFLAGS)
-$(TARGET60): primes001.o
+$(TARGET81): primes001.o
 	$(CC) -o primes001 $< $(LDFLAGS)
-$(TARGET61).o: printval.c
+$(TARGET82).o: printval.c
 	$(CC) -c   $< -o printval.o $(CPPFLAGS)
-$(TARGET61): printval.o
+$(TARGET82): printval.o
 	$(CC) -o printval $< $(LDFLAGS)
-$(TARGET62).o: printwidth.c
+$(TARGET83).o: printwidth.c
 	$(CC) -c   $< -o printwidth.o $(CPPFLAGS)
-$(TARGET62): printwidth.o
+$(TARGET83): printwidth.o
 	$(CC) -o printwidth $< $(LDFLAGS)
-$(TARGET63).o: proc2dvec.c
+$(TARGET84).o: proc2dvec.c
 	$(CC) -c   $< -o proc2dvec.o $(CPPFLAGS)
-$(TARGET63): proc2dvec.o
+$(TARGET84): proc2dvec.o
 	$(CC) -o proc2dvec $< $(LDFLAGS)
-$(TARGET64).o: proj_geo_norm.c
+$(TARGET85).o: proj_geo_norm.c
 	$(CC) -c   $< -o proj_geo_norm.o $(CPPFLAGS)
-$(TARGET64): proj_geo_norm.o
+$(TARGET85): proj_geo_norm.o
 	$(CC) -o proj_geo_norm $< $(LDFLAGS)
-$(TARGET65).o: random1.c
+$(TARGET86).o: proj_geo_norm_final.c
+	$(CC) -c   $< -o proj_geo_norm_final.o $(CPPFLAGS)
+$(TARGET86): proj_geo_norm_final.o
+	$(CC) -o proj_geo_norm_final $< $(LDFLAGS)
+$(TARGET87).o: proj_geo_norm_fixed.c
+	$(CC) -c   $< -o proj_geo_norm_fixed.o $(CPPFLAGS)
+$(TARGET87): proj_geo_norm_fixed.o
+	$(CC) -o proj_geo_norm_fixed $< $(LDFLAGS)
+$(TARGET88).o: random1.c
 	$(CC) -c   $< -o random1.o $(CPPFLAGS)
-$(TARGET65): random1.o
+$(TARGET88): random1.o
 	$(CC) -o random1 $< $(LDFLAGS)
-$(TARGET66).o: random2.c
+$(TARGET89).o: random2.c
 	$(CC) -c   $< -o random2.o $(CPPFLAGS)
-$(TARGET66): random2.o
+$(TARGET89): random2.o
 	$(CC) -o random2 $< $(LDFLAGS)
-$(TARGET67).o: realarrays.c
+$(TARGET90).o: realarrays.c
 	$(CC) -c   $< -o realarrays.o $(CPPFLAGS)
-$(TARGET67): realarrays.o
+$(TARGET90): realarrays.o
 	$(CC) -o realarrays $< $(LDFLAGS)
-$(TARGET68).o: rndicples.c
+$(TARGET91).o: rndicples.c
 	$(CC) -c   $< -o rndicples.o $(CPPFLAGS)
-$(TARGET68): rndicples.o
+$(TARGET91): rndicples.o
 	$(CC) -o rndicples $< $(LDFLAGS)
-$(TARGET69).o: rndrcples.c
+$(TARGET92).o: rndrcples.c
 	$(CC) -c   $< -o rndrcples.o $(CPPFLAGS)
-$(TARGET69): rndrcples.o
+$(TARGET92): rndrcples.o
 	$(CC) -o rndrcples $< $(LDFLAGS)
-$(TARGET70).o: shares.c
+$(TARGET93).o: rotated_square.c
+	$(CC) -c   $< -o rotated_square.o $(CPPFLAGS)
+$(TARGET93): rotated_square.o
+	$(CC) -o rotated_square $< $(LDFLAGS)
+$(TARGET94).o: rotated_triangle.c
+	$(CC) -c   $< -o rotated_triangle.o $(CPPFLAGS)
+$(TARGET94): rotated_triangle.o
+	$(CC) -o rotated_triangle $< $(LDFLAGS)
+$(TARGET95).o: rotation_animation.c
+	$(CC) -c   $< -o rotation_animation.o $(CPPFLAGS)
+$(TARGET95): rotation_animation.o
+	$(CC) -o rotation_animation $< $(LDFLAGS)
+$(TARGET96).o: shares.c
 	$(CC) -c   $< -o shares.o $(CPPFLAGS)
-$(TARGET70): shares.o
+$(TARGET96): shares.o
 	$(CC) -o shares $< $(LDFLAGS)
-$(TARGET71).o: show_pt.c
+$(TARGET97).o: show_pt.c
 	$(CC) -c   $< -o show_pt.o $(CPPFLAGS)
-$(TARGET71): show_pt.o
+$(TARGET97): show_pt.o
 	$(CC) -o show_pt $< $(LDFLAGS)
-$(TARGET72).o: simpshares.c
+$(TARGET98).o: simpshares.c
 	$(CC) -c   $< -o simpshares.o $(CPPFLAGS)
-$(TARGET72): simpshares.o
+$(TARGET98): simpshares.o
 	$(CC) -o simpshares $< $(LDFLAGS)
-$(TARGET73).o: sin.c
+$(TARGET99).o: sin.c
 	$(CC) -c   $< -o sin.o $(CPPFLAGS)
-$(TARGET73): sin.o
+$(TARGET99): sin.o
 	$(CC) -o sin $< $(LDFLAGS)
-$(TARGET74).o: sizes.c
+$(TARGET100).o: sizes.c
 	$(CC) -c   $< -o sizes.o $(CPPFLAGS)
-$(TARGET74): sizes.o
+$(TARGET100): sizes.o
 	$(CC) -o sizes $< $(LDFLAGS)
-$(TARGET75).o: solvequad.c
+$(TARGET101).o: skycoords.c
+	$(CC) -c   $< -o skycoords.o $(CPPFLAGS)
+$(TARGET101): skycoords.o
+	$(CC) -o skycoords $< $(LDFLAGS)
+$(TARGET102).o: skycoords_utc.c
+	$(CC) -c   $< -o skycoords_utc.o $(CPPFLAGS)
+$(TARGET102): skycoords_utc.o
+	$(CC) -o skycoords_utc $< $(LDFLAGS)
+$(TARGET103).o: solvequad.c
 	$(CC) -c   $< -o solvequad.o $(CPPFLAGS)
-$(TARGET75): solvequad.o
+$(TARGET103): solvequad.o
 	$(CC) -o solvequad $< $(LDFLAGS)
-$(TARGET76).o: sphere001.c
+$(TARGET104).o: sphere001.c
 	$(CC) -c   $< -o sphere001.o $(CPPFLAGS)
-$(TARGET76): sphere001.o
+$(TARGET104): sphere001.o
 	$(CC) -o sphere001 $< $(LDFLAGS)
-$(TARGET77).o: squares.c
+$(TARGET105).o: squares.c
 	$(CC) -c   $< -o squares.o $(CPPFLAGS)
-$(TARGET77): squares.o
+$(TARGET105): squares.o
 	$(CC) -o squares $< $(LDFLAGS)
-$(TARGET78).o: statsn.c
+$(TARGET106).o: statsn.c
 	$(CC) -c   $< -o statsn.o $(CPPFLAGS)
-$(TARGET78): statsn.o
+$(TARGET106): statsn.o
 	$(CC) -o statsn $< $(LDFLAGS)
-$(TARGET79).o: sum10.c
+$(TARGET107).o: sum10.c
 	$(CC) -c   $< -o sum10.o $(CPPFLAGS)
-$(TARGET79): sum10.o
+$(TARGET107): sum10.o
 	$(CC) -o sum10 $< $(LDFLAGS)
-$(TARGET80).o: sum4co.c
+$(TARGET108).o: sum4co.c
 	$(CC) -c   $< -o sum4co.o $(CPPFLAGS)
-$(TARGET80): sum4co.o
+$(TARGET108): sum4co.o
 	$(CC) -o sum4co $< $(LDFLAGS)
-$(TARGET81).o: sumn.c
+$(TARGET109).o: sumn.c
 	$(CC) -c   $< -o sumn.o $(CPPFLAGS)
-$(TARGET81): sumn.o
+$(TARGET109): sumn.o
 	$(CC) -o sumn $< $(LDFLAGS)
-$(TARGET82).o: taxes.c
+$(TARGET110).o: tan.c
+	$(CC) -c   $< -o tan.o $(CPPFLAGS)
+$(TARGET110): tan.o
+	$(CC) -o tan $< $(LDFLAGS)
+$(TARGET111).o: taxes.c
 	$(CC) -c   $< -o taxes.o $(CPPFLAGS)
-$(TARGET82): taxes.o
+$(TARGET111): taxes.o
 	$(CC) -o taxes $< $(LDFLAGS)
-$(TARGET83).o: test1.c
+$(TARGET112).o: test1.c
 	$(CC) -c   $< -o test1.o $(CPPFLAGS)
-$(TARGET83): test1.o
+$(TARGET112): test1.o
 	$(CC) -o test1 $< $(LDFLAGS)
-$(TARGET84).o: test2.c
+$(TARGET113).o: test2.c
 	$(CC) -c   $< -o test2.o $(CPPFLAGS)
-$(TARGET84): test2.o
+$(TARGET113): test2.o
 	$(CC) -o test2 $< $(LDFLAGS)
-$(TARGET85).o: test_limits.c
+$(TARGET114).o: test3.c
+	$(CC) -c   $< -o test3.o $(CPPFLAGS)
+$(TARGET114): test3.o
+	$(CC) -o test3 $< $(LDFLAGS)
+$(TARGET115).o: test_baku_correct.c
+	$(CC) -c   $< -o test_baku_correct.o $(CPPFLAGS)
+$(TARGET115): test_baku_correct.o
+	$(CC) -o test_baku_correct $< $(LDFLAGS)
+$(TARGET116).o: test_limits.c
 	$(CC) -c   $< -o test_limits.o $(CPPFLAGS)
-$(TARGET85): test_limits.o
+$(TARGET116): test_limits.o
 	$(CC) -o test_limits $< $(LDFLAGS)
-$(TARGET86).o: toobig.c
+$(TARGET117).o: toobig.c
 	$(CC) -c   $< -o toobig.o $(CPPFLAGS)
-$(TARGET86): toobig.o
+$(TARGET117): toobig.o
 	$(CC) -o toobig $< $(LDFLAGS)
-$(TARGET87).o: trial.c
+$(TARGET118).o: trial.c
 	$(CC) -c   $< -o trial.o $(CPPFLAGS)
-$(TARGET87): trial.o
+$(TARGET118): trial.o
 	$(CC) -o trial $< $(LDFLAGS)
-$(TARGET88).o: typesize.c
+$(TARGET119).o: trigonom001.c
+	$(CC) -c   $< -o trigonom001.o $(CPPFLAGS)
+$(TARGET119): trigonom001.o
+	$(CC) -o trigonom001 $< $(LDFLAGS)
+$(TARGET120).o: trigonom002.c
+	$(CC) -c   $< -o trigonom002.o $(CPPFLAGS)
+$(TARGET120): trigonom002.o
+	$(CC) -o trigonom002 $< $(LDFLAGS)
+$(TARGET121).o: trigonom003.c
+	$(CC) -c   $< -o trigonom003.o $(CPPFLAGS)
+$(TARGET121): trigonom003.o
+	$(CC) -o trigonom003 $< $(LDFLAGS)
+$(TARGET122).o: trigonom004.c
+	$(CC) -c   $< -o trigonom004.o $(CPPFLAGS)
+$(TARGET122): trigonom004.o
+	$(CC) -o trigonom004 $< $(LDFLAGS)
+$(TARGET123).o: trigonom005.c
+	$(CC) -c   $< -o trigonom005.o $(CPPFLAGS)
+$(TARGET123): trigonom005.o
+	$(CC) -o trigonom005 $< $(LDFLAGS)
+$(TARGET124).o: typesize.c
 	$(CC) -c   $< -o typesize.o $(CPPFLAGS)
-$(TARGET88): typesize.o
+$(TARGET124): typesize.o
 	$(CC) -o typesize $< $(LDFLAGS)
-$(TARGET89).o: ugravity.c
+$(TARGET125).o: ugravity.c
 	$(CC) -c   $< -o ugravity.o $(CPPFLAGS)
-$(TARGET89): ugravity.o
+$(TARGET125): ugravity.o
 	$(CC) -o ugravity $< $(LDFLAGS)
-$(TARGET90).o: voidprint5.c
+$(TARGET126).o: voidprint5.c
 	$(CC) -c   $< -o voidprint5.o $(CPPFLAGS)
-$(TARGET90): voidprint5.o
+$(TARGET126): voidprint5.o
 	$(CC) -o voidprint5 $< $(LDFLAGS)
+$(TARGET127).o: weight001.c
+	$(CC) -c   $< -o weight001.o $(CPPFLAGS)
+$(TARGET127): weight001.o
+	$(CC) -o weight001 $< $(LDFLAGS)
+$(TARGET128).o: write_geo_conf.c
+	$(CC) -c   $< -o write_geo_conf.o $(CPPFLAGS)
+$(TARGET128): write_geo_conf.o
+	$(CC) -o write_geo_conf $< $(LDFLAGS)
 install: all
 	mv $(TARGETS) bin
 .PHONY: clean
